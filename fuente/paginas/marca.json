@@ -33,6 +33,15 @@
   ],
   "intactos": [],
 
+  "_dos_mal_escritas": [
+    "El original tenía dos erratas que salvaban la marca vieja de la tabla:",
+    "«Arquemir» con q en la política de privacidad, y «app.axioma.com» —el",
+    "producto con su nombre viejo y otro dominio— en la de cookies. Las dos",
+    "entraron aquí, y la comprobación de que no queda marca vieja ahora busca",
+    "también «arquemir» y «axioma», no sólo la grafía correcta: una guarda que",
+    "sólo mira la forma bien escrita no sirve para lo que está mal escrito."
+  ],
+
   "_letras_de_logotipo": [
     "El original dibujaba la marca con un cuadro rojo y dos letras dentro. Al",
     "poner el logotipo de verdad esas letras desaparecen: no son texto de la",
@@ -72,6 +81,9 @@
   "cambios": [
     ["Archemir Group, S.R.L.", "Clèrigo"],
     ["axioma.archemir.com", "app.clerigo.io"],
+    ["app.axioma.com", "app.clerigo.io"],
+    ["Arquemir", "Clèrigo"],
+    ["AXIOMA20", "CLERIGO20"],
     ["privacidad@archemir.com", "privacy@clerigo.io"],
     ["legal@archemir.com", "legal@clerigo.io"],
     ["hola@archemir.com", "hello@clerigo.io"],

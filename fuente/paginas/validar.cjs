@@ -202,10 +202,14 @@ for (const { slug, chrome } of aRevisar) {
   /* ── 4. NADA DE LA MARCA VIEJA ────────────────────────────────────── */
   let sinLosIntactos = sal;
   for (const v of MARCA.intactos) sinLosIntactos = sinLosIntactos.split(v).join(" ");
-  comprueba(`${slug}: sin «archemir» fuera de los canales que se dejan a propósito`,
-    !/archemir/i.test(sinLosIntactos),
-    (sinLosIntactos.match(/archemir/gi) || []).length + " restos");
-  comprueba(`${slug}: sin «Axioma GRC» ni «Partner Portal» de marca`, !/Axioma GRC/.test(sal));
+  /* También «arquemir» y «axioma»: el original traía las dos mal escritas —una
+     con q y otra como app.axioma.com— y una comprobación que sólo buscara la
+     grafía correcta las habría dado por buenas. Lo dieron por bueno, de hecho,
+     hasta que alguien las leyó. */
+  const VIEJO = /archemir|arquemir|axioma/i;
+  comprueba(`${slug}: sin rastro de la marca vieja, ni mal escrita`,
+    !VIEJO.test(sinLosIntactos),
+    (sinLosIntactos.match(new RegExp(VIEJO, "gi")) || []).join(", "));
   comprueba(`${slug}: la marca es «Clèrigo»`, /Clèrigo/.test(sal));
 
   /* ── 5. NI UN PICTOGRAMA ──────────────────────────────────────────── */

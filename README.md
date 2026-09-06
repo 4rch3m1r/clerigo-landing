@@ -202,7 +202,7 @@ y `oscuro.html`— están en el repositorio y no dependen de él.
 | `archemir-original.html` | el landing aprobado, sin tocar. La fuente de todo. **No versionado** |
 | `logo.png` | la marca de Clèrigo, 160 × 160 |
 | `rebrandear.cjs` | marca, dominio, logotipo, metadatos, los SVG y los ajustes de teléfono |
-| `cambios-de-color.json` | los 264 cambios de color de la versión clara, uno a uno |
+| `cambios-de-color.json` | los cambios de color de la versión clara, uno a uno y con su motivo |
 | `a-modo-claro.cjs` | los aplica sobre la versión oscura |
 | `tema.cjs` | lo que comparten el aplicador y el validador |
 | `validar.cjs` | las comprobaciones |

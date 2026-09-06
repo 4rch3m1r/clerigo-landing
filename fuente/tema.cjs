@@ -55,6 +55,12 @@ const VALE_EL_BLANCO = [
   /background\s*[:=]\s*['"]?rgba\(255,\s*255,\s*255,\s*0\.[7-9]/,
   /<(text|rect|path|circle|line|polygon)[^>]*rgba\(255,\s*255,\s*255/,
   /(inset|text-shadow)[^;]*rgba\(255,\s*255,\s*255/,
+  /*  d) La barrita que separa los iconos sociales del pie de las condiciones
+   *     legales. Va DENTRO del pie, que es oscuro a propósito, así que su raya
+   *     blanca al 10% es la del original y es la correcta. Se convirtió a negro
+   *     al pasar la página a claro, cuando el pie todavía era claro; al volver
+   *     el pie a oscuro se quedó negro sobre negro y desapareció. */
+  /height:14px;background:rgba\(255,\s*255,\s*255/,
   /border-top:\s*1px solid rgba\(255,\s*255,\s*255,\s*0\.2[0-9]?\)/,
 ];
 
@@ -65,7 +71,11 @@ const VALE_EL_BLANCO = [
  */
 const TRAMO_OSCURO_QUERIDO = {
   abre: "── BARRA Y PIE SIEMPRE EN OSCURO ──",
-  cierra: "footer { background: #0E0E0E; }",
+  /* Se cierra con un rótulo propio y no con la última regla del bloque. Cuando
+     cerraba en «footer { background: #0E0E0E; }», añadir una regla detrás la
+     dejaba fuera del tramo y la comprobación la cantaba como resto del tema
+     oscuro aunque fuera igual de querida que las de arriba. */
+  cierra: "── FIN DE LA BARRA Y EL PIE EN OSCURO ──",
 };
 
 /**

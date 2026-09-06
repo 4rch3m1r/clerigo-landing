@@ -288,6 +288,13 @@ nav, footer {
 }
 nav { background: rgba(14,14,14,0.85); }
 footer { background: #0E0E0E; }
+/* Los cuadros de los iconos sociales se quedaron con el relleno y el borde del
+   modo claro —negro al 4% y al 12%— y el pie es #0E0E0E: negro sobre negro. El
+   cuadro no se veía, sólo el dibujo flotando, y el de X, que trae su propia
+   tarjeta negra, casi tampoco. Aquí llevan la misma alfa pero en blanco. */
+footer .social-icon { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
+footer .social-icon:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.24); }
+/* ── FIN DE LA BARRA Y EL PIE EN OSCURO ────────────────────────────────── */
 </style>
 </head>
 <body>
@@ -411,7 +418,7 @@ footer { background: #0E0E0E; }
       <a href="#" class="social-icon" style="width:26px;height:26px;border-radius:6px" title="X" aria-label="X">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" fill="#000"/><path d="M13.5 11.1L17.5 6.5H16.3L13 10.3L10.4 6.5H6.5L10.7 12.6L6.5 17.5H7.7L11.2 13.4L14 17.5H17.9L13.5 11.1Z" fill="white"/></svg>
       </a>
-      <div style="width:1px;height:14px;background:rgba(14,14,14,0.13);margin:0 4px"></div>
+      <div style="width:1px;height:14px;background:rgba(255,255,255,0.1);margin:0 4px"></div>
       <a href="legal.html">Términos de uso</a>
       <a href="legal.html">Privacidad</a>
       <a href="legal.html">Cookies</a>

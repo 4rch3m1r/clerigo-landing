@@ -418,6 +418,13 @@ nav, footer {
 }
 nav { background: rgba(14,14,14,0.85); }
 footer { background: #0E0E0E; }
+/* Los cuadros de los iconos sociales se quedaron con el relleno y el borde del
+   modo claro —negro al 4% y al 12%— y el pie es #0E0E0E: negro sobre negro. El
+   cuadro no se veía, sólo el dibujo flotando, y el de X, que trae su propia
+   tarjeta negra, casi tampoco. Aquí llevan la misma alfa pero en blanco. */
+footer .social-icon { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
+footer .social-icon:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.24); }
+/* ── FIN DE LA BARRA Y EL PIE EN OSCURO ────────────────────────────────── */
 
 </style>`,
   1,

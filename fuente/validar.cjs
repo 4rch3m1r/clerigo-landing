@@ -162,7 +162,7 @@ const esqueleto = (s) => pelado(
     /* El bloque de ajustes de teléfono es el ÚNICO añadido de verdad, y se
        quita aquí a propósito para que el resto de la página siga comparándose
        carácter a carácter. Que exista se comprueba aparte, más abajo. */
-    .replace(/\/\* ── AJUSTES DE TELÉFONO[\s\S]*?footer \{ background: #0E0E0E; \}\n/, "")
+    .replace(/\/\* ── AJUSTES DE TELÉFONO[\s\S]*?── FIN DE LA BARRA Y EL PIE EN OSCURO ──[^\n]*\n/, "")
     /* Y el panel de certificaciones es lo ÚNICO que se quita del original: se
        recorta también aquí —del original, donde sí está— para que el resto de
        la página siga comparándose línea por línea. Que NO esté en las dos

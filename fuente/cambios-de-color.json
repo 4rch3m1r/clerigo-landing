@@ -1659,13 +1659,6 @@
   "motivo": "Aro discontinuo hecho con el color de texto claro al 20%: sobre blanco sería invisible. Base #F0F0F0 -> #16181C y la alfa sube un poco por ser borde."
  },
  {
-  "linea": 3039,
-  "antes": "      <div style=\"width:1px;height:14px;background:rgba(255,255,255,0.1);margin:0 4px\"></div>",
-  "despues": "      <div style=\"width:1px;height:14px;background:rgba(14,14,14,0.13);margin:0 4px\"></div>",
-  "rol": "borde",
-  "motivo": "Barrita separadora del pie: raya blanca al 10% que sobre blanco no se ve. Pasa a negro con alfa +0.03."
- },
- {
   "linea": 3063,
   "antes": "    nav.style.background = 'rgba(14,14,14,0.97)';",
   "despues": "    nav.style.background = 'rgba(255,255,255,0.97)';",
