@@ -1401,6 +1401,54 @@ footer {
   /* Los cuatro pasos se quedaban en dos columnas hasta el final. El original
      ya apila aquí .modules-grid y .testimonials-grid; a ésta se le pasó. */
   .steps-grid { grid-template-columns: minmax(0,1fr); }
+
+  /* ── Las medallas y los sellos, en fila y abajo ──────────────────────────
+     En un móvil el hero medía 1.743 px y 1.048 eran medallas y sellos
+     apilados en vertical: el 60% de la pantalla antes de llegar al titular.
+     Ahora el titular va primero y las dos piezas bajan, cada una con su
+     contenido en fila. */
+  .hero-inner > .hero-text  { order: 1; }
+  .hero-inner > .hero-award { order: 2; }
+  .hero-inner > .cert-panel { order: 3; }
+
+  /* Las dos medallas, una al lado de la otra. Va con rejilla y no con «row»
+     porque la primera medalla son CUATRO hermanos sueltos —cinta, disco,
+     colas y firma— y la segunda es un bloque solo: se manda la primera a la
+     columna izquierda y la segunda a la derecha ocupando las cuatro filas. */
+  .hero-award {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    justify-items: center;
+    column-gap: 10px;
+    margin-right: 0;
+    margin-bottom: 28px;
+  }
+  .hero-award > :not(.award-ipexpert) { grid-column: 1; }
+  /* El «!important» es contra un estilo EN LÍNEA de 28 px que separaba una
+     medalla de la otra cuando iban en vertical. En fila sobra. */
+  .award-ipexpert { grid-column: 2; grid-row: 1 / span 4; margin-top: 0 !important; }
+
+  /* Los cuatro sellos, en fila y a todo el ancho en vez de en una columna de
+     158 px. Los separadores eran rayas horizontales entre sellos apilados:
+     puestos en fila no separan nada, así que se van. */
+  .cert-panel {
+    width: auto;
+    align-self: stretch;
+    margin-left: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    align-items: center;
+    justify-items: center;
+    column-gap: 8px;
+    row-gap: 10px;
+  }
+  .cert-panel-label { grid-column: 1 / -1; }
+  .cert-divider { display: none; }
+  /* Los sellos son SVG de 80 px fijos: se les deja encoger para que entren
+     los cuatro hasta en una pantalla de 320. */
+  .cert-logo-item { width: 100%; }
+  .cert-logo-item svg { width: 100%; height: auto; max-width: 80px; }
 }
 @media (max-width: 480px) {
   /* Las tres acciones de la barra no caben y «Contacto» se cortaba: a 375 px
