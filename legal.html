@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Términos, Privacidad y Cookies — Clèrigo</title>
+<meta name="description" content="Términos de uso, Política de Privacidad y Política de Cookies de Clèrigo: qué datos tratamos, cómo los protegemos y cuáles son tus derechos.">
+<link rel="canonical" href="https://clerigo.io/legal">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Clèrigo">
+<meta property="og:url" content="https://clerigo.io/legal">
+<meta property="og:title" content="Términos, Privacidad y Cookies — Clèrigo">
+<meta property="og:description" content="Términos de uso, Política de Privacidad y Política de Cookies de Clèrigo: qué datos tratamos, cómo los protegemos y cuáles son tus derechos.">
+<meta property="og:image" content="https://clerigo.io/og-legal.png">
+<meta property="og:image:secure_url" content="https://clerigo.io/og-legal.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Términos, Privacidad y Cookies — Clèrigo">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Términos, Privacidad y Cookies — Clèrigo">
+<meta name="twitter:description" content="Términos de uso, Política de Privacidad y Política de Cookies de Clèrigo: qué datos tratamos, cómo los protegemos y cuáles son tus derechos.">
+<meta name="twitter:image" content="https://clerigo.io/og-legal.png">
+<meta name="twitter:image:alt" content="Términos, Privacidad y Cookies — Clèrigo">
+<meta name="theme-color" content="#0E0E0E">
+<link rel="image_src" href="https://clerigo.io/og-legal.png">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300;1,400&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png" sizes="160x160">
+<link rel="apple-touch-icon" href="favicon.png">
+<noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Términos, Privacidad y Cookies — Clèrigo","description":"Términos de uso, Política de Privacidad y Política de Cookies de Clèrigo: qué datos tratamos, cómo los protegemos y cuáles son tus derechos.","url":"https://clerigo.io/legal","inLanguage":"es","primaryImageOfPage":"https://clerigo.io/og-legal.png","isPartOf":{"@type":"WebSite","name":"Clèrigo","url":"https://clerigo.io/"},"publisher":{"@type":"Organization","name":"Clèrigo","url":"https://clerigo.io/","logo":"https://clerigo.io/favicon.png"}}</script>
+<style>
+/* ── TOKENS — los mismos de index.html, sin una coma de diferencia ── */
+:root {
+  --red: #EB1000;
+  --red-ink: #C10D00;
+  --red-dim: rgba(235,16,0,0.10);
+  --dark: #FFFFFF;
+  --dark-2: #F7F8F9;
+  --dark-3: #EFF1F3;
+  --dark-4: #E5E8EB;
+  --border: rgba(14,14,14,0.10);
+  --border-light: rgba(14,14,14,0.16);
+  --text: #16181C;
+  --text-2: rgba(22,24,28,0.68);
+  --text-3: rgba(22,24,28,0.48);
+  --accent: #0257BF;
+  --success: #0F6B4E;
+  --warning: #B45309;
+  --danger: #C0252D;
+  --purple: #6B27A8;
+  --teal: #0A7373;
+  /* En la portada el logotipo va incrustado en base64 porque es la página que
+     se manda suelta. Aquí no: las cinco viajan siempre con favicon.png al
+     lado, y repetir 48 KB de base64 cinco veces no lo paga nadie. */
+  --logo: url("favicon.png");
+}
+
+/* ── RESET ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; color-scheme: light; }
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--dark);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Los controles de formulario NO heredan la letra del cuerpo: el navegador les
+   pone la suya y salen en Arial. La portada no tiene formularios y por eso no
+   lo necesita; estas páginas sí, y se veía —un botón de cerrar y varios campos
+   de la ventana de pago estaban en Arial sin que se notara a simple vista. */
+input, select, textarea, button { font-family: inherit; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 60px;
+  display: flex; align-items: center;
+  padding: 0 48px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  gap: 40px;
+  transition: background 0.3s;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px; text-decoration: none;
+}
+.nav-logo-mark {
+  width: 30px; height: 30px;
+  background: var(--logo) center / contain no-repeat;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.nav-logo-text { color: var(--text); font-size: 14px; font-weight: 700; letter-spacing: -0.3px; }
+.nav-logo-text small { color: var(--text-3); font-size: 10px; font-weight: 400; letter-spacing: 0.8px; text-transform: uppercase; margin-left: 8px; }
+
+.nav-links { display: flex; gap: 28px; margin-left: 20px; }
+.nav-links a {
+  color: var(--text-2); font-size: 13px; font-weight: 500; text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a.aqui { color: var(--text); }
+
+.nav-cta { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.btn-ghost {
+  color: var(--text-2); font-size: 13px; font-weight: 600; text-decoration: none;
+  padding: 7px 16px; border: 1px solid var(--border);
+  border-radius: 4px; transition: all 0.15s; cursor: pointer; background: none;
+  font-family: 'Source Sans 3', sans-serif;
+}
+.btn-ghost:hover { color: var(--text); border-color: var(--border-light); background: rgba(14,14,14,0.04); }
+.btn-primary {
+  color: white; font-size: 13px; font-weight: 700; text-decoration: none;
+  padding: 8px 20px; background: var(--red);
+  border-radius: 4px; border: none; cursor: pointer;
+  transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px;
+  white-space: nowrap; font-family: 'Source Sans 3', sans-serif;
+}
+.btn-primary:hover { background: #c80d00; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(235,16,0,0.20); }
+
+.btn-large {
+  font-size: 15px; font-weight: 700; padding: 13px 32px; border-radius: 4px;
+  cursor: pointer; border: none; text-decoration: none; display: inline-flex;
+  align-items: center; gap: 8px; transition: all 0.2s;
+  font-family: 'Source Sans 3', sans-serif;
+}
+.btn-large.red { background: var(--red); color: white; }
+.btn-large.red:hover { background: #c80d00; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(235,16,0,0.22); }
+.btn-large.outline { background: none; color: var(--text); border: 1px solid var(--border-light); }
+.btn-large.outline:hover { background: rgba(14,14,14,0.04); border-color: rgba(14,14,14,0.23); transform: translateY(-1px); }
+
+/* ── SECCIONES ── */
+section { position: relative; }
+.container { max-width: 1160px; margin: 0 auto; padding: 0 48px; }
+/* La barra va fija y mide 60 px: el contenido de cada página empieza debajo. */
+.pagina { padding-top: 60px; position: relative; z-index: 1; }
+
+.label-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--red); background: var(--red-dim);
+  border: 1px solid rgba(235,16,0,0.25);
+  padding: 4px 12px; border-radius: 20px; margin-bottom: 20px;
+}
+.label-chip::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--red);
+  animation: blink 2s ease-in-out infinite;
+}
+/* Un chip que ya trae su propio icono no lleva ademas el punto: la portada
+   pone una marca, no dos. */
+.label-chip:has(svg)::before { display: none; }
+@keyframes blink {
+  0%,100% { opacity: 1; } 50% { opacity: 0.3; }
+}
+
+/* El titular de sección de la portada: 900, muy apretado, y el `em` NO es
+   cursiva — es la misma letra en rojo. */
+.section-title-center {
+  font-size: clamp(32px, 4vw, 52px); font-weight: 900;
+  line-height: 1.08; letter-spacing: -1.5px; margin-bottom: 16px;
+}
+.section-title em, .section-title-center em { font-style: normal; color: var(--red); }
+.section-subtitle { font-size: 17px; color: var(--text-2); line-height: 1.6; }
+
+/* ── PIE ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 48px 0 32px;
+}
+.footer-inner {
+  display: grid; grid-template-columns: 220px 1fr; gap: 60px;
+  max-width: 1160px; margin: 0 auto; padding: 0 48px;
+}
+.footer-brand .brand-desc { font-size: 13px; color: var(--text-3); line-height: 1.7; margin-top: 12px; }
+.footer-links { display: grid; grid-template-columns: repeat(4,1fr); gap: 32px; }
+.footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-3); margin-bottom: 14px; }
+.footer-col a {
+  display: block; font-size: 13px; color: var(--text-3); text-decoration: none;
+  margin-bottom: 8px; transition: color 0.15s;
+}
+.footer-col a:hover { color: var(--text-2); }
+.footer-bottom {
+  max-width: 1160px; margin: 40px auto 0; padding: 20px 48px 0;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: var(--text-3);
+}
+.footer-bottom a { color: var(--text-3); text-decoration: none; }
+.footer-bottom a:hover { color: var(--text-2); }
+
+/* ── ANIMACIONES ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.6s ease both; }
+.fade-up-1 { animation-delay: 0.05s; }
+.fade-up-2 { animation-delay: 0.12s; }
+.fade-up-3 { animation-delay: 0.20s; }
+.fade-up-4 { animation-delay: 0.28s; }
+.fade-up-5 { animation-delay: 0.36s; }
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+/* Tres redes de seguridad para lo que empieza invisible. Una página que se
+   queda en blanco porque un observador no llegó a disparar es mucho peor que
+   una página sin animación:
+     · a quien pide menos movimiento se le da todo puesto y quieto;
+     · sin JavaScript no hay observador, así que tampoco hay nada que ocultar;
+     · y si el navegador no trae IntersectionObserver, lo destapa el guion. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+.reveal-2 { transition-delay: 0.1s; }
+.reveal-3 { transition-delay: 0.2s; }
+.reveal-4 { transition-delay: 0.3s; }
+.reveal-5 { transition-delay: 0.4s; }
+.reveal-6 { transition-delay: 0.5s; }
+
+/* ── ICONOS SOCIALES ── */
+.social-links {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 16px;
+}
+.social-icon {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(14,14,14,0.04);
+  border: 1px solid rgba(14,14,14,0.12);
+  transition: background 0.18s, border-color 0.18s, transform 0.18s;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.social-icon:hover {
+  background: rgba(14,14,14,0.07);
+  border-color: rgba(14,14,14,0.23);
+  transform: translateY(-2px);
+}
+.social-icon svg { display: block; }
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .container { padding: 0 20px; }
+  .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+  .footer-links { grid-template-columns: repeat(2,1fr); }
+  .footer-bottom { flex-wrap: wrap; row-gap: 10px; padding-left: 20px; padding-right: 20px; }
+  .footer-bottom > div { flex-wrap: wrap; }
+}
+@media (max-width: 480px) {
+  .nav-cta .btn-ghost + .btn-ghost { display: none; }
+}
+@media (max-width: 340px) {
+  .nav-cta { gap: 6px; }
+  .btn-ghost, .btn-primary { padding: 7px 10px; }
+  .nav-logo-text small { display: none; }
+}
+
+/* ── LO DE LA PÁGINA ─────────────────────────────────────────────────── */
+/* ── PORTADA DEL DOCUMENTO ── */
+.legal-hero {
+  padding: 64px 0 56px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(235,16,0,0.04) 0%, transparent 100%);
+  position: relative;
+  overflow: hidden;
+}
+.legal-hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background-image:
+    linear-gradient(rgba(14,14,14,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14,14,14,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 30% 0%, black 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 80% 70% at 30% 0%, black 40%, transparent 100%);
+  pointer-events: none;
+}
+.legal-hero::after {
+  content: '';
+  position: absolute; top: -160px; right: -140px;
+  width: 460px; height: 460px;
+  background: radial-gradient(circle, rgba(2,101,220,0.045) 0%, transparent 70%);
+  pointer-events: none;
+}
+.legal-hero-inner { max-width: 780px; position: relative; z-index: 1; }
+.legal-hero h1 {
+  font-size: clamp(32px, 4vw, 52px); font-weight: 900;
+  letter-spacing: -1.5px; line-height: 1.08;
+  margin-bottom: 16px;
+}
+.legal-hero h1 em { font-style: normal; color: var(--red); }
+.legal-hero .section-subtitle { max-width: 620px; margin-top: 12px; }
+.legal-hero-meta {
+  display: flex; gap: 28px; align-items: center; flex-wrap: wrap;
+  margin-top: 24px;
+}
+.legal-hero-meta span {
+  font-size: 12px; color: var(--text-3); display: flex; align-items: center; gap: 6px;
+}
+.legal-hero-meta span strong { color: var(--text-2); font-weight: 600; }
+
+/* ── PESTAÑAS ── */
+.legal-tabs {
+  position: sticky; top: 60px; z-index: 90;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.legal-tabs-inner {
+  display: flex; gap: 0;
+  max-width: 1160px; margin: 0 auto; padding: 0 48px;
+}
+.tab-btn {
+  padding: 16px 24px; font-size: 13px; font-weight: 700;
+  color: var(--text-3); background: none; border: none; cursor: pointer;
+  border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap;
+  font-family: 'Source Sans 3', sans-serif;
+}
+.tab-btn:hover { color: var(--text-2); }
+.tab-btn.active { color: var(--text); border-bottom-color: var(--red); }
+
+/* ── REPARTO DE LA PÁGINA ── */
+.legal-layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 0;
+  max-width: 1160px; margin: 0 auto; padding: 0 48px;
+  min-height: 80vh;
+}
+.legal-sidebar {
+  padding: 40px 0;
+  border-right: 1px solid var(--border);
+  position: sticky; top: 120px; height: fit-content;
+  align-self: start;
+}
+.sidebar-section-label {
+  font-size: 9px; font-weight: 800; letter-spacing: 1.8px; text-transform: uppercase;
+  color: var(--text-3); margin-bottom: 10px; padding: 0 0 0 2px;
+}
+.sidebar-nav { list-style: none; margin-bottom: 32px; }
+.sidebar-nav li a {
+  display: block; font-size: 12px; color: var(--text-3); text-decoration: none;
+  padding: 6px 12px; border-left: 2px solid transparent; transition: all 0.15s;
+  line-height: 1.4;
+}
+.sidebar-nav li a:hover { color: var(--text-2); border-left-color: var(--border-light); }
+.sidebar-nav li a.active { color: var(--text); border-left-color: var(--red); background: var(--red-dim); border-radius: 0 4px 4px 0; }
+
+/* ── COLUMNA DE TEXTO ── */
+.legal-content { padding: 48px 0 80px 56px; }
+.legal-section { display: none; }
+.legal-section.active { display: block; }
+
+/* ── EL ARTÍCULO ── */
+.article-header { margin-bottom: 40px; }
+.article-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 9px; font-weight: 800; letter-spacing: 1.8px; text-transform: uppercase;
+  color: var(--red); margin-bottom: 14px;
+}
+.article-header h2 {
+  font-size: 28px; font-weight: 900; letter-spacing: -0.8px; line-height: 1.2;
+  margin-bottom: 10px;
+}
+.article-header p { font-size: 15px; color: var(--text-2); line-height: 1.7; max-width: 640px; }
+
+/* Los 30 apartados son la diana de los 60 enlaces del índice y de la barra
+   lateral. Encima de ellos hay dos cosas pegadas: la barra (60 px) y las
+   pestañas (unos 50). Sin este margen de salto, un «#t5» dejaba el titular
+   del apartado 109 px por encima del borde: se caía detrás de las pestañas y
+   el lector aterrizaba a mitad de un párrafo sin saber en qué cláusula está.
+   Los 120 px no son un número nuevo: son los mismos que ya usa `showTab` al
+   subir el texto y los que coloca la barra lateral. */
+.article-block { margin-bottom: 40px; padding-top: 32px; border-top: 1px solid var(--border); scroll-margin-top: 120px; }
+.article-block:first-of-type { border-top: none; padding-top: 0; }
+
+.article-block h3 {
+  font-size: 16px; font-weight: 800; letter-spacing: -0.3px;
+  margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+  color: var(--text);
+}
+.article-block h3 .num {
+  width: 22px; height: 22px; background: var(--red-dim); border: 1px solid rgba(235,16,0,0.2);
+  border-radius: 4px; display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 900; color: var(--red); flex-shrink: 0; letter-spacing: 0;
+}
+
+.article-block p {
+  font-size: 14px; color: var(--text-2); line-height: 1.75; margin-bottom: 14px;
+}
+.article-block p:last-child { margin-bottom: 0; }
+
+.article-block ul, .article-block ol {
+  margin: 10px 0 14px 0; padding-left: 20px;
+}
+.article-block li {
+  font-size: 14px; color: var(--text-2); line-height: 1.7; margin-bottom: 6px;
+}
+.article-block li strong { color: var(--text); font-weight: 700; }
+
+.article-block a { color: var(--red-ink); text-decoration: none; }
+.article-block a:hover { text-decoration: underline; }
+
+/* ── AVISOS ── */
+.info-box {
+  padding: 16px 20px; border-radius: 8px; margin: 16px 0;
+  font-size: 13px; line-height: 1.6; display: flex; gap: 12px;
+  color: var(--text-2);
+}
+.info-box.blue { background: rgba(2,87,191,0.06); border: 1px solid rgba(2,87,191,0.20); }
+.info-box.green { background: rgba(15,107,78,0.06); border: 1px solid rgba(15,107,78,0.20); }
+.info-box.yellow { background: rgba(180,83,9,0.06); border: 1px solid rgba(180,83,9,0.22); }
+.info-box-icon { flex-shrink: 0; margin-top: 1px; }
+.info-box.blue .info-box-icon { color: var(--accent); }
+.info-box.green .info-box-icon { color: var(--success); }
+.info-box.yellow .info-box-icon { color: var(--warning); }
+
+/* ── TABLAS ── */
+.table-scroll { width: 100%; overflow-x: auto; margin: 16px 0; }
+.data-table {
+  width: 100%; min-width: 480px; border-collapse: collapse; font-size: 13px;
+}
+.data-table th {
+  text-align: left; padding: 10px 14px;
+  background: var(--dark-3); border: 1px solid var(--border);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+  color: var(--text-3);
+}
+.data-table td {
+  padding: 10px 14px; border: 1px solid var(--border);
+  color: var(--text-2); line-height: 1.5; vertical-align: top;
+}
+.data-table tr:hover td { background: rgba(14,14,14,0.03); }
+.data-table code {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 12px; color: var(--text);
+  background: var(--dark-3); border: 1px solid var(--border);
+  border-radius: 4px; padding: 1px 6px;
+}
+
+/* ── FICHAS DE COOKIES ── */
+.cookie-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; margin: 16px 0; }
+.cookie-card {
+  padding: 16px 18px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--dark-2);
+  transition: background 0.2s, border-color 0.2s;
+}
+.cookie-card:hover { background: var(--dark-3); border-color: var(--border-light); }
+.cookie-card-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px;
+}
+.cookie-card-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.cookie-card-tag {
+  font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 20px; white-space: nowrap;
+}
+.tag-required { background: rgba(15,107,78,0.12); color: var(--success); }
+.tag-functional { background: rgba(2,87,191,0.10); color: var(--accent); }
+.tag-analytics { background: rgba(180,83,9,0.12); color: var(--warning); }
+.tag-marketing { background: rgba(107,39,168,0.10); color: var(--purple); }
+.cookie-card p { font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+/* ── ÍNDICE ── */
+.toc-box {
+  background: var(--dark-2); border: 1px solid var(--border); border-radius: 8px;
+  padding: 24px 28px; margin-bottom: 40px;
+}
+.toc-box-title {
+  font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-3); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+}
+.toc-list { list-style: none; columns: 2; column-gap: 24px; }
+.toc-list li { margin-bottom: 6px; break-inside: avoid; }
+.toc-list li a {
+  font-size: 13px; color: var(--text-2); text-decoration: none;
+  display: flex; align-items: center; gap: 8px; transition: color 0.15s;
+}
+.toc-list li a:hover { color: var(--text); }
+.toc-list li a .toc-num { color: var(--red); font-weight: 700; font-size: 11px; min-width: 18px; }
+
+/* ── FICHA DE CONTACTO ── */
+.contact-card {
+  background: var(--dark-2); border: 1px solid var(--border); border-radius: 8px;
+  padding: 24px 28px; margin-top: 24px;
+  display: flex; align-items: flex-start; gap: 20px;
+}
+.contact-icon {
+  width: 40px; height: 40px; background: var(--red-dim); border: 1px solid rgba(235,16,0,0.2);
+  border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.contact-card h4 { font-size: 14px; font-weight: 800; margin-bottom: 4px; }
+.contact-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+.contact-card a { color: var(--red-ink); text-decoration: none; }
+.contact-card a:hover { text-decoration: underline; }
+
+/* ── FECHA DE LA ÚLTIMA REVISIÓN ── */
+.update-banner {
+  background: var(--dark-3); border: 1px solid var(--border); border-radius: 8px;
+  padding: 12px 18px; font-size: 12px; color: var(--text-3);
+  display: flex; align-items: center; gap: 10px; margin-bottom: 36px;
+}
+.update-banner strong { color: var(--text-2); }
+
+/* ── PANTALLAS ESTRECHAS ── */
+@media (max-width: 900px) {
+  .legal-layout { grid-template-columns: minmax(0, 1fr); padding: 0 20px; }
+  /* El guion escribe `display:block` en la barra lateral al cambiar de
+     pestaña, y un estilo en línea gana a esta regla: por eso el !important.
+     Sin él, la barra lateral reaparece en el móvil en cuanto tocas una
+     pestaña, que es justo lo que esta media query quiere evitar. */
+  .legal-sidebar { display: none !important; }
+  .legal-content { padding: 32px 0 60px; }
+  .cookie-grid { grid-template-columns: minmax(0, 1fr); }
+  .toc-list { columns: 1; }
+  .legal-tabs-inner { padding: 0 20px; overflow-x: auto; }
+  .toc-box, .contact-card { padding: 20px 22px; }
+}
+@media (max-width: 560px) {
+  .legal-hero { padding: 48px 0 40px; }
+  .legal-hero-meta { gap: 8px 20px; }
+  .tab-btn { padding: 14px 16px; }
+  .contact-card { flex-direction: column; gap: 14px; }
+  .article-header h2 { font-size: 24px; }
+}
+
+/* ── LAS TRES PESTAÑAS EN UN TELÉFONO ───────────────────────────────────
+   Las tres van en fila, con `white-space: nowrap`, y a 375 px piden 531:
+   «Política de Cookies» se salía 156 px. Y como el cuerpo lleva `overflow-x`
+   oculto, lo que sobra no se arrastra, SE CORTA: la tercera pestaña no se veía
+   y no había manera de abrirla desde un móvil. Ahora la fila se desplaza a
+   dedo. La barra de desplazamiento se esconde porque la fila ya se ve cortada
+   por la mitad de una pestaña, que es la pista de que hay más a la derecha. */
+@media (max-width: 640px) {
+  .legal-tabs-inner {
+    padding: 0 20px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .legal-tabs-inner::-webkit-scrollbar { display: none; }
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ── BARRA Y PIE SIEMPRE EN OSCURO ─────────────────────────────────────── */
+nav, footer {
+  --dark: #0E0E0E;
+  --dark-2: #141414;
+  --dark-3: #1B1B1B;
+  --dark-4: #222222;
+  --border: rgba(255,255,255,0.08);
+  --border-light: rgba(255,255,255,0.12);
+  --text: #F0F0F0;
+  --text-2: rgba(240,240,240,0.65);
+  --text-3: rgba(240,240,240,0.35);
+}
+nav { background: rgba(14,14,14,0.85); }
+footer { background: #0E0E0E; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ BARRA ══════════ -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark"></div>
+    <span class="nav-logo-text">Clèrigo <small>XGRC</small></span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html#solution">Módulos</a>
+    <a href="index.html#platform">Plataforma</a>
+    <a href="index.html#how">Cómo funciona</a>
+    <a href="marcos.html">Marcos</a>
+    <a href="index.html#testimonials">Clientes</a>
+  </div>
+  <div class="nav-cta">
+    <a href="https://app.clerigo.io" class="btn-ghost">login</a>
+    <a href="precios.html" class="btn-ghost">Planes</a>
+    <a href="contacto.html" class="btn-primary">
+       Contacto
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</nav>
+
+<main class="pagina">
+
+
+
+
+
+<!-- ══════════ PORTADA DEL DOCUMENTO ══════════ -->
+<div class="legal-hero">
+  <div class="container">
+    <div class="legal-hero-inner">
+      <div class="label-chip">
+        <svg width="10" height="10" fill="none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/></svg>
+        Documentos Legales
+      </div>
+      <h1>Términos, Privacidad<br>y <em>Política de Cookies</em></h1>
+      <p class="section-subtitle">
+        En Clèrigo estamos comprometidos con la transparencia. Estos documentos explican cómo operamos, qué datos recopilamos, cómo los protegemos y cuáles son tus derechos como usuario.
+      </p>
+      <div class="legal-hero-meta">
+        <span><strong>Versión:</strong> 2.1</span>
+        <span><strong>Vigente desde:</strong> 1 de enero de 2026</span>
+        <span><strong>Última revisión:</strong> 11 de marzo de 2026</span>
+        <span><strong>Jurisdicción:</strong> República Dominicana</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ PESTAÑAS ══════════ -->
+<div class="legal-tabs">
+  <div class="legal-tabs-inner">
+    <button class="tab-btn active" onclick="showTab('terms', this)">Términos y Condiciones</button>
+    <button class="tab-btn" onclick="showTab('privacy', this)">Política de Privacidad</button>
+    <button class="tab-btn" onclick="showTab('cookies', this)">Política de Cookies</button>
+  </div>
+</div>
+
+<!-- ══════════ CUERPO ══════════ -->
+<div style="background:var(--dark)">
+<div class="legal-layout">
+
+  <!-- BARRA LATERAL (se oculta en pantallas estrechas) -->
+  <aside class="legal-sidebar" id="sidebar-terms">
+    <div class="sidebar-section-label">Términos de Uso</div>
+    <ul class="sidebar-nav">
+      <li><a href="#t1" class="active">1. Aceptación</a></li>
+      <li><a href="#t2">2. Descripción del servicio</a></li>
+      <li><a href="#t3">3. Cuentas y acceso</a></li>
+      <li><a href="#t4">4. Uso aceptable</a></li>
+      <li><a href="#t5">5. Propiedad intelectual</a></li>
+      <li><a href="#t6">6. Datos del cliente</a></li>
+      <li><a href="#t7">7. Confidencialidad</a></li>
+      <li><a href="#t8">8. Facturación y pagos</a></li>
+      <li><a href="#t9">9. Suspensión y terminación</a></li>
+      <li><a href="#t10">10. Garantías y exclusiones</a></li>
+      <li><a href="#t11">11. Limitación de responsabilidad</a></li>
+      <li><a href="#t12">12. Ley aplicable</a></li>
+      <li><a href="#t13">13. Contacto legal</a></li>
+    </ul>
+  </aside>
+
+  <aside class="legal-sidebar" id="sidebar-privacy" style="display:none">
+    <div class="sidebar-section-label">Privacidad</div>
+    <ul class="sidebar-nav">
+      <li><a href="#p1">1. Responsable del tratamiento</a></li>
+      <li><a href="#p2">2. Qué datos recopilamos</a></li>
+      <li><a href="#p3">3. Finalidades del tratamiento</a></li>
+      <li><a href="#p4">4. Base legal</a></li>
+      <li><a href="#p5">5. Retención de datos</a></li>
+      <li><a href="#p6">6. Transferencias internacionales</a></li>
+      <li><a href="#p7">7. Tus derechos ARCO</a></li>
+      <li><a href="#p8">8. Seguridad</a></li>
+      <li><a href="#p9">9. Menores</a></li>
+      <li><a href="#p10">10. Cambios a esta política</a></li>
+      <li><a href="#p11">11. Contacto DPO</a></li>
+    </ul>
+  </aside>
+
+  <aside class="legal-sidebar" id="sidebar-cookies" style="display:none">
+    <div class="sidebar-section-label">Cookies</div>
+    <ul class="sidebar-nav">
+      <li><a href="#c1">1. Qué son las cookies</a></li>
+      <li><a href="#c2">2. Cookies que usamos</a></li>
+      <li><a href="#c3">3. Cookies de terceros</a></li>
+      <li><a href="#c4">4. Gestión de preferencias</a></li>
+      <li><a href="#c5">5. Do Not Track</a></li>
+      <li><a href="#c6">6. Actualizaciones</a></li>
+    </ul>
+  </aside>
+
+  <!-- ════════ TÉRMINOS ════════ -->
+  <div class="legal-content">
+    <section class="legal-section active" id="section-terms">
+
+      <div class="article-header">
+        <div class="article-tag">
+          <svg width="10" height="10" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2"/><polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2"/></svg>
+          Términos y Condiciones de Uso
+        </div>
+        <h2>Contrato de servicio<br>entre Clèrigo y el Cliente</h2>
+        <p>Este acuerdo regula el acceso y uso de la plataforma Clèrigo y todos sus módulos, APIs, integraciones y servicios relacionados operados por Clèrigo</p>
+      </div>
+
+      <div class="update-banner">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Última actualización: <strong>11 de marzo de 2026</strong>. Al continuar utilizando el servicio confirmas tu aceptación de estos términos.
+      </div>
+
+      <div class="toc-box">
+        <div class="toc-box-title">
+          <svg width="12" height="12" fill="none" viewBox="0 0 24 24"><path d="M3 7h18M3 12h12M3 17h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Índice de contenidos
+        </div>
+        <ul class="toc-list">
+          <li><a href="#t1"><span class="toc-num">01</span> Aceptación de los términos</a></li>
+          <li><a href="#t2"><span class="toc-num">02</span> Descripción del servicio</a></li>
+          <li><a href="#t3"><span class="toc-num">03</span> Registro y cuentas</a></li>
+          <li><a href="#t4"><span class="toc-num">04</span> Uso aceptable</a></li>
+          <li><a href="#t5"><span class="toc-num">05</span> Propiedad intelectual</a></li>
+          <li><a href="#t6"><span class="toc-num">06</span> Datos del cliente</a></li>
+          <li><a href="#t7"><span class="toc-num">07</span> Confidencialidad</a></li>
+          <li><a href="#t8"><span class="toc-num">08</span> Facturación y pagos</a></li>
+          <li><a href="#t9"><span class="toc-num">09</span> Suspensión y terminación</a></li>
+          <li><a href="#t10"><span class="toc-num">10</span> Garantías y exclusiones</a></li>
+          <li><a href="#t11"><span class="toc-num">11</span> Limitación de responsabilidad</a></li>
+          <li><a href="#t12"><span class="toc-num">12</span> Ley aplicable y disputas</a></li>
+          <li><a href="#t13"><span class="toc-num">13</span> Contacto legal</a></li>
+        </ul>
+      </div>
+
+      <div class="article-block" id="t1">
+        <h3><span class="num">01</span> Aceptación de los Términos</h3>
+        <p>Al registrarte, acceder o utilizar la plataforma Clèrigo ("el Servicio"), operada por <strong>Clèrigo</strong> ("Clèrigo", "nosotros", "la Compañía"), declaras que has leído, comprendido y aceptas estar vinculado por estos Términos y Condiciones de Uso, así como por nuestra Política de Privacidad y Política de Cookies.</p>
+        <p>Si accedes al Servicio en nombre de una organización, declaras que tienes la autoridad para vincular a dicha organización con estos Términos. En tal caso, "tú" y "el Cliente" se refieren a esa organización.</p>
+        <div class="info-box blue">
+          <div class="info-box-icon">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <span>Si no aceptas estos Términos, no podrás utilizar el Servicio. El uso continuado del Servicio después de la publicación de cambios constituye la aceptación de dichos cambios.</span>
+        </div>
+      </div>
+
+      <div class="article-block" id="t2">
+        <h3><span class="num">02</span> Descripción del Servicio</h3>
+        <p>Clèrigo es una plataforma SaaS (Software as a Service) de Gobernanza, Riesgo y Cumplimiento que proporciona, entre otros, los siguientes módulos y capacidades:</p>
+        <ul>
+          <li><strong>Gestión de Riesgos:</strong> identificación, evaluación, tratamiento y monitoreo de riesgos empresariales.</li>
+          <li><strong>Cumplimiento Regulatorio:</strong> gestión de marcos normativos, políticas, circulares y calendarios regulatorios.</li>
+          <li><strong>Ciberseguridad:</strong> controles técnicos, gestión de vulnerabilidades e incidentes correlacionados con el contexto GRC.</li>
+          <li><strong>Auditoría y Control Interno:</strong> planificación, ejecución y seguimiento de auditorías con recopilación de evidencias.</li>
+          <li><strong>Gobierno Corporativo:</strong> gestión de comités, actas y estructura de gobernanza institucional.</li>
+          <li><strong>Privacidad y Protección de Datos:</strong> gestión del ciclo de vida de datos personales bajo GDPR y Ley 172-13.</li>
+          <li><strong>Gestor Documental, Asistente de IA y API de Acceso:</strong> capacidades complementarias incluidas en todos los planes.</li>
+        </ul>
+        <p>Clèrigo se reserva el derecho de modificar, agregar o discontinuar funcionalidades del Servicio en cualquier momento, notificando a los Clientes con al menos 30 días de anticipación cuando el cambio sea material.</p>
+      </div>
+
+      <div class="article-block" id="t3">
+        <h3><span class="num">03</span> Registro, Cuentas y Acceso</h3>
+        <p>Para utilizar el Servicio deberás crear una cuenta proporcionando información veraz, completa y actualizada. El Cliente es responsable de:</p>
+        <ul>
+          <li>Mantener la confidencialidad de las credenciales de acceso de todos los usuarios autorizados.</li>
+          <li>Todas las actividades que ocurran bajo las cuentas asignadas a su organización.</li>
+          <li>Notificar a Clèrigo de inmediato ante cualquier uso no autorizado o brecha de seguridad.</li>
+          <li>Asegurar que el número de usuarios activos no exceda el volumen de licencias contratadas.</li>
+        </ul>
+        <p>El acceso de cada usuario se otorga de forma personal e intransferible. Está prohibido compartir credenciales entre múltiples personas bajo una misma cuenta de usuario.</p>
+      </div>
+
+      <div class="article-block" id="t4">
+        <h3><span class="num">04</span> Política de Uso Aceptable</h3>
+        <p>El Cliente y sus usuarios se comprometen a utilizar el Servicio únicamente para fines legales y conforme a estos Términos. Está expresamente prohibido:</p>
+        <ul>
+          <li>Realizar ingeniería inversa, descompilar o intentar extraer el código fuente de la plataforma.</li>
+          <li>Utilizar el Servicio para almacenar o transmitir contenido ilegal, difamatorio, malicioso o que infrinja derechos de terceros.</li>
+          <li>Realizar pruebas de penetración, escaneos de vulnerabilidades o ataques de denegación de servicio sin autorización escrita previa de Clèrigo.</li>
+          <li>Revender, sublicenciar o transferir el acceso al Servicio a terceros sin consentimiento expreso.</li>
+          <li>Utilizar scrapers, bots o automatizaciones que sobrecargen la infraestructura del Servicio.</li>
+          <li>Cargar datos personales de terceros sin contar con la base legal adecuada para su tratamiento.</li>
+        </ul>
+        <div class="info-box yellow">
+          <div class="info-box-icon">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="currentColor" stroke-width="1.8"/><path d="M12 9v4M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <span>El incumplimiento de esta política puede resultar en la suspensión inmediata del acceso sin derecho a reembolso, y en la interposición de acciones legales cuando corresponda.</span>
+        </div>
+      </div>
+
+      <div class="article-block" id="t5">
+        <h3><span class="num">05</span> Propiedad Intelectual</h3>
+        <p>Toda la propiedad intelectual asociada al Servicio, incluyendo pero no limitándose a el software, código fuente, algoritmos, diseño de interfaz, marca, logotipos, documentación y contenido propio, es propiedad exclusiva de Clèrigo y se encuentra protegida por las leyes de propiedad intelectual aplicables.</p>
+        <p>Clèrigo te otorga una licencia limitada, no exclusiva, no transferible y revocable para acceder y utilizar el Servicio durante el período de suscripción vigente, exclusivamente para los fines comerciales internos del Cliente.</p>
+        <p>El Cliente conserva todos los derechos sobre sus propios datos, documentos y contenido cargado en la plataforma ("Datos del Cliente"). El Cliente otorga a Clèrigo una licencia limitada para procesar dichos datos exclusivamente con el fin de prestar el Servicio.</p>
+      </div>
+
+      <div class="article-block" id="t6">
+        <h3><span class="num">06</span> Datos del Cliente y Seguridad</h3>
+        <p>Clèrigo trata los Datos del Cliente como información confidencial y solo los procesa según las instrucciones del Cliente y lo establecido en nuestra Política de Privacidad. En particular:</p>
+        <ul>
+          <li>Los datos se almacenan con cifrado <strong>AES-256</strong> en reposo y <strong>TLS 1.3</strong> en tránsito.</li>
+          <li>Arquemir no vende ni comercializa los Datos del Cliente con terceros.</li>
+          <li>Los datos se alojan en centros de datos ubicados en la región acordada con el Cliente.</li>
+          <li>En caso de incidente de seguridad que afecte los Datos del Cliente, Clèrigo notificará al Cliente dentro de las 72 horas siguientes al descubrimiento, conforme a la normativa aplicable.</li>
+        </ul>
+        <p>El Cliente es responsable de la legalidad de los datos que carga en la plataforma y de obtener los consentimientos necesarios cuando corresponda.</p>
+      </div>
+
+      <div class="article-block" id="t7">
+        <h3><span class="num">07</span> Confidencialidad</h3>
+        <p>Ambas partes acuerdan mantener la confidencialidad de toda información no pública que reciban en el marco de este acuerdo ("Información Confidencial"), incluyendo datos comerciales, técnicos, financieros o de cualquier otra naturaleza.</p>
+        <p>Esta obligación no aplica a información que: (a) sea de dominio público sin incumplimiento de este acuerdo; (b) ya fuera conocida por la parte receptora antes de su divulgación; (c) sea recibida legítimamente de un tercero; o (d) deba ser divulgada por mandato legal o judicial.</p>
+        <p>La obligación de confidencialidad permanece vigente durante 3 años después de la terminación del contrato de servicio.</p>
+      </div>
+
+      <div class="article-block" id="t8">
+        <h3><span class="num">08</span> Facturación, Pagos y Renovaciones</h3>
+        <p>El Servicio se factura según el plan seleccionado al momento del registro. Los precios vigentes se publican en <a href="precios.html">clerigo.io/precios</a> y pueden actualizarse con 30 días de aviso previo.</p>
+        <ul>
+          <li><strong>Planes anuales:</strong> se facturan por adelantado al inicio de cada período anual.</li>
+          <li><strong>Planes mensuales:</strong> se facturan cada mes en la fecha de suscripción, con un recargo del 20% respecto al precio anual equivalente.</li>
+          <li><strong>Usuarios adicionales:</strong> se facturan a $20 USD por usuario por mes, prorrateados según la fecha de activación.</li>
+          <li><strong>Renovación automática:</strong> los planes se renuevan automáticamente al vencer, salvo que el Cliente notifique la cancelación con al menos 15 días de anticipación.</li>
+        </ul>
+        <p>Los pagos vencidos pueden resultar en la suspensión del Servicio tras un período de gracia de 10 días. Clèrigo no se responsabiliza por pérdidas derivadas de suspensiones por falta de pago.</p>
+        <div class="info-box green">
+          <div class="info-box-icon">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <span>Todos los planes incluyen un período de prueba gratuita de 14 días sin requerir tarjeta de crédito. Al finalizar la prueba, el Servicio se suspende automáticamente hasta que el Cliente active un plan de pago.</span>
+        </div>
+      </div>
+
+      <div class="article-block" id="t9">
+        <h3><span class="num">09</span> Suspensión y Terminación</h3>
+        <p>Cualquiera de las partes puede terminar el contrato de servicio con 30 días de aviso escrito. Clèrigo puede suspender o terminar el acceso de forma inmediata y sin previo aviso cuando:</p>
+        <ul>
+          <li>El Cliente incumpla estos Términos de forma material.</li>
+          <li>Se detecte uso fraudulento, actividad ilegal o amenaza activa de seguridad.</li>
+          <li>Un pago permanezca impago más de 30 días después de la fecha de vencimiento.</li>
+          <li>Sea requerido por autoridad competente mediante resolución judicial o administrativa.</li>
+        </ul>
+        <p>Tras la terminación, el Cliente tendrá acceso de solo lectura a sus datos por un período de 30 días para facilitar la exportación. Transcurrido este plazo, los datos podrán ser eliminados de forma permanente. El Cliente puede solicitar la eliminación anticipada en cualquier momento.</p>
+      </div>
+
+      <div class="article-block" id="t10">
+        <h3><span class="num">10</span> Garantías y Exclusiones</h3>
+        <p>Clèrigo garantiza que el Servicio funcionará de manera sustancialmente conforme a la documentación publicada y mantendrá un nivel de disponibilidad del 99.5% mensual (SLA), excluyendo mantenimientos programados notificados con 48 horas de anticipación.</p>
+        <p>Salvo lo expresamente establecido en este acuerdo, el Servicio se proporciona "tal cual" y "según disponibilidad". Clèrigo no garantiza que el Servicio sea ininterrumpido, libre de errores ni que satisfaga todos los requisitos específicos del Cliente.</p>
+        <p>En particular, Clèrigo no garantiza resultados específicos de cumplimiento regulatorio, aprobaciones de auditoría o ausencia de sanciones derivadas del uso o no uso de la plataforma. El Servicio es una herramienta de apoyo y no reemplaza el asesoramiento jurídico o regulatorio profesional.</p>
+      </div>
+
+      <div class="article-block" id="t11">
+        <h3><span class="num">11</span> Limitación de Responsabilidad</h3>
+        <p>En la máxima medida permitida por la ley aplicable, la responsabilidad total de Clèrigo por cualquier reclamación derivada de este acuerdo no excederá el importe pagado por el Cliente en los 12 meses previos al evento que da origen a la reclamación.</p>
+        <p>Clèrigo no será responsable en ningún caso por: (a) pérdida de beneficios o ingresos; (b) pérdida de datos cuando el Cliente no haya realizado copias de seguridad; (c) daños indirectos, incidentales, especiales o consecuentes; o (d) daños derivados del incumplimiento regulatorio del Cliente.</p>
+        <p>Ninguna cláusula de este acuerdo excluye la responsabilidad por dolo, fraude, muerte o daños personales causados por negligencia grave, en la medida en que la ley lo prohíba.</p>
+      </div>
+
+      <div class="article-block" id="t12">
+        <h3><span class="num">12</span> Ley Aplicable y Resolución de Disputas</h3>
+        <p>Estos Términos se rigen por las leyes de la <strong>República Dominicana</strong>, en particular la Ley 172-13 sobre Protección de Datos Personales, la Ley 20-00 sobre Propiedad Industrial y el Código Civil dominicano, sin perjuicio de las disposiciones de derecho internacional privado que pudieran resultar aplicables.</p>
+        <p>Cualquier disputa que surja de o en relación con estos Términos será sometida en primer lugar a un proceso de mediación amigable de 30 días. De no resolverse, las partes se someten a la jurisdicción exclusiva de los Tribunales de Primera Instancia del Distrito Nacional de Santo Domingo, República Dominicana.</p>
+        <p>Para Clientes ubicados en la Unión Europea, los derechos bajo el RGPD se mantienen íntegros y prevalecen sobre cualquier disposición contraria de este acuerdo.</p>
+      </div>
+
+      <div class="article-block" id="t13">
+        <h3><span class="num">13</span> Contacto Legal</h3>
+        <p>Para notificaciones legales, reclamaciones o consultas relacionadas con estos Términos, contacta a nuestro equipo legal:</p>
+        <div class="contact-card">
+          <div class="contact-icon">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#EB1000" stroke-width="1.8"/></svg>
+          </div>
+          <div>
+            <h4>Departamento Legal — Clèrigo</h4>
+            <p>
+              <strong>Email:</strong> <a href="mailto:legal@clerigo.io">legal@clerigo.io</a><br>
+              <strong>Dirección:</strong> Santo Domingo, República Dominicana<br>
+              <strong>Tiempo de respuesta:</strong> hasta 5 días hábiles para consultas generales; 72 horas para notificaciones de incidentes de seguridad.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ════════ PRIVACIDAD ════════ -->
+    <section class="legal-section" id="section-privacy">
+
+      <div class="article-header">
+        <div class="article-tag">
+          <svg width="10" height="10" fill="none" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Política de Privacidad
+        </div>
+        <h2>Cómo tratamos tus datos<br>personales con responsabilidad</h2>
+        <p>Esta política describe qué datos recopilamos, con qué finalidad los tratamos, cuánto tiempo los conservamos y cuáles son tus derechos. Cumplimos con la Ley 172-13 (RD), el RGPD (UE) y el CCPA (California, EE.UU.) según aplique.</p>
+      </div>
+
+      <div class="update-banner">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Última actualización: <strong>11 de marzo de 2026</strong>. Los cambios materiales te serán notificados por email con al menos 30 días de anticipación.
+      </div>
+
+      <div class="article-block" id="p1">
+        <h3><span class="num">01</span> Responsable del Tratamiento</h3>
+        <p>El responsable del tratamiento de tus datos personales es <strong>Clèrigo</strong>, con domicilio en Santo Domingo, República Dominicana. Puedes contactar a nuestro Delegado de Protección de Datos (DPO) en <a href="mailto:privacy@clerigo.io">privacy@clerigo.io</a>.</p>
+        <p>Cuando el Servicio es utilizado por una organización cliente, dicha organización actúa como responsable del tratamiento de los datos de sus empleados y usuarios finales, y Clèrigo actúa como encargado del tratamiento bajo las instrucciones del cliente.</p>
+      </div>
+
+      <div class="article-block" id="p2">
+        <h3><span class="num">02</span> Qué Datos Recopilamos</h3>
+        <p>Dependiendo de cómo interactúes con el Servicio, podemos recopilar las siguientes categorías de datos:</p>
+        <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Categoría</th>
+              <th>Ejemplos</th>
+              <th>Origen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Datos de identidad</strong></td>
+              <td>Nombre, apellido, cargo, empresa</td>
+              <td>Proporcionados por el usuario al registrarse</td>
+            </tr>
+            <tr>
+              <td><strong>Datos de contacto</strong></td>
+              <td>Email corporativo, teléfono, país</td>
+              <td>Proporcionados por el usuario</td>
+            </tr>
+            <tr>
+              <td><strong>Datos de autenticación</strong></td>
+              <td>Hash de contraseña, tokens MFA, sesiones</td>
+              <td>Generados automáticamente al crear la cuenta</td>
+            </tr>
+            <tr>
+              <td><strong>Datos de uso</strong></td>
+              <td>Módulos accedidos, acciones realizadas, frecuencia de uso</td>
+              <td>Recopilados automáticamente</td>
+            </tr>
+            <tr>
+              <td><strong>Datos técnicos</strong></td>
+              <td>IP, navegador, sistema operativo, identificadores de dispositivo</td>
+              <td>Recopilados automáticamente</td>
+            </tr>
+            <tr>
+              <td><strong>Datos de pago</strong></td>
+              <td>Últimos 4 dígitos de tarjeta, método de pago (sin número completo)</td>
+              <td>Procesados por pasarela de pago certificada PCI-DSS</td>
+            </tr>
+            <tr>
+              <td><strong>Datos del Cliente</strong></td>
+              <td>Documentos, riesgos, hallazgos, datos GRC cargados por el Cliente</td>
+              <td>Cargados por el Cliente — tratados como datos confidenciales</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <p>No recopilamos datos de categorías especiales (salud, origen racial, creencias religiosas, orientación sexual) para la operación del Servicio, salvo que el propio Cliente los cargue como parte de sus Datos del Cliente.</p>
+      </div>
+
+      <div class="article-block" id="p3">
+        <h3><span class="num">03</span> Finalidades del Tratamiento</h3>
+        <p>Utilizamos tus datos para las siguientes finalidades:</p>
+        <ul>
+          <li><strong>Prestación del Servicio:</strong> autenticación, gestión de cuentas y provisión de funcionalidades contratadas.</li>
+          <li><strong>Comunicaciones de servicio:</strong> notificaciones de sistema, alertas de seguridad, cambios en los Términos y actualizaciones de facturación.</li>
+          <li><strong>Soporte técnico:</strong> diagnóstico de incidencias y asistencia al usuario.</li>
+          <li><strong>Mejora del Servicio:</strong> análisis agregado y anonimizado de patrones de uso para el desarrollo de nuevas funcionalidades.</li>
+          <li><strong>Seguridad:</strong> detección de accesos no autorizados, prevención de fraude y auditoría de seguridad interna.</li>
+          <li><strong>Cumplimiento legal:</strong> respuesta a requerimientos de autoridades competentes y cumplimiento de obligaciones fiscales.</li>
+          <li><strong>Marketing (con consentimiento):</strong> envío de contenido informativo, webinars y actualizaciones del producto. Puedes retirar este consentimiento en cualquier momento.</li>
+        </ul>
+      </div>
+
+      <div class="article-block" id="p4">
+        <h3><span class="num">04</span> Base Legal del Tratamiento</h3>
+        <p>Para cada finalidad, el tratamiento se basa en alguna de las siguientes bases legales:</p>
+        <ul>
+          <li><strong>Ejecución contractual:</strong> datos necesarios para la prestación del Servicio contratado.</li>
+          <li><strong>Interés legítimo:</strong> seguridad del sistema, prevención de fraude y mejora del servicio (con evaluación de impacto realizada).</li>
+          <li><strong>Obligación legal:</strong> conservación de registros fiscales y respuesta a requerimientos de autoridades.</li>
+          <li><strong>Consentimiento explícito:</strong> comunicaciones de marketing y uso de cookies no esenciales.</li>
+        </ul>
+      </div>
+
+      <div class="article-block" id="p5">
+        <h3><span class="num">05</span> Retención de Datos</h3>
+        <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr><th>Tipo de datos</th><th>Período de retención</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Datos de cuenta activa</td><td>Durante la vigencia del contrato + 30 días de acceso post-terminación</td></tr>
+            <tr><td>Registros de auditoría y logs</td><td>2 años desde su generación</td></tr>
+            <tr><td>Datos de facturación</td><td>7 años (obligación fiscal dominicana)</td></tr>
+            <tr><td>Datos de soporte técnico</td><td>1 año desde el cierre del ticket</td></tr>
+            <tr><td>Comunicaciones de marketing</td><td>Hasta que retires el consentimiento</td></tr>
+            <tr><td>Datos anonimizados de uso</td><td>Indefinidamente (no son datos personales una vez anonimizados)</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="article-block" id="p6">
+        <h3><span class="num">06</span> Transferencias Internacionales de Datos</h3>
+        <p>Los datos pueden ser procesados por proveedores de infraestructura y servicios ubicados fuera de la República Dominicana. Cuando esto ocurre, nos aseguramos de que existan garantías adecuadas:</p>
+        <ul>
+          <li>Contratos de procesamiento de datos con cláusulas de protección equivalentes al estándar GDPR.</li>
+          <li>Proveedores certificados bajo marcos de privacidad reconocidos (ISO 27701, SOC 2 Type II).</li>
+          <li>Evaluaciones de impacto en transferencias (TIA) cuando los datos se transfieren a jurisdicciones con menor nivel de protección.</li>
+        </ul>
+        <p>Entre nuestros subprocesadores principales se incluyen proveedores de infraestructura cloud, pasarelas de pago y herramientas de análisis, todos debidamente auditados. La lista actualizada de subprocesadores está disponible bajo solicitud en <a href="mailto:privacy@clerigo.io">privacy@clerigo.io</a>.</p>
+      </div>
+
+      <div class="article-block" id="p7">
+        <h3><span class="num">07</span> Tus Derechos como Titular de Datos</h3>
+        <p>Tienes los siguientes derechos sobre tus datos personales, ejercibles en cualquier momento:</p>
+        <ul>
+          <li><strong>Acceso:</strong> solicitar confirmación y copia de los datos que tratamos sobre ti.</li>
+          <li><strong>Rectificación:</strong> corregir datos inexactos o incompletos.</li>
+          <li><strong>Cancelación / Supresión:</strong> solicitar la eliminación de tus datos cuando ya no sean necesarios o retires el consentimiento.</li>
+          <li><strong>Oposición:</strong> oponerte al tratamiento basado en interés legítimo o con fines de marketing.</li>
+          <li><strong>Portabilidad:</strong> recibir tus datos en formato estructurado y legible por máquina (JSON o CSV).</li>
+          <li><strong>Limitación:</strong> solicitar la restricción del tratamiento mientras se resuelve una reclamación.</li>
+          <li><strong>No ser objeto de decisiones automatizadas:</strong> solicitar revisión humana de decisiones tomadas exclusivamente de forma automatizada con efectos significativos.</li>
+        </ul>
+        <div class="info-box blue">
+          <div class="info-box-icon">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <span>Atendemos las solicitudes de ejercicio de derechos dentro de los 30 días hábiles siguientes a su recepción, con posibilidad de extensión a 60 días en casos complejos notificando al interesado. Puedes enviar tu solicitud a <a href="mailto:privacy@clerigo.io" style="color:var(--red-ink)">privacy@clerigo.io</a>.</span>
+        </div>
+      </div>
+
+      <div class="article-block" id="p8">
+        <h3><span class="num">08</span> Medidas de Seguridad</h3>
+        <p>Implementamos medidas técnicas y organizativas apropiadas para proteger tus datos, incluyendo:</p>
+        <ul>
+          <li>Cifrado <strong>AES-256</strong> para datos en reposo y <strong>TLS 1.3</strong> para datos en tránsito.</li>
+          <li>Autenticación multifactor (MFA) obligatoria para cuentas de administrador.</li>
+          <li>Control de acceso basado en roles (RBAC) con principio de mínimo privilegio.</li>
+          <li>Auditorías de seguridad independientes y pruebas de penetración semestrales.</li>
+          <li>Monitoreo continuo de amenazas con SIEM y respuesta a incidentes 24/7.</li>
+          <li>Plan de recuperación ante desastres con RTO de 4 horas y RPO de 1 hora.</li>
+          <li>Capacitación periódica en privacidad y seguridad para todo el personal de Clèrigo.</li>
+        </ul>
+      </div>
+
+      <div class="article-block" id="p9">
+        <h3><span class="num">09</span> Menores de Edad</h3>
+        <p>El Servicio está dirigido exclusivamente a organizaciones y profesionales mayores de 18 años. No recopilamos conscientemente datos personales de menores de edad. Si detectamos que hemos recopilado datos de un menor sin consentimiento parental, procederemos a su eliminación inmediata.</p>
+        <p>Si eres padre, madre o tutor y crees que un menor ha proporcionado datos a través de nuestro Servicio, contáctanos en <a href="mailto:privacy@clerigo.io">privacy@clerigo.io</a>.</p>
+      </div>
+
+      <div class="article-block" id="p10">
+        <h3><span class="num">10</span> Cambios a Esta Política</h3>
+        <p>Nos reservamos el derecho de actualizar esta Política de Privacidad para reflejar cambios en nuestras prácticas, en la legislación aplicable o en el Servicio. Cuando los cambios sean materiales, te notificaremos por email y/o mediante un aviso prominente en la plataforma con al menos 30 días de anticipación.</p>
+        <p>Te recomendamos revisar esta política periódicamente. La fecha de "última actualización" al inicio de este documento indica cuándo se realizaron los últimos cambios.</p>
+      </div>
+
+      <div class="article-block" id="p11">
+        <h3><span class="num">11</span> Contacto con el DPO</h3>
+        <p>Para ejercer tus derechos, plantear preguntas o presentar una queja relacionada con el tratamiento de tus datos personales:</p>
+        <div class="contact-card">
+          <div class="contact-icon">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" stroke="#EB1000" stroke-width="1.8"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="#EB1000" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <h4>Delegado de Protección de Datos (DPO)</h4>
+            <p>
+              <strong>Email:</strong> <a href="mailto:privacy@clerigo.io">privacy@clerigo.io</a><br>
+              <strong>Tiempo de respuesta:</strong> máximo 30 días hábiles.<br>
+              <strong>También puedes</strong> presentar una reclamación ante el Instituto Dominicano de las Telecomunicaciones (INDOTEL) o la autoridad de protección de datos competente en tu jurisdicción.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ════════ COOKIES ════════ -->
+    <section class="legal-section" id="section-cookies">
+
+      <div class="article-header">
+        <div class="article-tag">
+          <svg width="10" height="10" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/><circle cx="9" cy="15" r="1" fill="currentColor"/><circle cx="14.5" cy="14.5" r="1.5" fill="currentColor"/></svg>
+          Política de Cookies
+        </div>
+        <h2>Qué cookies utilizamos<br>y cómo gestionarlas</h2>
+        <p>Utilizamos cookies y tecnologías similares para que el Servicio funcione correctamente, para analizar su uso y para personalizar tu experiencia. Esta política te explica exactamente qué usamos y cómo controlarlo.</p>
+      </div>
+
+      <div class="update-banner">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Última actualización: <strong>11 de marzo de 2026</strong>.
+      </div>
+
+      <div class="article-block" id="c1">
+        <h3><span class="num">01</span> ¿Qué son las Cookies?</h3>
+        <p>Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas un sitio web. Junto con las cookies, también podemos utilizar tecnologías similares como píxeles de seguimiento, almacenamiento local (localStorage) e identificadores de sesión para cumplir finalidades análogas.</p>
+        <p>Las cookies pueden ser:</p>
+        <ul>
+          <li><strong>De sesión:</strong> se eliminan automáticamente al cerrar el navegador.</li>
+          <li><strong>Persistentes:</strong> permanecen en tu dispositivo durante un período definido o hasta que las elimines manualmente.</li>
+          <li><strong>Propias:</strong> establecidas directamente por Clèrigo desde el dominio app.clerigo.io.</li>
+          <li><strong>De terceros:</strong> establecidas por proveedores externos integrados en el Servicio.</li>
+        </ul>
+      </div>
+
+      <div class="article-block" id="c2">
+        <h3><span class="num">02</span> Cookies que Utilizamos</h3>
+        <p>Clasificamos las cookies según su finalidad:</p>
+
+        <div class="cookie-grid">
+          <div class="cookie-card">
+            <div class="cookie-card-head">
+              <span class="cookie-card-name">Cookies Esenciales</span>
+              <span class="cookie-card-tag tag-required">Obligatorias</span>
+            </div>
+            <p>Necesarias para el funcionamiento básico del Servicio. Sin ellas, no es posible autenticarse ni utilizar la plataforma. No requieren consentimiento.</p>
+          </div>
+          <div class="cookie-card">
+            <div class="cookie-card-head">
+              <span class="cookie-card-name">Cookies Funcionales</span>
+              <span class="cookie-card-tag tag-functional">Funcionales</span>
+            </div>
+            <p>Recuerdan tus preferencias (idioma, módulo activo, configuración de vista) para ofrecerte una experiencia personalizada entre sesiones.</p>
+          </div>
+          <div class="cookie-card">
+            <div class="cookie-card-head">
+              <span class="cookie-card-name">Cookies Analíticas</span>
+              <span class="cookie-card-tag tag-analytics">Analíticas</span>
+            </div>
+            <p>Recopilan información agregada sobre cómo se utiliza la plataforma (páginas más visitadas, tiempo de sesión, flujos de navegación) para mejorar el Servicio.</p>
+          </div>
+          <div class="cookie-card">
+            <div class="cookie-card-head">
+              <span class="cookie-card-name">Cookies de Marketing</span>
+              <span class="cookie-card-tag tag-marketing">Opcionales</span>
+            </div>
+            <p>Utilizadas en el sitio web público (clerigo.io) para medir la eficacia de campañas publicitarias y personalizar mensajes. Requieren consentimiento explícito.</p>
+          </div>
+        </div>
+
+        <div class="table-scroll" style="margin-top:20px">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Duración</th>
+              <th>Finalidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>ax_session</code></td><td>Esencial</td><td>Sesión</td><td>Mantiene la sesión autenticada del usuario</td></tr>
+            <tr><td><code>ax_csrf</code></td><td>Esencial</td><td>Sesión</td><td>Protección contra ataques CSRF</td></tr>
+            <tr><td><code>ax_mfa_trusted</code></td><td>Esencial</td><td>30 días</td><td>Recuerda dispositivos de confianza para MFA</td></tr>
+            <tr><td><code>ax_prefs</code></td><td>Funcional</td><td>1 año</td><td>Preferencias de interfaz (tema, módulo activo)</td></tr>
+            <tr><td><code>ax_lang</code></td><td>Funcional</td><td>1 año</td><td>Idioma seleccionado por el usuario</td></tr>
+            <tr><td><code>ax_analytics</code></td><td>Analítica</td><td>2 años</td><td>Identificador anónimo para análisis de uso</td></tr>
+            <tr><td><code>_gtag_*</code></td><td>Analítica</td><td>2 años</td><td>Google Analytics (sitio público, anonimizado)</td></tr>
+            <tr><td><code>_fbp</code></td><td>Marketing</td><td>90 días</td><td>Meta Pixel (solo sitio público, con consentimiento)</td></tr>
+            <tr><td><code>li_fat_id</code></td><td>Marketing</td><td>30 días</td><td>LinkedIn Insight Tag (solo sitio público, con consentimiento)</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="article-block" id="c3">
+        <h3><span class="num">03</span> Cookies de Terceros</h3>
+        <p>Algunos de nuestros proveedores establecen sus propias cookies. Estos terceros tienen sus propias políticas de privacidad que te recomendamos revisar:</p>
+        <ul>
+          <li><strong>Google Analytics:</strong> análisis de uso del sitio web público. Utilizamos anonimización de IP y hemos firmado el acuerdo DPA con Google.</li>
+          <li><strong>Stripe / PayPal:</strong> procesamiento de pagos. Estas cookies son esenciales para completar transacciones seguras y no pueden desactivarse durante el proceso de pago.</li>
+          <li><strong>Intercom:</strong> soporte en tiempo real. Establece cookies para identificar usuarios en conversaciones de soporte.</li>
+          <li><strong>Meta / LinkedIn:</strong> solo en el sitio web público y únicamente con tu consentimiento previo explícito.</li>
+        </ul>
+        <div class="info-box yellow">
+          <div class="info-box-icon">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="currentColor" stroke-width="1.8"/><path d="M12 9v4M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <span>Dentro de la plataforma autenticada (app.axioma.com), no utilizamos cookies de marketing ni de redes sociales. Las cookies de terceros opcionales solo aplican al sitio web público.</span>
+        </div>
+      </div>
+
+      <div class="article-block" id="c4">
+        <h3><span class="num">04</span> Gestión de tus Preferencias de Cookies</h3>
+        <p>Al visitar nuestro sitio web por primera vez, se te presentará un banner de consentimiento de cookies que te permite aceptar o rechazar categorías no esenciales. Puedes modificar tus preferencias en cualquier momento a través de:</p>
+        <ul>
+          <li><strong>Centro de preferencias de cookies:</strong> accesible desde el enlace "Gestionar cookies" en el pie de página de clerigo.io.</li>
+          <li><strong>Configuración de tu navegador:</strong> puedes bloquear o eliminar cookies directamente desde la configuración de privacidad de tu navegador.</li>
+          <li><strong>Herramientas de opt-out:</strong> para Google Analytics puedes instalar el complemento de inhabilitación disponible en <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">tools.google.com/dlpage/gaoptout</a>.</li>
+        </ul>
+        <div class="info-box blue">
+          <div class="info-box-icon">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <span>Deshabilitar las cookies esenciales impedirá el uso del Servicio. Deshabilitar las cookies funcionales puede reducir la personalización de la experiencia. Las cookies analíticas y de marketing pueden desactivarse sin afectar la funcionalidad principal.</span>
+        </div>
+      </div>
+
+      <div class="article-block" id="c5">
+        <h3><span class="num">05</span> Señales Do Not Track (DNT)</h3>
+        <p>Algunos navegadores envían señales "Do Not Track" (DNT) para indicar que el usuario no desea ser rastreado. Actualmente, no existe un estándar uniforme de la industria para interpretar estas señales. Por ello, nuestro sitio web no modifica su comportamiento en respuesta a las señales DNT, aunque sí respetamos las preferencias que estableces a través de nuestro centro de gestión de cookies.</p>
+        <p>Para usuarios en California bajo el CCPA, puedes ejercer el derecho de "No vender ni compartir mi información personal" contactando a <a href="mailto:privacy@clerigo.io">privacy@clerigo.io</a>.</p>
+      </div>
+
+      <div class="article-block" id="c6">
+        <h3><span class="num">06</span> Actualizaciones de Esta Política</h3>
+        <p>Actualizamos esta Política de Cookies periódicamente para reflejar cambios en las cookies que utilizamos, en los proveedores de servicios o en los requisitos legales. Cuando realicemos cambios materiales, renovaremos tu consentimiento a través del banner de cookies.</p>
+        <p>La versión actualizada siempre estará disponible en <a href="legal.html">clerigo.io/legal/cookies</a>. Para preguntas sobre el uso de cookies, escríbenos a <a href="mailto:privacy@clerigo.io">privacy@clerigo.io</a>.</p>
+
+        <div class="contact-card" style="margin-top:32px">
+          <div class="contact-icon">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#EB1000" stroke-width="1.8"/><circle cx="8.5" cy="8.5" r="1.5" fill="#EB1000"/><circle cx="15" cy="9" r="1" fill="#EB1000"/><circle cx="9" cy="15" r="1" fill="#EB1000"/><circle cx="14.5" cy="14.5" r="1.5" fill="#EB1000"/></svg>
+          </div>
+          <div>
+            <h4>¿Preguntas sobre cookies?</h4>
+            <p>
+              <strong>Email:</strong> <a href="mailto:privacy@clerigo.io">privacy@clerigo.io</a><br>
+              <strong>Gestionar preferencias:</strong> <a href="#">Centro de privacidad</a><br>
+              <strong>Respuesta:</strong> dentro de los 5 días hábiles siguientes a tu consulta.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div><!-- fin de legal-content -->
+</div><!-- fin de legal-layout -->
+</div>
+
+
+
+
+
+</main>
+
+<!-- ══════════ PIE ══════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo" style="text-decoration:none">
+        <div class="nav-logo-mark"></div>
+        <span class="nav-logo-text">Clèrigo</span>
+      </a>
+      <p class="brand-desc">La plataforma GRC más completa de Latinoamérica. Gobernanza, Riesgo y Cumplimiento centralizados, automatizados e inteligentes.</p>
+      <div class="social-links">
+        <a href="#" class="social-icon" title="LinkedIn" aria-label="LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="20" height="20" rx="4" fill="#0A66C2"/>
+            <path d="M7 10v7" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="7" cy="7.5" r="1.2" fill="white"/>
+            <path d="M11 17v-4c0-1.1.9-2 2-2s2 .9 2 2v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M11 13v4" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <a href="#" class="social-icon" title="Instagram" aria-label="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="ig-grad" cx="30%" cy="107%" r="150%">
+                <stop offset="0%" stop-color="#ffd600"/>
+                <stop offset="25%" stop-color="#ff7a00"/>
+                <stop offset="50%" stop-color="#ff0069"/>
+                <stop offset="75%" stop-color="#d300c5"/>
+                <stop offset="100%" stop-color="#7638fa"/>
+              </radialGradient>
+            </defs>
+            <rect x="2" y="2" width="20" height="20" rx="5.5" fill="url(#ig-grad)"/>
+            <rect x="7" y="7" width="10" height="10" rx="3" stroke="white" stroke-width="1.5" fill="none"/>
+            <circle cx="12" cy="12" r="2.5" stroke="white" stroke-width="1.5" fill="none"/>
+            <circle cx="16.2" cy="7.8" r="0.9" fill="white"/>
+          </svg>
+        </a>
+        <a href="#" class="social-icon" title="X (Twitter)" aria-label="X">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="20" height="20" rx="4" fill="#000"/>
+            <path d="M13.5 11.1L17.5 6.5H16.3L13 10.3L10.4 6.5H6.5L10.7 12.6L6.5 17.5H7.7L11.2 13.4L14 17.5H17.9L13.5 11.1Z" fill="white"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <div class="footer-col-title">Producto</div>
+        <a href="precios.html">Módulos GRC</a>
+        <a href="index.html#platform">Plataforma</a>
+        <a href="#">Integraciones</a>
+        <a href="precios.html">Precios</a>
+        <a href="#">Changelog</a>
+        <a href="index.html#solution">Entrenamiento</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Soluciones</div>
+        <a href="marcos.html">Gestión de Riesgos</a>
+        <a href="marcos.html">Cumplimiento ISO</a>
+        <a href="marcos.html">Privacidad GDPR</a>
+        <a href="marcos.html">Ciberseguridad</a>
+        <a href="marcos.html">Auditoría Interna</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Recursos</div>
+        <a href="https://clerigo.io/academia">Academia</a>
+        <a href="#">Blog GRC</a>
+        <a href="#">Webinars</a>
+        <a href="#">Casos de éxito</a>
+        <a href="#">API Developers</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Compañía</div>
+        <a href="#">Sobre nosotros</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="#">Prensa</a>
+        <a href="partners.html">Socios</a>
+        <a href="#">Carreras</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Clèrigo. Todos los derechos reservados.</span>
+    <div style="display:flex;gap:8px;align-items:center">
+      <a href="#" class="social-icon" style="width:26px;height:26px;border-radius:6px" title="LinkedIn" aria-label="LinkedIn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" fill="#0A66C2"/><path d="M7 10v7" stroke="white" stroke-width="1.6" stroke-linecap="round"/><circle cx="7" cy="7.5" r="1.2" fill="white"/><path d="M11 17v-4c0-1.1.9-2 2-2s2 .9 2 2v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 13v4" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </a>
+      <a href="#" class="social-icon" style="width:26px;height:26px;border-radius:6px" title="Instagram" aria-label="Instagram">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><defs><radialGradient id="ig2" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#ffd600"/><stop offset="25%" stop-color="#ff7a00"/><stop offset="50%" stop-color="#ff0069"/><stop offset="75%" stop-color="#d300c5"/><stop offset="100%" stop-color="#7638fa"/></radialGradient></defs><rect x="2" y="2" width="20" height="20" rx="5.5" fill="url(#ig2)"/><rect x="7" y="7" width="10" height="10" rx="3" stroke="white" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="2.5" stroke="white" stroke-width="1.5" fill="none"/><circle cx="16.2" cy="7.8" r="0.9" fill="white"/></svg>
+      </a>
+      <a href="#" class="social-icon" style="width:26px;height:26px;border-radius:6px" title="X" aria-label="X">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" fill="#000"/><path d="M13.5 11.1L17.5 6.5H16.3L13 10.3L10.4 6.5H6.5L10.7 12.6L6.5 17.5H7.7L11.2 13.4L14 17.5H17.9L13.5 11.1Z" fill="white"/></svg>
+      </a>
+      <div style="width:1px;height:14px;background:rgba(14,14,14,0.13);margin:0 4px"></div>
+      <a href="legal.html">Términos de uso</a>
+      <a href="legal.html">Privacidad</a>
+      <a href="legal.html">Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Aparición al desplazar, igual que en la portada ──
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+} else {
+  // Sin observador no hay animación, pero se ve todo. Es la única salida
+  // aceptable: lo contrario es una página en blanco.
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+}
+</script>
+<script>
+// ── Cambio de pestaña ──
+function showTab(tab, btn) {
+  // Se ocultan todas las secciones
+  document.querySelectorAll('.legal-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.legal-sidebar').forEach(s => s.style.display = 'none');
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+  // Se enseña la elegida
+  document.getElementById('section-' + tab).classList.add('active');
+  document.getElementById('sidebar-' + tab).style.display = 'block';
+  btn.classList.add('active');
+
+  // Y se sube al principio del texto
+  window.scrollTo({ top: 120, behavior: 'smooth' });
+}
+
+// ── El apartado en el que estás, resaltado en la barra lateral ──
+const allLinks = document.querySelectorAll('.sidebar-nav a');
+const observadorLateral = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      allLinks.forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === '#' + id) a.classList.add('active');
+      });
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+document.querySelectorAll('[id^="t"],[id^="p"],[id^="c"]').forEach(el => {
+  if (el.id.match(/^[tpc]\d/)) observadorLateral.observe(el);
+});
+
+// ── La barra de arriba se asienta al desplazar ──
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  nav.style.background = window.scrollY > 60
+    ? 'rgba(14,14,14,0.99)'
+    : 'rgba(14,14,14,0.85)';
+});
+</script>
+</body>
+</html>

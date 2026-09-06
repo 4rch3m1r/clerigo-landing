@@ -40,8 +40,35 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
   comprueba(`sin «archemir» en el ${n}`, cuenta(t, /archemir/gi) === 0, cuenta(t, /archemir/gi) + " restos");
   comprueba(`sin «GRC Intelligence» ni «Axioma GRC» en el ${n}`,
     !/GRC Intelligence|Axioma GRC|grc-intelligence/i.test(t));
-  comprueba(`el dominio es clerigo.io en el ${n}`, cuenta(t, /clerigo\.io/g) >= 26,
-    cuenta(t, /clerigo\.io/g) + " apariciones");
+  /* Antes esto contaba apariciones de «clerigo.io» y pedía 26 o más. Dejó de
+     valer el día que los enlaces del sitio pasaron a apuntar al fichero de al
+     lado: la cuenta se desplomó a 7 y el número grande no decía nada. Ahora se
+     mira lo que de verdad importa, que es dónde va cada cosa. */
+  comprueba(`lo absoluto sigue en clerigo.io en el ${n}`,
+    /<link rel="canonical" href="https:\/\/clerigo\.io\//.test(t)
+    /* og:image, og:image:secure_url y twitter:image */
+    && cuenta(t, /content="https:\/\/clerigo\.io\/og\.png"/g) === 3
+    && t.includes('href="https://app.clerigo.io"')
+    && t.includes('href="https://clerigo.io/academia"'));
+  comprueba(`los enlaces del sitio van a las páginas de al lado en el ${n}`,
+    cuenta(t, /href="marcos\.html"/g) === 6
+    && cuenta(t, /href="legal\.html"/g) === 5
+    && cuenta(t, /href="precios\.html"/g) === 3
+    && cuenta(t, /href="contacto\.html"/g) === 3
+    && cuenta(t, /href="partners\.html"/g) === 1
+    && cuenta(t, /href="index\.html"/g) === 2,
+    "marcos " + cuenta(t, /href="marcos\.html"/g)
+    + ", legal " + cuenta(t, /href="legal\.html"/g)
+    + ", precios " + cuenta(t, /href="precios\.html"/g)
+    + ", contacto " + cuenta(t, /href="contacto\.html"/g)
+    + ", partners " + cuenta(t, /href="partners\.html"/g)
+    + ", index " + cuenta(t, /href="index\.html"/g));
+  comprueba(`y los ficheros a los que apunta existen, en el ${n}`,
+    ["marcos", "legal", "precios", "contacto", "partners", "index"]
+      .every((f) => fs.existsSync(require("node:path").join(RAIZ, f + ".html"))),
+    ["marcos", "legal", "precios", "contacto", "partners", "index"]
+      .filter((f) => !fs.existsSync(require("node:path").join(RAIZ, f + ".html")))
+      .map((f) => f + ".html") + " no está");
   comprueba(`la marca es «Clèrigo» en el ${n}`, cuenta(t, /Clèrigo/g) >= 18,
     cuenta(t, /Clèrigo/g) + " apariciones");
   comprueba(`el título es de Clèrigo en el ${n}`, /<title>Clèrigo — /.test(t));
@@ -49,6 +76,21 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
     /rel="canonical" href="https:\/\/clerigo\.io\//.test(t)
     && /og:url" content="https:\/\/clerigo\.io\//.test(t)
     && /twitter:card/.test(t));
+  /* La tarjeta de la vista previa. La etiqueta sola no vale de nada: durante
+     meses apuntó a og.png y ese fichero NO existía —el servidor contestaba a
+     esa ruta con el HTML de la portada—, así que el enlace salía sin imagen en
+     todas partes. Aquí se comprueba el fichero, no la promesa. */
+  comprueba(`las etiquetas de la tarjeta están completas en el ${n}`,
+    /og:image:width" content="1200"/.test(t)
+    && /og:image:height" content="630"/.test(t)
+    && /og:image:type" content="image\/png"/.test(t)
+    && /og:image:alt"/.test(t)
+    && /twitter:card" content="summary_large_image"/.test(t)
+    && /twitter:image:alt"/.test(t)
+    && /application\/ld\+json/.test(t));
+  comprueba(`y están arriba del todo, donde las lee WhatsApp, en el ${n}`,
+    t.indexOf('property="og:image"') > 0 && t.indexOf('property="og:image"') < 1536,
+    "og:image aparece en el byte " + t.indexOf('property="og:image"'));
   comprueba(`el login apunta a app.clerigo.io en el ${n}`,
     t.includes('href="https://app.clerigo.io"') && !/truestoneadvisory/i.test(t));
   comprueba(`el logotipo de Clèrigo se usa en los 3 sitios de marca del ${n}`,
@@ -79,6 +121,28 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
 comprueba("y en el original SÍ estaba, que si no esta comprobación no dice nada",
   /class="cert-panel/.test(org) && /Nuestras Certificaciones/.test(org));
 
+/* Las seis tarjetas: la de la portada y una por página interior. Se miran los
+   BYTES del fichero, no la etiqueta que dice que existe. */
+{
+  const cartas = ["og.png", "og-legal.png", "og-precios.png", "og-marcos.png",
+    "og-contacto.png", "og-partners.png"];
+  const malas = [];
+  for (const c of cartas) {
+    const f = require("node:path").join(RAIZ, c);
+    if (!fs.existsSync(f)) { malas.push(c + " no está"); continue; }
+    const cab = Buffer.alloc(24);
+    const fd = fs.openSync(f, "r");
+    fs.readSync(fd, cab, 0, 24, 0);
+    fs.closeSync(fd);
+    const kb = Math.round(fs.statSync(f).size / 1024);
+    if (cab.readUInt32BE(16) !== 1200 || cab.readUInt32BE(20) !== 630 || kb >= 300) {
+      malas.push(`${c}: ${cab.readUInt32BE(16)} × ${cab.readUInt32BE(20)}, ${kb} KB`);
+    }
+  }
+  comprueba("las 6 tarjetas de vista previa existen, miden 1200 × 630 y pesan poco",
+    malas.length === 0, malas.join(" | "));
+}
+
 comprueba("el favicon apunta a favicon.png y el fichero existe",
   /rel="icon"[^>]*href="favicon\.png"/.test(osc) && fs.existsSync(require("node:path").join(RAIZ, "favicon.png")));
 
@@ -93,7 +157,7 @@ const esqueleto = (s) => pelado(
   sinPanelDeCertificaciones(s)
   /* Estas dos van ANTES de pelar, porque `pelado` aplana cada bloque `{ … }` a
      una línea y después un `^--logo:` ya no existe como principio de línea. */
-    .replace(/^.*(og:|twitter:|rel="canonical"|name="description").*$/gm, "")
+    .replace(/^.*(og:|twitter:|rel="canonical"|name="description"|name="theme-color"|rel="image_src"|application\/ld\+json).*$/gm, "")
     .replace(/^\s*--logo:.*$/gm, "")
     /* El bloque de ajustes de teléfono es el ÚNICO añadido de verdad, y se
        quita aquí a propósito para que el resto de la página siga comparándose
@@ -106,8 +170,23 @@ const esqueleto = (s) => pelado(
     .replace(/\/\* ── CERT LOGOS PANEL \(static, in hero\) ── \*\/[\s\S]*?(?=\/\* ── SECURITY TRUST STRIP ── \*\/)/, "")
     .replace(/[ \t]*\.hero-inner > \.cert-panel \{ order: 3; \}\n/, ""),
 )
+  /* Los enlaces al resto del sitio apuntan al fichero de al lado en vez de a
+     una ruta de clerigo.io. Se deshace aquí —y sólo aquí— para poder seguir
+     comparando línea por línea contra el original, donde eran rutas de
+     archemir.com. No es una excepción nueva: es la misma normalización del
+     dominio que ya había, un paso antes. */
+  .replace(/href="marcos\.html"/g, 'href="https://clerigo.io/marcos"')
+  .replace(/href="legal\.html"/g, 'href="https://clerigo.io/legal"')
+  .replace(/href="precios\.html"/g, 'href="https://clerigo.io/precios"')
+  .replace(/href="contacto\.html"/g, 'href="https://clerigo.io/prospectos"')
+  .replace(/href="partners\.html"/g, 'href="https://portal.clerigo.io"')
+  .replace(/href="index\.html"/g, 'href="https://clerigo.io"')
   .replace(/GRC Intelligence Platform|GRC Intelligence|Axioma GRC|Clèrigo XGRC|Clèrigo/g, "MARCA")
   .replace(/grc-intelligence\.app|portal\.archemir\.com|portal\.clerigo\.io|truestoneadvisory\.com\/login|app\.clerigo\.io|archemir\.com|clerigo\.io/g, "DOM")
+  /* El original escribía la misma ruta de dos maneras, con barra final y sin
+     ella. Las dos llevan ahora al mismo fichero, así que la barra final se
+     iguala en los tres para poder compararlos. */
+  .replace(/href="https:\/\/DOM\/prospectos\/"/g, 'href="https://DOM/prospectos"')
   /* El sufijo del rótulo de la barra: «Platform» pasó a «XGRC», mismo hueco. */
   .replace(/<small>(Platform|XGRC)<\/small>/g, "<small>SUF</small>")
   /* El enlace del pie venía sin protocolo —un fallo del original— y ahora lo
@@ -190,7 +269,13 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
     && t.includes("footer { background: #0E0E0E; }")
     && !/nav\.style\.background = 'rgba\(255/.test(t));
 
-  comprueba(`mismo guion en el ${n}`, cuenta(t, /<script/g) === cuenta(org, /<script/g));
+  /* Los mismos guiones que el original, más UNO: el de datos estructurados de
+     la cabecera, que no es código —no se ejecuta— sino la ficha que leen
+     Google y LinkedIn para pintar la tarjeta del enlace. */
+  comprueba(`mismo guion en el ${n}`,
+    cuenta(t, /<script/g) === cuenta(org, /<script/g) + 1
+    && cuenta(t, /<script type="application\/ld\+json">/g) === 1,
+    `${cuenta(t, /<script/g)} vs ${cuenta(org, /<script/g)} + 1`);
   comprueba(`mismas secciones en el ${n}`,
     cuenta(t, /<section/g) === cuenta(org, /<section/g),
     `${cuenta(t, /<section/g)} vs ${cuenta(org, /<section/g)}`);

@@ -8,3 +8,10 @@
 # ficheros ya generados —index.html y oscuro.html— están en el repositorio y
 # no dependen de nada.
 fuente/archemir-original.html
+
+# Y por lo mismo, los originales de las cinco páginas interiores: llevan la
+# marca de Archemir, sus correos y sus textos sin vestir. Se quedan fuera.
+# Sin ellos no se puede COMPROBAR que las páginas dicen lo mismo que decían
+# —`fuente/paginas/validar.cjs` avisa si faltan—, pero las cinco páginas ya
+# escritas están en el repositorio y no dependen de ellos.
+fuente/paginas-originales/

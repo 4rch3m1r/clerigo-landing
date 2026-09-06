@@ -72,12 +72,32 @@ cambia(
   + '<meta property="og:url" content="https://clerigo.io/">\n'
   + '<meta property="og:title" content="Clèrigo — Gobernanza, Riesgo y Cumplimiento sin complicaciones">\n'
   + '<meta property="og:description" content="Clèrigo unifica Gestión de Riesgos, Cumplimiento Legal y Regulatorio, Privacidad, Ciberseguridad, Control Interno y Auditoría en un solo entorno.">\n'
+  /* La tarjeta que sale al pegar el enlace en WhatsApp, LinkedIn, Slack, X o
+     iMessage. Las medidas y el tipo NO son adorno: WhatsApp descarta la imagen
+     si tiene que descargarla entera para averiguar cuánto mide, y con
+     `og:image:width` y `og:image:height` puestos se la cree y la pinta.
+     `og.png` lo dibuja fuente/hacer-og.ps1. */
   + '<meta property="og:image" content="https://clerigo.io/og.png">\n'
+  + '<meta property="og:image:secure_url" content="https://clerigo.io/og.png">\n'
+  + '<meta property="og:image:type" content="image/png">\n'
+  + '<meta property="og:image:width" content="1200">\n'
+  + '<meta property="og:image:height" content="630">\n'
+  + '<meta property="og:image:alt" content="Clèrigo — Gobernanza, Riesgo y Cumplimiento sin complicaciones">\n'
   + '<meta property="og:locale" content="es_ES">\n'
   + '<meta name="twitter:card" content="summary_large_image">\n'
   + '<meta name="twitter:title" content="Clèrigo — Gobernanza, Riesgo y Cumplimiento sin complicaciones">\n'
   + '<meta name="twitter:description" content="Clèrigo unifica Gestión de Riesgos, Cumplimiento Legal y Regulatorio, Privacidad, Ciberseguridad, Control Interno y Auditoría en un solo entorno.">\n'
-  + '<meta name="twitter:image" content="https://clerigo.io/og.png">',
+  + '<meta name="twitter:image" content="https://clerigo.io/og.png">\n'
+  + '<meta name="twitter:image:alt" content="Clèrigo — Gobernanza, Riesgo y Cumplimiento sin complicaciones">\n'
+  + '<meta name="theme-color" content="#0E0E0E">\n'
+  + '<link rel="image_src" href="https://clerigo.io/og.png">\n'
+  /* Para Google y LinkedIn, que leen datos estructurados además de las
+     etiquetas de Open Graph. */
+  + '<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite",'
+  + '"name":"Clèrigo","url":"https://clerigo.io/","inLanguage":"es",'
+  + '"description":"Clèrigo unifica Gestión de Riesgos, Cumplimiento Legal y Regulatorio, Privacidad, Ciberseguridad, Control Interno y Auditoría en un solo entorno.",'
+  + '"publisher":{"@type":"Organization","name":"Clèrigo","url":"https://clerigo.io/",'
+  + '"logo":"https://clerigo.io/favicon.png"}}</script>',
   1,
 );
 
@@ -357,8 +377,8 @@ cambia(
   /* Sólo en pantallas diminutas. A 360 y 375 la barra pide 342 y cabe con el
      sufijo puesto; a 320 no, y ahí sí se aprieta el espaciado y se retira el
      «XGRC» del rótulo. El logotipo y el nombre siguen estando. */
-  .nav-cta { gap: 8px; }
-  .btn-ghost, .btn-primary { padding: 7px 12px; }
+  .nav-cta { gap: 6px; }
+  .btn-ghost, .btn-primary { padding: 7px 10px; }
   .nav-logo-text small { display: none; }
 }
 
@@ -500,6 +520,33 @@ cambia('href="https://truestoneadvisory.com/login"', 'href="https://app.clerigo.
 cambia("https://portal.archemir.com", "https://portal.clerigo.io", 1);
 cambia('href="archemir.com"', 'href="https://clerigo.io"', 1);
 cambia("https://archemir.com", "https://clerigo.io", 19);
+
+/* ── 4b. Los enlaces al resto del sitio ─────────────────────────────────── */
+
+/* La portada ya traía los enlaces a las cinco páginas interiores, apuntando a
+   rutas de un dominio que todavía no existe. Ahora esas páginas están aquí al
+   lado, así que apuntan al fichero.
+ *
+ * No se añade NI UN enlace: son los mismos que había, con otro destino. Por eso
+ * la cuenta de enlaces de la página no cambia, y la comprobación que la vigila
+ * sigue valiendo.
+ *
+ * Relativos y no absolutos a propósito: así el sitio funciona en GitHub Pages,
+ * en cualquier hosting y abriendo el fichero con doble clic, sin depender de
+ * que clerigo.io esté ya levantado. La canónica y las etiquetas de Open Graph
+ * sí se quedan absolutas, que para eso están. */
+cambia('href="https://clerigo.io/marcos"', 'href="marcos.html"', 6);
+cambia('href="https://clerigo.io/legal"', 'href="legal.html"', 5);
+cambia('href="https://clerigo.io/precios"', 'href="precios.html"', 3);
+cambia('href="https://clerigo.io/prospectos/"', 'href="contacto.html"', 2);
+cambia('href="https://clerigo.io/prospectos"', 'href="contacto.html"', 1);
+cambia('href="https://portal.clerigo.io"', 'href="partners.html"', 1);
+cambia('href="https://clerigo.io"', 'href="index.html"', 2);
+
+/* Y lo que NO cambia, para que se vea que es a propósito:
+     https://clerigo.io/            la canónica y las og:url — absolutas
+     https://clerigo.io/academia    no hay página de academia todavía
+     https://app.clerigo.io         la aplicación, que es otro sitio */
 
 /* ── 5. Comprobación ────────────────────────────────────────────────────── */
 

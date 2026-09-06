@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clèrigo — Cobertura Regulatoria</title>
+<meta name="description" content="Los módulos, marcos, reguladores y regulaciones dominicanas que cubre Clèrigo, con buscador, filtros por sector y el detalle de cada control.">
+<link rel="canonical" href="https://clerigo.io/marcos">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Clèrigo">
+<meta property="og:url" content="https://clerigo.io/marcos">
+<meta property="og:title" content="Clèrigo — Cobertura Regulatoria">
+<meta property="og:description" content="Los módulos, marcos, reguladores y regulaciones dominicanas que cubre Clèrigo, con buscador, filtros por sector y el detalle de cada control.">
+<meta property="og:image" content="https://clerigo.io/og-marcos.png">
+<meta property="og:image:secure_url" content="https://clerigo.io/og-marcos.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Clèrigo — Cobertura Regulatoria">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Clèrigo — Cobertura Regulatoria">
+<meta name="twitter:description" content="Los módulos, marcos, reguladores y regulaciones dominicanas que cubre Clèrigo, con buscador, filtros por sector y el detalle de cada control.">
+<meta name="twitter:image" content="https://clerigo.io/og-marcos.png">
+<meta name="twitter:image:alt" content="Clèrigo — Cobertura Regulatoria">
+<meta name="theme-color" content="#0E0E0E">
+<link rel="image_src" href="https://clerigo.io/og-marcos.png">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300;1,400&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png" sizes="160x160">
+<link rel="apple-touch-icon" href="favicon.png">
+<noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Clèrigo — Cobertura Regulatoria","description":"Los módulos, marcos, reguladores y regulaciones dominicanas que cubre Clèrigo, con buscador, filtros por sector y el detalle de cada control.","url":"https://clerigo.io/marcos","inLanguage":"es","primaryImageOfPage":"https://clerigo.io/og-marcos.png","isPartOf":{"@type":"WebSite","name":"Clèrigo","url":"https://clerigo.io/"},"publisher":{"@type":"Organization","name":"Clèrigo","url":"https://clerigo.io/","logo":"https://clerigo.io/favicon.png"}}</script>
+<style>
+/* ── TOKENS — los mismos de index.html, sin una coma de diferencia ── */
+:root {
+  --red: #EB1000;
+  --red-ink: #C10D00;
+  --red-dim: rgba(235,16,0,0.10);
+  --dark: #FFFFFF;
+  --dark-2: #F7F8F9;
+  --dark-3: #EFF1F3;
+  --dark-4: #E5E8EB;
+  --border: rgba(14,14,14,0.10);
+  --border-light: rgba(14,14,14,0.16);
+  --text: #16181C;
+  --text-2: rgba(22,24,28,0.68);
+  --text-3: rgba(22,24,28,0.48);
+  --accent: #0257BF;
+  --success: #0F6B4E;
+  --warning: #B45309;
+  --danger: #C0252D;
+  --purple: #6B27A8;
+  --teal: #0A7373;
+  /* En la portada el logotipo va incrustado en base64 porque es la página que
+     se manda suelta. Aquí no: las cinco viajan siempre con favicon.png al
+     lado, y repetir 48 KB de base64 cinco veces no lo paga nadie. */
+  --logo: url("favicon.png");
+}
+
+/* ── RESET ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; color-scheme: light; }
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--dark);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Los controles de formulario NO heredan la letra del cuerpo: el navegador les
+   pone la suya y salen en Arial. La portada no tiene formularios y por eso no
+   lo necesita; estas páginas sí, y se veía —un botón de cerrar y varios campos
+   de la ventana de pago estaban en Arial sin que se notara a simple vista. */
+input, select, textarea, button { font-family: inherit; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 60px;
+  display: flex; align-items: center;
+  padding: 0 48px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  gap: 40px;
+  transition: background 0.3s;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px; text-decoration: none;
+}
+.nav-logo-mark {
+  width: 30px; height: 30px;
+  background: var(--logo) center / contain no-repeat;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.nav-logo-text { color: var(--text); font-size: 14px; font-weight: 700; letter-spacing: -0.3px; }
+.nav-logo-text small { color: var(--text-3); font-size: 10px; font-weight: 400; letter-spacing: 0.8px; text-transform: uppercase; margin-left: 8px; }
+
+.nav-links { display: flex; gap: 28px; margin-left: 20px; }
+.nav-links a {
+  color: var(--text-2); font-size: 13px; font-weight: 500; text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a.aqui { color: var(--text); }
+
+.nav-cta { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.btn-ghost {
+  color: var(--text-2); font-size: 13px; font-weight: 600; text-decoration: none;
+  padding: 7px 16px; border: 1px solid var(--border);
+  border-radius: 4px; transition: all 0.15s; cursor: pointer; background: none;
+  font-family: 'Source Sans 3', sans-serif;
+}
+.btn-ghost:hover { color: var(--text); border-color: var(--border-light); background: rgba(14,14,14,0.04); }
+.btn-primary {
+  color: white; font-size: 13px; font-weight: 700; text-decoration: none;
+  padding: 8px 20px; background: var(--red);
+  border-radius: 4px; border: none; cursor: pointer;
+  transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px;
+  white-space: nowrap; font-family: 'Source Sans 3', sans-serif;
+}
+.btn-primary:hover { background: #c80d00; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(235,16,0,0.20); }
+
+.btn-large {
+  font-size: 15px; font-weight: 700; padding: 13px 32px; border-radius: 4px;
+  cursor: pointer; border: none; text-decoration: none; display: inline-flex;
+  align-items: center; gap: 8px; transition: all 0.2s;
+  font-family: 'Source Sans 3', sans-serif;
+}
+.btn-large.red { background: var(--red); color: white; }
+.btn-large.red:hover { background: #c80d00; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(235,16,0,0.22); }
+.btn-large.outline { background: none; color: var(--text); border: 1px solid var(--border-light); }
+.btn-large.outline:hover { background: rgba(14,14,14,0.04); border-color: rgba(14,14,14,0.23); transform: translateY(-1px); }
+
+/* ── SECCIONES ── */
+section { position: relative; }
+.container { max-width: 1160px; margin: 0 auto; padding: 0 48px; }
+/* La barra va fija y mide 60 px: el contenido de cada página empieza debajo. */
+.pagina { padding-top: 60px; position: relative; z-index: 1; }
+
+.label-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--red); background: var(--red-dim);
+  border: 1px solid rgba(235,16,0,0.25);
+  padding: 4px 12px; border-radius: 20px; margin-bottom: 20px;
+}
+.label-chip::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--red);
+  animation: blink 2s ease-in-out infinite;
+}
+/* Un chip que ya trae su propio icono no lleva ademas el punto: la portada
+   pone una marca, no dos. */
+.label-chip:has(svg)::before { display: none; }
+@keyframes blink {
+  0%,100% { opacity: 1; } 50% { opacity: 0.3; }
+}
+
+/* El titular de sección de la portada: 900, muy apretado, y el `em` NO es
+   cursiva — es la misma letra en rojo. */
+.section-title-center {
+  font-size: clamp(32px, 4vw, 52px); font-weight: 900;
+  line-height: 1.08; letter-spacing: -1.5px; margin-bottom: 16px;
+}
+.section-title em, .section-title-center em { font-style: normal; color: var(--red); }
+.section-subtitle { font-size: 17px; color: var(--text-2); line-height: 1.6; }
+
+/* ── PIE ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 48px 0 32px;
+}
+.footer-inner {
+  display: grid; grid-template-columns: 220px 1fr; gap: 60px;
+  max-width: 1160px; margin: 0 auto; padding: 0 48px;
+}
+.footer-brand .brand-desc { font-size: 13px; color: var(--text-3); line-height: 1.7; margin-top: 12px; }
+.footer-links { display: grid; grid-template-columns: repeat(4,1fr); gap: 32px; }
+.footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-3); margin-bottom: 14px; }
+.footer-col a {
+  display: block; font-size: 13px; color: var(--text-3); text-decoration: none;
+  margin-bottom: 8px; transition: color 0.15s;
+}
+.footer-col a:hover { color: var(--text-2); }
+.footer-bottom {
+  max-width: 1160px; margin: 40px auto 0; padding: 20px 48px 0;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: var(--text-3);
+}
+.footer-bottom a { color: var(--text-3); text-decoration: none; }
+.footer-bottom a:hover { color: var(--text-2); }
+
+/* ── ANIMACIONES ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.6s ease both; }
+.fade-up-1 { animation-delay: 0.05s; }
+.fade-up-2 { animation-delay: 0.12s; }
+.fade-up-3 { animation-delay: 0.20s; }
+.fade-up-4 { animation-delay: 0.28s; }
+.fade-up-5 { animation-delay: 0.36s; }
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+/* Tres redes de seguridad para lo que empieza invisible. Una página que se
+   queda en blanco porque un observador no llegó a disparar es mucho peor que
+   una página sin animación:
+     · a quien pide menos movimiento se le da todo puesto y quieto;
+     · sin JavaScript no hay observador, así que tampoco hay nada que ocultar;
+     · y si el navegador no trae IntersectionObserver, lo destapa el guion. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+.reveal-2 { transition-delay: 0.1s; }
+.reveal-3 { transition-delay: 0.2s; }
+.reveal-4 { transition-delay: 0.3s; }
+.reveal-5 { transition-delay: 0.4s; }
+.reveal-6 { transition-delay: 0.5s; }
+
+/* ── ICONOS SOCIALES ── */
+.social-links {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 16px;
+}
+.social-icon {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(14,14,14,0.04);
+  border: 1px solid rgba(14,14,14,0.12);
+  transition: background 0.18s, border-color 0.18s, transform 0.18s;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.social-icon:hover {
+  background: rgba(14,14,14,0.07);
+  border-color: rgba(14,14,14,0.23);
+  transform: translateY(-2px);
+}
+.social-icon svg { display: block; }
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .container { padding: 0 20px; }
+  .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+  .footer-links { grid-template-columns: repeat(2,1fr); }
+  .footer-bottom { flex-wrap: wrap; row-gap: 10px; padding-left: 20px; padding-right: 20px; }
+  .footer-bottom > div { flex-wrap: wrap; }
+}
+@media (max-width: 480px) {
+  .nav-cta .btn-ghost + .btn-ghost { display: none; }
+}
+@media (max-width: 340px) {
+  .nav-cta { gap: 6px; }
+  .btn-ghost, .btn-primary { padding: 7px 10px; }
+  .nav-logo-text small { display: none; }
+}
+
+/* ── LO DE LA PÁGINA ─────────────────────────────────────────────────── */
+/* El panel de detalle entra por la derecha y tiene que taparlo todo, la barra
+   incluida. La plantilla le da a `.pagina` un z-index de 1, y eso abre un
+   contexto de apilado del que el panel no puede salir por mucho z-index que
+   se le ponga: aquí se le devuelve el `auto` para que el 300 del panel se
+   mida contra el 100 de la barra y no contra sus hermanos. */
+.pagina { z-index: auto; }
+/* Y la contrapartida: al quitarle el contexto de apilado a `.pagina`, el fondo
+   fijo `.gbg` también se escapa, y como el pie no está posicionado se pintaba
+   POR ENCIMA de él —el resplandor rojo de abajo a la izquierda ensuciaba el
+   negro del pie con una mancha—. Posicionar el pie lo devuelve a su capa: se
+   pinta después del fondo por orden en el documento, y sigue por debajo de la
+   barra (100) y del panel (300). Las otras cuatro páginas no lo necesitan
+   porque en ellas `.pagina` conserva su z-index y el fondo no sale de ahí. */
+footer { position: relative; }
+
+/* FONDO */
+.gbg{position:fixed;inset:0;pointer-events:none;z-index:0;}
+.gbg::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 55% 50% at 5% 85%,rgba(235,16,0,0.055) 0%,transparent 55%),
+  radial-gradient(ellipse 40% 40% at 95% 8%,rgba(2,101,220,0.045) 0%,transparent 55%);}
+.gbg-grid{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(14,14,14,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(14,14,14,0.06) 1px,transparent 1px);
+  background-size:54px 54px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 55% at 50% 0%,black 35%,transparent 100%);
+  mask-image:radial-gradient(ellipse 90% 55% at 50% 0%,black 35%,transparent 100%);}
+
+.page{padding:36px 32px 80px;position:relative;z-index:1;max-width:1600px;margin:0 auto;}
+
+/* HERO */
+.hero-sec{text-align:center;padding-bottom:44px;}
+.sdesc{max-width:600px;margin:0 auto 28px;}
+.sdesc strong{color:var(--text);font-weight:700;}
+.stats-row{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap;}
+.stat-item{text-align:center;}
+.stat-v{font-size:30px;font-weight:900;letter-spacing:-1.2px;line-height:1.1;color:var(--text);}
+.stat-v em{color:var(--red);font-style:normal;}
+.stat-l{font-size:9px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--text-3);margin-top:2px;}
+.stat-sep{width:1px;height:26px;background:var(--border);}
+
+/* FILTERS */
+.filter-area{margin-bottom:24px;}
+.search-row{display:flex;gap:10px;margin-bottom:12px;align-items:center;justify-content:center;flex-wrap:wrap;}
+.search-wrap{position:relative;width:100%;max-width:400px;}
+.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-3);pointer-events:none;}
+.search-inp{width:100%;height:38px;border:1px solid var(--border);border-radius:4px;padding:0 14px 0 36px;font-size:13px;font-family:'Source Sans 3', sans-serif;color:var(--text);background:var(--dark-2);outline:none;transition:border-color .15s,box-shadow .15s;}
+.search-inp:focus{border-color:rgba(235,16,0,.45);box-shadow:0 0 0 3px rgba(235,16,0,0.08);}
+.search-inp::placeholder{color:var(--text-3);}
+.filter-tabs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;}
+.ft-btn{height:32px;padding:0 13px;border:1px solid var(--border);border-radius:4px;background:var(--dark-2);color:var(--text-2);font-size:11px;font-weight:700;cursor:pointer;font-family:'Source Sans 3', sans-serif;transition:all .15s;white-space:nowrap;}
+.ft-btn:hover{border-color:var(--border-light);color:var(--text);}
+.ft-btn.active{border-color:var(--red);background:var(--red-dim);color:var(--red-ink);}
+
+/* SECTOR PILLS */
+.sectors-bar{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:28px;}
+.sec-pill{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border:1px solid var(--border);border-radius:20px;background:var(--dark-2);cursor:pointer;font-size:10px;font-weight:700;color:var(--text-2);transition:all .18s;white-space:nowrap;user-select:none;}
+.sec-pill svg{flex-shrink:0;opacity:.75;}
+.sec-pill:hover{border-color:var(--border-light);color:var(--text);}
+.sec-pill.active{border-color:var(--red);background:var(--red-dim);color:var(--red-ink);}
+.sec-pill.active svg{opacity:1;}
+
+/* GRID */
+/* Cuántas columnas hay lo sabe el guion; cuántas caben lo sabe el ancho. El
+   guion escribe `--cols` (y su tope por tramo) y aquí se elige la de cada
+   tramo, así que manda siempre la más pequeña de las dos. Antes esto se hacía
+   con un `!important` sobre el `style` en línea, y entonces el ancho ganaba
+   siempre: al filtrar por «Reguladores» en una pantalla de 1280 px salía una
+   sola columna metida en una rejilla de tres, con dos tercios en blanco. */
+.fw-grid{display:grid;grid-template-columns:repeat(var(--cols,5),minmax(0,1fr));gap:12px;}
+
+.fw-col{background:var(--dark-2);border:1px solid var(--border);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;min-width:0;}
+.fw-col-header{padding:14px 16px 11px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;background:var(--dark-3);border-radius:8px 8px 0 0;flex-shrink:0;}
+.fw-col-icon{width:30px;height:30px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.fw-col-title{font-size:10.5px;font-weight:800;letter-spacing:.2px;color:var(--text);line-height:1.3;flex:1;min-width:0;}
+.fw-col-count{background:var(--dark-4);border-radius:20px;padding:2px 7px;font-size:9px;font-weight:700;color:var(--text-3);flex-shrink:0;}
+.fw-col-body{padding:4px 0;flex:1;}
+
+/* ITEM */
+.fw-item{padding:9px 14px;display:flex;align-items:flex-start;gap:8px;cursor:pointer;transition:background .15s;position:relative;}
+.fw-item:hover{background:var(--dark-3);}
+.fw-item.hidden{display:none;}
+/* El chevron del original era un carácter de texto; aquí va dibujado. */
+.fw-item::after{content:'';position:absolute;right:11px;top:50%;width:5px;height:5px;border-right:1.5px solid var(--red);border-top:1.5px solid var(--red);transform:translateY(-50%) rotate(45deg);opacity:0;transition:opacity .15s;}
+.fw-item:hover::after{opacity:1;}
+.fw-item-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.fw-item-body{min-width:0;flex:1;}
+.fw-item-name{font-size:11.5px;font-weight:700;color:var(--text);line-height:1.25;margin-bottom:2px;}
+.fw-item-sub{font-size:9.5px;color:var(--text-2);line-height:1.45;}
+.fw-item-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px;}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;padding:1px 5px;border-radius:4px;font-size:8px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;}
+.b-mod{background:var(--red-dim);color:var(--red-ink);border:1px solid rgba(235,16,0,.25);}
+.b-intl{background:rgba(2,87,191,.09);color:var(--accent);border:1px solid rgba(2,87,191,.22);}
+.b-local{background:rgba(180,83,9,.09);color:var(--warning);border:1px solid rgba(180,83,9,.22);}
+.b-reg{background:rgba(15,107,78,.09);color:var(--success);border:1px solid rgba(15,107,78,.22);}
+.b-hybrid{background:rgba(107,39,168,.09);color:var(--purple);border:1px solid rgba(107,39,168,.22);}
+.b-ext{background:rgba(10,115,115,.09);color:var(--teal);border:1px solid rgba(10,115,115,.22);}
+
+/* REGULATION CARD (col 5) */
+.reg-card{padding:10px 14px;cursor:pointer;transition:background .15s;border-bottom:1px solid var(--border);position:relative;}
+.reg-card:hover{background:var(--dark-3);}
+.reg-card.hidden{display:none;}
+.reg-card::after{content:'';position:absolute;right:11px;top:13px;width:5px;height:5px;border-right:1.5px solid var(--red);border-top:1.5px solid var(--red);transform:rotate(45deg);opacity:0;transition:opacity .15s;}
+.reg-card:hover::after{opacity:1;}
+.reg-card-title{font-size:11px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:3px;padding-right:14px;}
+.reg-card-entity{font-size:9px;color:var(--text-2);margin-bottom:5px;}
+.reg-card-type{font-size:9px;color:var(--text-3);margin-top:4px;font-style:italic;}
+
+.empty-col{padding:28px 14px;text-align:center;color:var(--text-3);font-size:11px;}
+
+/* DETAIL PANEL */
+.dp-overlay{position:fixed;inset:0;background:rgba(14,14,14,.32);z-index:299;opacity:0;pointer-events:none;transition:opacity .28s;backdrop-filter:blur(6px);}
+.dp-overlay.open{opacity:1;pointer-events:all;}
+.detail-panel{position:fixed;right:0;top:0;bottom:0;width:400px;max-width:100%;background:var(--dark);border-left:1px solid var(--border);z-index:300;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;padding:26px 26px 40px;box-shadow:-18px 0 50px rgba(14,14,14,0.10);}
+.detail-panel.open{transform:translateX(0);}
+.dp-close{position:absolute;top:16px;right:16px;width:28px;height:28px;border:1px solid var(--border);border-radius:4px;background:var(--dark-2);cursor:pointer;color:var(--text-3);display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.dp-close:hover{border-color:var(--border-light);color:var(--text);}
+.dp-eye{font-size:9px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--text-3);margin-bottom:7px;}
+.dp-title{font-size:26px;font-weight:900;letter-spacing:-.9px;line-height:1.12;color:var(--text);margin-bottom:4px;padding-right:28px;}
+.dp-sub{font-size:12px;color:var(--text-2);margin-bottom:14px;}
+.dp-div{height:1px;background:var(--border);margin:12px 0;}
+.dp-sec{font-size:9px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--text-3);margin-bottom:9px;}
+.dp-desc{font-size:12.5px;color:var(--text-2);line-height:1.68;margin-bottom:12px;}
+.dp-ctrls{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+.dp-ctrl{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;background:var(--dark-2);border:1px solid var(--border);border-radius:4px;}
+.dp-ctrl-ico{width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.dp-ctrl-name{font-size:11.5px;font-weight:600;color:var(--text);line-height:1.3;}
+.dp-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
+.dp-tag{display:flex;align-items:center;gap:5px;padding:3px 8px;background:var(--dark-2);border:1px solid var(--border);border-radius:20px;font-size:9.5px;color:var(--text-2);}
+.cb-row{display:flex;justify-content:space-between;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-3);margin-bottom:5px;}
+.cb-val{color:var(--text);}
+.cb-track{height:4px;background:var(--dark-4);border-radius:4px;overflow:hidden;margin-bottom:12px;}
+.cb-fill{height:100%;border-radius:4px;transition:width .75s cubic-bezier(.4,0,.2,1);}
+.dp-cta{width:100%;height:40px;background:var(--red);border:none;border-radius:4px;color:white;font-size:13px;font-weight:700;cursor:pointer;font-family:'Source Sans 3', sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;margin-top:16px;}
+.dp-cta:hover{background:#c80d00;transform:translateY(-1px);box-shadow:0 8px 32px rgba(235,16,0,0.22);}
+
+/* El tope de columnas por tramo. `--cols-3` y `--cols-2` los escribe el guion
+   ya recortados, y el valor de reserva sirve por si el guion no llegara a
+   correr. Sin esto, en un móvil se quedaban cinco columnas de 60 px. */
+@media(max-width:1400px){.fw-grid{grid-template-columns:repeat(var(--cols-3,3),minmax(0,1fr));}}
+@media(max-width:900px){.fw-grid{grid-template-columns:repeat(var(--cols-2,2),minmax(0,1fr));}.detail-panel{width:100%;}}
+@media(max-width:560px){.fw-grid{grid-template-columns:minmax(0,1fr);}.page{padding:28px 16px 60px;}.stats-row{gap:16px;}.stat-sep{display:none;}}
+@media(max-width:360px){.page{padding:24px 12px 56px;}.detail-panel{padding:22px 16px 36px;}}
+
+
+
+
+
+
+
+
+
+
+
+/* ── BARRA Y PIE SIEMPRE EN OSCURO ─────────────────────────────────────── */
+nav, footer {
+  --dark: #0E0E0E;
+  --dark-2: #141414;
+  --dark-3: #1B1B1B;
+  --dark-4: #222222;
+  --border: rgba(255,255,255,0.08);
+  --border-light: rgba(255,255,255,0.12);
+  --text: #F0F0F0;
+  --text-2: rgba(240,240,240,0.65);
+  --text-3: rgba(240,240,240,0.35);
+}
+nav { background: rgba(14,14,14,0.85); }
+footer { background: #0E0E0E; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ BARRA ══════════ -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark"></div>
+    <span class="nav-logo-text">Clèrigo <small>XGRC</small></span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html#solution">Módulos</a>
+    <a href="index.html#platform">Plataforma</a>
+    <a href="index.html#how">Cómo funciona</a>
+    <a href="marcos.html">Marcos</a>
+    <a href="index.html#testimonials">Clientes</a>
+  </div>
+  <div class="nav-cta">
+    <a href="https://app.clerigo.io" class="btn-ghost">login</a>
+    <a href="precios.html" class="btn-ghost">Planes</a>
+    <a href="contacto.html" class="btn-primary">
+       Contacto
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</nav>
+
+<main class="pagina">
+
+
+
+
+
+<div class="gbg"><div class="gbg-grid"></div></div>
+
+<div class="page">
+
+  <div class="hero-sec reveal">
+    <div class="label-chip">Cobertura regulatoria multicapa</div>
+    <h1 class="section-title-center">Módulos, marcos y reguladores.<br><em>Todo en un solo entorno.</em></h1>
+    <p class="section-subtitle sdesc">Clèrigo cubre <strong>9 módulos funcionales</strong>, marcos de control híbrido, normas internacionales, reguladores locales e internacionales, y regulaciones sectoriales de RD.</p>
+    <div class="stats-row">
+      <div class="stat-item"><div class="stat-v"><em>9</em></div><div class="stat-l">Módulos</div></div>
+      <div class="stat-sep"></div>
+      <div class="stat-item"><div class="stat-v"><em>5</em></div><div class="stat-l">Marcos Híbridos</div></div>
+      <div class="stat-sep"></div>
+      <div class="stat-item"><div class="stat-v"><em>7</em></div><div class="stat-l">Normas Int'l</div></div>
+      <div class="stat-sep"></div>
+      <div class="stat-item"><div class="stat-v"><em>8</em></div><div class="stat-l">Reguladores</div></div>
+      <div class="stat-sep"></div>
+      <div class="stat-item"><div class="stat-v"><em>11</em></div><div class="stat-l">Regulaciones RD</div></div>
+    </div>
+  </div>
+
+  <div class="filter-area reveal reveal-2">
+    <div class="search-row">
+      <div class="search-wrap">
+        <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.8"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <input class="search-inp" id="searchInp" placeholder="Buscar módulo, marco, regulador…" oninput="applyFilters()">
+      </div>
+      <div class="filter-tabs">
+        <button class="ft-btn active" onclick="setType(this,'all')">Todo</button>
+        <button class="ft-btn" onclick="setType(this,'modulo')">Módulos</button>
+        <button class="ft-btn" onclick="setType(this,'hibrido')">Control Híbrido</button>
+        <button class="ft-btn" onclick="setType(this,'internacional')">Marcos Int'l</button>
+        <button class="ft-btn" onclick="setType(this,'regulador')">Reguladores</button>
+        <button class="ft-btn" onclick="setType(this,'regulacion')">Regulaciones RD</button>
+      </div>
+    </div>
+    <div class="sectors-bar">
+      <div class="sec-pill active" data-s="all" onclick="setSector(this,'all')">Todos los sectores</div>
+      <div class="sec-pill" data-s="banca" onclick="setSector(this,'banca')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 3l9 4.5H3L12 3zM5 9v9M9.7 9v9M14.3 9v9M19 9v9M3 21h18" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Banca</div>
+      <div class="sec-pill" data-s="valores" onclick="setSector(this,'valores')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 17l5.5-5.5 3.5 3.5L21 6M15 6h6v6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>Mercado de Valores</div>
+      <div class="sec-pill" data-s="seguros" onclick="setSector(this,'seguros')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 3l7.5 3v5.6c0 4.4-3.1 8.4-7.5 9.4-4.4-1-7.5-5-7.5-9.4V6L12 3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 12l2.2 2.2L15.5 10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Seguros</div>
+      <div class="sec-pill" data-s="cooperativas" onclick="setSector(this,'cooperativas')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M2.5 8.5L6 6l4 1.5h4L18 6l3.5 2.5M21.5 8.5v6.5h-2M2.5 8.5v6.5h2M10 7.5L7.8 9.7a1.7 1.7 0 0 0 2.4 2.4l1-1 3.3 3.3M13.5 14.4l1.6 1.6M11.6 16.3l1.6 1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Cooperativas</div>
+      <div class="sec-pill" data-s="pensiones" onclick="setSector(this,'pensiones')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="2.5" y="7" width="19" height="13.5" rx="2.2" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 7V5.4A2.4 2.4 0 0 1 10.9 3h2.2a2.4 2.4 0 0 1 2.4 2.4V7M2.5 12.5h19" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>Pensiones (AFP)</div>
+      <div class="sec-pill" data-s="fintech" onclick="setSector(this,'fintech')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M13.4 2.5L4.5 13.6h6.2l-1.1 7.9 8.9-11.1h-6.2l1.1-7.9z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Fintech</div>
+      <div class="sec-pill" data-s="gobierno" onclick="setSector(this,'gobierno')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 2.5a4.2 4.2 0 0 0-4.2 4.2V9h8.4V6.7A4.2 4.2 0 0 0 12 2.5zM4 9h16M5.6 9v9M10 9v9M14 9v9M18.4 9v9M3 21h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Gobierno</div>
+    </div>
+  </div>
+
+  <div class="fw-grid" id="fwGrid"></div>
+</div>
+
+<div class="dp-overlay" id="dpOverlay" onclick="closeDetail()"></div>
+<div class="detail-panel" id="detailPanel">
+  <button class="dp-close" onclick="closeDetail()">
+    <svg width="12" height="12" fill="none" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  </button>
+  <div id="dpContent"></div>
+</div>
+
+<script>
+const SECTORS = {all:'Todos',banca:'Banca',valores:'Mercado de Valores',seguros:'Seguros',cooperativas:'Cooperativas',pensiones:'Pensiones',fintech:'Fintech',gobierno:'Gobierno',tech:'Tecnología'};
+
+const DATA = {
+
+  /* ═══════════════════════════════
+     COL 1 — MÓDULOS
+  ═══════════════════════════════ */
+  modulos: {
+    title:'Módulos Funcionales', color:'#EB1000', type:'modulo',
+    icon:`<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/></svg>`,
+    items:[
+      {id:'m1',name:'Riesgo',sub:'Gestión integral de riesgos empresariales',type:'modulo',sectors:['banca','valores','seguros','cooperativas','pensiones','fintech'],coverage:92,
+        desc:'Gestión completa del ciclo de riesgo: identificación, análisis, evaluación, tratamiento y monitoreo continuo. Incluye ERM, matrices de calor, BIA y simulador de escenarios.',
+        controls:['Matrices de riesgo — impacto × probabilidad','ERM: operativo, legal, tecnológico, reputacional','Registro de eventos de pérdida','BIA — Análisis de Impacto al Negocio','Simulador de escenarios de riesgo','Reportes ejecutivos de riesgo'],
+        tags:['b-mod']},
+      {id:'m2',name:'Cumplimiento',sub:'Gestión regulatoria y normativa',type:'modulo',sectors:['banca','valores','seguros','cooperativas','pensiones','fintech','gobierno'],coverage:90,
+        desc:'Módulo central para la gestión del cumplimiento regulatorio, políticas internas y marcos normativos aplicables. Calendario regulatorio y asistente IA de cumplimiento.',
+        controls:['Gestión de políticas y procedimientos','Seguimiento de marcos regulatorios','Debida diligencia automatizada','Contratos y hechos relevantes','Calendario regulatorio y alertas','Asistente IA de cumplimiento'],
+        tags:['b-mod']},
+      {id:'m3',name:'Auditoría',sub:'Auditorías internas y externas',type:'modulo',sectors:['banca','valores','seguros','cooperativas','pensiones','fintech','gobierno'],coverage:88,
+        desc:'Planificación y ejecución de auditorías, solicitud de evidencias, requerimientos de aclaración y seguimiento de hallazgos con planes de acción.',
+        controls:['Plan anual de auditoría','Programa de trabajo por auditoría','Solicitud y carga de evidencias','Requerimientos de aclaración','Seguimiento de hallazgos y planes de acción','Informes automáticos de auditoría'],
+        tags:['b-mod']},
+      {id:'m4',name:'Control Interno',sub:'COSO — ambiente, actividades y monitoreo',type:'modulo',sectors:['banca','valores','seguros','pensiones','gobierno'],coverage:86,
+        desc:'Sistema de control interno alineado con COSO. Cubre los cinco componentes: ambiente, evaluación de riesgos, actividades de control, información y monitoreo.',
+        controls:['Ambiente de control institucional','Evaluación de riesgos de control','Actividades de control por proceso','Información y comunicación','Monitoreo y supervisión continua','Deficiencias y remediación'],
+        tags:['b-mod','b-hybrid']},
+      {id:'m5',name:'Ciberseguridad',sub:'Controles, vulnerabilidades e incidentes',type:'modulo',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:91,
+        desc:'Gestión integral de ciberseguridad: evaluación de controles, gestión de vulnerabilidades, incidentes de seguridad y cumplimiento de marcos ISO 27001, NIST y PCI-DSS.',
+        controls:['Evaluación de controles de seguridad','Gestión de vulnerabilidades y parches','Gestión de incidentes de ciberseguridad','Recertificación de accesos privilegiados','Evaluación de riesgo de proveedor TI','OSINT automatizado de terceros'],
+        tags:['b-mod','b-intl']},
+      {id:'m6',name:'Gobierno Corporativo',sub:'Comités, actas, juntas y gobernanza',type:'modulo',sectors:['banca','valores','seguros','cooperativas','pensiones'],coverage:87,
+        desc:'Gestión de la estructura de gobernanza: comités, juntas directivas, declaraciones juradas, actas y flujos de aprobación regulatoria con firma digital.',
+        controls:['Gestión de comités y juntas directivas','Actas y resoluciones digitales','Flujos de aprobación por consejo','Declaraciones juradas digitales','Registro de conflictos de interés','Organigrama y estructura de gobierno'],
+        tags:['b-mod']},
+      {id:'m7',name:'Continuidad',sub:'BCP, DRP, pruebas de resiliencia y crisis',type:'modulo',sectors:['banca','valores','seguros','fintech'],coverage:84,
+        desc:'Gestión completa de la continuidad operacional: BCP, DRP, pruebas de resiliencia, gestión de crisis. Incluido sin costo adicional al activar el módulo de Riesgo.',
+        controls:['Plan de Continuidad del Negocio (BCP)','Plan de Recuperación ante Desastres (DRP)','Pruebas y ejercicios de continuidad','Gestión de crisis y comunicación','RTO y RPO por proceso crítico','Alineado ISO 22301'],
+        tags:['b-mod','b-intl']},
+      {id:'m8',name:'Privacidad',sub:'Ley 172-13, GDPR, ciclo de vida de datos',type:'modulo',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:82,
+        desc:'Gestión del ciclo de vida de datos personales, derechos ARCO, evaluaciones de impacto y cumplimiento de la Ley 172-13 y GDPR. Incluido sin costo al activar Ciberseguridad.',
+        controls:['Registro de tratamientos de datos','Consentimiento y derechos ARCO','Evaluaciones de impacto (DPIA)','Gestión de brechas de privacidad','DPO y roles de privacidad','Ley 172-13 y GDPR alineado'],
+        tags:['b-mod','b-intl']},
+      {id:'m9',name:'Riesgos de Terceros',sub:'Due diligence y monitoreo de proveedores',type:'modulo',sectors:['banca','valores','seguros','fintech'],coverage:80,
+        desc:'Evaluación y monitoreo continuo del riesgo en proveedores y terceras partes. Cuestionarios automatizados, clasificación de criticidad y alertas en tiempo real. Incluido sin costo al activar Ciberseguridad.',
+        controls:['Inventario y clasificación de proveedores','Evaluación de riesgo de ciberseguridad','Due diligence automatizado de terceros','Cuestionarios de seguridad a proveedores','Monitoreo continuo del perfil de riesgo','Alertas de cambios en proveedor'],
+        tags:['b-mod']},
+    ]
+  },
+
+  /* ═══════════════════════════════
+     COL 2 — CONTROL HÍBRIDO
+  ═══════════════════════════════ */
+  hibrido: {
+    title:'Control Híbrido Multicapa', color:'#6B27A8', type:'hibrido',
+    icon:`<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`,
+    items:[
+      {id:'h1',name:'COSO',sub:'Control Interno — 5 Componentes',type:'hibrido',sectors:['banca','valores','seguros','pensiones','gobierno'],coverage:90,
+        desc:'Marco de referencia para diseño, implementación y evaluación de sistemas de control interno. Alineado con el módulo de Control Interno de Clèrigo.',
+        controls:['Ambiente de control','Evaluación de riesgos','Actividades de control','Información y comunicación','Supervisión y monitoreo'],
+        tags:['b-hybrid','b-mod']},
+      {id:'h2',name:'COBIT 2019',sub:'Gobierno y Controles de TI',type:'hibrido',sectors:['banca','valores','fintech','gobierno'],coverage:83,
+        desc:'Marco de gobernanza y gestión de TI empresarial. Conecta los objetivos del negocio con los objetivos de TI y define controles de gobierno digital.',
+        controls:['EDM — Evaluar, Dirigir, Monitorear','APO — Alinear, Planificar, Organizar','BAI — Construir, Adquirir, Implementar','DSS — Entregar, Servicio, Soporte','MEA — Monitorear, Evaluar, Valorar'],
+        tags:['b-hybrid']},
+      {id:'h3',name:'NIST CSF 2.0 / CIS',sub:'Ciberseguridad — 6 Funciones Core',type:'hibrido',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:79,
+        desc:'Marco de ciberseguridad del NIST v2.0 complementado con los CIS Controls. Lenguaje común para gestionar y reducir el riesgo de ciberseguridad.',
+        controls:['Govern — Gobernanza de ciberseguridad','Identify — Activos y riesgos','Protect — Controles preventivos','Detect — Monitoreo y detección','Respond — Respuesta a incidentes','Recover — Recuperación y resiliencia'],
+        tags:['b-hybrid','b-intl']},
+      {id:'h4',name:'ISO 27002',sub:'Catálogo de Controles — Certificación',type:'hibrido',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:91,
+        desc:'Catálogo de 93 controles de seguridad agrupados en 4 temas. Marco de referencia para la implementación y certificación bajo ISO 27001.',
+        controls:['Controles organizacionales (37)','Controles de personas (8)','Controles físicos (14)','Controles tecnológicos (34)','Gestión de activos de información','Criptografía y gestión de claves'],
+        tags:['b-hybrid','b-intl']},
+      {id:'h5',name:'SOC Type 2',sub:'Madurez de Controles — Informe de Efectividad',type:'hibrido',sectors:['banca','valores','fintech'],coverage:75,
+        desc:'Informe de madurez y efectividad operativa de controles sobre un período de tiempo. Evalúa 5 criterios de confianza: Seguridad, Disponibilidad, Integridad del procesamiento, Confidencialidad y Privacidad.',
+        controls:['CC — Seguridad (Criterios Comunes)','A — Disponibilidad del sistema','PI — Integridad del Procesamiento','C — Confidencialidad de la información','P — Privacidad de datos personales','Informe de efectividad operativa'],
+        tags:['b-hybrid']},
+    ]
+  },
+
+  /* ═══════════════════════════════
+     COL 3 — MARCOS INTERNACIONALES
+  ═══════════════════════════════ */
+  internacionales: {
+    title:'Marcos Internacionales', color:'#0257BF', type:'internacional',
+    icon:`<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="1.8"/></svg>`,
+    items:[
+      {id:'i1',name:'ISO 27001',sub:'Ciberseguridad — SGSI',type:'internacional',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:91,
+        desc:'Estándar internacional para sistemas de gestión de seguridad de la información. El módulo de Ciberseguridad de Clèrigo está diseñado para soportar su implementación y certificación.',
+        controls:['Contexto y partes interesadas','Liderazgo y política del SGSI','Evaluación y tratamiento de riesgos','Controles del Anexo A (ISO 27002)','Auditoría interna del SGSI','Revisión por la dirección','Mejora continua del SGSI'],
+        tags:['b-intl','b-mod']},
+      {id:'i2',name:'ISO 22301',sub:'Continuidad del Negocio — BCMS',type:'internacional',sectors:['banca','valores','seguros','fintech'],coverage:84,
+        desc:'Estándar internacional para sistemas de gestión de continuidad del negocio. El módulo de Continuidad de Clèrigo implementa el proceso ISO 22301 completo.',
+        controls:['BIA — Análisis de Impacto al Negocio','Evaluación de riesgos de continuidad','Estrategias y soluciones de continuidad','Planes de continuidad y recuperación','Ejercicios y pruebas periódicas','Mejora continua del BCMS'],
+        tags:['b-intl','b-mod']},
+      {id:'i3',name:'ISO 31000',sub:'Gestión de Riesgos — Principios',type:'internacional',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:88,
+        desc:'Marco de principios y directrices para la gestión de riesgos a nivel empresarial. El módulo de Riesgo de Clèrigo implementa el proceso ISO 31000.',
+        controls:['Principios de gestión de riesgos','Liderazgo y compromiso','Alcance, contexto y criterios','Evaluación integral del riesgo','Tratamiento del riesgo','Comunicación y consulta','Monitoreo, revisión y reporte'],
+        tags:['b-intl','b-mod']},
+      {id:'i4',name:'PCI-DSS v4.0',sub:'Ciberseguridad / TI — Datos de Pago',type:'internacional',sectors:['banca','fintech','valores'],coverage:80,
+        desc:'Estándar de seguridad para el sector de tarjetas de pago. Obligatorio para entidades que procesen, almacenen o transmitan datos de tarjetas.',
+        controls:['Red segura y protegida','Protección de datos de tarjeta','Gestión de vulnerabilidades','Control de acceso robusto','Monitoreo y pruebas de redes','Política de seguridad','Gestión de proveedores de servicios'],
+        tags:['b-intl']},
+      {id:'i5',name:'SWIFT CSCF',sub:'Customer Security Controls Framework',type:'internacional',sectors:['banca','fintech'],coverage:77,
+        desc:'Marco de controles de seguridad de la comunidad SWIFT. Obligatorio para todas las instituciones conectadas a la red de mensajería SWIFT global.',
+        controls:['Restricción del entorno SWIFT','Protección de cuentas y sistemas','Detección de anomalías transaccionales','Gestión de credenciales privilegiadas','Actualización y parcheo del entorno','Seguridad física y lógica'],
+        tags:['b-intl']},
+      {id:'i6',name:'ISO 9001',sub:'Calidad — Sistema de Gestión',type:'internacional',sectors:['banca','valores','seguros','gobierno'],coverage:72,
+        desc:'Estándar internacional para sistemas de gestión de calidad. Establece los requisitos para demostrar la capacidad de proporcionar productos y servicios que cumplan con los requisitos del cliente.',
+        controls:['Contexto y partes interesadas del SGC','Liderazgo y política de calidad','Planificación y gestión de riesgos de calidad','Operación y control de procesos','Evaluación del desempeño','No conformidades y acciones correctivas'],
+        tags:['b-intl']},
+      {id:'i7',name:'GDPR',sub:'Privacidad y Protección de Datos — UE',type:'internacional',sectors:['banca','valores','fintech','gobierno'],coverage:78,
+        desc:'Reglamento europeo de protección de datos. Aplica a organizaciones que traten datos de residentes en la UE. Cubierto por el módulo de Privacidad de Clèrigo.',
+        controls:['Base legal del tratamiento','Derechos del titular (ARCO+)','Privacidad desde el diseño','Evaluación de impacto (DPIA)','Notificación de brechas en 72h','DPO — Delegado de Protección','Transferencias internacionales de datos'],
+        tags:['b-intl','b-mod']},
+    ]
+  },
+
+  /* ═══════════════════════════════
+     COL 4 — REGULADORES
+  ═══════════════════════════════ */
+  reguladores: {
+    title:'Reguladores', color:'#B45309', type:'regulador',
+    icon:`<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+    items:[
+      {id:'r1',name:'SIB',sub:'Superintendencia de Bancos — RD',type:'regulador',sectors:['banca'],coverage:92,
+        desc:'Superintendencia de Bancos de la República Dominicana. Supervisa y regula a todas las entidades de intermediación financiera. Emite reglamentos de gobierno corporativo, riesgos, ciberseguridad y ALD/CFT.',
+        controls:['Regl. Gobierno Corporativo','Regl. Gestión Integral de Riesgos','Regl. Riesgo Operacional','Regl. Prevención Lavado de Activos','Regl. Seguridad Cibernética y TI','Supervisión prudencial y capital'],
+        tags:['b-local']},
+      {id:'r2',name:'BCRD',sub:'Banco Central de la República Dominicana',type:'regulador',sectors:['banca','fintech'],coverage:88,
+        desc:'Banco Central de la República Dominicana. Rector de la política monetaria y cambiaria. Co-emite regulaciones de ciberseguridad para el sistema financiero.',
+        controls:['Reglamento de Seguridad Cibernética y TI','Normativa del sistema de pagos','Política monetaria y estabilidad','Infraestructura crítica financiera','Reportes regulatorios'],
+        tags:['b-local']},
+      {id:'r3',name:'SIMV',sub:'Superintendencia del Mercado de Valores — RD',type:'regulador',sectors:['valores','fintech'],coverage:85,
+        desc:'Superintendencia del Mercado de Valores de la República Dominicana. Regula a los participantes del mercado de capitales: puestos de bolsa, administradoras y emisores.',
+        controls:['Regl. Intermediarios de Valores','Regl. Gobierno Corporativo MV','Regl. Gestión de Riesgos MV','Regl. Ciberseguridad','Hechos relevantes y transparencia'],
+        tags:['b-local']},
+      {id:'r4',name:'IDECOOP',sub:'Instituto de Desarrollo y Crédito Cooperativo — RD',type:'regulador',sectors:['cooperativas'],coverage:74,
+        desc:'Regula y supervisa al sector cooperativo dominicano, incluyendo cooperativas de ahorro y crédito. Emite normas de supervisión, capital y prevención ALD.',
+        controls:['Regl. Supervisión de Cooperativas','Normas de capital cooperativo','Gestión de riesgos cooperativos','Prevención lavado de activos','Gobierno cooperativo'],
+        tags:['b-local']},
+      {id:'r5',name:'SIPEN',sub:'Superintendencia de Pensiones — RD',type:'regulador',sectors:['pensiones'],coverage:76,
+        desc:'Regula y supervisa el Sistema Dominicano de Pensiones y las AFP. Establece los requisitos de control interno, auditoría y gestión de fondos previsionales.',
+        controls:['Regl. Control Interno AFP','Supervisión de fondos previsionales','Inversión de reservas de pensiones','Protección a los afiliados','Auditorías de cumplimiento'],
+        tags:['b-local']},
+      {id:'r6',name:'FINRA',sub:'Financial Industry Regulatory Authority — EE.UU.',type:'regulador',sectors:['valores'],coverage:68,
+        desc:'Autoridad Reguladora de la Industria Financiera de EE.UU. Aplica a entidades que operan como broker-dealers en mercados de capitales estadounidenses.',
+        controls:['Registro de broker-dealers','Supervisión de prácticas de ventas','Prevención de fraude financiero','Protección al inversor','Exámenes periódicos de cumplimiento'],
+        tags:['b-ext']},
+      {id:'r7',name:'SEC',sub:'Securities and Exchange Commission — EE.UU.',type:'regulador',sectors:['valores','fintech'],coverage:66,
+        desc:'Comisión de Bolsa y Valores de EE.UU. Regula los mercados de valores y protege a los inversores. Aplica a emisores y entidades con actividad en mercados norteamericanos.',
+        controls:['Divulgación de información financiera','Prevención de fraude bursátil','Control interno (SOX)','Reportes 8-K, 10-K, 20-F','Regulación de asesores de inversión'],
+        tags:['b-ext']},
+      {id:'r_optic',name:'OPTIC',sub:'Oficina Presidencial de Tecnologías de la Información y Comunicación — RD',type:'regulador',sectors:['gobierno'],coverage:85,
+        desc:'Rector de TIC del Estado Dominicano. Emite las Normas Técnicas para las Instituciones del Estado (NORTICs) y supervisa el gobierno digital, la interoperabilidad y la ciberseguridad del sector público.',
+        controls:['Emisión y actualización de las NORTICs','Gobierno digital del Estado','Interoperabilidad gubernamental segura','Ciberseguridad del sector público','Identidad digital ciudadana','Transformación digital institucional'],
+        tags:['b-local']},
+      {id:'r8',name:'OFAC',sub:'Office of Foreign Assets Control — EE.UU.',type:'regulador',sectors:['banca','valores','fintech','seguros'],coverage:82,
+        desc:'Oficina de Control de Activos Extranjeros del Tesoro de EE.UU. Administra sanciones económicas. Cumplimiento obligatorio para transacciones en USD o con contrapartes de EE.UU.',
+        controls:['Filtrado lista SDN de sanciones','Detección de transacciones bloqueadas','Due diligence de contrapartes','Programa de cumplimiento OFAC','Bloqueo y reporte de activos sancionados'],
+        tags:['b-ext']},
+    ]
+  },
+
+  /* ═══════════════════════════════
+     COL 5 — REGULACIONES RD × SECTOR
+  ═══════════════════════════════ */
+  regulaciones: {
+    title:'Regulaciones RD × Sector', color:'#0F6B4E', type:'regulacion',
+    isRegTable: true,
+    icon:`<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+    items:[
+      {id:'reg1',name:'Regl. Gobierno Corporativo',sub:'SIB',compliance:'Control interno, juntas directivas, políticas',type:'regulacion',sectors:['banca'],coverage:88,
+        desc:'Establece los requisitos de gobernanza para entidades bancarias: estructura de juntas, comités obligatorios, políticas de gobierno y control interno.',
+        controls:['Junta Directiva y comités obligatorios','Separación de funciones ejecutivas','Políticas de conflictos de interés','Código de ética y conducta','Auditoría interna y externa','Divulgación pública de gobierno'],
+        tags:['b-local','b-reg']},
+      {id:'reg2',name:'Regl. Gestión Integral de Riesgos',sub:'SIB',compliance:'Gestión de riesgos empresariales',type:'regulacion',sectors:['banca'],coverage:90,
+        desc:'Marco regulatorio de gestión integral de riesgos para entidades bancarias. Cubre riesgo de crédito, mercado, liquidez, operacional y tecnológico.',
+        controls:['Riesgo de crédito y concentración','Riesgo de mercado y tasa','Riesgo de liquidez','Riesgo operacional','Riesgo tecnológico','Capital regulatorio Basilea III'],
+        tags:['b-local','b-reg']},
+      {id:'reg3',name:'Regl. Riesgo Operacional',sub:'SIB',compliance:'Gestión de incidentes y continuidad',type:'regulacion',sectors:['banca'],coverage:85,
+        desc:'Regulación específica para la gestión del riesgo operacional: eventos de pérdida, continuidad operacional y gestión de incidentes en entidades bancarias.',
+        controls:['Identificación de riesgo operacional','Registro de eventos de pérdida','Continuidad operacional bancaria','Gestión de incidentes operativos','Indicadores KRI de riesgo operacional','Reporte de eventos al regulador'],
+        tags:['b-local','b-reg']},
+      {id:'reg4',name:'Regl. Prevención de Lavado de Activos',sub:'SIB / SIMV',compliance:'AML / Compliance financiero',type:'regulacion',sectors:['banca','valores','seguros','cooperativas'],coverage:92,
+        desc:'Regulación ALD/CFT para el sistema financiero dominicano. Basada en la Ley 155-17 y estándares GAFI/FATF. Cubre debida diligencia, monitoreo y reporte.',
+        controls:['Debida diligencia del cliente (DDC / KYC)','Identificación del beneficiario final','Monitoreo de transacciones inusuales','Reporte de transacciones sospechosas (ROS)','Listas de sanciones y PEPs','Programa de cumplimiento ALD/CFT'],
+        tags:['b-local','b-reg']},
+      {id:'reg5',name:'Regl. Seguridad Cibernética y TI',sub:'SIB / BCRD',compliance:'Ciberseguridad y gestión tecnológica',type:'regulacion',sectors:['banca'],coverage:89,
+        desc:'Reglamento de seguridad cibernética y de la información para el sistema bancario. Establece controles mínimos, gestión de incidentes y continuidad tecnológica.',
+        controls:['Gobierno de ciberseguridad institucional','Gestión de riesgos tecnológicos','Control de accesos y privilegios','Gestión de vulnerabilidades y parches','Continuidad de servicios críticos de TI','Reporte de incidentes al regulador'],
+        tags:['b-local','b-reg']},
+      {id:'reg6',name:'Regl. Intermediarios de Valores',sub:'SIMV',compliance:'Operación de puestos de bolsa',type:'regulacion',sectors:['valores'],coverage:83,
+        desc:'Regula la habilitación, operación y supervisión de los intermediarios de valores (puestos de bolsa) en el mercado de capitales dominicano.',
+        controls:['Requisitos de habilitación y licencia','Capital mínimo requerido','Segregación de activos de clientes','Mejores prácticas de ejecución','Gestión de conflictos de interés','Reporte de transacciones al regulador'],
+        tags:['b-local','b-reg']},
+      {id:'reg7',name:'Regl. Gobierno Corporativo — Valores',sub:'SIMV',compliance:'Gobernanza del mercado de valores',type:'regulacion',sectors:['valores'],coverage:80,
+        desc:'Reglamento de gobierno corporativo para los participantes del mercado de valores dominicano. Establece estándares de transparencia, responsabilidad y trato equitativo.',
+        controls:['Estructura de juntas directivas','Comités obligatorios de auditoría y riesgo','Transparencia e información al mercado','Hechos relevantes y materialidad','Derechos de los inversores','Evaluación anual del gobierno corporativo'],
+        tags:['b-local','b-reg']},
+      {id:'reg8',name:'Regl. Gestión de Riesgos — Valores',sub:'SIMV',compliance:'Gestión de riesgos en el mercado de valores',type:'regulacion',sectors:['valores'],coverage:82,
+        desc:'Marco regulatorio de gestión de riesgos para los participantes del mercado de valores dominicano.',
+        controls:['Riesgo de mercado y precio','Riesgo de crédito y contraparte','Riesgo de liquidez de mercado','Riesgo operacional de intermediación','Pruebas de estrés y escenarios','Reportes de riesgos a SIMV'],
+        tags:['b-local','b-reg']},
+      {id:'reg9',name:'Regl. Control Interno — AFP',sub:'SIPEN',compliance:'Control y auditoría de fondos de pensiones',type:'regulacion',sectors:['pensiones'],coverage:77,
+        desc:'Reglamento de control interno para las AFP. Establece los requisitos de control, auditoría y cumplimiento en la gestión de fondos previsionales.',
+        controls:['Sistema de control interno AFP','Auditoría interna y externa obligatoria','Gestión de inversiones previsionales','Controles de valoración de activos','Reporte a SIPEN y afiliados','Prevención de conflictos de interés'],
+        tags:['b-local','b-reg']},
+      {id:'reg10',name:'Regl. Supervisión de Cooperativas',sub:'IDECOOP',compliance:'Supervisión financiera cooperativa',type:'regulacion',sectors:['cooperativas'],coverage:72,
+        desc:'Marco de supervisión financiera para las cooperativas de ahorro y crédito en República Dominicana.',
+        controls:['Requisitos de capital cooperativo','Gestión de riesgos financieros','Prevención de lavado de activos','Gobierno y democracia cooperativa','Auditorías y reportes a IDECOOP','Protección al socio-cliente'],
+        tags:['b-local','b-reg']},
+      {id:'reg11',name:'NORTICs',sub:'OPTIC',compliance:'Gobierno digital, ciberseguridad, datos y TI del sector público',type:'regulacion',sectors:['gobierno'],coverage:83,
+        desc:'Normas Técnicas para las Instituciones del Estado Dominicano emitidas por la OPTIC. Regulan la gestión de tecnología, ciberseguridad, datos, interoperabilidad y gobierno digital en todas las instituciones públicas del país.',
+        controls:['Ciberseguridad institucional del Estado','Gobierno de TI del sector público','Gestión y gobierno de datos públicos','Interoperabilidad entre instituciones','Arquitectura web y servicios digitales','Identidad digital y firma electrónica','Transformación digital gubernamental'],
+        tags:['b-local','b-reg']},
+    ]
+  }
+};
+
+// ─────────────────────────────
+// STATE
+// ─────────────────────────────
+let activeSector = 'all';
+let activeType = 'all';
+let searchQuery = '';
+
+function matchItem(item) {
+  const sOk = activeSector === 'all' || item.sectors.includes(activeSector);
+  const tOk = activeType === 'all' || item.type === activeType;
+  const q = searchQuery.toLowerCase();
+  const tOk2 = !q ||
+    item.name.toLowerCase().includes(q) ||
+    item.sub.toLowerCase().includes(q) ||
+    (item.desc||'').toLowerCase().includes(q) ||
+    (item.compliance||'').toLowerCase().includes(q);
+  return sOk && tOk && tOk2;
+}
+
+function setSector(el, s) {
+  activeSector = s;
+  document.querySelectorAll('.sec-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  renderGrid();
+}
+function setType(el, t) {
+  activeType = t;
+  document.querySelectorAll('.ft-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderGrid();
+}
+function applyFilters() {
+  searchQuery = document.getElementById('searchInp').value;
+  renderGrid();
+}
+
+// ─────────────────────────────
+// RENDER
+// ─────────────────────────────
+const COLS_ORDER = ['modulos','hibrido','internacionales','reguladores','regulaciones'];
+
+function renderGrid() {
+  const grid = document.getElementById('fwGrid');
+  const visibleCols = COLS_ORDER.filter(key => {
+    const col = DATA[key];
+    return activeType === 'all' || col.type === activeType;
+  });
+  // Cuántas columnas hay. Los topes por ancho de pantalla los pone la hoja de
+  // estilo; aquí sólo se dice el número, ya recortado a cada tope, para que
+  // mande siempre el menor de los dos.
+  const nCols = Math.min(visibleCols.length, 5);
+  grid.style.setProperty('--cols', nCols);
+  grid.style.setProperty('--cols-3', Math.min(nCols, 3));
+  grid.style.setProperty('--cols-2', Math.min(nCols, 2));
+
+  grid.innerHTML = visibleCols.map(key => {
+    const col = DATA[key];
+    const vis = col.items.filter(i => matchItem(i));
+    const topBorder = `border-top:2px solid ${col.color};`;
+
+    if (col.isRegTable) {
+      return `
+      <div class="fw-col" style="${topBorder}">
+        <div class="fw-col-header">
+          <div class="fw-col-icon" style="background:${col.color}18;color:${col.color}">${col.icon}</div>
+          <div class="fw-col-title">${col.title}</div>
+          <div class="fw-col-count">${vis.length}</div>
+        </div>
+        <div class="fw-col-body">
+          ${col.items.map(item => {
+            const v = matchItem(item);
+            return `
+            <div class="reg-card ${v ? '' : 'hidden'}" onclick="openDetail('${item.id}','${key}')">
+              <div class="reg-card-title">${item.name}</div>
+              <div class="reg-card-entity">${item.sub}</div>
+              <div class="fw-item-tags" style="margin-bottom:4px">
+                ${item.sectors.map(s => `<span class="badge b-reg">${SECTORS[s]||s}</span>`).join('')}
+              </div>
+              <div class="reg-card-type">${item.compliance}</div>
+            </div>`;
+          }).join('')}
+          ${vis.length === 0 ? `<div class="empty-col">Sin resultados</div>` : ''}
+        </div>
+      </div>`;
+    }
+
+    return `
+    <div class="fw-col" style="${topBorder}">
+      <div class="fw-col-header">
+        <div class="fw-col-icon" style="background:${col.color}18;color:${col.color}">${col.icon}</div>
+        <div class="fw-col-title">${col.title}</div>
+        <div class="fw-col-count">${vis.length}</div>
+      </div>
+      <div class="fw-col-body">
+        ${col.items.map(item => {
+          const v = matchItem(item);
+          return `
+          <div class="fw-item ${v ? '' : 'hidden'}" onclick="openDetail('${item.id}','${key}')">
+            <div class="fw-item-dot" style="background:${col.color}"></div>
+            <div class="fw-item-body">
+              <div class="fw-item-name">${item.name}</div>
+              <div class="fw-item-sub">${item.sub}</div>
+              <div class="fw-item-tags">
+                ${(item.tags||[]).map(t => `<span class="badge ${t}">${BADGE_LABELS[t]||t}</span>`).join('')}
+              </div>
+            </div>
+          </div>`;
+        }).join('')}
+        ${vis.length === 0 ? `<div class="empty-col">Sin resultados</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+const BADGE_LABELS = {
+  'b-mod':'Módulo','b-intl':'Internacional','b-local':'Local RD',
+  'b-reg':'Sector','b-hybrid':'Control Híbrido','b-ext':'Int\'l'
+};
+
+// ─────────────────────────────
+// DETAIL
+// ─────────────────────────────
+function openDetail(id, colKey) {
+  const col = DATA[colKey];
+  const item = col.items.find(i => i.id === id);
+  if (!item) return;
+
+  const coverColor = item.coverage >= 85 ? '#0F6B4E' : item.coverage >= 75 ? '#B45309' : '#0257BF';
+
+  document.getElementById('dpContent').innerHTML = `
+    <div class="dp-eye" style="color:${col.color}">${col.title}</div>
+    <div class="dp-title">${item.name}</div>
+    <div class="dp-sub">${item.sub}</div>
+    ${item.compliance ? `<div style="margin-bottom:12px;padding:7px 10px;background:var(--dark-2);border-radius:4px;border:1px solid var(--border)">
+      <span style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--text-3)">Tipo de cumplimiento</span>
+      <div style="font-size:12px;color:var(--text-2);margin-top:2px">${item.compliance}</div>
+    </div>` : ''}
+    ${item.sectors ? `<div style="margin-bottom:12px">
+      <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--text-3);margin-bottom:6px">Sectores</div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px">${item.sectors.map(s=>`<div class="dp-tag"><div style="width:5px;height:5px;border-radius:50%;background:${col.color}"></div>${SECTORS[s]||s}</div>`).join('')}</div>
+    </div>` : ''}
+
+    <div class="cb-row"><span>Cobertura en Clèrigo</span><span class="cb-val">${item.coverage}%</span></div>
+    <div class="cb-track"><div class="cb-fill" style="width:0%;background:${coverColor}" data-w="${item.coverage}"></div></div>
+
+    <div class="dp-div"></div>
+    <div class="dp-sec">Descripción</div>
+    <div class="dp-desc">${item.desc}</div>
+
+    <div class="dp-div"></div>
+    <div class="dp-sec">Controles / Requisitos cubiertos</div>
+    <div class="dp-ctrls">
+      ${item.controls.map(c=>`
+        <div class="dp-ctrl">
+          <div class="dp-ctrl-ico" style="background:${col.color}18;color:${col.color}">
+            <svg width="9" height="9" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="dp-ctrl-name">${c}</div>
+        </div>`).join('')}
+    </div>
+
+    <button class="dp-cta">
+      <svg width="12" height="12" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      Activar en mi organización
+    </button>`;
+
+  document.getElementById('detailPanel').classList.add('open');
+  document.getElementById('dpOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  setTimeout(() => {
+    const f = document.querySelector('.cb-fill');
+    if (f) f.style.width = f.dataset.w + '%';
+  }, 80);
+}
+
+function closeDetail() {
+  document.getElementById('detailPanel').classList.remove('open');
+  document.getElementById('dpOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ─────────────────────────────
+// INIT
+// ─────────────────────────────
+renderGrid();
+
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.background =
+    window.scrollY > 30 ? 'rgba(14,14,14,0.97)' : 'rgba(14,14,14,0.85)';
+});
+</script>
+
+
+
+
+
+</main>
+
+<!-- ══════════ PIE ══════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo" style="text-decoration:none">
+        <div class="nav-logo-mark"></div>
+        <span class="nav-logo-text">Clèrigo</span>
+      </a>
+      <p class="brand-desc">La plataforma GRC más completa de Latinoamérica. Gobernanza, Riesgo y Cumplimiento centralizados, automatizados e inteligentes.</p>
+      <div class="social-links">
+        <a href="#" class="social-icon" title="LinkedIn" aria-label="LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="20" height="20" rx="4" fill="#0A66C2"/>
+            <path d="M7 10v7" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="7" cy="7.5" r="1.2" fill="white"/>
+            <path d="M11 17v-4c0-1.1.9-2 2-2s2 .9 2 2v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M11 13v4" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <a href="#" class="social-icon" title="Instagram" aria-label="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="ig-grad" cx="30%" cy="107%" r="150%">
+                <stop offset="0%" stop-color="#ffd600"/>
+                <stop offset="25%" stop-color="#ff7a00"/>
+                <stop offset="50%" stop-color="#ff0069"/>
+                <stop offset="75%" stop-color="#d300c5"/>
+                <stop offset="100%" stop-color="#7638fa"/>
+              </radialGradient>
+            </defs>
+            <rect x="2" y="2" width="20" height="20" rx="5.5" fill="url(#ig-grad)"/>
+            <rect x="7" y="7" width="10" height="10" rx="3" stroke="white" stroke-width="1.5" fill="none"/>
+            <circle cx="12" cy="12" r="2.5" stroke="white" stroke-width="1.5" fill="none"/>
+            <circle cx="16.2" cy="7.8" r="0.9" fill="white"/>
+          </svg>
+        </a>
+        <a href="#" class="social-icon" title="X (Twitter)" aria-label="X">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="20" height="20" rx="4" fill="#000"/>
+            <path d="M13.5 11.1L17.5 6.5H16.3L13 10.3L10.4 6.5H6.5L10.7 12.6L6.5 17.5H7.7L11.2 13.4L14 17.5H17.9L13.5 11.1Z" fill="white"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <div class="footer-col-title">Producto</div>
+        <a href="precios.html">Módulos GRC</a>
+        <a href="index.html#platform">Plataforma</a>
+        <a href="#">Integraciones</a>
+        <a href="precios.html">Precios</a>
+        <a href="#">Changelog</a>
+        <a href="index.html#solution">Entrenamiento</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Soluciones</div>
+        <a href="marcos.html">Gestión de Riesgos</a>
+        <a href="marcos.html">Cumplimiento ISO</a>
+        <a href="marcos.html">Privacidad GDPR</a>
+        <a href="marcos.html">Ciberseguridad</a>
+        <a href="marcos.html">Auditoría Interna</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Recursos</div>
+        <a href="https://clerigo.io/academia">Academia</a>
+        <a href="#">Blog GRC</a>
+        <a href="#">Webinars</a>
+        <a href="#">Casos de éxito</a>
+        <a href="#">API Developers</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Compañía</div>
+        <a href="#">Sobre nosotros</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="#">Prensa</a>
+        <a href="partners.html">Socios</a>
+        <a href="#">Carreras</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Clèrigo. Todos los derechos reservados.</span>
+    <div style="display:flex;gap:8px;align-items:center">
+      <a href="#" class="social-icon" style="width:26px;height:26px;border-radius:6px" title="LinkedIn" aria-label="LinkedIn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" fill="#0A66C2"/><path d="M7 10v7" stroke="white" stroke-width="1.6" stroke-linecap="round"/><circle cx="7" cy="7.5" r="1.2" fill="white"/><path d="M11 17v-4c0-1.1.9-2 2-2s2 .9 2 2v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 13v4" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </a>
+      <a href="#" class="social-icon" style="width:26px;height:26px;border-radius:6px" title="Instagram" aria-label="Instagram">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><defs><radialGradient id="ig2" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#ffd600"/><stop offset="25%" stop-color="#ff7a00"/><stop offset="50%" stop-color="#ff0069"/><stop offset="75%" stop-color="#d300c5"/><stop offset="100%" stop-color="#7638fa"/></radialGradient></defs><rect x="2" y="2" width="20" height="20" rx="5.5" fill="url(#ig2)"/><rect x="7" y="7" width="10" height="10" rx="3" stroke="white" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="2.5" stroke="white" stroke-width="1.5" fill="none"/><circle cx="16.2" cy="7.8" r="0.9" fill="white"/></svg>
+      </a>
+      <a href="#" class="social-icon" style="width:26px;height:26px;border-radius:6px" title="X" aria-label="X">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" fill="#000"/><path d="M13.5 11.1L17.5 6.5H16.3L13 10.3L10.4 6.5H6.5L10.7 12.6L6.5 17.5H7.7L11.2 13.4L14 17.5H17.9L13.5 11.1Z" fill="white"/></svg>
+      </a>
+      <div style="width:1px;height:14px;background:rgba(14,14,14,0.13);margin:0 4px"></div>
+      <a href="legal.html">Términos de uso</a>
+      <a href="legal.html">Privacidad</a>
+      <a href="legal.html">Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Aparición al desplazar, igual que en la portada ──
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+} else {
+  // Sin observador no hay animación, pero se ve todo. Es la única salida
+  // aceptable: lo contrario es una página en blanco.
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+{
+  "_por_que": [
+    "La tabla de marca de las cinco páginas interiores. El validador la aplica",
+    "sobre el ORIGINAL antes de comparar palabra por palabra: así lo único que",
+    "se le permite cambiar al texto es lo que está escrito aquí, y cualquier",
+    "otra palabra que alguien toque salta como fallo.",
+    "",
+    "El orden importa: las entradas se aplican de arriba abajo, y las largas van",
+    "antes que las cortas. Si «https://archemir.com» fuera antes que",
+    "«https://archemir.com/login», el segundo acabaría siendo «index.htmllogin».",
+    "",
+    "De Archemir no queda nada: ni el nombre, ni el dominio, ni un buzón. Fue",
+    "una instrucción explícita del dueño el 2026-09-06, y sustituye a la",
+    "decisión anterior de dejar los canales de contacto sin tocar."
+  ],
+
+  "_correos": [
+    "En inglés y con los nombres que usa cualquier grande: hello, legal,",
+    "privacy. El dueño ya había pedido antes «los correos habituales de",
+    "bigtech», y ahora ha añadido que en inglés — así que privacidad@ pasa a",
+    "privacy@, y no a privacidad@clerigo.io.",
+    "",
+    "OJO: estos tres buzones hay que darlos de alta en clerigo.io. Hasta que",
+    "existan, un correo a hello@clerigo.io se pierde. En la página de Contacto",
+    "es el canal principal."
+  ],
+
+  "_intactos": [
+    "Aquí iban los canales que no se tocaban. Ya no hay ninguno: el teléfono y",
+    "el WhatsApp no llevan marca dentro y no hacen falta en esta lista. Se deja",
+    "el mecanismo porque es la única puerta de escape de la tabla, y vacío se",
+    "ve que está vacío a propósito."
+  ],
+  "intactos": [],
+
+  "_letras_de_logotipo": [
+    "El original dibujaba la marca con un cuadro rojo y dos letras dentro. Al",
+    "poner el logotipo de verdad esas letras desaparecen: no son texto de la",
+    "página, son el logotipo escrito a mano. Se descuentan de los DOS lados",
+    "antes de comparar, igual que se hizo con el «GRC» de la portada."
+  ],
+  "letras_de_logotipo": ["PP", "AX", "AG"],
+
+  "_enlaces": "A dónde apunta cada enlace del original una vez la página vive en el sitio de Clèrigo. Va antes que «cambios», y de más largo a más corto.",
+  "enlaces": [
+    ["https://archemir.com/login", "https://app.clerigo.io"],
+    ["https://archemir.com/legal", "legal.html"],
+    ["https://archemir.com/precios", "precios.html"],
+    ["https://archemir.com/marcos", "marcos.html"],
+    ["https://archemir.com/prospectos/", "contacto.html"],
+    ["https://archemir.com/prospectos", "contacto.html"],
+    ["https://archemir.com/", "index.html"],
+    ["https://archemir.com", "index.html"]
+  ],
+
+  "_la_sociedad": [
+    "«Archemir Group, S.R.L.» es una sociedad, no una marca: sale en los",
+    "Términos como quien opera el servicio, en la Política de Privacidad como",
+    "responsable del tratamiento, y en el pie como titular del copyright.",
+    "",
+    "Pasa a «Clèrigo», SIN forma societaria. Es lo mismo que el dueño ya decidió",
+    "para los textos legales de la aplicación —«Clèrigo LLC no existe, pon",
+    "Clèrigo»— y aquí la razón es la misma: no se inventa una sociedad.",
+    "",
+    "PERO ESTO HAY QUE MIRARLO: unos Términos que no nombran a ninguna sociedad",
+    "no dicen quién responde ni contra quién se reclama. En cuanto haya una",
+    "sociedad de verdad, su nombre completo entra aquí y se rehacen las páginas.",
+    "La jurisdicción sí se queda como estaba y es coherente: República",
+    "Dominicana, Ley 172-13, Ley 20-00, INDOTEL, domicilio en Santo Domingo."
+  ],
+
+  "cambios": [
+    ["Archemir Group, S.R.L.", "Clèrigo"],
+    ["axioma.archemir.com", "app.clerigo.io"],
+    ["privacidad@archemir.com", "privacy@clerigo.io"],
+    ["legal@archemir.com", "legal@clerigo.io"],
+    ["hola@archemir.com", "hello@clerigo.io"],
+    ["soluciones%20de%20Archemir%20Group.", "soluciones%20de%20Cl%C3%A8rigo."],
+    ["linkedin.com/company/archemir-group", "linkedin.com/company/clerigo"],
+    ["Axioma GRC", "Clèrigo"],
+    ["Archemir Group", "Clèrigo"],
+    ["by Archemir", "XGRC"],
+    ["Archemir", "Clèrigo"],
+    ["archemir.com", "clerigo.io"]
+  ]
+}

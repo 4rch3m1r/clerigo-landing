@@ -110,6 +110,10 @@ function restosDeTemaOscuro(lineas) {
     if (enTramoQuerido) { if (l.includes(TRAMO_OSCURO_QUERIDO.cierra)) enTramoQuerido = false; continue; }
     /* El guion también pinta la barra en oscuro, y también a propósito. */
     if (/nav\.style\.background = 'rgba\(14,14,14/.test(l)) continue;
+    /* `theme-color` no pinta nada de la página: tiñe la barra del navegador
+       del teléfono. Va en oscuro a propósito, para que continúe la barra de
+       arriba, que también va en oscuro. */
+    if (/<meta name="theme-color"/.test(l)) continue;
     if (l.includes("base64")) continue;
     if (!HUELE_A_OSCURO.test(l)) continue;
     if (VALE_EL_BLANCO.some((re) => re.test(l))) continue;

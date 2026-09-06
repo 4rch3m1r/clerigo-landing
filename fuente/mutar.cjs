@@ -4,6 +4,24 @@ const fs=require('fs'), {execFileSync}=require('child_process');
 const CLARO=require('node:path').join(RAIZ,'index.html');
 const bueno=fs.readFileSync(CLARO);
 
+/* Antes de romper nada, la pagina tiene que estar VERDE.
+ *
+ * Sin esto la prueba miente: si el validador ya venia fallando por cualquier
+ * otro motivo, las once mutaciones salen «detectadas» sin que nadie las haya
+ * mirado, y encima el motivo que se imprime es el fallo de antes. Paso de
+ * verdad al reapuntar los enlaces de la portada. */
+function pasa(){
+  try { execFileSync('node',['validar.cjs'],{cwd:__dirname,encoding:'utf8'}); return {ok:true,salida:''}; }
+  catch(e){ return {ok:false,salida:e.stdout||''}; }
+}
+const limpio=pasa();
+if(!limpio.ok){
+  console.error('\n  index.html no esta en verde: romperlo no demostraria nada.');
+  console.error('  Deja el validador en TODO PASA y vuelve.\n');
+  console.error((limpio.salida.match(/^  MAL .*/gm)||[]).join('\n'));
+  process.exit(1);
+}
+
 const MUTANTES=[
   ['cambiar un relleno',        s=>s.replace('padding: 0 48px;','padding: 0 44px;')],
   ['cambiar un texto visible',  s=>s.replace('no tiene que ser','no tiene que serr')],
