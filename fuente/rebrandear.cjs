@@ -555,6 +555,30 @@ cambia('href="https://clerigo.io"', 'href="index.html"', 2);
      https://clerigo.io/academia    no hay página de academia todavía
      https://app.clerigo.io         la aplicación, que es otro sitio */
 
+/* ── 4c. Dónde vive el sitio ────────────────────────────────────────────── */
+
+/* Las direcciones ABSOLUTAS de la cabecera —la canónica, og:url, og:image,
+ * twitter:image y la ficha de datos estructurados— salen de fuente/sitio.json,
+ * no de aquí. Ahora mismo apuntan a GitHub Pages y es provisional: clerigo.io
+ * contesta a cualquier ruta con una copia vieja de la portada, así que la
+ * tarjeta que pide WhatsApp le llega como página web y no se pinta nada.
+ *
+ * El cambio se hace SÓLO sobre la cabecera. En el cuerpo hay dos enlaces a
+ * clerigo.io que no son el sitio y no se tocan: la academia, que no existe
+ * todavía, y app.clerigo.io, que es la aplicación y vive en otro sitio.
+ *
+ * Cuando clerigo.io sirva estos ficheros, se pone «base» en sitio.json y esto
+ * se vuelve una operación que no cambia nada. */
+{
+  const SITIO = JSON.parse(require("node:fs").readFileSync(
+    require("node:path").join(__dirname, "sitio.json"), "utf8"));
+  const fin = h.indexOf("</head>");
+  if (fin < 0) throw new Error("no encuentro el cierre de la cabecera");
+  const cabeza = h.slice(0, fin).split("https://clerigo.io/").join(SITIO.base + "/");
+  h = cabeza + h.slice(fin);
+  parte.push(`  · direcciones absolutas de la cabecera -> ${SITIO.base}`);
+}
+
 /* ── 5. Comprobación ────────────────────────────────────────────────────── */
 
 const restos = h.match(/archemir/gi) || [];

@@ -7,6 +7,8 @@
 const RAIZ = require("node:path").join(__dirname, "..");
 const fs = require("fs");
 const { pelado, restosDeTemaOscuro, EXCEPCIONES, sinPanelDeCertificaciones } = require("./tema.cjs");
+/* Donde vive el sitio: de aqui salen las direcciones absolutas de la cabecera. */
+const SITIO = JSON.parse(fs.readFileSync(require("node:path").join(__dirname, "sitio.json"), "utf8"));
 
 /* El original de Archemir no viaja en el repositorio —es público y ese fichero
    lleva su marca—. Sin él no se puede comparar contra la fuente, así que se
@@ -40,14 +42,17 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
   comprueba(`sin «archemir» en el ${n}`, cuenta(t, /archemir/gi) === 0, cuenta(t, /archemir/gi) + " restos");
   comprueba(`sin «GRC Intelligence» ni «Axioma GRC» en el ${n}`,
     !/GRC Intelligence|Axioma GRC|grc-intelligence/i.test(t));
-  /* Antes esto contaba apariciones de «clerigo.io» y pedía 26 o más. Dejó de
-     valer el día que los enlaces del sitio pasaron a apuntar al fichero de al
-     lado: la cuenta se desplomó a 7 y el número grande no decía nada. Ahora se
-     mira lo que de verdad importa, que es dónde va cada cosa. */
-  comprueba(`lo absoluto sigue en clerigo.io en el ${n}`,
-    /<link rel="canonical" href="https:\/\/clerigo\.io\//.test(t)
+  /* Esto contaba apariciones de «clerigo.io» y pedía 26 o más. Dejó de valer el
+     día que los enlaces del sitio pasaron a apuntar al fichero de al lado: la
+     cuenta se desplomó a 7 y el número grande no decía nada. Se mira dónde va
+     cada cosa, que es lo que importa.
+     Las direcciones absolutas de la cabecera salen de fuente/sitio.json —hoy
+     GitHub Pages, provisionalmente— y las dos del cuerpo que NO son el sitio
+     se quedan donde estaban: la academia y la aplicación. */
+  comprueba(`las direcciones absolutas son las de sitio.json en el ${n}`,
+    t.includes(`<link rel="canonical" href="${SITIO.base}/"`)
     /* og:image, og:image:secure_url y twitter:image */
-    && cuenta(t, /content="https:\/\/clerigo\.io\/og\.png"/g) === 3
+    && cuenta(t, new RegExp(`content="${SITIO.base.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/og\\.png"`, "g")) === 3
     && t.includes('href="https://app.clerigo.io"')
     && t.includes('href="https://clerigo.io/academia"'));
   comprueba(`los enlaces del sitio van a las páginas de al lado en el ${n}`,
@@ -73,8 +78,8 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
     cuenta(t, /Clèrigo/g) + " apariciones");
   comprueba(`el título es de Clèrigo en el ${n}`, /<title>Clèrigo — /.test(t));
   comprueba(`hay canonical, Open Graph y Twitter en el ${n}`,
-    /rel="canonical" href="https:\/\/clerigo\.io\//.test(t)
-    && /og:url" content="https:\/\/clerigo\.io\//.test(t)
+    t.includes(`rel="canonical" href="${SITIO.base}/"`)
+    && t.includes(`og:url" content="${SITIO.base}/"`)
     && /twitter:card/.test(t));
   /* La tarjeta de la vista previa. La etiqueta sola no vale de nada: durante
      meses apuntó a og.png y ese fichero NO existía —el servidor contestaba a

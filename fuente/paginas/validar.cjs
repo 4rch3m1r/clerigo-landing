@@ -25,6 +25,7 @@ const { palabras, aplicaMarca, comportamiento, PICTOGRAMAS } = require("./palabr
 const { restosDeTemaOscuro } = require("../tema.cjs");
 
 const MARCA = JSON.parse(fs.readFileSync(path.join(AQUI, "marca.json"), "utf8"));
+const SITIO = JSON.parse(fs.readFileSync(path.join(AQUI, "..", "sitio.json"), "utf8"));
 const PLANTILLA = lee(path.join(AQUI, "plantilla.html"));
 
 /** Las cinco. `chrome:false` es la única que no lleva barra ni pie: es una
@@ -150,25 +151,36 @@ for (const { slug, chrome } of aRevisar) {
   /* ── 3. LA LÍNEA GRÁFICA, LETRA A LETRA ───────────────────────────── */
   const titulo = (sal.match(/<title>([^<]*)<\/title>/) || [])[1] || "";
   const desc = (sal.match(/<meta name="description" content="([^"]*)"/) || [])[1] || "";
-  const ruta = (sal.match(/<link rel="canonical" href="https:\/\/clerigo\.io\/([^"]*)"/) || [])[1] || "";
-  const imagen = (sal.match(/<meta property="og:image" content="https:\/\/clerigo\.io\/([^"]*)"/) || [])[1] || "";
+  /* La canónica y la tarjeta NO se leen de la página: se calculan de
+     fuente/sitio.json igual que las calcula el sincronizador, y se exige que la
+     página diga exactamente eso. Leerlas de la página sería preguntarle al
+     examinado por la respuesta. */
+  const donde = SITIO.paginas[slug] || {};
+  const canonica = SITIO.base + "/" + donde.fichero;
+  const imagen = SITIO.base + "/" + donde.imagen;
   const cabeceraEsperada = CABECERA
     .split("{{TITULO}}").join(titulo)
     .split("{{DESCRIPCION}}").join(desc)
-    .split("{{RUTA}}").join(ruta)
-    .split("{{IMAGEN}}").join(imagen);
+    .split("{{CANONICA}}").join(canonica)
+    .split("{{IMAGEN}}").join(imagen)
+    .split("{{BASE}}").join(SITIO.base);
   comprueba(`${slug}: la cabecera, los tokens y la hoja compartida salen de la plantilla`,
     sal.startsWith(cabeceraEsperada));
-  comprueba(`${slug}: tiene título, descripción y canónica propias`,
-    titulo.includes("Clèrigo") && desc.length > 40 && ruta.length > 0,
-    `título «${titulo}», ruta «${ruta}», descripción de ${desc.length} letras`);
+  comprueba(`${slug}: la canónica y la tarjeta son las que dice sitio.json`,
+    sal.includes(`<link rel="canonical" href="${canonica}">`)
+    && sal.includes(`<meta property="og:image" content="${imagen}">`),
+    canonica);
+  comprueba(`${slug}: tiene título y descripción propios`,
+    titulo.includes("Clèrigo") && desc.length > 40,
+    `título «${titulo}», descripción de ${desc.length} letras`);
 
   /* ── La tarjeta que sale al pegar el enlace ───────────────────────────
      Esto no se puede dar por bueno mirando la etiqueta: la etiqueta llevaba
      meses apuntando a og.png y el fichero NO existía. Se comprueba que el
      fichero está, que pesa lo que puede tragar WhatsApp y que mide lo que
      piden las tarjetas grandes. */
-  const fImagen = path.join(RAIZ, imagen);
+  /* De la dirección al fichero de al lado: la tarjeta tiene que estar aquí. */
+  const fImagen = path.join(RAIZ, imagen.slice(SITIO.base.length + 1));
   const hayImagen = imagen !== "" && fs.existsSync(fImagen);
   comprueba(`${slug}: la imagen de la vista previa existe de verdad`, hayImagen, imagen || "no declara ninguna");
   if (hayImagen) {

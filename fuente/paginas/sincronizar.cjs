@@ -20,6 +20,9 @@ const RAIZ = path.join(AQUI, "..", "..");
 const lee = (p) => fs.readFileSync(p, "utf8").split("\r\n").join("\n");
 
 const PLANTILLA = lee(path.join(AQUI, "plantilla.html"));
+/* Dónde vive el sitio. Una sola línea, en fuente/sitio.json, y de ahí salen
+   todas las direcciones absolutas de las seis páginas. */
+const SITIO = JSON.parse(fs.readFileSync(path.join(AQUI, "..", "sitio.json"), "utf8"));
 const PAGINAS = [
   { slug: "legal", chrome: true },
   { slug: "precios", chrome: true },
@@ -76,18 +79,22 @@ for (const { slug, chrome } of PAGINAS) {
 
   const titulo = (antes.match(/<title>([^<]*)<\/title>/) || [])[1] || "";
   const desc = (antes.match(/<meta name="description" content="([^"]*)"/) || [])[1] || "";
-  const ruta = (antes.match(/<link rel="canonical" href="https:\/\/clerigo\.io\/([^"]*)"/) || [])[1] || "";
-  /* La tarjeta de cada página sale de su nombre y no de lo que ponga la
-     página: si se leyera de ahí, la primera vez que las cinco decían og.png
-     se habrían quedado las cinco con og.png para siempre. Pasó. */
-  const imagen = "og-" + slug + ".png";
+  /* La canónica y la tarjeta salen de sitio.json y del nombre de la página, no
+     de lo que la página diga de sí misma: si se leyeran de ahí, un valor malo
+     se copiaría a sí mismo para siempre. Pasó con og.png, que las cinco
+     heredaron de la primera versión. */
+  const donde = SITIO.paginas[slug];
+  if (!donde) throw new Error(`sitio.json no dice dónde vive ${slug}`);
+  const canonica = SITIO.base + "/" + donde.fichero;
+  const imagen = SITIO.base + "/" + donde.imagen;
 
   const { estilo, cuerpo, guion } = despieza(antes);
   const despues = CABECERA
     .split("{{TITULO}}").join(titulo)
     .split("{{DESCRIPCION}}").join(desc)
-    .split("{{RUTA}}").join(ruta)
+    .split("{{CANONICA}}").join(canonica)
     .split("{{IMAGEN}}").join(imagen)
+    .split("{{BASE}}").join(SITIO.base)
     + estilo
     + (chrome ? CIERRE : CIERRE_SIN_BARRA)
     + cuerpo
@@ -97,6 +104,6 @@ for (const { slug, chrome } of PAGINAS) {
   if (despues === antes) { console.log(`  ·  ${slug}.html ya estaba al día`); continue; }
   fs.writeFileSync(f, despues);
   tocadas++;
-  console.log(`  hecha  ${slug}.html rehecha  ·  imagen ${imagen}`);
+  console.log(`  hecha  ${slug}.html  ·  ${canonica}`);
 }
 console.log(`\n${tocadas} de ${PAGINAS.length} páginas rehechas desde la plantilla.`);

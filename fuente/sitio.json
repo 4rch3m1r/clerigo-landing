@@ -1,0 +1,38 @@
+{
+  "_por_que": [
+    "Dónde vive el sitio DE VERDAD, hoy. De aquí salen las direcciones absolutas",
+    "de las seis páginas: la canónica, og:url, og:image, twitter:image y la ficha",
+    "de datos estructurados. Está en un solo fichero a propósito: cambiar de casa",
+    "es cambiar esta línea y volver a generar.",
+    "",
+    "AHORA MISMO APUNTA A GITHUB PAGES, Y ES PROVISIONAL.",
+    "",
+    "El motivo: clerigo.io sirve una copia vieja de la portada y contesta a",
+    "CUALQUIER ruta con esa misma página. Comprobado el 2026-09-06:",
+    "",
+    "    clerigo.io/og.png      ->  200  text/html  231455 bytes",
+    "    clerigo.io/legal.html  ->  200  text/html  231455 bytes",
+    "",
+    "Con eso, el rastreador de WhatsApp pide la tarjeta, recibe una página web y",
+    "no pinta nada: el enlace sale pelado. Apuntando a Pages, que sí devuelve los",
+    "PNG como image/png, la tarjeta funciona hoy.",
+    "",
+    "CUANDO clerigo.io SIRVA ESTOS FICHEROS: pon «base» en https://clerigo.io y",
+    "corre otra vez rebrandear + a-modo-claro + paginas/sincronizar. Nada más.",
+    "Y pasa las páginas por el depurador de Facebook y el validador de X, que si",
+    "no WhatsApp puede seguir enseñando la tarjeta vieja durante días."
+  ],
+
+  "base": "https://4rch3m1r.github.io/clerigo-landing",
+  "definitiva": "https://clerigo.io",
+
+  "_rutas": "Qué fichero es cada página y con qué tarjeta se comparte.",
+  "paginas": {
+    "index": { "fichero": "", "imagen": "og.png" },
+    "legal": { "fichero": "legal.html", "imagen": "og-legal.png" },
+    "precios": { "fichero": "precios.html", "imagen": "og-precios.png" },
+    "marcos": { "fichero": "marcos.html", "imagen": "og-marcos.png" },
+    "contacto": { "fichero": "contacto.html", "imagen": "og-contacto.png" },
+    "partners": { "fichero": "partners.html", "imagen": "og-partners.png" }
+  }
+}

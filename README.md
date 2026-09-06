@@ -149,9 +149,13 @@ Revisar una por una antes de que esto lo vea un cliente.
 **Y lo que hay publicado en clerigo.io no es esto.** El dominio sirve una copia
 anterior de la portada —con los sellos de certificación todavía puestos— y
 contesta a CUALQUIER ruta con esa misma página: `/legal`, `/precios` y hasta
-`/og.png` devuelven el HTML de la portada. Mientras eso siga así, las cinco
-páginas nuevas no se ven y la tarjeta de vista previa no tiene imagen. Hay que
-volver a subir el sitio entero.
+`/og.png` devuelven el HTML de la portada. Hay que volver a subir el sitio
+entero.
+
+Mientras tanto, **las direcciones absolutas apuntan a GitHub Pages**, que sí
+sirve los ficheros: así la tarjeta de vista previa funciona hoy. Está en una
+línea, `base`, en [`fuente/sitio.json`](fuente/sitio.json). Cuando clerigo.io
+sirva estos ficheros se pone ahí `https://clerigo.io`, se vuelve a generar y ya.
 
 ## Cómo publicarla
 
