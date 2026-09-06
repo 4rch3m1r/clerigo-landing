@@ -6,7 +6,7 @@
  */
 const RAIZ = require("node:path").join(__dirname, "..");
 const fs = require("fs");
-const { pelado, restosDeTemaOscuro, EXCEPCIONES } = require("./tema.cjs");
+const { pelado, restosDeTemaOscuro, EXCEPCIONES, sinPanelDeCertificaciones } = require("./tema.cjs");
 
 /* El original de Archemir no viaja en el repositorio —es público y ese fichero
    lleva su marca—. Sin él no se puede comparar contra la fuente, así que se
@@ -64,6 +64,21 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
   const pict = sinDatos.match(/[\u{1F000}-\u{1FAFF}\u{2605}\u{2606}\u{2190}-\u{21FF}\u{2794}-\u{27BF}\u{2B00}-\u{2BFF}]/gu) || [];
   comprueba(`sin emojis, estrellas ni flechas de texto en el ${n}`, pict.length === 0, [...new Set(pict)].join(" "));
 }
+/* Lo ÚNICO que se le quita al original. El panel decía «Nuestras
+   Certificaciones» y traía sellos con la palabra «Certified» sobre ISO 27001,
+   ISO 22301 y SOC 2 Type II: son marcos que la plataforma cubre, no
+   certificaciones que Clèrigo tenga. La página es pública. */
+for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
+  /* Ojo: «ISO 22301» y «SOC 2 Type II» SÍ siguen en la página, en la lista de
+     marcos compatibles, y ahí están bien: son marcos que la plataforma cubre.
+     Lo que se comprueba es que no quede el panel que los presentaba como
+     certificaciones propias — ni su marcado ni su CSS. */
+  comprueba(`sin el panel de certificaciones en el ${n}`,
+    !/cert-panel|cert-logo-item|cert-divider|cert-logo-name|Nuestras Certificaciones/.test(t));
+}
+comprueba("y en el original SÍ estaba, que si no esta comprobación no dice nada",
+  /class="cert-panel/.test(org) && /Nuestras Certificaciones/.test(org));
+
 comprueba("el favicon apunta a favicon.png y el fichero existe",
   /rel="icon"[^>]*href="favicon\.png"/.test(osc) && fs.existsSync(require("node:path").join(RAIZ, "favicon.png")));
 
@@ -71,14 +86,25 @@ console.log("\n── Estructura intacta ─────────────
 /* La prueba dura: quitando marca, dominio, logotipo y color, los tres ficheros
    tienen que ser LA MISMA página. */
 const esqueleto = (s) => pelado(
+  /* El marcado del panel se recorta contando etiquetas, con el mismo ayudante
+     que usa el guion que lo quita: por regex se cortaba en el primer `</div>`
+     —el panel tiene divs dentro— o se llevaba de más el cierre del bloque que
+     lo envuelve. Las dos cosas pasaron. */
+  sinPanelDeCertificaciones(s)
   /* Estas dos van ANTES de pelar, porque `pelado` aplana cada bloque `{ … }` a
      una línea y después un `^--logo:` ya no existe como principio de línea. */
-  s.replace(/^.*(og:|twitter:|rel="canonical"|name="description").*$/gm, "")
+    .replace(/^.*(og:|twitter:|rel="canonical"|name="description").*$/gm, "")
     .replace(/^\s*--logo:.*$/gm, "")
     /* El bloque de ajustes de teléfono es el ÚNICO añadido de verdad, y se
        quita aquí a propósito para que el resto de la página siga comparándose
        carácter a carácter. Que exista se comprueba aparte, más abajo. */
-    .replace(/\/\* ── AJUSTES DE TELÉFONO[\s\S]*?footer \{ background: #0E0E0E; \}\n/, ""),
+    .replace(/\/\* ── AJUSTES DE TELÉFONO[\s\S]*?footer \{ background: #0E0E0E; \}\n/, "")
+    /* Y el panel de certificaciones es lo ÚNICO que se quita del original: se
+       recorta también aquí —del original, donde sí está— para que el resto de
+       la página siga comparándose línea por línea. Que NO esté en las dos
+       versiones se comprueba aparte, más abajo. */
+    .replace(/\/\* ── CERT LOGOS PANEL \(static, in hero\) ── \*\/[\s\S]*?(?=\/\* ── SECURITY TRUST STRIP ── \*\/)/, "")
+    .replace(/[ \t]*\.hero-inner > \.cert-panel \{ order: 3; \}\n/, ""),
 )
   .replace(/GRC Intelligence Platform|GRC Intelligence|Axioma GRC|Clèrigo XGRC|Clèrigo/g, "MARCA")
   .replace(/grc-intelligence\.app|portal\.archemir\.com|portal\.clerigo\.io|truestoneadvisory\.com\/login|app\.clerigo\.io|archemir\.com|clerigo\.io/g, "DOM")
@@ -171,9 +197,12 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
   comprueba(`mismo número de enlaces en el ${n}`,
     cuenta(t, /<a /g) === cuenta(org, /<a /g),
     `${cuenta(t, /<a /g)} vs ${cuenta(org, /<a /g)}`);
-  comprueba(`mismas transiciones en el ${n}`,
-    cuenta(t, /transition:/g) === cuenta(org, /transition:/g),
-    `${cuenta(t, /transition:/g)} vs ${cuenta(org, /transition:/g)}`);
+  /* Una transición MENOS que el original, y sólo una: la de
+     `.cert-logo-item`, que crecía al pasar el ratón por encima de un sello.
+     El sello ya no está, así que su animación tampoco. */
+  comprueba(`las transiciones del original menos la del sello, en el ${n}`,
+    cuenta(t, /transition:/g) === cuenta(org, /transition:/g) - 1,
+    `${cuenta(t, /transition:/g)} vs ${cuenta(org, /transition:/g)} del original`);
   comprueba(`mismos observadores de aparición en el ${n}`,
     cuenta(t, /IntersectionObserver/g) === cuenta(org, /IntersectionObserver/g));
 }

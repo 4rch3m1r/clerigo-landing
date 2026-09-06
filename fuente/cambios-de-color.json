@@ -16,30 +16,30 @@
  {
   "linea": 148,
   "antes": "    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),",
-  "despues": "    linear-gradient(rgba(14,14,14,0.03) 1px, transparent 1px),",
+  "despues": "    linear-gradient(rgba(14,14,14,0.06) 1px, transparent 1px),",
   "rol": "rejilla",
-  "motivo": "Línea horizontal de la rejilla de fondo del hero. Blanco al 2,5% pasa a negro con alfa parecida, un pelo mayor (0.03) para que se siga viendo sobre blanco. Se mantienen el tipo de degradado, la parada y el 1px."
+  "motivo": "Línea horizontal de la rejilla de fondo del hero. Blanco al 2,5% pasa a negro con alfa parecida, un pelo mayor (0.03) para que se siga viendo sobre blanco. Se mantienen el tipo de degradado, la parada y el 1px. [subido a mano: sobre blanco el valor anterior no se veía y los laterales quedaban en blanco liso]"
  },
  {
   "linea": 149,
   "antes": "    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);",
-  "despues": "    linear-gradient(90deg, rgba(14,14,14,0.03) 1px, transparent 1px);",
+  "despues": "    linear-gradient(90deg, rgba(14,14,14,0.06) 1px, transparent 1px);",
   "rol": "rejilla",
-  "motivo": "Línea vertical de la misma rejilla. Mismo criterio que la anterior; se conserva el ángulo 90deg y el transparent."
+  "motivo": "Línea vertical de la misma rejilla. Mismo criterio que la anterior; se conserva el ángulo 90deg y el transparent. [subido a mano: sobre blanco el valor anterior no se veía y los laterales quedaban en blanco liso]"
  },
  {
   "linea": 156,
   "antes": "  background: radial-gradient(ellipse, rgba(235,16,0,0.12) 0%, transparent 70%);",
-  "despues": "  background: radial-gradient(ellipse, rgba(235,16,0,0.03) 0%, transparent 70%);",
+  "despues": "  background: radial-gradient(ellipse, rgba(235,16,0,0.055) 0%, transparent 70%);",
   "rol": "brillo",
-  "motivo": "Niebla roja del hero. Sobre blanco un rojo al 12% se convierte en una mancha sucia: se baja la alfa a ~0,25 de la original (0.12 -> 0.03). Se conservan el tipo radial, la forma ellipse, las dos paradas y sus porcentajes, y el transparent final."
+  "motivo": "Niebla roja del hero. Sobre blanco un rojo al 12% se convierte en una mancha sucia: se baja la alfa a ~0,25 de la original (0.12 -> 0.03). Se conservan el tipo radial, la forma ellipse, las dos paradas y sus porcentajes, y el transparent final. [subido a mano: sobre blanco el valor anterior no se veía y los laterales quedaban en blanco liso]"
  },
  {
   "linea": 161,
   "antes": "  background: radial-gradient(circle, rgba(2,101,220,0.06) 0%, transparent 70%);",
-  "despues": "  background: radial-gradient(circle, rgba(2,101,220,0.015) 0%, transparent 70%);",
+  "despues": "  background: radial-gradient(circle, rgba(2,101,220,0.045) 0%, transparent 70%);",
   "rol": "brillo",
-  "motivo": "Segundo brillo del hero, azul. Mismo criterio: alfa a ~0,25 de la original (0.06 -> 0.015). Se conservan circle, las paradas, los porcentajes y el transparent."
+  "motivo": "Segundo brillo del hero, azul. Mismo criterio: alfa a ~0,25 de la original (0.06 -> 0.015). Se conservan circle, las paradas, los porcentajes y el transparent. [subido a mano: sobre blanco el valor anterior no se veía y los laterales quedaban en blanco liso]"
  },
  {
   "linea": 197,

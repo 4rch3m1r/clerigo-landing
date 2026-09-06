@@ -64,11 +64,14 @@ comprobado contra el producto:**
   «15+ marcos», «12 módulos».
 - Los dos premios: WE2SEC 2026 e IPEXPERT 2025.
 - Los tres testimonios, con nombre, cargo y empresa.
-- **Los sellos de certificación.** Dicen «Certified» sobre ISO 27001 y
-  SOC 2 Type II. Son marcos que la plataforma **cubre**, no certificaciones que
-  Clèrigo **tenga**. Publicar eso sin respaldo es el riesgo más serio de la
-  página, y más en un producto de cumplimiento.
 - La maqueta del «Centro de Comando» está dibujada con CSS: no es el sistema.
+
+**Los sellos de certificación ya se quitaron**, y son lo único que se le ha
+quitado al original. El panel se titulaba «Nuestras Certificaciones» y traía
+ISO 27001, ISO 22301 y SOC 2 Type II con la palabra «Certified» dentro del
+dibujo. Son marcos que la plataforma **cubre**, no certificaciones que Clèrigo
+**tenga**, y la página está abierta a cualquiera. Los nombres siguen en la
+lista de marcos compatibles, que es donde están bien dichos.
 
 Revisar una por una antes de que esto lo vea un cliente.
 

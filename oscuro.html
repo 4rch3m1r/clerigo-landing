@@ -1056,61 +1056,6 @@ footer {
 .training-cta-actions { display: flex; gap: 10px; flex-shrink: 0; }
 
 
-/* ── CERT LOGOS PANEL (static, in hero) ── */
-.cert-panel {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 16px;
-  margin-left: 40px;
-  margin-top: 16px;
-  padding: 22px 18px 20px;
-  background: rgba(255,255,255,0.055);
-  border: 1px solid rgba(255,255,255,0.13);
-  border-radius: 12px;
-  width: 158px;
-  box-shadow: 0 0 40px rgba(255,255,255,0.02), inset 0 1px 0 rgba(255,255,255,0.07);
-}
-.cert-panel-label {
-  font-size: 8px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(240,240,240,0.5);
-  text-align: center;
-  width: 100%;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  padding-bottom: 10px;
-  margin-bottom: 2px;
-}
-.cert-logo-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  opacity: 1;
-  transition: transform 0.2s, opacity 0.2s;
-  cursor: default;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
-}
-.cert-logo-item:hover { transform: scale(1.04); }
-.cert-logo-item svg { display: block; }
-.cert-logo-name {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  color: rgba(240,240,240,0.55);
-  text-transform: uppercase;
-  text-align: center;
-}
-.cert-divider {
-  width: 80%;
-  height: 1px;
-  background: rgba(255,255,255,0.08);
-}
-
 /* ── SECURITY TRUST STRIP ── */
 .security-strip {
   background: var(--dark-2);
@@ -1409,7 +1354,6 @@ footer {
      contenido en fila. */
   .hero-inner > .hero-text  { order: 1; }
   .hero-inner > .hero-award { order: 2; }
-  .hero-inner > .cert-panel { order: 3; }
 
   /* Las dos medallas, una al lado de la otra. Va con rejilla y no con «row»
      porque la primera medalla son CUATRO hermanos sueltos —cinta, disco,
@@ -1429,26 +1373,7 @@ footer {
      medalla de la otra cuando iban en vertical. En fila sobra. */
   .award-ipexpert { grid-column: 2; grid-row: 1 / span 4; margin-top: 0 !important; }
 
-  /* Los cuatro sellos, en fila y a todo el ancho en vez de en una columna de
-     158 px. Los separadores eran rayas horizontales entre sellos apilados:
-     puestos en fila no separan nada, así que se van. */
-  .cert-panel {
-    width: auto;
-    align-self: stretch;
-    margin-left: 0;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0,1fr));
-    align-items: center;
-    justify-items: center;
-    column-gap: 8px;
-    row-gap: 10px;
-  }
-  .cert-panel-label { grid-column: 1 / -1; }
-  .cert-divider { display: none; }
-  /* Los sellos son SVG de 80 px fijos: se les deja encoger para que entren
-     los cuatro hasta en una pantalla de 320. */
-  .cert-logo-item { width: 100%; }
-  .cert-logo-item svg { width: 100%; height: auto; max-width: 80px; }
+
 }
 @media (max-width: 480px) {
   /* Las tres acciones de la barra no caben y «Contacto» se cortaba: a 375 px
@@ -1624,100 +1549,6 @@ footer { background: #0E0E0E; }
       </div>
     </div>
 
-    <!-- CERT LOGOS PANEL — right column -->
-    <div class="cert-panel fade-up fade-up-4">
-      <div class="cert-panel-label">Nuestras Certificaciones</div>
-
-      <!-- ISO 27001 official seal -->
-      <div class="cert-logo-item">
-        <svg width="80" height="80" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="100" cy="100" r="96" fill="none" stroke="#1a6faf" stroke-width="7"/>
-          <circle cx="100" cy="100" r="84" fill="none" stroke="#1a6faf" stroke-width="2"/>
-          <circle cx="100" cy="100" r="82" fill="#c8d8e8" opacity="0.25"/>
-          <circle cx="100" cy="100" r="55" fill="none" stroke="rgba(200,220,240,0.3)" stroke-width="1.5"/>
-          <ellipse cx="100" cy="100" rx="30" ry="55" fill="none" stroke="rgba(200,220,240,0.3)" stroke-width="1.5"/>
-          <line x1="45" y1="100" x2="155" y2="100" stroke="rgba(200,220,240,0.3)" stroke-width="1.5"/>
-          <line x1="100" y1="45" x2="100" y2="155" stroke="rgba(200,220,240,0.3)" stroke-width="1.5"/>
-          <path d="M55 75 Q100 68 145 75" fill="none" stroke="rgba(200,220,240,0.25)" stroke-width="1.2"/>
-          <path d="M55 125 Q100 132 145 125" fill="none" stroke="rgba(200,220,240,0.25)" stroke-width="1.2"/>
-          <text x="100" y="98" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="40" fill="white" letter-spacing="-1">ISO</text>
-          <text x="100" y="132" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="26" fill="#1a6faf" letter-spacing="1">27001</text>
-          <path id="iso-top" d="M 22,100 A 78,78 0 0,1 178,100" fill="none"/>
-          <text font-family="Arial,sans-serif" font-size="11.5" font-weight="700" fill="#1a6faf" letter-spacing="0.8">
-            <textPath href="#iso-top" startOffset="6%">Information Security Management</textPath>
-          </text>
-          <path id="iso-bot" d="M 40,130 A 70,70 0 0,0 160,130" fill="none"/>
-          <text font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#1a6faf" letter-spacing="2">
-            <textPath href="#iso-bot" startOffset="22%">Certified</textPath>
-          </text>
-        </svg>
-        <span class="cert-logo-name">ISO 27001</span>
-      </div>
-
-      <div class="cert-divider"></div>
-
-      <!-- NIST official wordmark -->
-      <div class="cert-logo-item">
-        <svg width="100" height="48" viewBox="0 0 250 120" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="0" width="250" height="56" rx="4" fill="#003087"/>
-          <text x="125" y="41" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="40" fill="white" letter-spacing="6">NIST</text>
-          <text x="125" y="74" text-anchor="middle" font-family="Arial,sans-serif" font-weight="600" font-size="10.5" fill="#aac4e0" letter-spacing="0.3">National Institute of Standards</text>
-          <text x="125" y="87" text-anchor="middle" font-family="Arial,sans-serif" font-weight="600" font-size="10.5" fill="#aac4e0" letter-spacing="0.3">and Technology</text>
-          <text x="125" y="108" text-anchor="middle" font-family="Arial,sans-serif" font-weight="800" font-size="11" fill="#4a9be8" letter-spacing="1.8">CYBERSECURITY FRAMEWORK</text>
-        </svg>
-        <span class="cert-logo-name">NIST CSF</span>
-      </div>
-
-      <div class="cert-divider"></div>
-
-      <!-- SOC 2 official badge -->
-      <div class="cert-logo-item">
-        <svg width="80" height="80" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="100" cy="100" r="96" fill="none" stroke="#d4353b" stroke-width="7"/>
-          <circle cx="100" cy="100" r="84" fill="none" stroke="#d4353b" stroke-width="2"/>
-          <circle cx="100" cy="100" r="82" fill="rgba(212,53,59,0.06)"/>
-          <path id="soc-top" d="M 28,100 A 72,72 0 0,1 172,100" fill="none"/>
-          <text font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#d4353b" letter-spacing="2">
-            <textPath href="#soc-top" startOffset="18%">AICPA · SOC</textPath>
-          </text>
-          <text x="100" y="90" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="48" fill="#d4353b" letter-spacing="-2">SOC</text>
-          <text x="100" y="130" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="40" fill="white">2</text>
-          <path id="soc-bot" d="M 35,130 A 72,72 0 0,0 165,130" fill="none"/>
-          <text font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#d4353b" letter-spacing="1.5">
-            <textPath href="#soc-bot" startOffset="14%">TYPE II · CERTIFIED</textPath>
-          </text>
-        </svg>
-        <span class="cert-logo-name">SOC 2 Type II</span>
-      </div>
-
-      <div class="cert-divider"></div>
-
-      <!-- ISO 22301 official seal -->
-      <div class="cert-logo-item">
-        <svg width="80" height="80" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="100" cy="100" r="96" fill="none" stroke="#1a6faf" stroke-width="7"/>
-          <circle cx="100" cy="100" r="84" fill="none" stroke="#1a6faf" stroke-width="2"/>
-          <circle cx="100" cy="100" r="82" fill="#c8d8e8" opacity="0.25"/>
-          <circle cx="100" cy="100" r="55" fill="none" stroke="rgba(200,220,240,0.3)" stroke-width="1.5"/>
-          <ellipse cx="100" cy="100" rx="30" ry="55" fill="none" stroke="rgba(200,220,240,0.3)" stroke-width="1.5"/>
-          <line x1="45" y1="100" x2="155" y2="100" stroke="rgba(200,220,240,0.3)" stroke-width="1.5"/>
-          <line x1="100" y1="45" x2="100" y2="155" stroke="rgba(200,220,240,0.3)" stroke-width="1.5"/>
-          <path d="M55 75 Q100 68 145 75" fill="none" stroke="rgba(200,220,240,0.25)" stroke-width="1.2"/>
-          <path d="M55 125 Q100 132 145 125" fill="none" stroke="rgba(200,220,240,0.25)" stroke-width="1.2"/>
-          <text x="100" y="98" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="40" fill="white" letter-spacing="-1">ISO</text>
-          <text x="100" y="132" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="26" fill="#1a6faf" letter-spacing="1">22301</text>
-          <path id="iso22-top" d="M 22,100 A 78,78 0 0,1 178,100" fill="none"/>
-          <text font-family="Arial,sans-serif" font-size="11.5" font-weight="700" fill="#1a6faf" letter-spacing="0.8">
-            <textPath href="#iso22-top" startOffset="8%">Business Continuity Management</textPath>
-          </text>
-          <path id="iso22-bot" d="M 40,130 A 70,70 0 0,0 160,130" fill="none"/>
-          <text font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#1a6faf" letter-spacing="2">
-            <textPath href="#iso22-bot" startOffset="22%">Certified</textPath>
-          </text>
-        </svg>
-        <span class="cert-logo-name">ISO 22301</span>
-      </div>
-    </div>
 
   </div>
 

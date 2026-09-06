@@ -126,4 +126,33 @@ function restosDeTemaOscuro(lineas) {
   return { restos, excepcionadas, huerfanas };
 }
 
-module.exports = { COLOR, pelado, VALE_EL_BLANCO, EXCEPCIONES, restosDeTemaOscuro };
+/**
+ * Quita el panel de certificaciones de un texto, si lo tiene.
+ *
+ * Lo usa el validador sobre el ORIGINAL, para poder comparar el resto de la
+ * página con las versiones publicadas, de las que el panel ya salió.
+ *
+ * Cuenta etiquetas en vez de buscar un `</div>`: el panel tiene divs dentro y
+ * cualquier atajo se queda a la mitad o se lleva de más el cierre del bloque
+ * que lo envuelve. Las dos cosas pasaron antes de escribir esto.
+ */
+function sinPanelDeCertificaciones(texto) {
+  const li = texto.split("\n");
+  const ini = li.findIndex((l) => l.includes('<div class="cert-panel'));
+  if (ini < 0) return texto;
+
+  let prof = 0;
+  let fin = -1;
+  for (let i = ini; i < li.length; i++) {
+    prof += (li[i].match(/<div\b/g) || []).length;
+    prof -= (li[i].match(/<\/div>/g) || []).length;
+    if (prof === 0) { fin = i; break; }
+  }
+  if (fin < 0) return texto;
+
+  const desde = li[ini - 1] && li[ini - 1].includes("CERT LOGOS PANEL") ? ini - 1 : ini;
+  li.splice(desde, fin - desde + 1);
+  return li.join("\n");
+}
+
+module.exports = { COLOR, pelado, VALE_EL_BLANCO, EXCEPCIONES, restosDeTemaOscuro, sinPanelDeCertificaciones };

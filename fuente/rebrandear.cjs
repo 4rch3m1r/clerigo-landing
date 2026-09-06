@@ -345,26 +345,7 @@ cambia(
      medalla de la otra cuando iban en vertical. En fila sobra. */
   .award-ipexpert { grid-column: 2; grid-row: 1 / span 4; margin-top: 0 !important; }
 
-  /* Los cuatro sellos, en fila y a todo el ancho en vez de en una columna de
-     158 px. Los separadores eran rayas horizontales entre sellos apilados:
-     puestos en fila no separan nada, así que se van. */
-  .cert-panel {
-    width: auto;
-    align-self: stretch;
-    margin-left: 0;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0,1fr));
-    align-items: center;
-    justify-items: center;
-    column-gap: 8px;
-    row-gap: 10px;
-  }
-  .cert-panel-label { grid-column: 1 / -1; }
-  .cert-divider { display: none; }
-  /* Los sellos son SVG de 80 px fijos: se les deja encoger para que entren
-     los cuatro hasta en una pantalla de 320. */
-  .cert-logo-item { width: 100%; }
-  .cert-logo-item svg { width: 100%; height: auto; max-width: 80px; }
+
 }
 @media (max-width: 480px) {
   /* Las tres acciones de la barra no caben y «Contacto» se cortaba: a 375 px
@@ -421,6 +402,77 @@ footer { background: #0E0E0E; }
 </style>`,
   1,
 );
+
+/* ── 2 septies. Fuera el panel de certificaciones ───────────────────────────
+   ESTO QUITA CONTENIDO DEL ORIGINAL, y va aparte por eso.
+
+   El panel se titulaba «Nuestras Certificaciones» y traía cuatro sellos: ISO
+   27001 y ISO 22301 con la palabra «Certified» dentro del dibujo, SOC 2 con
+   «TYPE II · CERTIFIED», y NIST CSF.
+
+   Ninguno es una certificación que Clèrigo tenga: son marcos que la plataforma
+   CUBRE. Publicar lo uno como lo otro, en un producto de cumplimiento, es la
+   clase de afirmación que mira precisamente quien compra cumplimiento. Y la
+   página está en internet.
+
+   Se quita el bloque entero —rótulo y sellos—, no sólo los que dicen
+   «Certified»: el problema es el título, que afirma tener certificaciones.
+
+   Se localiza contando etiquetas, no por número de línea: así sigue valiendo
+   si el original cambia de sitio. */
+{
+  const MARCA = '<div class="cert-panel';
+  const li = h.split("\n");
+  const ini = li.findIndex((l) => l.includes(MARCA));
+  if (ini < 0) throw new Error("no encuentro el panel de certificaciones");
+
+  /* Se baja contando `<div>` que abren y `</div>` que cierran hasta volver a
+     cero: ahí acaba el bloque, sin depender de cómo esté sangrado. */
+  let prof = 0;
+  let fin = -1;
+  for (let i = ini; i < li.length; i++) {
+    prof += (li[i].match(/<div\b/g) || []).length;
+    prof -= (li[i].match(/<\/div>/g) || []).length;
+    if (prof === 0) { fin = i; break; }
+  }
+  if (fin < 0) throw new Error("el panel de certificaciones no cierra");
+
+  /* El comentario que lo anuncia se va con él. */
+  const desde = li[ini - 1].includes("CERT LOGOS PANEL") ? ini - 1 : ini;
+  const cuantas = fin - desde + 1;
+  li.splice(desde, cuantas);
+  h = li.join("\n");
+  parte.push(`${String(cuantas).padStart(3)} × líneas del panel de certificaciones (fuera)`);
+
+  if (h.includes(MARCA)) throw new Error("queda algún panel de certificaciones");
+}
+
+/* Con el panel fuera, la regla de teléfono que lo colocaba sobra. Esto va
+   ANTES de barrer el CSS, porque el barrido comprueba al final que no quede
+   ni una mención del panel — y esta regla es una. */
+cambia(
+  `  .hero-inner > .hero-text  { order: 1; }
+  .hero-inner > .hero-award { order: 2; }
+  .hero-inner > .cert-panel { order: 3; }`,
+  `  .hero-inner > .hero-text  { order: 1; }
+  .hero-inner > .hero-award { order: 2; }`,
+  1,
+);
+
+/* Y su CSS es código muerto: cincuenta y pico líneas de estilos para algo que
+   ya no existe. Se van también, que un repositorio que otro vaya a leer no
+   debe dejar preguntas sin respuesta. */
+{
+  const desde = h.indexOf("/* ── CERT LOGOS PANEL (static, in hero) ── */");
+  const hasta = h.indexOf("/* ── SECURITY TRUST STRIP ── */");
+  if (desde < 0 || hasta < 0 || hasta < desde) throw new Error("no acoto el CSS del panel de certificaciones");
+  const cuantas = h.slice(desde, hasta).split("\n").length - 1;
+  h = h.slice(0, desde) + h.slice(hasta);
+  parte.push(`${String(cuantas).padStart(3)} × líneas de CSS del panel (fuera)`);
+  for (const resto of [".cert-panel", ".cert-logo-item", ".cert-divider", ".cert-logo-name"]) {
+    if (h.includes(resto)) throw new Error(`queda CSS de ${resto}`);
+  }
+}
 
 /* ── 3. El nombre de la marca ───────────────────────────────────────────── */
 
