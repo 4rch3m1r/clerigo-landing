@@ -770,38 +770,92 @@ function cambiaBloque(marca, dentro, nombre) {
   parte.push(`${String(fin - ini + 1).padStart(3)} × líneas de dibujo → foto (${nombre})`);
 }
 
+/* ── EL CARRUSEL DE PANTALLAS ──────────────────────────────────────────────
+ *
+ * Catorce pantallas del sistema, una cada vez, con una tira de rótulos debajo
+ * para saltar a la que sea. Esto SÍ es nuevo: no sale del original.
+ *
+ * La lista va aquí y de ella salen las tres cosas —las láminas, los rótulos y
+ * la cuenta que comprueba el validador—. Antes eran cinco `<figure>` escritas
+ * a mano y añadir una era tocar tres sitios.
+ *
+ * `alt` largo y con contenido en todas: el validador exige treinta caracteres
+ * como mínimo, porque «captura del sistema» no le dice nada a quien no ve la
+ * imagen. Y `loading="lazy"` en todas MENOS la primera: ésa se ve sin bajar y
+ * diferirla la haría aparecer tarde.
+ */
+const PANTALLAS = [
+  { f: "panel",        r: "Centro de Comando",       alt: "Centro de Comando: los indicadores de las cinco áreas y el radar de conocimiento." },
+  { f: "cumplimiento", r: "Cumplimiento",            alt: "Cumplimiento Regulatorio: estado por marco, obligaciones y requisitos." },
+  { f: "riesgos",      r: "Riesgos",                 alt: "Gestión de Riesgos: madurez ERM, riesgo inherente frente a residual y mapa de calor." },
+  { f: "auditoria",    r: "Auditoría",               alt: "Gestión de Auditorías: plan anual, hallazgos y seguimiento por área." },
+  { f: "activos",      r: "Activos",                 alt: "Inventario de activos tecnológicos con su clasificación y su responsable." },
+  { f: "terceros",     r: "Terceros",                alt: "Evaluación de riesgos de terceros y estado de cada contraparte." },
+  { f: "gobierno",     r: "Gobierno Corporativo",    alt: "Gobierno Corporativo: estructura de comités, políticas y miembros registrados." },
+  { f: "xsign",        r: "Firma Digital",           alt: "Firma Digital XSign: formatos de firma avanzada, cadena de evidencia y sellado de tiempo." },
+  { f: "documental",   r: "Gestión Documental",      alt: "Gestión Documental: ciclo de vida del documento, captura y cuadro de clasificación." },
+  { f: "procesos",     r: "Procesos",                alt: "Gestión de Procesos: mapa de procesos, indicadores y riesgos asociados." },
+  { f: "teamwork",     r: "Teamwork",                alt: "Teamwork: tablero de tareas por estado, con responsable y fecha de cada una." },
+  { f: "workflow",     r: "Automatizaciones",        alt: "Motor de automatizaciones: reglas que disparan avisos y tareas sin que nadie las lance." },
+  { f: "catalogos",    r: "Motor de Catálogos",      alt: "Motor de Catálogos: el vocabulario común de normativa, controles, riesgos y amenazas." },
+  { f: "chatagent",    r: "Chat Agent",              alt: "Chat Agent: preguntas en lenguaje corriente cruzando los módulos de la plataforma." },
+];
+
+/* Las láminas: van DENTRO del marco de la plataforma, en el sitio del panel
+   que antes se dibujaba con CSS. */
+const LAMINAS_DEL_CARRUSEL = `<div class="carrusel-marco">
+  <div class="carrusel-pista">
+${PANTALLAS.map((p, i) => `    <figure class="carrusel-lamina"${i === 0 ? "" : " aria-hidden=\"true\""}>`
+  + `<img src="sistema/sistema-${p.f}.png" width="1600" height="1000"${i === 0 ? "" : ' loading="lazy"'} alt="${p.alt}"></figure>`).join("\n")}
+  </div>
+</div>`;
+
+/* Y los mandos, debajo del marco: las dos flechas y la tira de rótulos. */
+const MANDOS_DEL_CARRUSEL = `
+    <div class="carrusel-mandos" data-carrusel>
+      <button class="carrusel-flecha carrusel-atras" type="button" aria-label="Pantalla anterior">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="carrusel-tiras" role="tablist" aria-label="Pantallas de la plataforma">
+${PANTALLAS.map((p, i) => `        <button class="carrusel-tira" type="button" role="tab" aria-selected="${i === 0}">${p.r}</button>`).join("\n")}
+      </div>
+      <button class="carrusel-flecha carrusel-adelante" type="button" aria-label="Pantalla siguiente">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>`;
+
 cambiaBloque(
   '<div class="preview-body">',
   '<img class="foto-sistema" src="sistema/sistema-panel.png" width="1600" height="1000"\n'
   + '     alt="Resumen General de Clèrigo: índice de cumplimiento, riesgos de terceros, controles ERM, plan de auditoría y hallazgos críticos.">',
   "la ventana del encabezado",
 );
+/* El panel de la sección Plataforma NO se sustituye por una foto suelta: se
+ * sustituye por el carrusel entero.
+ *
+ * `platform-frame` ya es una ventana de navegador —barra con sus tres puntos y
+ * sombra—, así que las láminas salen dentro de ella, que es exactamente donde
+ * tienen que salir. Antes había una foto fija aquí Y el carrusel debajo, y la
+ * primera lámina era la misma imagen: la página enseñaba dos veces lo mismo.
+ *
+ * Los mandos —flechas y rótulos— van FUERA del marco, justo debajo: el marco
+ * lleva `overflow: hidden` y ahí dentro se recortarían.
+ */
 cambiaBloque(
   '<div class="platform-body">',
-  '<img class="foto-sistema" src="sistema/sistema-panel.png" width="1600" height="1000"\n'
-  + '     alt="Centro de Comando de Clèrigo con los indicadores de las cinco áreas y el radar de conocimiento.">',
-  "el panel de la sección Plataforma",
+  LAMINAS_DEL_CARRUSEL,
+  "el panel de la sección Plataforma → carrusel",
 );
-
-/* Y las otras cinco pantallas, debajo del panel. Esto SÍ es nuevo: no sale del
- * original. Van con `loading="lazy"` porque pesan 1,4 MB entre las cinco y
- * nadie las ve hasta bajar. */
-const GALERIA = `
-      <div class="galeria-sistema">
-        <figure><img src="sistema/sistema-riesgos.png" width="1600" height="1000" loading="lazy" alt="Gestión de Riesgos: madurez ERM, riesgo inherente frente a residual y mapa de calor."><figcaption>Riesgos</figcaption></figure>
-        <figure><img src="sistema/sistema-cumplimiento.png" width="1600" height="1000" loading="lazy" alt="Cumplimiento Regulatorio: estado por marco y requisitos."><figcaption>Cumplimiento</figcaption></figure>
-        <figure><img src="sistema/sistema-auditoria.png" width="1600" height="1000" loading="lazy" alt="Gestión de Auditorías: plan anual, hallazgos y seguimiento."><figcaption>Auditoría</figcaption></figure>
-        <figure><img src="sistema/sistema-activos.png" width="1600" height="1000" loading="lazy" alt="Inventario de activos tecnológicos con su clasificación."><figcaption>Activos</figcaption></figure>
-        <figure><img src="sistema/sistema-terceros.png" width="1600" height="1000" loading="lazy" alt="Evaluación de riesgos de terceros y estado de las contrapartes."><figcaption>Terceros</figcaption></figure>
-      </div>`;
 {
+  /* Los mandos, justo después de que cierre el marco. */
   const cierre = "\n    </div>\n";
   const i = h.indexOf('<div class="platform-frame');
-  const j = h.indexOf(cierre, h.indexOf("foto-sistema", i));
+  const j = h.indexOf(cierre, h.indexOf("carrusel-pista", i));
   if (j < 0) throw new Error("no encuentro dónde acaba el marco de la plataforma");
-  h = h.slice(0, j + cierre.length) + GALERIA + "\n" + h.slice(j + cierre.length);
-  parte.push("  · galería de 5 pantallas añadida bajo el panel");
+  h = h.slice(0, j + cierre.length) + MANDOS_DEL_CARRUSEL + "\n" + h.slice(j + cierre.length);
+  parte.push(`  · carrusel de ${PANTALLAS.length} pantallas, con sus mandos`);
 }
+
 
 /* El CSS de las fotos va DENTRO del tramo de añadidos, entre el rótulo de los
    ajustes de teléfono y el del pie oscuro: así la comprobación lo recorta con
@@ -810,25 +864,175 @@ cambia(
   "/* ── BARRA Y PIE SIEMPRE EN OSCURO ──",
   `/* ── LAS FOTOS DEL SISTEMA ─────────────────────────────────────────────── */
 .foto-sistema { display: block; width: 100%; height: auto; }
-.galeria-sistema {
-  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px;
-  max-width: 1160px; margin: 24px auto 0; padding: 0 48px;
+
+/* ── EL CARRUSEL DE PANTALLAS ───────────────────────────────────────────────
+   Una lámina cada vez, y la pista entera se desplaza.
+
+   Sobre la curva: 'cubic-bezier(.32,.72,0,1)' arranca deprisa y frena mucho al
+   final. Es lo que da la sensación de que la lámina «llega» y se posa, en vez
+   de pararse en seco. Con la curva de siempre —ease— el movimiento es
+   simétrico y parece mecánico.
+
+   La lámina que no toca NO se esconde con display:none: se deja en su sitio,
+   más pequeña y más apagada. Así se ve que hay más a los lados, que es la
+   mitad de lo que invita a pasar. */
+.carrusel-marco { overflow: hidden; }
+.carrusel-pista {
+  display: flex;
+  transition: transform 700ms cubic-bezier(.32,.72,0,1);
+  will-change: transform;
 }
-.galeria-sistema figure { margin: 0; }
-.galeria-sistema img {
-  width: 100%; height: auto; display: block;
-  border: 1px solid var(--border); border-radius: 6px;
+.carrusel-lamina {
+  flex: 0 0 100%; margin: 0; min-width: 0;
+  transform: scale(.94); opacity: .35;
+  transition: transform 700ms cubic-bezier(.32,.72,0,1), opacity 500ms ease;
 }
-.galeria-sistema figcaption {
-  font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
-  color: var(--text-3); margin-top: 10px; text-align: center;
+.carrusel-lamina.es-la-que-toca { transform: scale(1); opacity: 1; }
+/* Sin borde ni redondeo propios: la lamina va DENTRO de la ventana de
+   «platform-frame», que ya los pone. */
+.carrusel-lamina img { width: 100%; height: auto; display: block; }
+
+/* Los mandos: una fila debajo del marco. Las flechas NO van encima de la
+   pantalla —taparian justo lo que se ha venido a ver— y el marco lleva
+   «overflow: hidden», asi que dentro se recortarian. */
+.carrusel-mandos {
+  display: flex; align-items: center; gap: 12px;
+  max-width: 1160px; margin: 20px auto 0; padding: 0 8px;
 }
-@media (max-width: 900px) { .galeria-sistema { grid-template-columns: repeat(2, minmax(0,1fr)); padding: 0 20px; } }
-@media (max-width: 520px) { .galeria-sistema { grid-template-columns: minmax(0,1fr); } }
+.carrusel-flecha {
+  flex: 0 0 auto;
+  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border); border-radius: 50%;
+  background: var(--dark-2); color: var(--text-2);
+  cursor: pointer; padding: 0;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.carrusel-flecha:hover { background: var(--dark-3); color: var(--text); border-color: var(--border-light); }
+.carrusel-flecha:disabled { opacity: .3; cursor: default; }
+
+
+/* La tira de rótulos. Hace de índice y de mando: con catorce pantallas, unos
+   puntitos no dicen a dónde llevan. */
+.carrusel-tiras {
+  flex: 1 1 auto; min-width: 0;
+  display: flex; gap: 8px;
+  overflow-x: auto; scrollbar-width: none; padding-bottom: 2px;
+}
+.carrusel-tiras::-webkit-scrollbar { display: none; }
+.carrusel-tira {
+  flex: 0 0 auto; cursor: pointer;
+  font-size: 11px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase;
+  color: var(--text-3); background: transparent;
+  border: 1px solid var(--border); border-radius: 999px;
+  padding: 7px 14px;
+  transition: color .2s, border-color .2s, background .2s;
+}
+.carrusel-tira:hover { color: var(--text-2); border-color: var(--border-light); }
+.carrusel-tira[aria-selected="true"] { color: var(--text); border-color: var(--red); background: var(--red-soft); }
+
+@media (max-width: 900px) { .carrusel-mandos { padding: 0 20px; } .carrusel-flecha { display: none; } }
+
+/* Quien pide menos movimiento lo recibe: la lámina cambia igual, pero sin el
+   desplazamiento. */
+@media (prefers-reduced-motion: reduce) {
+  .carrusel-pista, .carrusel-lamina { transition: none; }
+}
 
 /* ── BARRA Y PIE SIEMPRE EN OSCURO ──`,
   1,
 );
+
+/* El guion del carrusel. Va en su propia etiqueta, la ÚNICA que se añade al
+ * original aparte de la ficha de datos estructurados, y está declarada en
+ * «validar.cjs» por eso.
+ *
+ * Sin él, el carrusel se queda en la primera pantalla y las flechas no hacen
+ * nada. Se degrada bien: si el guion no llegara, se ve la primera lámina
+ * entera y los rótulos no engañan a nadie porque no reaccionan.
+ */
+{
+  const GUION_CARRUSEL = `
+<script>
+/* El carrusel de pantallas del sistema.
+   Nada de dependencias: mueve la pista con una transformación y marca cuál es
+   la lámina que toca. La transición la hace el CSS. */
+(function () {
+  /* Las laminas viven DENTRO de la ventana de la plataforma y los mandos
+     FUERA, debajo, asi que no cuelgan de un mismo contenedor: se buscan por
+     separado en el documento. Solo hay un carrusel en la pagina. */
+  var caja = document.querySelector('[data-carrusel]');
+  var pista = document.querySelector('.carrusel-pista');
+  if (!caja || !pista) return;
+  var laminas = [].slice.call(document.querySelectorAll('.carrusel-lamina'));
+  var tiras = [].slice.call(caja.querySelectorAll('.carrusel-tira'));
+  var atras = caja.querySelector('.carrusel-atras');
+  var adelante = caja.querySelector('.carrusel-adelante');
+  if (!laminas.length) return;
+  var cual = 0;
+  /* El rótulo de la barra de la ventana. Decía siempre «Centro de Comando»,
+     también con XSign o el gestor documental delante: una ventana que no se
+     entera de lo que enseña. Los nombres salen de los propios rótulos, así
+     que no hay una segunda lista que se pueda desincronizar. */
+  var barra = document.querySelector('.ptb-title');
+  var marca = barra ? (barra.textContent.split('—')[0] || '').trim() : '';
+
+  function pinta() {
+    pista.style.transform = 'translateX(' + (-cual * 100) + '%)';
+    for (var i = 0; i < laminas.length; i++) {
+      var toca = i === cual;
+      laminas[i].classList.toggle('es-la-que-toca', toca);
+      /* Lo que no se ve tampoco se lee en voz alta. */
+      if (toca) laminas[i].removeAttribute('aria-hidden');
+      else laminas[i].setAttribute('aria-hidden', 'true');
+      if (tiras[i]) tiras[i].setAttribute('aria-selected', toca ? 'true' : 'false');
+    }
+    if (barra && tiras[cual]) barra.textContent = marca + ' — ' + tiras[cual].textContent;
+    if (atras) atras.disabled = cual === 0;
+    if (adelante) adelante.disabled = cual === laminas.length - 1;
+    /* Que el rótulo elegido se vea sin tener que arrastrar la tira. */
+    if (tiras[cual] && tiras[cual].scrollIntoView) {
+      tiras[cual].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
+  }
+
+  function ir(n) {
+    cual = Math.max(0, Math.min(laminas.length - 1, n));
+    pinta();
+  }
+
+  if (atras) atras.addEventListener('click', function () { ir(cual - 1); });
+  if (adelante) adelante.addEventListener('click', function () { ir(cual + 1); });
+  tiras.forEach(function (t, i) { t.addEventListener('click', function () { ir(i); }); });
+
+  /* Flechas del teclado, cuando el foco está dentro. */
+  caja.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') { ir(cual - 1); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { ir(cual + 1); e.preventDefault(); }
+  });
+
+  /* Arrastrar, que en un teléfono es lo único que se intenta. Se mira el
+     desplazamiento total al soltar y no durante: seguir el dedo en tiempo real
+     obliga a quitar la transición y a volver a ponerla, y se ve el salto. */
+  var x0 = null;
+  var zona = pista.parentNode;
+  zona.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  zona.addEventListener('touchend', function (e) {
+    if (x0 === null) return;
+    var d = e.changedTouches[0].clientX - x0;
+    if (Math.abs(d) > 40) ir(cual + (d < 0 ? 1 : -1));
+    x0 = null;
+  });
+
+  pinta();
+})();
+</script>
+`;
+  const cierre = "\n</body>";
+  const i = h.lastIndexOf(cierre);
+  if (i < 0) throw new Error("no encuentro el cierre del cuerpo para el guion del carrusel");
+  h = h.slice(0, i) + GUION_CARRUSEL + h.slice(i);
+  parte.push("  · guion del carrusel");
+}
 
 /* ── 5. Comprobación ────────────────────────────────────────────────────── */
 

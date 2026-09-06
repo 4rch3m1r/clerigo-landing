@@ -168,8 +168,8 @@ comprueba("y en el original el rótulo decía «Nuestras Certificaciones»",
 for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
   const pedidas = [...new Set([...t.matchAll(/src="(sistema\/[a-z0-9-]+\.png)"/g)].map((m) => m[1]))];
   const faltan = pedidas.filter((f) => !fs.existsSync(require("node:path").join(RAIZ, f)));
-  comprueba(`las 6 fotos del sistema existen, en el ${n}`,
-    pedidas.length === 6 && faltan.length === 0,
+  comprueba(`las 14 fotos del sistema existen, en el ${n}`,
+    pedidas.length === 14 && faltan.length === 0,
     `pide ${pedidas.length}` + (faltan.length ? `, faltan ${faltan.join(", ")}` : ""));
   /* Y que sean fotos de verdad, no un recorte de 2 KB: se leen sus medidas de
      la cabecera del PNG. */
@@ -183,9 +183,13 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
     fs.closeSync(fd);
     if (cab.readUInt32BE(16) !== 1600) malas.push(`${f}: ${cab.readUInt32BE(16)} px de ancho`);
   }
-  comprueba(`y las 6 miden 1600 de ancho, en el ${n}`, malas.length === 0, malas.join(" | "));
-  comprueba(`la galería no se carga hasta que se baja, en el ${n}`,
-    cuenta(t, /loading="lazy"/g) === 5, cuenta(t, /loading="lazy"/g) + " con carga diferida");
+  comprueba(`y las 14 miden 1600 de ancho, en el ${n}`, malas.length === 0, malas.join(" | "));
+  /* Trece de las catorce. La primera NO va diferida a propósito: es la que se
+     ve al llegar al carrusel, y diferirla la haría aparecer tarde. Que sean
+     justo trece delata las dos formas de estropearlo: quitar el `lazy` de
+     todas, o ponérselo también a la primera. */
+  comprueba(`el carrusel no se carga entero hasta que se baja, en el ${n}`,
+    cuenta(t, /loading="lazy"/g) === 13, cuenta(t, /loading="lazy"/g) + " con carga diferida");
   comprueba(`toda foto lleva su descripción para quien no la ve, en el ${n}`,
     cuenta(t, /<img[^>]*src="sistema\//g) === cuenta(t, /<img[^>]*src="sistema\/[^>]*alt="[^"]{30,}"/g));
 }
@@ -235,12 +239,15 @@ const esqueleto = (s) => pelado(
      comparando línea por línea contra el original, donde eran rutas de
      archemir.com. No es una excepción nueva: es la misma normalización del
      dominio que ya había, un paso antes. */
-  /* Lo que ocupa el sitio de las maquetas —las dos fotos del sistema— y la
-     galería de cinco, que es lo único de la página que no sale del original.
-     Del original ya se recortaron las maquetas unas líneas más arriba; aquí se
-     recorta lo que las sustituye, y así el resto sigue comparándose entero. */
+  /* Lo que ocupa el sitio de las maquetas —las dos fotos del sistema— y el
+     carrusel de catorce pantallas con su guion, que es lo único de la página
+     que no sale del original. Del original ya se recortaron las maquetas unas
+     líneas más arriba; aquí se recorta lo que las sustituye, y así el resto
+     sigue comparándose entero. */
   .replace(/[ \t]*<img class="foto-sistema"[\s\S]*?>\n/g, "")
-  .replace(/[ \t]*<div class="galeria-sistema">[\s\S]*?<\/div>\n/, "")
+  .replace(/[ \t]*<div class="carrusel-marco">[\s\S]*?\n      <\/div>\n/, "")
+  .replace(/[ \t]*<div class="carrusel-mandos" data-carrusel>[\s\S]*?\n    <\/div>\n/, "")
+  .replace(/<script>\n\/[*] El carrusel de pantallas[\s\S]*?<\/script>\n/, "")
   /* Y el enlace al Centro de Confianza, que es lo único añadido a la página. */
   .replace(/[ \t]*<a href="confianza\.html">[^<]*<\/a>\n/, "")
   /* El rótulo del panel del hero. Es lo ÚNICO que se le cambia de TEXTO al
@@ -351,13 +358,20 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
     && t.includes("footer { background: #0E0E0E; }")
     && !/nav\.style\.background = 'rgba\(255/.test(t));
 
-  /* Los mismos guiones que el original, más UNO: el de datos estructurados de
-     la cabecera, que no es código —no se ejecuta— sino la ficha que leen
-     Google y LinkedIn para pintar la tarjeta del enlace. */
-  comprueba(`mismo guion en el ${n}`,
-    cuenta(t, /<script/g) === cuenta(org, /<script/g) + 1
-    && cuenta(t, /<script type="application\/ld\+json">/g) === 1,
-    `${cuenta(t, /<script/g)} vs ${cuenta(org, /<script/g)} + 1`);
+  /* Los mismos guiones que el original, más DOS, y sólo esos dos:
+       · el de datos estructurados de la cabecera, que no es código —no se
+         ejecuta— sino la ficha que leen Google y LinkedIn para pintar la
+         tarjeta del enlace;
+       · el del carrusel de pantallas, que es lo ÚNICO que se le añade de
+         comportamiento a la página.
+     Se comprueban los dos por separado y no sólo la cuenta: con la cuenta a
+     secas, cambiar uno por otro pasaría de largo. */
+  comprueba(`los guiones del original más los dos declarados, en el ${n}`,
+    cuenta(t, /<script/g) === cuenta(org, /<script/g) + 2
+    && cuenta(t, /<script type="application\/ld\+json">/g) === 1
+    && cuenta(t, /<div class="carrusel-mandos" data-carrusel>/g) === 1
+    && t.includes("carrusel-pista"),
+    `${cuenta(t, /<script/g)} vs ${cuenta(org, /<script/g)} + 2`);
   comprueba(`mismas secciones en el ${n}`,
     cuenta(t, /<section/g) === cuenta(org, /<section/g),
     `${cuenta(t, /<section/g)} vs ${cuenta(org, /<section/g)}`);
@@ -367,13 +381,15 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
   comprueba(`mismo número de enlaces en el ${n}`,
     cuenta(t, /<a /g) === cuenta(org, /<a /g) + 1,
     `${cuenta(t, /<a /g)} vs ${cuenta(org, /<a /g)}`);
-  /* Una transición MÁS que el original, y sólo una: la de la ficha de
-     integración, que ahora se levanta al pasar por encima. La del sello
-     —`.cert-logo-item`, que crece al pasar el ratón— sigue estando: el panel
-     volvió a la página. Se escribe la cuenta y no un número suelto para que
-     se vea de dónde sale. */
-  comprueba(`las transiciones del original más la de la ficha, en el ${n}`,
-    cuenta(t, /transition:/g) === cuenta(org, /transition:/g) + 1,
+  /* Las del original más SEIS, y se escribe de dónde sale cada una en vez de
+     poner un número suelto:
+       +1  la ficha de integración, que se levanta al pasar por encima;
+       +5  el carrusel — la pista, la lámina, la flecha, el rótulo, y la de
+           «sin movimiento» para quien lo pide en su sistema.
+     La del sello sigue contada dentro de las del original: `.cert-logo-item`
+     volvió con el panel. */
+  comprueba(`las transiciones del original más la de la ficha y las 5 del carrusel, en el ${n}`,
+    cuenta(t, /transition:/g) === cuenta(org, /transition:/g) + 1 + 5,
     `${cuenta(t, /transition:/g)} vs ${cuenta(org, /transition:/g)} del original`);
   comprueba(`mismos observadores de aparición en el ${n}`,
     cuenta(t, /IntersectionObserver/g) === cuenta(org, /IntersectionObserver/g));

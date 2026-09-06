@@ -38,8 +38,26 @@ const MUTANTES=[
      apuntaba a un fichero que no existía y nadie se enteró. */
   ['apuntar una foto a un fichero que no está', s=>s.replace('sistema/sistema-panel.png','sistema/sistema-inventado.png')],
   ['quitarle la descripcion a una foto',   s=>s.replace(/alt="Resumen General de[^"]*"/,'alt=""')],
-  ['quitar la galeria de pantallas',        s=>s.replace('<div class="galeria-sistema">','<div class="galeria-quitada">')],
-  ['cargar la galeria de golpe',            s=>s.replace(/ loading="lazy"/g,'')],
+  /* El carrusel son DOS piezas: las laminas, dentro de la ventana de la
+     plataforma, y los mandos, debajo y fuera. Se rompen por separado porque
+     quitar una sola deja la pagina en pie y con pinta de estar bien. */
+  ['quitar las laminas del carrusel',       s=>s.replace('<div class="carrusel-marco">','<div class="carrusel-quitado">')],
+  ['quitar los mandos del carrusel',        s=>s.replace('<div class="carrusel-mandos" data-carrusel>','<div class="mandos-quitados">')],
+  ['cargar el carrusel de golpe',           s=>s.replace(/ loading="lazy"/g,'')],
+  /* La primera lamina NO va diferida: es la que se ve al llegar. Ponersela
+     tambien a ella es el fallo silencioso de este bloque —la pagina sigue
+     entera y solo se nota que la primera pantalla aparece tarde—. */
+  ['diferir tambien la primera lamina',
+    s=>s.replace('<img src="sistema/sistema-panel.png" width="1600" height="1000" alt=',
+                 '<img src="sistema/sistema-panel.png" width="1600" height="1000" loading="lazy" alt=')],
+  /* El guion del carrusel. Sin el, las flechas y los rotulos no hacen nada y la
+     pagina se queda en la primera pantalla, sin un solo error en consola.
+     Va con expresion y no con texto a pelo: el fichero se escribe con CRLF y un
+     "\n" en la cadena NO casa. La primera version de esta mutacion no llegaba a
+     aplicarse, asi que salia «SE LE ESCAPA» por un cambio que nunca se hizo —el
+     peor resultado posible, porque parece un agujero y no lo es. */
+  ['quitar el guion del carrusel',
+    s=>s.replace(/<script>(\r?\n)\/\* El carrusel de pantallas/, '<script>$1/* quitado a proposito')],
   /* El panel del hero. Las tres rompen algo que no se nota mirando: la página
      queda entera y lo único que cambia es lo que dice de sí misma. */
   ['devolver el rotulo viejo del panel',
