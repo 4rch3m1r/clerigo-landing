@@ -82,6 +82,52 @@ El repositorio tiene que ser público, o hacer falta un plan de pago.
 **Con hosting propio:** subir los tres ficheros por FTP a la raíz del sitio y
 apuntar el dominio ahí.
 
+## Cómo se rehace
+
+Los tres ficheros de arriba **están generados**. No se editan a mano: se
+regeneran desde el original de Archemir con los guiones de `fuente/`.
+
+```bash
+node fuente/rebrandear.cjs     # el original  ->  oscuro.html + favicon.png
+node fuente/a-modo-claro.cjs   # oscuro.html  ->  index.html
+node fuente/validar.cjs        # comprueba que todo cuadra
+node fuente/mutar.cjs          # rompe el validador a propósito, once veces
+```
+
+No hacen falta dependencias: sólo Node.
+
+**El original no está aquí.** `fuente/archemir-original.html` es el landing de
+Archemir con su marca y sus textos, y este repositorio es público: se queda
+fuera a propósito. Para regenerar la página hay que ponerlo a mano en
+`fuente/`. Los guiones avisan si falta. Los ficheros ya generados —`index.html`
+y `oscuro.html`— están en el repositorio y no dependen de él.
+
+| En `fuente/` | |
+|---|---|
+| `archemir-original.html` | el landing aprobado, sin tocar. La fuente de todo. **No versionado** |
+| `logo.png` | la marca de Clèrigo, 160 × 160 |
+| `rebrandear.cjs` | marca, dominio, logotipo, metadatos, los SVG y los ajustes de teléfono |
+| `cambios-de-color.json` | los 264 cambios de color de la versión clara, uno a uno |
+| `a-modo-claro.cjs` | los aplica sobre la versión oscura |
+| `tema.cjs` | lo que comparten el aplicador y el validador |
+| `validar.cjs` | las comprobaciones |
+| `mutar.cjs` | rompe el validador a propósito, para ver si de verdad mira |
+
+**Por qué se puede confiar en esto.** `validar.cjs` no dice «parece bien»:
+quita marca, dominio, logotipo y color de los tres ficheros y exige que salgan
+idénticos línea por línea. Si alguien cambia un tamaño, un texto o una clase,
+falla. Y `mutar.cjs` lo rompe de once maneras —tocar un relleno, quitar una
+sección, dejar texto casi blanco, colar una flecha de texto— para comprobar que
+el validador las ve todas. Una guarda que no se ha roto nunca no sirve de nada.
+
+Comprobado: borrando los tres ficheros y regenerándolos, salen **byte a byte
+idénticos**.
+
+Cada guion explica por dentro por qué hace lo que hace, incluidas las trampas
+que ya mordieron: los finales de línea de Windows, la regla base que gana a una
+consulta de medios por estar escrita más abajo, y el estilo en línea que gana a
+la hoja entera.
+
 ## Este repositorio es el único dueño
 
 Estuvo un tiempo también en el repositorio del producto, en `app-saas/landing/`.

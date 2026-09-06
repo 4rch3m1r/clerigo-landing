@@ -1,0 +1,10 @@
+# El original de Archemir NO entra aquí.
+#
+# `fuente/archemir-original.html` es el landing de Archemir con su marca, su
+# dominio y sus textos. Este repositorio es público, así que ese fichero se
+# queda fuera y vive sólo en el disco de quien tenga que regenerar la página.
+#
+# Los guiones avisan si falta: sin él no se puede REHACER la página, pero los
+# ficheros ya generados —index.html y oscuro.html— están en el repositorio y
+# no dependen de nada.
+fuente/archemir-original.html

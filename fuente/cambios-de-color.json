@@ -1,0 +1,1850 @@
+[
+ {
+  "linea": 73,
+  "antes": "  background: rgba(14,14,14,0.85);",
+  "despues": "  background: rgba(255,255,255,0.85);",
+  "rol": "fondo",
+  "motivo": "Fondo de la barra de navegación: es el fondo de página (#0E0E0E) al 85% con desenfoque detrás. En claro el fondo de página es #FFFFFF, así que la misma capa translúcida pasa a blanco al 85%. Se conserva la alfa."
+ },
+ {
+  "linea": 104,
+  "antes": ".btn-ghost:hover { color: var(--text); border-color: var(--border-light); background: rgba(255,255,255,0.04); }",
+  "despues": ".btn-ghost:hover { color: var(--text); border-color: var(--border-light); background: rgba(14,14,14,0.04); }",
+  "rol": "superficie",
+  "motivo": "Superficie levantada al pasar el ratón: sobre oscuro se sube con blanco al 4%. En claro se sube al revés, con negro al 4% (regla 2, tramo 0.03-0.06)."
+ },
+ {
+  "linea": 148,
+  "antes": "    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),",
+  "despues": "    linear-gradient(rgba(14,14,14,0.03) 1px, transparent 1px),",
+  "rol": "rejilla",
+  "motivo": "Línea horizontal de la rejilla de fondo del hero. Blanco al 2,5% pasa a negro con alfa parecida, un pelo mayor (0.03) para que se siga viendo sobre blanco. Se mantienen el tipo de degradado, la parada y el 1px."
+ },
+ {
+  "linea": 149,
+  "antes": "    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);",
+  "despues": "    linear-gradient(90deg, rgba(14,14,14,0.03) 1px, transparent 1px);",
+  "rol": "rejilla",
+  "motivo": "Línea vertical de la misma rejilla. Mismo criterio que la anterior; se conserva el ángulo 90deg y el transparent."
+ },
+ {
+  "linea": 156,
+  "antes": "  background: radial-gradient(ellipse, rgba(235,16,0,0.12) 0%, transparent 70%);",
+  "despues": "  background: radial-gradient(ellipse, rgba(235,16,0,0.03) 0%, transparent 70%);",
+  "rol": "brillo",
+  "motivo": "Niebla roja del hero. Sobre blanco un rojo al 12% se convierte en una mancha sucia: se baja la alfa a ~0,25 de la original (0.12 -> 0.03). Se conservan el tipo radial, la forma ellipse, las dos paradas y sus porcentajes, y el transparent final."
+ },
+ {
+  "linea": 161,
+  "antes": "  background: radial-gradient(circle, rgba(2,101,220,0.06) 0%, transparent 70%);",
+  "despues": "  background: radial-gradient(circle, rgba(2,101,220,0.015) 0%, transparent 70%);",
+  "rol": "brillo",
+  "motivo": "Segundo brillo del hero, azul. Mismo criterio: alfa a ~0,25 de la original (0.06 -> 0.015). Se conservan circle, las paradas, los porcentajes y el transparent."
+ },
+ {
+  "linea": 197,
+  "antes": "  background: linear-gradient(135deg, #fff 40%, rgba(255,255,255,0.4));",
+  "despues": "  background: linear-gradient(135deg, #16181C 40%, rgba(22,24,28,0.55));",
+  "rol": "texto",
+  "motivo": "Es un degradado recortado sobre el texto (background-clip: text en la línea siguiente), no un relleno: por tanto es color de TEXTO sobre el fondo de página. Blanco puro pasa a #16181C y el blanco al 40% a rgba(22,24,28,0.45) (alfa un poco mayor, como manda la regla 4). Se conservan linear, el ángulo 135deg, las dos paradas y el 40%. [corregido: El \"antes\" coincide y el papel está bien leído (es texto por background-clip: text, no relleno), pero la segunda parada no se lee. rgba(22,24,28,0.45) sobre blanco da un gris #969798 con 2,92:1 de contraste: por debajo del 3:1 que exige el texto grande, y peor que el original (el blanco al 40% sobre #0E0E0E daba 3,79:1). Subiendo la alfa a 0.55 el contraste queda en 3,95:1, parecido al del modo oscuro. Sólo cambia el número de la alfa: el 135deg, las dos paradas y el 40% siguen igual.]"
+ },
+ {
+  "linea": 220,
+  "antes": ".btn-large.outline:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.2); transform: translateY(-1px); }",
+  "despues": ".btn-large.outline:hover { background: rgba(14,14,14,0.04); border-color: rgba(14,14,14,0.23); transform: translateY(-1px); }",
+  "rol": "superficie",
+  "motivo": "Hover del boton de contorno sobre el fondo de pagina: el relleno blanco al 4% era la capa levantada (regla 2), en claro se levanta con negro a la misma alfa. El border-color blanco 0.2 es borde (regla 3): +0.03 para que no quede flojo sobre blanco."
+ },
+ {
+  "linea": 239,
+  "antes": "  box-shadow: 0 -40px 80px rgba(235,16,0,0.06), 0 0 0 1px rgba(255,255,255,0.05);",
+  "despues": "  box-shadow: 0 -40px 80px rgba(235,16,0,0.015), 0 0 0 1px rgba(14,14,14,0.08);",
+  "rol": "brillo",
+  "motivo": "La primera sombra es el resplandor rojo difuso bajo la vista previa (regla 8): mismo rojo de marca, alfa a ~0.25 para que no manche el blanco. La segunda (0 0 0 1px) es un filo de un pixel, o sea un borde (regla 3): blanco 0.05 -> negro 0.08. Desplazamientos y desenfoque intactos."
+ },
+ {
+  "linea": 248,
+  "antes": ".preview-sidebar { background: #141414; border-right: 1px solid var(--border); padding: 12px 0; }",
+  "despues": ".preview-sidebar { background: #F7F8F9; border-right: 1px solid var(--border); padding: 12px 0; }",
+  "rol": "fondo",
+  "motivo": "Fondo crudo de la barra lateral de la maqueta; #141414 es exactamente el valor de --dark-2, asi que le corresponde su equivalente claro #F7F8F9 (regla 1). Nunca dejar negro."
+ },
+ {
+  "linea": 253,
+  "antes": ".preview-nav-item.active { background: rgba(235,16,0,0.1); color: var(--text); border-left: 2px solid var(--red); }",
+  "despues": ".preview-nav-item.active { background: rgba(235,16,0,0.07); color: var(--text); border-left: 2px solid var(--red); }",
+  "rol": "superficie",
+  "motivo": "Tinte rojo del item activo, o sea un --red-dim escrito a mano. El contrato baja --red-dim de 0.15 a 0.10 (un tercio menos), aplico la misma proporcion: 0.10 -> 0.07. El rojo de marca no se toca (regla 10) y el texto sigue en var(--text)."
+ },
+ {
+  "linea": 271,
+  "antes": ".preview-bar { height: 5px; background: rgba(255,255,255,0.06); border-radius: 3px; margin-bottom: 5px; overflow: hidden; }",
+  "despues": ".preview-bar { height: 5px; background: rgba(14,14,14,0.05); border-radius: 3px; margin-bottom: 5px; overflow: hidden; }",
+  "rol": "superficie",
+  "motivo": "Carril vacio de la barra de progreso, capa levantada con blanco (regla 2). En claro se levanta con negro; 0.06 entra en la banda 0.03-0.05."
+ },
+ {
+  "linea": 275,
+  "antes": ".preview-alert-line { height: 8px; border-radius: 2px; background: rgba(255,255,255,0.06); flex: 1; }",
+  "despues": ".preview-alert-line { height: 8px; border-radius: 2px; background: rgba(14,14,14,0.05); flex: 1; }",
+  "rol": "superficie",
+  "motivo": "Misma pieza que la linea 271 (renglon gris de relleno de la alerta): capa levantada blanca -> negra a la misma alfa de banda."
+ },
+ {
+  "linea": 322,
+  "antes": "  background: rgba(215,55,63,0.05);",
+  "despues": "  background: rgba(192,37,45,0.05);",
+  "rol": "superficie",
+  "motivo": "Tinte de peligro escrito a mano con el rgb de --danger oscuro (215,55,63). Paso al rgb del --danger claro del contrato (#C0252D = 192,37,45) y dejo la alfa igual: es un tinte de color saturado, no una capa blanca."
+ },
+ {
+  "linea": 323,
+  "antes": "  border: 1px solid rgba(215,55,63,0.15);",
+  "despues": "  border: 1px solid rgba(192,37,45,0.15);",
+  "rol": "borde",
+  "motivo": "Borde de la misma tarjeta de caos, tambien con el rgb del --danger oscuro. Mismo cambio de rgb al --danger claro; la alfa se queda porque la regla de subir +0.03 es para bordes hechos con blanco, no con un color saturado."
+ },
+ {
+  "linea": 353,
+  "antes": "  background: rgba(215,55,63,0.08); border: 1px solid rgba(215,55,63,0.2);",
+  "despues": "  background: rgba(192,37,45,0.08); border: 1px solid rgba(192,37,45,0.2);",
+  "rol": "superficie",
+  "motivo": "Bloque de resultado del caos: relleno y borde con el rgb del --danger oscuro. Ambos pasan al rgb del --danger claro conservando sus alfas. El texto de la linea 355 ya usa var(--danger), no se toca."
+ },
+ {
+  "linea": 417,
+  "antes": "  box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);",
+  "despues": "  box-shadow: 0 40px 80px rgba(0,0,0,0.17), 0 0 0 1px rgba(14,14,14,0.07);",
+  "rol": "sombra",
+  "motivo": "Sombra grande del marco: 0.5 -> 0.17 (regla 5, ~0.35 de la original) para que no ensucie el blanco; se mantienen 0 40px 80px. El segundo valor no es sombra sino un aro de 1px hecho con blanco al 4% (borde, regla 3): pasa a negro con alfa +0.03."
+ },
+ {
+  "linea": 420,
+  "antes": "  height: 44px; background: #111; border-bottom: 1px solid var(--border);",
+  "despues": "  height: 44px; background: #FFFFFF; border-bottom: 1px solid var(--border);",
+  "rol": "fondo",
+  "motivo": "Barra superior de la maqueta de producto. #111 es el negro de pagina (equivale a --dark #0E0E0E), asi que baja al blanco de la escala. Queda distinta del marco, que es --dark-3 (#EFF1F3 en claro)."
+ },
+ {
+  "linea": 430,
+  "antes": "  background: #0E0E0E; border-right: 1px solid var(--border);",
+  "despues": "  background: #FFFFFF; border-right: 1px solid var(--border);",
+  "rol": "fondo",
+  "motivo": "Barra lateral de la maqueta. #0E0E0E es exactamente --dark, cuyo equivalente claro es #FFFFFF."
+ },
+ {
+  "linea": 450,
+  "antes": ".plat-nav-item:hover { color: var(--text-2); background: rgba(255,255,255,0.03); }",
+  "despues": ".plat-nav-item:hover { color: var(--text-2); background: rgba(14,14,14,0.04); }",
+  "rol": "superficie",
+  "motivo": "Realce del hover hecho subiendo con blanco (regla 2). En claro se sube al reves, con negro y alfa parecida; 0.04 para que el hover siga notandose sobre blanco."
+ },
+ {
+  "linea": 465,
+  "antes": "  color: #a855f7; background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.2);",
+  "despues": "  color: #6B27A8; background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.28);",
+  "rol": "texto",
+  "motivo": "Texto morado de 11px sobre relleno casi blanco: #a855f7 se lee mal a ese tamano, baja al morado de la ficha clara (--purple #6B27A8). El relleno al 10% se deja igual porque sobre blanco da el mismo tinte suave; el borde morado al 20% sobre blanco casi desaparece, sube a 0.28 (mismo criterio de la regla 3 para bordes)."
+ },
+ {
+  "linea": 472,
+  "antes": "  background: #141414; border: 1px solid var(--border);",
+  "despues": "  background: #F7F8F9; border: 1px solid var(--border);",
+  "rol": "superficie",
+  "motivo": "Tarjeta KPI de la maqueta. #141414 es exactamente --dark-2, cuyo equivalente claro es #F7F8F9."
+ },
+ {
+  "linea": 483,
+  "antes": ".plat-panel { background: #141414; border: 1px solid var(--border); border-radius: 4px; padding: 12px; }",
+  "despues": ".plat-panel { background: #F7F8F9; border: 1px solid var(--border); border-radius: 4px; padding: 12px; }",
+  "rol": "superficie",
+  "motivo": "Panel de la maqueta, mismo caso que la tarjeta KPI: #141414 = --dark-2 -> #F7F8F9."
+ },
+ {
+  "linea": 492,
+  "antes": ".plat-alert-item { display: flex; gap: 6px; align-items: flex-start; margin-bottom: 7px; padding-bottom: 7px; border-bottom: 1px solid rgba(255,255,255,0.04); }",
+  "despues": ".plat-alert-item { display: flex; gap: 6px; align-items: flex-start; margin-bottom: 7px; padding-bottom: 7px; border-bottom: 1px solid rgba(14,14,14,0.07); }",
+  "rol": "borde",
+  "motivo": "Linea separadora entre avisos, hecha con blanco al 4% (regla 3): pasa a negro con alfa +0.03 para que se vea sobre claro."
+ },
+ {
+  "linea": 559,
+  "antes": "  box-shadow: 0 6px 24px rgba(0,0,0,0.35);",
+  "despues": "  box-shadow: 0 6px 24px rgba(0,0,0,0.12);",
+  "rol": "sombra",
+  "motivo": "Sombra del hover de las tarjetas de logotipo: 0.35 -> 0.12 (regla 5). Desplazamiento y desenfoque intactos."
+ },
+ {
+  "linea": 622,
+  "antes": "  background: radial-gradient(ellipse, rgba(235,16,0,0.1) 0%, transparent 70%);",
+  "despues": "  background: radial-gradient(ellipse, rgba(235,16,0,0.025) 0%, transparent 70%);",
+  "rol": "brillo",
+  "motivo": "Brillo rojo difuso del CTA (regla 8): sobre blanco la niebla se vuelve mancha sucia. Alfa a ~0.25 de la original (0.1 -> 0.025); tipo radial, elipse, paradas y porcentajes intactos, la parada final sigue transparent."
+ },
+ {
+  "linea": 699,
+  "antes": "  background: rgba(255,255,255,0.05);",
+  "despues": "  background: rgba(14,14,14,0.04);",
+  "rol": "superficie",
+  "motivo": "Superficie levantada del icono social hecha con blanco al 5% (regla 2): en claro se levanta con negro tenue, rgba(14,14,14,0.04)."
+ },
+ {
+  "linea": 700,
+  "antes": "  border: 1px solid rgba(255,255,255,0.09);",
+  "despues": "  border: 1px solid rgba(14,14,14,0.12);",
+  "rol": "borde",
+  "motivo": "Borde blanco al 9% (regla 3): pasa a negro con alfa +0.03 para que no quede flojo sobre blanco."
+ },
+ {
+  "linea": 706,
+  "antes": "  background: rgba(255,255,255,0.1);",
+  "despues": "  background: rgba(14,14,14,0.07);",
+  "rol": "superficie",
+  "motivo": "Hover del icono social (regla 2): 0.1 de blanco -> 0.07 de negro, un escalón por encima del estado normal (0.04) para que el hover se siga notando."
+ },
+ {
+  "linea": 707,
+  "antes": "  border-color: rgba(255,255,255,0.2);",
+  "despues": "  border-color: rgba(14,14,14,0.23);",
+  "rol": "borde",
+  "motivo": "Borde de hover (regla 3): negro con alfa +0.03 respecto del blanco original."
+ },
+ {
+  "linea": 721,
+  "antes": "  background: rgba(18,18,18,0.97);",
+  "despues": "  background: rgba(255,255,255,0.97);",
+  "rol": "fondo",
+  "motivo": "Fondo del panel de cookies, casi negro opaco con desenfoque detrás (regla 1): su equivalente claro es blanco casi opaco. Se conserva la alfa 0.97 para que el backdrop-filter siga aportando."
+ },
+ {
+  "linea": 723,
+  "antes": "  border: 1px solid rgba(255,255,255,0.1);",
+  "despues": "  border: 1px solid rgba(14,14,14,0.13);",
+  "rol": "borde",
+  "motivo": "Borde del panel de cookies (regla 3): blanco 0.1 -> negro 0.13."
+ },
+ {
+  "linea": 726,
+  "antes": "  box-shadow: 0 20px 60px rgba(0,0,0,0.65), 0 0 0 0.5px rgba(255,255,255,0.05), 0 0 80px rgba(235,16,0,0.04);",
+  "despues": "  box-shadow: 0 20px 60px rgba(0,0,0,0.23), 0 0 0 0.5px rgba(14,14,14,0.08), 0 0 80px rgba(235,16,0,0.01);",
+  "rol": "sombra",
+  "motivo": "Tres capas, tres reglas: sombra negra 0.65 -> 0.23 (regla 5, ~0.35 de la original) para que no ensucie el blanco; el aro de 0.5px de luz blanca al 5% es un borde, pasa a negro al 8% (regla 3); el halo rojo difuso baja a ~0.25 de su alfa (regla 8). Desplazamientos y desenfoques (20px, 60px, 0.5px, 80px) exactamente iguales."
+ },
+ {
+  "linea": 745,
+  "antes": "  background: rgba(18,128,92,0.12);",
+  "despues": "  background: rgba(15,107,78,0.10);",
+  "rol": "superficie",
+  "motivo": "Relleno teñido del escudo con el verde de éxito: se cambia el verde oscuro (#12805C) por el verde claro de la ficha (#0F6B4E = 15,107,78), y la alfa baja igual que --red-dim (0.15 -> 0.10) porque sobre blanco un tinte rinde más."
+ },
+ {
+  "linea": 746,
+  "antes": "  border: 1px solid rgba(18,128,92,0.22);",
+  "despues": "  border: 1px solid rgba(15,107,78,0.25);",
+  "rol": "borde",
+  "motivo": "Mismo verde de la ficha clara y alfa +0.03 por ser borde (regla 3)."
+ },
+ {
+  "linea": 760,
+  "antes": "  background: rgba(255,255,255,0.05);",
+  "despues": "  background: rgba(14,14,14,0.04);",
+  "rol": "superficie",
+  "motivo": "Superficie levantada del botón de cerrar (regla 2): blanco 5% -> negro 4%."
+ },
+ {
+  "linea": 761,
+  "antes": "  border: 1px solid rgba(255,255,255,0.07);",
+  "despues": "  border: 1px solid rgba(14,14,14,0.10);",
+  "rol": "borde",
+  "motivo": "Borde del botón de cerrar (regla 3): blanco 0.07 -> negro 0.10."
+ },
+ {
+  "linea": 763,
+  "antes": "  color: rgba(240,240,240,0.35);",
+  "despues": "  color: rgba(22,24,28,0.48);",
+  "rol": "texto",
+  "motivo": "Aspa del botón de cerrar: es el mismo valor que --text-3 escrito a mano, así que toma su equivalente claro exacto (rgba(22,24,28,0.48)). No va sobre relleno saturado."
+ },
+ {
+  "linea": 767,
+  "antes": ".cookie-close:hover { color: var(--text-2); background: rgba(255,255,255,0.09); }",
+  "despues": ".cookie-close:hover { color: var(--text-2); background: rgba(14,14,14,0.06); }",
+  "rol": "superficie",
+  "motivo": "Sólo cambia el relleno de hover (regla 2): blanco 0.09 -> negro 0.06, por encima del 0.04 del estado normal. El color de texto ya va por ficha y se deja tal cual."
+ },
+ {
+  "linea": 772,
+  "antes": "  color: rgba(240,240,240,0.55);",
+  "despues": "  color: rgba(22,24,28,0.60);",
+  "rol": "texto",
+  "motivo": "Texto del cuerpo del aviso (regla 4): blanco roto al 55% -> tinta oscura al 60%, entre --text-2 (0.68) y --text-3 (0.48), respetando la proporción del contrato."
+ },
+ {
+  "linea": 777,
+  "antes": "  color: rgba(240,240,240,0.6);",
+  "despues": "  color: rgba(22,24,28,0.65);",
+  "rol": "texto",
+  "motivo": "Enlace dentro del texto del aviso (regla 4): el ejemplo del contrato da 0.6 -> 0.65 sobre tinta 22,24,28."
+ },
+ {
+  "linea": 797,
+  "antes": "  color: rgba(240,240,240,0.45);",
+  "despues": "  color: rgba(22,24,28,0.68);",
+  "rol": "texto",
+  "motivo": "Texto de la pastilla de confianza (10px) sobre el panel de cookies, que en claro pasa a ser casi blanco. Blanco al 45% -> tinta oscura; subo un poco la alfa porque a ese tamano el gris claro no se lee. [corregido: No se lee. El fondo real de la pastilla es el panel de cookies (linea 721, rgba(18,18,18,0.97) -> casi blanco en claro) mas su propio velo negro al 4%: queda en ~#F5F5F5. Tinta rgba(22,24,28,0.55) mezclada sobre ese fondo da ~rgb(122,123,126) y el contraste sale 3.5:1, por debajo del 4.5:1 que exige un texto de 10px. Hace falta alfa >= 0.60; con 0.68 (el valor de --text-2 en claro) sube a ~5.9:1 y ademas casa con la ficha. El resto del cambio (blanco -> tinta oscura) esta bien.]"
+ },
+ {
+  "linea": 798,
+  "antes": "  background: rgba(255,255,255,0.04);",
+  "despues": "  background: rgba(14,14,14,0.04);",
+  "rol": "superficie",
+  "motivo": "Superficie levantada dentro del panel. En claro se sube al reves: mismo alfa con tinta oscura (regla 2, tramo 0.03-0.06)."
+ },
+ {
+  "linea": 799,
+  "antes": "  border: 1px solid rgba(255,255,255,0.07);",
+  "despues": "  border: 1px solid rgba(14,14,14,0.10);",
+  "rol": "borde",
+  "motivo": "Borde de la pastilla. Regla 3: alfa + 0.03 para que el trazo oscuro se vea sobre fondo claro."
+ },
+ {
+  "linea": 808,
+  "antes": "  background: rgba(255,255,255,0.07);",
+  "despues": "  background: rgba(14,14,14,0.10);",
+  "rol": "borde",
+  "motivo": "Es un separador de 1px de alto: hace de borde, no de superficie. Mismo tratamiento que la linea 799."
+ },
+ {
+  "linea": 821,
+  "antes": "  background: rgba(255,255,255,0.05);",
+  "despues": "  background: rgba(14,14,14,0.05);",
+  "rol": "superficie",
+  "motivo": "Relleno del boton secundario (Rechazar) sobre panel claro. Regla 2: misma alfa, tinta oscura."
+ },
+ {
+  "linea": 822,
+  "antes": "  color: rgba(240,240,240,0.55);",
+  "despues": "  color: rgba(22,24,28,0.62);",
+  "rol": "texto",
+  "motivo": "Texto del boton secundario. Equivalente oscuro con un pelo mas de alfa, en la linea de --text-2 (0.65 -> 0.68)."
+ },
+ {
+  "linea": 823,
+  "antes": "  border: 1px solid rgba(255,255,255,0.09);",
+  "despues": "  border: 1px solid rgba(14,14,14,0.12);",
+  "rol": "borde",
+  "motivo": "Borde del boton secundario. Regla 3: alfa + 0.03."
+ },
+ {
+  "linea": 830,
+  "antes": "  background: rgba(255,255,255,0.09);",
+  "despues": "  background: rgba(14,14,14,0.08);",
+  "rol": "superficie",
+  "motivo": "Relleno en hover del boton secundario. Tiene que quedar por encima del 0.05 de reposo pero sin ensuciar; 0.08 da el escalon visible."
+ },
+ {
+  "linea": 831,
+  "antes": "  border-color: rgba(255,255,255,0.14);",
+  "despues": "  border-color: rgba(14,14,14,0.17);",
+  "rol": "borde",
+  "motivo": "Borde en hover del boton secundario. Regla 3: alfa + 0.03, y queda por encima del 0.12 de reposo."
+ },
+ {
+  "linea": 908,
+  "antes": "  box-shadow: 0 2px 8px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.2);",
+  "despues": "  box-shadow: 0 2px 8px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.2);",
+  "rol": "sombra",
+  "motivo": "La sombra exterior de la cinta cae sobre la pagina: sobre blanco el 0.45 ensucia, la bajo a ~0.35 de la original (0.16) dejando desplazamiento y desenfoque igual. El brillo interior va sobre el relleno rojo saturado, que no cambia, asi que lo dejo tal cual."
+ },
+ {
+  "linea": 924,
+  "antes": "  background: radial-gradient(circle, rgba(2,101,220,0.05) 0%, transparent 70%);",
+  "despues": "  background: radial-gradient(circle, rgba(2,101,220,0.015) 0%, transparent 70%);",
+  "rol": "brillo",
+  "motivo": "Halo azul difuso del fondo de la seccion. Sobre negro es niebla; sobre blanco seria una mancha sucia. Regla 8: alfa a ~0.25 de la original, misma forma, mismo angulo, misma parada transparent."
+ },
+ {
+  "linea": 949,
+  "antes": ".tl-level-tag.l1 { background: rgba(18,128,92,0.15); color: #12805C; border: 1px solid rgba(18,128,92,0.25); }",
+  "despues": ".tl-level-tag.l1 { background: rgba(18,128,92,0.15); color: #0F6B4E; border: 1px solid rgba(18,128,92,0.25); }",
+  "rol": "texto",
+  "motivo": "Texto de 9px del chip de nivel. El relleno pasa de verde oscurisimo a verde palido, asi que la tinta necesita el verde de modo claro (#0F6B4E) para leerse a ese tamano. El tinte y el borde son un velo del mismo verde: sobre blanco quedan bien y no los toco."
+ },
+ {
+  "linea": 950,
+  "antes": ".tl-level-tag.l2 { background: rgba(2,101,220,0.12); color: #4A9BE8; border: 1px solid rgba(2,101,220,0.2); }",
+  "despues": ".tl-level-tag.l2 { background: rgba(2,101,220,0.12); color: #0257BF; border: 1px solid rgba(2,101,220,0.2); }",
+  "rol": "texto",
+  "motivo": "#4A9BE8 es un azul claro elegido para leerse sobre negro; sobre el tinte azul palido de modo claro seria ilegible. Paso al azul de modo claro (#0257BF)."
+ },
+ {
+  "linea": 951,
+  "antes": ".tl-level-tag.l3 { background: rgba(123,47,190,0.12); color: #9B6FD8; border: 1px solid rgba(123,47,190,0.2); }",
+  "despues": ".tl-level-tag.l3 { background: rgba(123,47,190,0.12); color: #6B27A8; border: 1px solid rgba(123,47,190,0.2); }",
+  "rol": "texto",
+  "motivo": "Mismo caso que el azul: morado claro sobre tinte morado palido no se lee. Paso al morado de modo claro (#6B27A8)."
+ },
+ {
+  "linea": 958,
+  "antes": "  background: rgba(255,255,255,0.03);",
+  "despues": "  background: rgba(14,14,14,0.03);",
+  "rol": "superficie",
+  "motivo": "Fila de curso levantada dentro de la tarjeta de nivel. Regla 2: misma alfa, tinta oscura."
+ },
+ {
+  "linea": 963,
+  "antes": ".tl-course:hover { border-color: var(--border-light); background: rgba(255,255,255,0.05); }",
+  "despues": ".tl-course:hover { border-color: var(--border-light); background: rgba(14,14,14,0.05); }",
+  "rol": "superficie",
+  "motivo": "Relleno en hover de la fila de curso; sube sobre el 0.03 de reposo. El borde ya va por ficha y no se toca."
+ },
+ {
+  "linea": 1005,
+  "antes": "  border-bottom: 1px solid rgba(255,255,255,0.04);",
+  "despues": "  border-bottom: 1px solid rgba(14,14,14,0.07);",
+  "rol": "borde",
+  "motivo": "Linea separadora de filas hecha con blanco al 4% sobre fondo oscuro; en claro pasa a negro con alfa subida (+0.03) para que se siga viendo."
+ },
+ {
+  "linea": 1009,
+  "antes": ".matrix-table tr:hover td { background: rgba(255,255,255,0.02); }",
+  "despues": ".matrix-table tr:hover td { background: rgba(14,14,14,0.03); }",
+  "rol": "superficie",
+  "motivo": "Realce de fila al pasar el raton: en oscuro se sube con blanco, en claro se sube con negro a alfa parecida."
+ },
+ {
+  "linea": 1018,
+  "antes": ".mtr-tag.l1 { background: rgba(18,128,92,0.12); color: #12805C; }",
+  "despues": ".mtr-tag.l1 { background: rgba(15,107,78,0.12); color: #0F6B4E; }",
+  "rol": "texto",
+  "motivo": "Etiqueta de nivel: el verde #12805C es el --success de oscuro; en claro se usa el --success claro #0F6B4E, y el tinte de fondo se recalcula con ese mismo verde manteniendo la alfa."
+ },
+ {
+  "linea": 1019,
+  "antes": ".mtr-tag.l2 { background: rgba(2,101,220,0.10); color: #4A9BE8; }",
+  "despues": ".mtr-tag.l2 { background: rgba(2,87,191,0.10); color: #0257BF; }",
+  "rol": "texto",
+  "motivo": "#4A9BE8 es un azul aclarado para fondo negro; sobre blanco no se lee. Pasa al --accent claro #0257BF y el tinte de fondo al mismo azul."
+ },
+ {
+  "linea": 1020,
+  "antes": ".mtr-tag.l3 { background: rgba(123,47,190,0.10); color: #9B6FD8; }",
+  "despues": ".mtr-tag.l3 { background: rgba(107,39,168,0.10); color: #6B27A8; }",
+  "rol": "texto",
+  "motivo": "#9B6FD8 es el morado aclarado para fondo negro; en claro se usa el --purple claro #6B27A8, y el tinte de fondo se recalcula con el mismo morado."
+ },
+ {
+  "linea": 1026,
+  "antes": "  background: rgba(255,255,255,0.05); color: var(--text-3);",
+  "despues": "  background: rgba(14,14,14,0.05); color: var(--text-3);",
+  "rol": "superficie",
+  "motivo": "Pastilla de rol levantada sobre la tarjeta: en claro se levanta con negro a alfa parecida. El color de texto ya va por ficha y no se toca."
+ },
+ {
+  "linea": 1042,
+  "antes": ".mtr-status.required { background: rgba(235,16,0,0.12); color: #EB1000; }",
+  "despues": ".mtr-status.required { background: rgba(235,16,0,0.12); color: var(--red-ink); }",
+  "rol": "texto",
+  "motivo": "Texto rojo de 9px sobre tinte claro: el #EB1000 se lee mal a ese tamano sobre blanco, se pasa a var(--red-ink). El relleno rojo de marca no cambia."
+ },
+ {
+  "linea": 1043,
+  "antes": ".mtr-status.role     { background: rgba(2,101,220,0.10); color: #4A9BE8; }",
+  "despues": ".mtr-status.role     { background: rgba(2,87,191,0.10); color: #0257BF; }",
+  "rol": "texto",
+  "motivo": "Mismo caso que el nivel l2: azul aclarado para oscuro sustituido por el --accent claro, y el tinte de fondo con ese mismo azul."
+ },
+ {
+  "linea": 1044,
+  "antes": ".mtr-status.cert     { background: rgba(123,47,190,0.10); color: #9B6FD8; }",
+  "despues": ".mtr-status.cert     { background: rgba(107,39,168,0.10); color: #6B27A8; }",
+  "rol": "texto",
+  "motivo": "Mismo caso que el nivel l3: morado aclarado para oscuro sustituido por el --purple claro, y el tinte de fondo con ese mismo morado."
+ },
+ {
+  "linea": 1070,
+  "antes": "  background: rgba(255,255,255,0.055);",
+  "despues": "  background: rgba(14,14,14,0.04);",
+  "rol": "superficie",
+  "motivo": "Panel de certificaciones levantado sobre el fondo del hero (que pasa a blanco); en claro se levanta con negro a alfa baja."
+ },
+ {
+  "linea": 1071,
+  "antes": "  border: 1px solid rgba(255,255,255,0.13);",
+  "despues": "  border: 1px solid rgba(14,14,14,0.16);",
+  "rol": "borde",
+  "motivo": "Borde del panel: blanco al 13% sobre negro pasa a negro al 16% sobre blanco (alfa un poco mayor para que no quede flojo)."
+ },
+ {
+  "linea": 1074,
+  "antes": "  box-shadow: 0 0 40px rgba(255,255,255,0.02), inset 0 1px 0 rgba(255,255,255,0.07);",
+  "despues": "  box-shadow: 0 0 40px rgba(14,14,14,0.04), inset 0 1px 0 rgba(14,14,14,0.04);",
+  "rol": "sombra",
+  "motivo": "El halo blanco exterior desaparece sobre blanco: pasa a una sombra suave de negro con el mismo desenfoque y sin desplazamiento. El brillo interior del canto sobre relleno gris claro tampoco aporta: se convierte en el trazo tenue oscuro."
+ },
+ {
+  "linea": 1081,
+  "antes": "  color: rgba(240,240,240,0.5);",
+  "despues": "  color: rgba(22,24,28,0.65);",
+  "rol": "texto",
+  "motivo": "Rotulo del panel en blanco atenuado: pasa al gris de texto oscuro con la alfa subida un poco para mantener la misma presencia. [corregido: No se lee. Sobre el panel (negro al 4% sobre blanco, gris ~#F5F5F5), rgba(22,24,28,0.55) da 3.9:1, por debajo del 4.5 que exige un texto de 8px. La regla 4 sugiere +0.05, pero el minimo de contraste manda: con 0.65 sube a 5.3:1. Solo cambia la alfa del color, nada mas.]"
+ },
+ {
+  "linea": 1084,
+  "antes": "  border-bottom: 1px solid rgba(255,255,255,0.1);",
+  "despues": "  border-bottom: 1px solid rgba(14,14,14,0.13);",
+  "rol": "borde",
+  "motivo": "Linea bajo el rotulo del panel: blanco al 10% pasa a negro al 13%."
+ },
+ {
+  "linea": 1096,
+  "antes": "  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));",
+  "despues": "  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.18));",
+  "rol": "sombra",
+  "motivo": "Sombra de los logos de certificacion: sobre blanco una alfa de 0.5 ensucia; se baja a ~0.35 de la original manteniendo desplazamiento y desenfoque."
+ },
+ {
+  "linea": 1104,
+  "antes": "  color: rgba(240,240,240,0.55);",
+  "despues": "  color: rgba(22,24,28,0.60);",
+  "rol": "texto",
+  "motivo": "Nombre del logo en blanco atenuado: equivalente oscuro con la alfa subida un poco."
+ },
+ {
+  "linea": 1111,
+  "antes": "  background: rgba(255,255,255,0.08);",
+  "despues": "  background: rgba(14,14,14,0.11);",
+  "rol": "borde",
+  "motivo": "El divisor de 1px del panel hace de borde: blanco al 8% pasa a negro al 11%."
+ },
+ {
+  "linea": 1200,
+  "antes": "  box-shadow: 0 -2px 8px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);",
+  "despues": "  box-shadow: 0 -2px 8px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.3);",
+  "rol": "sombra",
+  "motivo": "La primera es sombra proyectada hacia arriba sobre el fondo de pagina: regla 5, alfa 0.4 -> 0.14. El inset blanco 0.3 NO se toca porque cae sobre el relleno dorado de la cinta (relleno saturado que no cambia), es el brillo del metal."
+ },
+ {
+  "linea": 1237,
+  "antes": "    0 8px 28px rgba(0,0,0,0.6),",
+  "despues": "    0 8px 28px rgba(0,0,0,0.20),",
+  "rol": "sombra",
+  "motivo": "Sombra proyectada de la medalla sobre el fondo de pagina. Regla 5: 0.6 -> 0.20. Desplazamiento y desenfoque intactos."
+ },
+ {
+  "linea": 1315,
+  "antes": "  background: #0E0E0E;",
+  "despues": "  background: #FFFFFF;",
+  "rol": "fondo",
+  "motivo": "Fondo del globo de ayuda escrito en crudo con el valor de --dark. Regla 1: equivalencia directa de la escala #0E0E0E -> #FFFFFF. Mantiene su borde dorado y su sombra, asi que sigue despegado del fondo."
+ },
+ {
+  "linea": 1319,
+  "antes": "  box-shadow: 0 8px 32px rgba(0,0,0,0.7);",
+  "despues": "  box-shadow: 0 8px 32px rgba(0,0,0,0.24);",
+  "rol": "sombra",
+  "motivo": "Sombra del globo de ayuda sobre la pagina. Regla 5: 0.7 x 0.35 = 0.245 -> 0.24. Geometria sin tocar."
+ },
+ {
+  "linea": 1336,
+  "antes": "  font-size: 13px; font-weight: 800; color: #F0F0F0;",
+  "despues": "  font-size: 13px; font-weight: 800; color: #16181C;",
+  "rol": "texto",
+  "motivo": "Titulo del globo: blanco roto crudo (valor de --text en oscuro) sobre una superficie que pasa a blanca. Regla 4: #F0F0F0 -> #16181C."
+ },
+ {
+  "linea": 1340,
+  "antes": "  font-size: 11px; color: rgba(240,240,240,0.5); line-height: 1.55;",
+  "despues": "  font-size: 11px; color: rgba(22,24,28,0.62); line-height: 1.55;",
+  "rol": "texto",
+  "motivo": "Texto secundario del globo sobre superficie ya blanca. Regla 4 con la escala de fichas: 0.35 -> 0.48 y 0.65 -> 0.68, asi que 0.5 cae en 0.58. [corregido: No se lee del todo: rgba(22,24,28,0.58) compuesto sobre blanco equivale a #7879 7B y da 4.37:1, por debajo del 4.5 exigido para texto normal de 11px. El agente interpoló entre --text-3 (0.48) y --text-2 (0.68) sin comprobar el contraste. Con alfa 0.62 sube a 4.98:1. Lo demás de la línea está bien copiado y sin tocar.]"
+ },
+ {
+  "linea": 1299,
+  "antes": "  color: #F5D020;",
+  "despues": "  color: #7A5800;",
+  "motivo": "El fallo grande que se dejó. Este rótulo (nombre de la firma bajo la medalla) NO está sobre la medalla: está sobre el fondo de la página, que pasa a blanco (body usa var(--dark)). El dorado #F5D020 sobre blanco da 1.5:1 — desaparece. La regla 10 protege los dorados del OBJETO, no un texto suelto sobre la página; la regla de lectura manda. #7A5800 (dorado hondo, ya usado en la línea 1235 del propio fichero) da 6.4:1 y conserva la identidad dorada.",
+  "rol": "olvidado"
+ },
+ {
+  "linea": 1303,
+  "antes": "  font-size: 8px; color: rgba(245,208,32,0.5);",
+  "despues": "  font-size: 8px; color: rgba(122,88,0,0.9);",
+  "motivo": "Misma trampa que 1299, y peor: dorado al 50% sobre página blanca queda en ~1.2:1, invisible. A 8px hace falta 4.5:1. rgba(122,88,0,0.9) da ~6:1 y mantiene el matiz dorado más flojo que el título.",
+  "rol": "olvidado"
+ },
+ {
+  "linea": 1333,
+  "antes": ".award-tt-firm { font-size: 11px; font-weight: 900; color: #F5D020; }",
+  "despues": ".award-tt-firm { font-size: 11px; font-weight: 900; color: #7A5800; }",
+  "motivo": "Dentro del globo, que en 1315 pasa a blanco: dorado claro sobre blanco = 1.5:1. El propio agente lo listó como duda y lo dejó; no resiste. #7A5800 da 6.4:1.",
+  "rol": "olvidado"
+ },
+ {
+  "linea": 1334,
+  "antes": ".award-tt-year { font-size: 9px; color: rgba(245,208,32,0.5); margin-top: 1px; }",
+  "despues": ".award-tt-year { font-size: 9px; color: rgba(122,88,0,0.9); margin-top: 1px; }",
+  "motivo": "Igual que 1333 pero a 9px y con alfa 0.5: sobre el globo blanco es prácticamente invisible. Con rgba(122,88,0,0.9) queda en ~6:1.",
+  "rol": "olvidado"
+ },
+ {
+  "linea": 1316,
+  "antes": "  border: 1px solid rgba(200,164,0,0.4);",
+  "despues": "  border: 1px solid rgba(122,88,0,0.45);",
+  "motivo": "Al volverse blanco el globo (1315), este borde es lo único, junto con la sombra, que lo separa de la página blanca. Dorado medio al 40% sobre blanco da 1.44:1 y casi no se ve. Con el dorado hondo al 45% sube a ~2.1:1: sigue siendo dorado, pero se nota el canto.",
+  "rol": "olvidado"
+ },
+ {
+  "linea": 1341,
+  "antes": "  border-top: 1px solid rgba(200,164,0,0.15); padding-top: 8px;",
+  "despues": "  border-top: 1px solid rgba(122,88,0,0.25); padding-top: 8px;",
+  "motivo": "Separador dentro del globo. Dorado al 15% sobre blanco es 1.09:1: la línea desaparece. Regla 3 (subir la alfa al pasar a claro) con el dorado hondo lo deja como una raya fina visible. El padding no se toca.",
+  "rol": "olvidado"
+ },
+ {
+  "linea": 1450,
+  "antes": "        <div style=\"width:110px;background:linear-gradient(135deg,#1a3a6b 0%,#2d5fc4 45%,#1a3a6b 75%,#0f2548 100%);border-radius:3px 3px 0 0;padding:5px 0 4px;text-align:center;box-shadow:0 -2px 8px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.25);border:1px solid rgba(255,255,255,0.15);border-bottom:none;position:relative;z-index:2;\">",
+  "despues": "        <div style=\"width:110px;background:linear-gradient(135deg,#1a3a6b 0%,#2d5fc4 45%,#1a3a6b 75%,#0f2548 100%);border-radius:3px 3px 0 0;padding:5px 0 4px;text-align:center;box-shadow:0 -2px 8px rgba(0,0,0,0.14),inset 0 1px 0 rgba(255,255,255,0.25);border:1px solid rgba(255,255,255,0.15);border-bottom:none;position:relative;z-index:2;\">",
+  "rol": "sombra",
+  "motivo": "Sombra que cae sobre el fondo de la pagina (cinta de la medalla Ipexpert). Regla 5: 0.4 -> 0.14. El degradado azul de la cinta, el brillo interior y el borde blanco son de la medalla (relleno saturado que no cambia) y quedan igual."
+ },
+ {
+  "linea": 1456,
+  "antes": "          <div style=\"width:110px;height:110px;border-radius:50%;background:conic-gradient(#c0c0c0 0deg,#e8e8e8 40deg,#f5f5f5 80deg,#d0d0d0 120deg,#e8e8e8 160deg,#f0f0f0 200deg,#c8c8c8 240deg,#e5e5e5 280deg,#f2f2f2 320deg,#b8b8b8 360deg);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 0 3px #888,0 0 0 5px rgba(220,220,220,0.25),0 8px 28px rgba(0,0,0,0.6),inset 0 2px 4px rgba(255,255,255,0.4),inset 0 -2px 4px rgba(0,0,0,0.15);position:relative;z-index:1;\">",
+  "despues": "          <div style=\"width:110px;height:110px;border-radius:50%;background:conic-gradient(#c0c0c0 0deg,#e8e8e8 40deg,#f5f5f5 80deg,#d0d0d0 120deg,#e8e8e8 160deg,#f0f0f0 200deg,#c8c8c8 240deg,#e5e5e5 280deg,#f2f2f2 320deg,#b8b8b8 360deg);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 0 3px #888,0 0 0 5px rgba(220,220,220,0.25),0 8px 28px rgba(0,0,0,0.2),inset 0 2px 4px rgba(255,255,255,0.4),inset 0 -2px 4px rgba(0,0,0,0.15);position:relative;z-index:1;\">",
+  "rol": "sombra",
+  "motivo": "Solo la sombra de caida del disco sobre la pagina. Regla 5: 0.6 -> 0.20. Los plateados del disco, el aro #888, el halo plateado y las dos sombras interiores son la medalla (regla 10) y no se tocan."
+ },
+ {
+  "linea": 1481,
+  "antes": "          <span style=\"font-size:9px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#6a9fd8;display:block;\">IPEXPERT</span>",
+  "despues": "          <span style=\"font-size:9px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#2d5fc4;display:block;\">IPEXPERT</span>",
+  "rol": "texto",
+  "motivo": "Texto sobre el fondo de la pagina, no sobre la medalla. #6a9fd8 es el azul aclarado para leerse en negro; en blanco se pierde. Paso al azul de la propia cinta #2d5fc4, que ya esta en este mismo bloque."
+ },
+ {
+  "linea": 1482,
+  "antes": "          <span style=\"font-size:8px;color:rgba(106,159,216,0.5);letter-spacing:0.5px;display:block;margin-top:2px;\">Software Innovation Award 2025</span>",
+  "despues": "          <span style=\"font-size:8px;color:rgba(26,58,107,0.75);letter-spacing:0.5px;display:block;margin-top:2px;\">Software Innovation Award 2025</span>",
+  "rol": "texto",
+  "motivo": "Misma familia que la linea anterior, un escalon mas apagado: rgb del azul de la cinta (45,95,196) con alfa casi igual (0.5 -> 0.6) para guardar la misma relacion de jerarquia. [corregido: NO SE LEE. rgba(45,95,196,0.6) sobre blanco se mezcla a (129,159,220): 2.65:1 para un texto de 8px, muy por debajo de 4.5:1. Ademas subir la alfa de ese mismo azul no lo salva (a 0.85 sigue en 4.1:1). Hay que bajar el tono, no la transparencia: uso el azul marino de la propia cinta (26,58,107) con alfa 0.75 -> 5.4:1, y sigue quedando un escalon por debajo de la linea 1481, que es mas viva.]"
+ },
+ {
+  "linea": 1525,
+  "antes": "          <circle cx=\"100\" cy=\"100\" r=\"55\" fill=\"none\" stroke=\"rgba(200,220,240,0.3)\" stroke-width=\"1.5\"/>",
+  "despues": "          <circle cx=\"100\" cy=\"100\" r=\"55\" fill=\"none\" stroke=\"rgba(26,111,175,0.3)\" stroke-width=\"1.5\"/>",
+  "rol": "rejilla",
+  "motivo": "Lineas del globo del sello ISO 27001. La cara del sello es un tinte al 25% que en claro queda casi blanco: una linea casi blanca desaparece. Paso al azul del propio sello #1a6faf con la misma alfa."
+ },
+ {
+  "linea": 1526,
+  "antes": "          <ellipse cx=\"100\" cy=\"100\" rx=\"30\" ry=\"55\" fill=\"none\" stroke=\"rgba(200,220,240,0.3)\" stroke-width=\"1.5\"/>",
+  "despues": "          <ellipse cx=\"100\" cy=\"100\" rx=\"30\" ry=\"55\" fill=\"none\" stroke=\"rgba(26,111,175,0.3)\" stroke-width=\"1.5\"/>",
+  "rol": "rejilla",
+  "motivo": "Meridiano del globo del sello ISO 27001; mismo caso que la linea 1525."
+ },
+ {
+  "linea": 1527,
+  "antes": "          <line x1=\"45\" y1=\"100\" x2=\"155\" y2=\"100\" stroke=\"rgba(200,220,240,0.3)\" stroke-width=\"1.5\"/>",
+  "despues": "          <line x1=\"45\" y1=\"100\" x2=\"155\" y2=\"100\" stroke=\"rgba(26,111,175,0.3)\" stroke-width=\"1.5\"/>",
+  "rol": "rejilla",
+  "motivo": "Ecuador del globo del sello ISO 27001; mismo caso que la linea 1525."
+ },
+ {
+  "linea": 1528,
+  "antes": "          <line x1=\"100\" y1=\"45\" x2=\"100\" y2=\"155\" stroke=\"rgba(200,220,240,0.3)\" stroke-width=\"1.5\"/>",
+  "despues": "          <line x1=\"100\" y1=\"45\" x2=\"100\" y2=\"155\" stroke=\"rgba(26,111,175,0.3)\" stroke-width=\"1.5\"/>",
+  "rol": "rejilla",
+  "motivo": "Eje vertical del globo del sello ISO 27001; mismo caso que la linea 1525."
+ },
+ {
+  "linea": 1529,
+  "antes": "          <path d=\"M55 75 Q100 68 145 75\" fill=\"none\" stroke=\"rgba(200,220,240,0.25)\" stroke-width=\"1.2\"/>",
+  "despues": "          <path d=\"M55 75 Q100 68 145 75\" fill=\"none\" stroke=\"rgba(26,111,175,0.25)\" stroke-width=\"1.2\"/>",
+  "rol": "rejilla",
+  "motivo": "Paralelo curvo del globo ISO 27001; misma conversion con su alfa original 0.25."
+ },
+ {
+  "linea": 1530,
+  "antes": "          <path d=\"M55 125 Q100 132 145 125\" fill=\"none\" stroke=\"rgba(200,220,240,0.25)\" stroke-width=\"1.2\"/>",
+  "despues": "          <path d=\"M55 125 Q100 132 145 125\" fill=\"none\" stroke=\"rgba(26,111,175,0.25)\" stroke-width=\"1.2\"/>",
+  "rol": "rejilla",
+  "motivo": "Paralelo curvo inferior del globo ISO 27001; misma conversion con su alfa original 0.25."
+ },
+ {
+  "linea": 1531,
+  "antes": "          <text x=\"100\" y=\"98\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"900\" font-size=\"40\" fill=\"white\" letter-spacing=\"-1\">ISO</text>",
+  "despues": "          <text x=\"100\" y=\"98\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"900\" font-size=\"40\" fill=\"#1a6faf\" letter-spacing=\"-1\">ISO</text>",
+  "rol": "texto",
+  "motivo": "La palabra ISO no esta sobre un relleno saturado: la cara del sello es un tinte al 25% que en claro queda casi blanco, asi que el blanco desapareceria. Uso el azul del propio sello, el mismo del 27001 justo debajo."
+ },
+ {
+  "linea": 1552,
+  "antes": "          <text x=\"125\" y=\"74\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"600\" font-size=\"10.5\" fill=\"#aac4e0\" letter-spacing=\"0.3\">National Institute of Standards</text>",
+  "despues": "          <text x=\"125\" y=\"74\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"600\" font-size=\"10.5\" fill=\"#4066a8\" letter-spacing=\"0.3\">National Institute of Standards</text>",
+  "rol": "texto",
+  "motivo": "Esta linea cae FUERA del rectangulo azul (el rect acaba en y=56), o sea sobre el fondo. #aac4e0 es el azul marino aclarado para negro; en blanco se borra. Lo bajo al mismo azul marino aclarado solo un tercio."
+ },
+ {
+  "linea": 1553,
+  "antes": "          <text x=\"125\" y=\"87\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"600\" font-size=\"10.5\" fill=\"#aac4e0\" letter-spacing=\"0.3\">and Technology</text>",
+  "despues": "          <text x=\"125\" y=\"87\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"600\" font-size=\"10.5\" fill=\"#4066a8\" letter-spacing=\"0.3\">and Technology</text>",
+  "rol": "texto",
+  "motivo": "Segunda linea del mismo subtitulo NIST, fuera del rectangulo azul; mismo cambio que la 1552 para que las dos casen."
+ },
+ {
+  "linea": 1554,
+  "antes": "          <text x=\"125\" y=\"108\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"800\" font-size=\"11\" fill=\"#4a9be8\" letter-spacing=\"1.8\">CYBERSECURITY FRAMEWORK</text>",
+  "despues": "          <text x=\"125\" y=\"108\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"800\" font-size=\"11\" fill=\"#003087\" letter-spacing=\"1.8\">CYBERSECURITY FRAMEWORK</text>",
+  "rol": "texto",
+  "motivo": "Tambien fuera del rectangulo, sobre el fondo. Era el azul mas vivo del conjunto; en claro el que mas resalta es el azul marino de marca #003087, que ya esta en este mismo SVG."
+ },
+ {
+  "linea": 1572,
+  "antes": "          <text x=\"100\" y=\"130\" text-anchor=\"middle\" font-family=\"Arial Black,Arial,sans-serif\" font-weight=\"900\" font-size=\"40\" fill=\"white\">2</text>",
+  "despues": "          <text x=\"100\" y=\"130\" text-anchor=\"middle\" font-family=\"Arial Black,Arial,sans-serif\" font-weight=\"900\" font-size=\"40\" fill=\"#d4353b\">2</text>",
+  "rol": "texto",
+  "motivo": "El 2 del sello SOC 2 va sobre un tinte rojo al 6%, no sobre relleno saturado: en blanco el blanco se pierde. Uso el rojo del propio sello, el mismo de SOC justo encima."
+ },
+ {
+  "linea": 1589,
+  "antes": "          <circle cx=\"100\" cy=\"100\" r=\"55\" fill=\"none\" stroke=\"rgba(200,220,240,0.3)\" stroke-width=\"1.5\"/>",
+  "despues": "          <circle cx=\"100\" cy=\"100\" r=\"55\" fill=\"none\" stroke=\"rgba(26,111,175,0.3)\" stroke-width=\"1.5\"/>",
+  "rol": "rejilla",
+  "motivo": "Lineas del globo del sello ISO 22301, gemelo del de 27001; mismo caso que la linea 1525."
+ },
+ {
+  "linea": 1590,
+  "antes": "          <ellipse cx=\"100\" cy=\"100\" rx=\"30\" ry=\"55\" fill=\"none\" stroke=\"rgba(200,220,240,0.3)\" stroke-width=\"1.5\"/>",
+  "despues": "          <ellipse cx=\"100\" cy=\"100\" rx=\"30\" ry=\"55\" fill=\"none\" stroke=\"rgba(26,111,175,0.3)\" stroke-width=\"1.5\"/>",
+  "rol": "rejilla",
+  "motivo": "Meridiano del globo del sello ISO 22301; mismo caso que la linea 1526."
+ },
+ {
+  "linea": 1591,
+  "antes": "          <line x1=\"45\" y1=\"100\" x2=\"155\" y2=\"100\" stroke=\"rgba(200,220,240,0.3)\" stroke-width=\"1.5\"/>",
+  "despues": "          <line x1=\"45\" y1=\"100\" x2=\"155\" y2=\"100\" stroke=\"rgba(26,111,175,0.3)\" stroke-width=\"1.5\"/>",
+  "rol": "rejilla",
+  "motivo": "Ecuador del globo del sello ISO 22301; mismo caso que la linea 1527."
+ },
+ {
+  "linea": 1592,
+  "antes": "          <line x1=\"100\" y1=\"45\" x2=\"100\" y2=\"155\" stroke=\"rgba(200,220,240,0.3)\" stroke-width=\"1.5\"/>",
+  "despues": "          <line x1=\"100\" y1=\"45\" x2=\"100\" y2=\"155\" stroke=\"rgba(26,111,175,0.3)\" stroke-width=\"1.5\"/>",
+  "rol": "rejilla",
+  "motivo": "Eje vertical del globo del sello ISO 22301; mismo caso que la linea 1528."
+ },
+ {
+  "linea": 1593,
+  "antes": "          <path d=\"M55 75 Q100 68 145 75\" fill=\"none\" stroke=\"rgba(200,220,240,0.25)\" stroke-width=\"1.2\"/>",
+  "despues": "          <path d=\"M55 75 Q100 68 145 75\" fill=\"none\" stroke=\"rgba(26,111,175,0.25)\" stroke-width=\"1.2\"/>",
+  "rol": "rejilla",
+  "motivo": "Paralelo curvo del globo ISO 22301; misma conversion con su alfa original 0.25."
+ },
+ {
+  "linea": 1594,
+  "antes": "          <path d=\"M55 125 Q100 132 145 125\" fill=\"none\" stroke=\"rgba(200,220,240,0.25)\" stroke-width=\"1.2\"/>",
+  "despues": "          <path d=\"M55 125 Q100 132 145 125\" fill=\"none\" stroke=\"rgba(26,111,175,0.25)\" stroke-width=\"1.2\"/>",
+  "rol": "rejilla",
+  "motivo": "Paralelo curvo inferior del globo ISO 22301; misma conversion con su alfa original 0.25."
+ },
+ {
+  "linea": 1595,
+  "antes": "          <text x=\"100\" y=\"98\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"900\" font-size=\"40\" fill=\"white\" letter-spacing=\"-1\">ISO</text>",
+  "despues": "          <text x=\"100\" y=\"98\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"900\" font-size=\"40\" fill=\"#1a6faf\" letter-spacing=\"-1\">ISO</text>",
+  "rol": "texto",
+  "motivo": "Palabra ISO del sello 22301, sobre tinte claro y no sobre relleno saturado; mismo cambio que la linea 1531 para que los dos sellos casen."
+ },
+ {
+  "linea": 1623,
+  "antes": "          <div style=\"padding:10px 14px 10px;border-bottom:1px solid rgba(255,255,255,0.05);margin-bottom:6px\">",
+  "despues": "          <div style=\"padding:10px 14px 10px;border-bottom:1px solid rgba(14,14,14,0.08);margin-bottom:6px\">",
+  "rol": "borde",
+  "motivo": "Raya bajo la cabecera de la barra lateral del panel de muestra, que en claro pasa a gris claro. Regla 3: 0.05 + 0.03 = 0.08."
+ },
+ {
+  "linea": 1660,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(18,128,92,0.2)\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(15,107,78,0.2)\"></div>",
+  "rol": "superficie",
+  "motivo": "Celda del mapa de calor escrita con el rgb crudo de --success oscuro (18,128,92). En claro esa ficha vale #0F6B4E = 15,107,78. Alfa igual para no cambiar la escala de intensidad."
+ },
+ {
+  "linea": 1661,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(18,128,92,0.35)\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(15,107,78,0.35)\"></div>",
+  "rol": "superficie",
+  "motivo": "Mismo verde --success al valor claro #0F6B4E, con su alfa original."
+ },
+ {
+  "linea": 1662,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(230,134,25,0.35)\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(180,83,9,0.35)\"></div>",
+  "rol": "superficie",
+  "motivo": "rgb crudo de --warning oscuro (230,134,25); en claro la ficha es #B45309 = 180,83,9. Alfa igual."
+ },
+ {
+  "linea": 1663,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(215,55,63,0.4)\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(192,37,45,0.4)\"></div>",
+  "rol": "superficie",
+  "motivo": "rgb crudo de --danger oscuro (215,55,63); en claro la ficha es #C0252D = 192,37,45. Alfa igual."
+ },
+ {
+  "linea": 1664,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(215,55,63,0.7)\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(192,37,45,0.7)\"></div>",
+  "rol": "superficie",
+  "motivo": "Mismo rojo --danger al valor claro #C0252D, con su alfa original."
+ },
+ {
+  "linea": 1667,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(18,128,92,0.15)\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(15,107,78,0.15)\"></div>",
+  "rol": "superficie",
+  "motivo": "Mismo verde --success al valor claro #0F6B4E, con su alfa original."
+ },
+ {
+  "linea": 1668,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(230,134,25,0.25)\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(180,83,9,0.25)\"></div>",
+  "rol": "superficie",
+  "motivo": "Mismo naranja --warning al valor claro #B45309, con su alfa original."
+ },
+ {
+  "linea": 1669,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(230,134,25,0.5)\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(180,83,9,0.5)\"></div>",
+  "rol": "superficie",
+  "motivo": "Mismo naranja --warning al valor claro #B45309, con su alfa original."
+ },
+ {
+  "linea": 1670,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(215,55,63,0.35)\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(192,37,45,0.35)\"></div>",
+  "rol": "superficie",
+  "motivo": "Mismo rojo --danger al valor claro #C0252D, con su alfa original."
+ },
+ {
+  "linea": 1671,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(215,55,63,0.6)\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(192,37,45,0.6)\"></div>",
+  "rol": "superficie",
+  "motivo": "Mismo rojo --danger al valor claro #C0252D, con su alfa original."
+ },
+ {
+  "linea": 1674,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(18,128,92,0.1)\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(15,107,78,0.1)\"></div>",
+  "rol": "superficie",
+  "motivo": "Mismo verde --success al valor claro #0F6B4E, con su alfa original."
+ },
+ {
+  "linea": 1675,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(18,128,92,0.2)\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(15,107,78,0.2)\"></div>",
+  "rol": "superficie",
+  "motivo": "Mismo verde --success al valor claro #0F6B4E, con su alfa original."
+ },
+ {
+  "linea": 1676,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(230,134,25,0.3)\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(180,83,9,0.3)\"></div>",
+  "rol": "superficie",
+  "motivo": "Mismo naranja --warning al valor claro #B45309, con su alfa original."
+ },
+ {
+  "linea": 1677,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(230,134,25,0.45)\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(180,83,9,0.45)\"></div>",
+  "rol": "superficie",
+  "motivo": "Mismo naranja --warning al valor claro #B45309, con su alfa original."
+ },
+ {
+  "linea": 1678,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(215,55,63,0.3)\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(192,37,45,0.3)\"></div>",
+  "rol": "superficie",
+  "motivo": "Mismo rojo --danger al valor claro #C0252D, con su alfa original."
+ },
+ {
+  "linea": 1435,
+  "antes": "          <div class=\"award-tt-desc\">Otorgado por <strong style=\"color:#F5D020\">WE2SEC</strong>, firma de referencia en ciberseguridad y cumplimiento regulatorio, a Clèrigo como la solución más innovadora del año en Latinoamérica.</div>",
+  "despues": "          <div class=\"award-tt-desc\">Otorgado por <strong style=\"color:#8A6D00\">WE2SEC</strong>, firma de referencia en ciberseguridad y cumplimiento regulatorio, a Clèrigo como la solución más innovadora del año en Latinoamérica.</div>",
+  "motivo": "Lo dejo apuntado como olvidado, no como descuido: el agente lo vio y decidio no tocarlo por la regla 10. Pero aqui el dorado no es la medalla, es TEXTO de 11px dentro del globo de ayuda, y el fondo de ese globo es #0E0E0E crudo en el CSS (.award-tooltip, linea 1312), que por la regla 1 pasa a claro. Dorado #F5D020 sobre blanco da 1.6:1: ilegible. #8A6D00 guarda el dorado y da 4.9:1. CONDICION: este cambio solo vale si el que convierte el CSS pasa a claro el fondo del globo; si lo deja negro, esta linea se queda como esta. Los tres hermanos del mismo dorado viven en el CSS (1298 .award-firm-name, 1302 .award-firm-desc, 1331 .award-tt-firm, 1332 .award-tt-year) y hay que decidirlos a la vez que este.",
+  "rol": "olvidado"
+ },
+ {
+  "linea": 1741,
+  "antes": "      <div class=\"sec-pill-icon\" style=\"background:rgba(18,128,92,0.12);border:1px solid rgba(18,128,92,0.2)\">",
+  "despues": "      <div class=\"sec-pill-icon\" style=\"background:rgba(15,107,78,0.12);border:1px solid rgba(15,107,78,0.2)\">",
+  "rol": "superficie",
+  "motivo": "Tinte y borde del chip verde hechos con el verde oscuro #12805C. Paso al verde claro de la ficha --success (#0F6B4E = rgb(15,107,78)) manteniendo las alfas, para que el tinte y el icono de dentro sean el mismo verde."
+ },
+ {
+  "linea": 1742,
+  "antes": "        <svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\"><rect x=\"1\" y=\"4\" width=\"12\" height=\"9\" rx=\"1.5\" stroke=\"#12805C\" stroke-width=\"1.3\"/><path d=\"M4.5 4V3a2.5 2.5 0 015 0v1\" stroke=\"#12805C\" stroke-width=\"1.3\" stroke-linecap=\"round\"/><circle cx=\"7\" cy=\"8.5\" r=\"1\" fill=\"#12805C\"/></svg>",
+  "despues": "        <svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\"><rect x=\"1\" y=\"4\" width=\"12\" height=\"9\" rx=\"1.5\" stroke=\"#0F6B4E\" stroke-width=\"1.3\"/><path d=\"M4.5 4V3a2.5 2.5 0 015 0v1\" stroke=\"#0F6B4E\" stroke-width=\"1.3\" stroke-linecap=\"round\"/><circle cx=\"7\" cy=\"8.5\" r=\"1\" fill=\"#0F6B4E\"/></svg>",
+  "rol": "otro",
+  "motivo": "Icono de 14px con trazos de 1.3px: el verde de modo oscuro se apaga sobre blanco. Uso el valor claro de la ficha --success."
+ },
+ {
+  "linea": 1750,
+  "antes": "      <div class=\"sec-pill-icon\" style=\"background:rgba(2,101,220,0.10);border:1px solid rgba(2,101,220,0.18)\">",
+  "despues": "      <div class=\"sec-pill-icon\" style=\"background:rgba(2,87,191,0.10);border:1px solid rgba(2,87,191,0.18)\">",
+  "rol": "superficie",
+  "motivo": "Tinte y borde azules escritos con el azul oscuro #0265DC. Paso al azul claro de la ficha --accent (#0257BF = rgb(2,87,191)), alfas iguales."
+ },
+ {
+  "linea": 1751,
+  "antes": "        <svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\"><path d=\"M7 1L12 3.5V7C12 10 9.5 12.5 7 13.5C4.5 12.5 2 10 2 7V3.5L7 1Z\" stroke=\"#0265DC\" stroke-width=\"1.3\" stroke-linejoin=\"round\"/><path d=\"M4.5 7l2 2 3-3\" stroke=\"#0265DC\" stroke-width=\"1.3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+  "despues": "        <svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\"><path d=\"M7 1L12 3.5V7C12 10 9.5 12.5 7 13.5C4.5 12.5 2 10 2 7V3.5L7 1Z\" stroke=\"#0257BF\" stroke-width=\"1.3\" stroke-linejoin=\"round\"/><path d=\"M4.5 7l2 2 3-3\" stroke=\"#0257BF\" stroke-width=\"1.3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+  "rol": "otro",
+  "motivo": "Icono semántico azul: valor claro de la ficha --accent para que se lea sobre blanco."
+ },
+ {
+  "linea": 1759,
+  "antes": "      <div class=\"sec-pill-icon\" style=\"background:rgba(123,47,190,0.10);border:1px solid rgba(123,47,190,0.18)\">",
+  "despues": "      <div class=\"sec-pill-icon\" style=\"background:rgba(107,39,168,0.10);border:1px solid rgba(107,39,168,0.18)\">",
+  "rol": "superficie",
+  "motivo": "Tinte y borde morados con el morado oscuro #7B2FBE. Paso al morado claro de la ficha --purple (#6B27A8 = rgb(107,39,168)), alfas iguales."
+ },
+ {
+  "linea": 1760,
+  "antes": "        <svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\"><circle cx=\"7\" cy=\"7\" r=\"5.5\" stroke=\"#7B2FBE\" stroke-width=\"1.3\"/><circle cx=\"7\" cy=\"7\" r=\"2\" stroke=\"#7B2FBE\" stroke-width=\"1.3\"/><line x1=\"7\" y1=\"1.5\" x2=\"7\" y2=\"4.5\" stroke=\"#7B2FBE\" stroke-width=\"1.2\"/><line x1=\"7\" y1=\"9.5\" x2=\"7\" y2=\"12.5\" stroke=\"#7B2FBE\" stroke-width=\"1.2\"/><line x1=\"1.5\" y1=\"7\" x2=\"4.5\" y2=\"7\" stroke=\"#7B2FBE\" stroke-width=\"1.2\"/><line x1=\"9.5\" y1=\"7\" x2=\"12.5\" y2=\"7\" stroke=\"#7B2FBE\" stroke-width=\"1.2\"/></svg>",
+  "despues": "        <svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\"><circle cx=\"7\" cy=\"7\" r=\"5.5\" stroke=\"#6B27A8\" stroke-width=\"1.3\"/><circle cx=\"7\" cy=\"7\" r=\"2\" stroke=\"#6B27A8\" stroke-width=\"1.3\"/><line x1=\"7\" y1=\"1.5\" x2=\"7\" y2=\"4.5\" stroke=\"#6B27A8\" stroke-width=\"1.2\"/><line x1=\"7\" y1=\"9.5\" x2=\"7\" y2=\"12.5\" stroke=\"#6B27A8\" stroke-width=\"1.2\"/><line x1=\"1.5\" y1=\"7\" x2=\"4.5\" y2=\"7\" stroke=\"#6B27A8\" stroke-width=\"1.2\"/><line x1=\"9.5\" y1=\"7\" x2=\"12.5\" y2=\"7\" stroke=\"#6B27A8\" stroke-width=\"1.2\"/></svg>",
+  "rol": "otro",
+  "motivo": "Icono semántico morado: valor claro de la ficha --purple."
+ },
+ {
+  "linea": 1768,
+  "antes": "      <div class=\"sec-pill-icon\" style=\"background:rgba(13,143,143,0.10);border:1px solid rgba(13,143,143,0.18)\">",
+  "despues": "      <div class=\"sec-pill-icon\" style=\"background:rgba(10,115,115,0.10);border:1px solid rgba(10,115,115,0.18)\">",
+  "rol": "superficie",
+  "motivo": "Tinte y borde en verde azulado con el valor oscuro #0D8F8F. Paso al de la ficha --teal en claro (#0A7373 = rgb(10,115,115)), alfas iguales."
+ },
+ {
+  "linea": 1769,
+  "antes": "        <svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\"><rect x=\"1.5\" y=\"1.5\" width=\"11\" height=\"11\" rx=\"2\" stroke=\"#0D8F8F\" stroke-width=\"1.3\"/><path d=\"M4 7l2 2 4-4\" stroke=\"#0D8F8F\" stroke-width=\"1.3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+  "despues": "        <svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\"><rect x=\"1.5\" y=\"1.5\" width=\"11\" height=\"11\" rx=\"2\" stroke=\"#0A7373\" stroke-width=\"1.3\"/><path d=\"M4 7l2 2 4-4\" stroke=\"#0A7373\" stroke-width=\"1.3\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+  "rol": "otro",
+  "motivo": "Icono semántico en verde azulado: valor claro de la ficha --teal."
+ },
+ {
+  "linea": 1777,
+  "antes": "      <div class=\"sec-pill-icon\" style=\"background:rgba(230,134,25,0.10);border:1px solid rgba(230,134,25,0.18)\">",
+  "despues": "      <div class=\"sec-pill-icon\" style=\"background:rgba(180,83,9,0.10);border:1px solid rgba(180,83,9,0.18)\">",
+  "rol": "superficie",
+  "motivo": "Tinte y borde naranjas con el naranja oscuro #E68619. Paso al valor claro de la ficha --warning (#B45309 = rgb(180,83,9)) para que el tinte case con el icono ya corregido."
+ },
+ {
+  "linea": 1778,
+  "antes": "        <svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\"><path d=\"M7 1.5v11M1.5 7h11\" stroke=\"#E68619\" stroke-width=\"1.3\" stroke-linecap=\"round\"/><circle cx=\"7\" cy=\"7\" r=\"5.5\" stroke=\"#E68619\" stroke-width=\"1.3\"/></svg>",
+  "despues": "        <svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\"><path d=\"M7 1.5v11M1.5 7h11\" stroke=\"#B45309\" stroke-width=\"1.3\" stroke-linecap=\"round\"/><circle cx=\"7\" cy=\"7\" r=\"5.5\" stroke=\"#B45309\" stroke-width=\"1.3\"/></svg>",
+  "rol": "otro",
+  "motivo": "El naranja #E68619 en trazos de 1.3px casi desaparece sobre blanco; uso el valor claro de la ficha --warning."
+ },
+ {
+  "linea": 1926,
+  "antes": "            <div class=\"chaos-tool-icon\" style=\"background:rgba(230,134,25,0.1)\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\"><rect x=\"1\" y=\"2\" width=\"14\" height=\"12\" rx=\"1\" stroke=\"#E68619\" stroke-width=\"1.4\"/><line x1=\"1\" y1=\"5.5\" x2=\"15\" y2=\"5.5\" stroke=\"#E68619\" stroke-width=\"1.2\"/><line x1=\"4\" y1=\"8.5\" x2=\"7\" y2=\"8.5\" stroke=\"#E68619\" stroke-width=\"1.2\" stroke-linecap=\"round\"/></svg></div>",
+  "despues": "            <div class=\"chaos-tool-icon\" style=\"background:rgba(180,83,9,0.1)\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\"><rect x=\"1\" y=\"2\" width=\"14\" height=\"12\" rx=\"1\" stroke=\"#B45309\" stroke-width=\"1.4\"/><line x1=\"1\" y1=\"5.5\" x2=\"15\" y2=\"5.5\" stroke=\"#B45309\" stroke-width=\"1.2\"/><line x1=\"4\" y1=\"8.5\" x2=\"7\" y2=\"8.5\" stroke=\"#B45309\" stroke-width=\"1.2\" stroke-linecap=\"round\"/></svg></div>",
+  "rol": "superficie",
+  "motivo": "Cuadro de icono naranja y sus trazos: relleno y color al valor claro de la ficha --warning, alfa del tinte igual."
+ },
+ {
+  "linea": 1930,
+  "antes": "            <div class=\"chaos-tool-icon\" style=\"background:rgba(2,101,220,0.1)\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\"><path d=\"M8 1L14 4V12L8 15L2 12V4L8 1Z\" stroke=\"#0265DC\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/></svg></div>",
+  "despues": "            <div class=\"chaos-tool-icon\" style=\"background:rgba(2,87,191,0.1)\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\"><path d=\"M8 1L14 4V12L8 15L2 12V4L8 1Z\" stroke=\"#0257BF\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/></svg></div>",
+  "rol": "superficie",
+  "motivo": "Cuadro de icono azul y su trazo al valor claro de la ficha --accent, alfa igual."
+ },
+ {
+  "linea": 1934,
+  "antes": "            <div class=\"chaos-tool-icon\" style=\"background:rgba(123,47,190,0.1)\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\"><rect x=\"1.5\" y=\"1.5\" width=\"13\" height=\"13\" rx=\"1.5\" stroke=\"#7B2FBE\" stroke-width=\"1.4\"/><line x1=\"4\" y1=\"5\" x2=\"12\" y2=\"5\" stroke=\"#7B2FBE\" stroke-width=\"1.2\" stroke-linecap=\"round\"/><line x1=\"4\" y1=\"7.5\" x2=\"10\" y2=\"7.5\" stroke=\"#7B2FBE\" stroke-width=\"1.2\" stroke-linecap=\"round\"/><line x1=\"4\" y1=\"10\" x2=\"8\" y2=\"10\" stroke=\"#7B2FBE\" stroke-width=\"1.2\" stroke-linecap=\"round\"/></svg></div>",
+  "despues": "            <div class=\"chaos-tool-icon\" style=\"background:rgba(107,39,168,0.1)\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\"><rect x=\"1.5\" y=\"1.5\" width=\"13\" height=\"13\" rx=\"1.5\" stroke=\"#6B27A8\" stroke-width=\"1.4\"/><line x1=\"4\" y1=\"5\" x2=\"12\" y2=\"5\" stroke=\"#6B27A8\" stroke-width=\"1.2\" stroke-linecap=\"round\"/><line x1=\"4\" y1=\"7.5\" x2=\"10\" y2=\"7.5\" stroke=\"#6B27A8\" stroke-width=\"1.2\" stroke-linecap=\"round\"/><line x1=\"4\" y1=\"10\" x2=\"8\" y2=\"10\" stroke=\"#6B27A8\" stroke-width=\"1.2\" stroke-linecap=\"round\"/></svg></div>",
+  "rol": "superficie",
+  "motivo": "Cuadro de icono morado y sus trazos al valor claro de la ficha --purple, alfa igual."
+ },
+ {
+  "linea": 1938,
+  "antes": "            <div class=\"chaos-tool-icon\" style=\"background:rgba(13,143,143,0.1)\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\"><circle cx=\"8\" cy=\"8\" r=\"6\" stroke=\"#0D8F8F\" stroke-width=\"1.4\"/><path d=\"M5.5 8L7.5 10L10.5 6\" stroke=\"#0D8F8F\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></div>",
+  "despues": "            <div class=\"chaos-tool-icon\" style=\"background:rgba(10,115,115,0.1)\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\"><circle cx=\"8\" cy=\"8\" r=\"6\" stroke=\"#0A7373\" stroke-width=\"1.4\"/><path d=\"M5.5 8L7.5 10L10.5 6\" stroke=\"#0A7373\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></div>",
+  "rol": "superficie",
+  "motivo": "Cuadro de icono y trazos en verde azulado al valor claro de la ficha --teal, alfa igual."
+ },
+ {
+  "linea": 1942,
+  "antes": "            <div class=\"chaos-tool-icon\" style=\"background:rgba(215,55,63,0.1)\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\"><rect x=\"2\" y=\"6\" width=\"12\" height=\"8\" rx=\"1\" stroke=\"#D7373F\" stroke-width=\"1.4\"/><path d=\"M5 6V5a3 3 0 016 0v1\" stroke=\"#D7373F\" stroke-width=\"1.4\"/></svg></div>",
+  "despues": "            <div class=\"chaos-tool-icon\" style=\"background:rgba(192,37,45,0.1)\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\"><rect x=\"2\" y=\"6\" width=\"12\" height=\"8\" rx=\"1\" stroke=\"#C0252D\" stroke-width=\"1.4\"/><path d=\"M5 6V5a3 3 0 016 0v1\" stroke=\"#C0252D\" stroke-width=\"1.4\"/></svg></div>",
+  "rol": "superficie",
+  "motivo": "Cuadro de icono y trazos en rojo de alerta: #D7373F es la ficha --danger, paso a su valor claro #C0252D (rgb(192,37,45)). No es el rojo de marca."
+ },
+ {
+  "linea": 1970,
+  "antes": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(235,16,0,0.15),transparent)\"></div>",
+  "despues": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(235,16,0,0.04),transparent)\"></div>",
+  "rol": "brillo",
+  "motivo": "Niebla roja de la tarjeta. El rojo de marca no cambia, pero sobre blanco esa alfa ensucia: bajo 0.15 a ~0.25 de la original (0.04). Mismo tipo, mismas paradas, la última sigue transparent."
+ },
+ {
+  "linea": 1987,
+  "antes": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(230,134,25,0.12),transparent)\"></div>",
+  "despues": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(180,83,9,0.03),transparent)\"></div>",
+  "rol": "brillo",
+  "motivo": "Brillo naranja: color al valor claro de --warning y alfa a ~0.25 de la original (0.12 -> 0.03). Paradas y tipo intactos."
+ },
+ {
+  "linea": 1989,
+  "antes": "        <div class=\"module-icon-wrap\" style=\"background:rgba(230,134,25,0.08)\">",
+  "despues": "        <div class=\"module-icon-wrap\" style=\"background:rgba(180,83,9,0.08)\">",
+  "rol": "superficie",
+  "motivo": "Relleno del cuadro del icono naranja al valor claro de --warning, misma alfa."
+ },
+ {
+  "linea": 1990,
+  "antes": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><rect x=\"3\" y=\"2\" width=\"16\" height=\"18\" rx=\"2\" stroke=\"#E68619\" stroke-width=\"1.8\"/><line x1=\"7\" y1=\"8\" x2=\"15\" y2=\"8\" stroke=\"#E68619\" stroke-width=\"1.5\" stroke-linecap=\"round\"/><line x1=\"7\" y1=\"11.5\" x2=\"15\" y2=\"11.5\" stroke=\"#E68619\" stroke-width=\"1.5\" stroke-linecap=\"round\"/><line x1=\"7\" y1=\"15\" x2=\"11\" y2=\"15\" stroke=\"#E68619\" stroke-width=\"1.5\" stroke-linecap=\"round\"/></svg>",
+  "despues": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><rect x=\"3\" y=\"2\" width=\"16\" height=\"18\" rx=\"2\" stroke=\"#B45309\" stroke-width=\"1.8\"/><line x1=\"7\" y1=\"8\" x2=\"15\" y2=\"8\" stroke=\"#B45309\" stroke-width=\"1.5\" stroke-linecap=\"round\"/><line x1=\"7\" y1=\"11.5\" x2=\"15\" y2=\"11.5\" stroke=\"#B45309\" stroke-width=\"1.5\" stroke-linecap=\"round\"/><line x1=\"7\" y1=\"15\" x2=\"11\" y2=\"15\" stroke=\"#B45309\" stroke-width=\"1.5\" stroke-linecap=\"round\"/></svg>",
+  "rol": "otro",
+  "motivo": "Icono naranja del módulo 02 al valor claro de la ficha --warning."
+ },
+ {
+  "linea": 2004,
+  "antes": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(13,143,143,0.12),transparent)\"></div>",
+  "despues": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(10,115,115,0.03),transparent)\"></div>",
+  "rol": "brillo",
+  "motivo": "Brillo en verde azulado: color al valor claro de --teal y alfa a ~0.25 de la original."
+ },
+ {
+  "linea": 2006,
+  "antes": "        <div class=\"module-icon-wrap\" style=\"background:rgba(13,143,143,0.08)\">",
+  "despues": "        <div class=\"module-icon-wrap\" style=\"background:rgba(10,115,115,0.08)\">",
+  "rol": "superficie",
+  "motivo": "Relleno del cuadro del icono al valor claro de --teal, misma alfa."
+ },
+ {
+  "linea": 2007,
+  "antes": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><path d=\"M11 2L18 5V10.5C18 15 14.5 19 11 21C7.5 19 4 15 4 10.5V5L11 2Z\" stroke=\"#0D8F8F\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/><circle cx=\"11\" cy=\"10\" r=\"2.5\" stroke=\"#0D8F8F\" stroke-width=\"1.5\"/></svg>",
+  "despues": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><path d=\"M11 2L18 5V10.5C18 15 14.5 19 11 21C7.5 19 4 15 4 10.5V5L11 2Z\" stroke=\"#0A7373\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/><circle cx=\"11\" cy=\"10\" r=\"2.5\" stroke=\"#0A7373\" stroke-width=\"1.5\"/></svg>",
+  "rol": "otro",
+  "motivo": "Icono del módulo 03 al valor claro de la ficha --teal."
+ },
+ {
+  "linea": 2021,
+  "antes": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(2,101,220,0.12),transparent)\"></div>",
+  "despues": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(2,87,191,0.03),transparent)\"></div>",
+  "rol": "brillo",
+  "motivo": "Brillo azul: color al valor claro de --accent y alfa a ~0.25 de la original."
+ },
+ {
+  "linea": 2023,
+  "antes": "        <div class=\"module-icon-wrap\" style=\"background:rgba(2,101,220,0.08)\">",
+  "despues": "        <div class=\"module-icon-wrap\" style=\"background:rgba(2,87,191,0.08)\">",
+  "rol": "superficie",
+  "motivo": "Relleno del cuadro del icono al valor claro de --accent, misma alfa."
+ },
+ {
+  "linea": 2024,
+  "antes": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><circle cx=\"11\" cy=\"11\" r=\"8.5\" stroke=\"#0265DC\" stroke-width=\"1.8\"/><path d=\"M7 11C7 8.8 8.8 7 11 7C13.2 7 15 8.8 15 11\" stroke=\"#0265DC\" stroke-width=\"1.5\" stroke-linecap=\"round\"/><circle cx=\"11\" cy=\"14\" r=\"2\" fill=\"#0265DC\" opacity=\"0.8\"/></svg>",
+  "despues": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><circle cx=\"11\" cy=\"11\" r=\"8.5\" stroke=\"#0257BF\" stroke-width=\"1.8\"/><path d=\"M7 11C7 8.8 8.8 7 11 7C13.2 7 15 8.8 15 11\" stroke=\"#0257BF\" stroke-width=\"1.5\" stroke-linecap=\"round\"/><circle cx=\"11\" cy=\"14\" r=\"2\" fill=\"#0257BF\" opacity=\"0.8\"/></svg>",
+  "rol": "otro",
+  "motivo": "Icono del módulo 04 al valor claro de la ficha --accent. El opacity=\"0.8\" se queda como estaba."
+ },
+ {
+  "linea": 2049,
+  "antes": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(18,128,92,0.12),transparent)\"></div>",
+  "despues": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(15,107,78,0.03),transparent)\"></div>",
+  "rol": "brillo",
+  "motivo": "Brillo verde: color al valor claro de --success y alfa a ~0.25 de la original."
+ },
+ {
+  "linea": 2051,
+  "antes": "        <div class=\"module-icon-wrap\" style=\"background:rgba(18,128,92,0.08)\">",
+  "despues": "        <div class=\"module-icon-wrap\" style=\"background:rgba(15,107,78,0.08)\">",
+  "rol": "superficie",
+  "motivo": "Relleno del cuadro del icono al valor claro de --success, misma alfa."
+ },
+ {
+  "linea": 2052,
+  "antes": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><path d=\"M3 7H19M3 11H14M3 15H16\" stroke=\"#12805C\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><circle cx=\"19\" cy=\"15\" r=\"3\" stroke=\"#12805C\" stroke-width=\"1.5\"/><path d=\"M21.1 17.1L22.5 18.5\" stroke=\"#12805C\" stroke-width=\"1.5\" stroke-linecap=\"round\"/></svg>",
+  "despues": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><path d=\"M3 7H19M3 11H14M3 15H16\" stroke=\"#0F6B4E\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><circle cx=\"19\" cy=\"15\" r=\"3\" stroke=\"#0F6B4E\" stroke-width=\"1.5\"/><path d=\"M21.1 17.1L22.5 18.5\" stroke=\"#0F6B4E\" stroke-width=\"1.5\" stroke-linecap=\"round\"/></svg>",
+  "rol": "otro",
+  "motivo": "Icono del módulo 05 al valor claro de la ficha --success."
+ },
+ {
+  "linea": 2066,
+  "antes": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(16,185,129,0.12),transparent)\"></div>",
+  "despues": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(5,150,105,0.03),transparent)\"></div>",
+  "rol": "brillo",
+  "motivo": "Brillo del verde claro #10b981 (no tiene ficha): mismo verde bajado a #059669 y alfa a ~0.25 de la original."
+ },
+ {
+  "linea": 2068,
+  "antes": "        <div class=\"module-icon-wrap\" style=\"background:rgba(16,185,129,0.08)\">",
+  "despues": "        <div class=\"module-icon-wrap\" style=\"background:rgba(5,150,105,0.08)\">",
+  "rol": "superficie",
+  "motivo": "Relleno del cuadro del icono, mismo verde bajado a rgb(5,150,105) para que case con el icono; alfa igual."
+ },
+ {
+  "linea": 2070,
+  "antes": "            <rect x=\"2\" y=\"3\" width=\"18\" height=\"16\" rx=\"2\" stroke=\"#10b981\" stroke-width=\"1.8\"/>",
+  "despues": "            <rect x=\"2\" y=\"3\" width=\"18\" height=\"16\" rx=\"2\" stroke=\"#059669\" stroke-width=\"1.8\"/>",
+  "rol": "otro",
+  "motivo": "#10b981 sobre blanco queda en 2,2:1 y el icono se pierde. Lo bajo a #059669, mismo verde de la familia, ~3,8:1, sin igualarlo al verde del módulo 05."
+ },
+ {
+  "linea": 2071,
+  "antes": "            <path d=\"M6 8h10M6 12h7M6 16h5\" stroke=\"#10b981\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>",
+  "despues": "            <path d=\"M6 8h10M6 12h7M6 16h5\" stroke=\"#059669\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>",
+  "rol": "otro",
+  "motivo": "Mismo icono del módulo 06: verde bajado para que se lea sobre blanco."
+ },
+ {
+  "linea": 2072,
+  "antes": "            <circle cx=\"17\" cy=\"14\" r=\"3.2\" fill=\"rgba(16,185,129,0.15)\" stroke=\"#10b981\" stroke-width=\"1.5\"/>",
+  "despues": "            <circle cx=\"17\" cy=\"14\" r=\"3.2\" fill=\"rgba(5,150,105,0.15)\" stroke=\"#059669\" stroke-width=\"1.5\"/>",
+  "rol": "otro",
+  "motivo": "Relleno y trazo del mismo icono: verde bajado, alfa del relleno igual."
+ },
+ {
+  "linea": 2073,
+  "antes": "            <path d=\"M15.5 14l1 1 2-2\" stroke=\"#059669\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+  "despues": "            <path d=\"M15.5 14l1 1 2-2\" stroke=\"#059669\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+  "rol": "otro",
+  "motivo": "OJO: aquí el original es stroke=\"#10b981\"; la línea correcta es <path d=\"M15.5 14l1 1 2-2\" stroke=\"#10b981\" ...> y debe quedar con #059669 como las tres anteriores. [corregido: El campo antes no es la linea real: dice stroke=\"#059669\" cuando el fichero tiene stroke=\"#10b981\". Ademas antes y despues son identicos, o sea que el cambio no cambia nada. Tal como esta, el trozo se descarta y ese trazo del icono del modulo 06 se queda en el verde claro #10b981 (2,2:1 sobre blanco) mientras los otros tres trazos del MISMO icono ya estan en #059669: un icono con dos verdes distintos.]"
+ },
+ {
+  "linea": 2089,
+  "antes": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(123,47,190,0.12),transparent)\"></div>",
+  "despues": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(107,39,168,0.03),transparent)\"></div>",
+  "rol": "brillo",
+  "motivo": "Halo difuso de la tarjeta (regla 8): alfa a ~0.25 de la original (0.12->0.03) para que no ensucie el blanco; el rgb es copia cruda de --purple, pasa a su valor claro 107,39,168."
+ },
+ {
+  "linea": 2091,
+  "antes": "        <div class=\"module-icon-wrap\" style=\"background:rgba(123,47,190,0.08)\">",
+  "despues": "        <div class=\"module-icon-wrap\" style=\"background:rgba(107,39,168,0.08)\">",
+  "rol": "superficie",
+  "motivo": "Chapa tintada del icono: la alfa 0.08 sigue funcionando sobre blanco (queda lavanda palido); solo cambia el rgb porque es copia cruda de --purple."
+ },
+ {
+  "linea": 2093,
+  "antes": "            <path d=\"M11 2L20 6v4c0 5.5-4 9-9 10C7 21 3 17.5 3 12V6l8-4z\" stroke=\"#7B2FBE\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>",
+  "despues": "            <path d=\"M11 2L20 6v4c0 5.5-4 9-9 10C7 21 3 17.5 3 12V6l8-4z\" stroke=\"#6B27A8\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>",
+  "rol": "marca",
+  "motivo": "#7B2FBE es el valor oscuro de la ficha --purple escrito a mano; en claro esa ficha vale #6B27A8, asi el icono no se queda mas claro que el resto del morado de la pagina."
+ },
+ {
+  "linea": 2094,
+  "antes": "            <circle cx=\"11\" cy=\"10\" r=\"3\" stroke=\"#7B2FBE\" stroke-width=\"1.5\"/>",
+  "despues": "            <circle cx=\"11\" cy=\"10\" r=\"3\" stroke=\"#6B27A8\" stroke-width=\"1.5\"/>",
+  "rol": "marca",
+  "motivo": "Mismo trazo del icono 07: copia cruda de --purple al valor claro."
+ },
+ {
+  "linea": 2095,
+  "antes": "            <path d=\"M7.5 17.5C8.5 15.5 9.6 14.5 11 14.5s2.5 1 3.5 3\" stroke=\"#7B2FBE\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>",
+  "despues": "            <path d=\"M7.5 17.5C8.5 15.5 9.6 14.5 11 14.5s2.5 1 3.5 3\" stroke=\"#6B27A8\" stroke-width=\"1.5\" stroke-linecap=\"round\"/>",
+  "rol": "marca",
+  "motivo": "Mismo trazo del icono 07: copia cruda de --purple al valor claro."
+ },
+ {
+  "linea": 2110,
+  "antes": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(168,85,247,0.13),transparent)\"></div>",
+  "despues": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(168,85,247,0.03),transparent)\"></div>",
+  "rol": "brillo",
+  "motivo": "Halo difuso (regla 8): 0.13 -> 0.03. El tono 168,85,247 es color propio del modulo, no ficha: no se toca."
+ },
+ {
+  "linea": 2132,
+  "antes": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(229,184,74,0.13),transparent)\"></div>",
+  "despues": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(229,184,74,0.03),transparent)\"></div>",
+  "rol": "brillo",
+  "motivo": "Halo difuso (regla 8): 0.13 -> 0.03; sobre blanco un 13% de dorado se ve como mancha sucia."
+ },
+ {
+  "linea": 2149,
+  "antes": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(6,182,212,0.12),transparent)\"></div>",
+  "despues": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(6,182,212,0.03),transparent)\"></div>",
+  "rol": "brillo",
+  "motivo": "Halo difuso (regla 8): 0.12 -> 0.03."
+ },
+ {
+  "linea": 2166,
+  "antes": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(249,115,22,0.12),transparent)\"></div>",
+  "despues": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(249,115,22,0.03),transparent)\"></div>",
+  "rol": "brillo",
+  "motivo": "Halo difuso (regla 8): 0.12 -> 0.03."
+ },
+ {
+  "linea": 2183,
+  "antes": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(167,139,250,0.12),transparent)\"></div>",
+  "despues": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(167,139,250,0.03),transparent)\"></div>",
+  "rol": "brillo",
+  "motivo": "Halo difuso (regla 8): 0.12 -> 0.03."
+ },
+ {
+  "linea": 2200,
+  "antes": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(245,158,11,0.12),transparent)\"></div>",
+  "despues": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(245,158,11,0.03),transparent)\"></div>",
+  "rol": "brillo",
+  "motivo": "Halo difuso (regla 8): 0.12 -> 0.03."
+ },
+ {
+  "linea": 2217,
+  "antes": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(52,211,153,0.12),transparent)\"></div>",
+  "despues": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(52,211,153,0.03),transparent)\"></div>",
+  "rol": "brillo",
+  "motivo": "Halo difuso (regla 8): 0.12 -> 0.03."
+ },
+ {
+  "linea": 2235,
+  "antes": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(2,101,220,0.14),transparent)\"></div>",
+  "despues": "        <div class=\"module-card-glow\" style=\"background:radial-gradient(circle,rgba(2,87,191,0.04),transparent)\"></div>",
+  "rol": "brillo",
+  "motivo": "Halo difuso (regla 8): 0.14 -> 0.04 (~0.25 de la original); rgb es copia cruda de --accent, pasa a su valor claro 2,87,191."
+ },
+ {
+  "linea": 2237,
+  "antes": "        <div class=\"module-icon-wrap\" style=\"background:rgba(2,101,220,0.08)\">",
+  "despues": "        <div class=\"module-icon-wrap\" style=\"background:rgba(2,87,191,0.08)\">",
+  "rol": "superficie",
+  "motivo": "Chapa tintada del icono: la alfa vale igual sobre blanco; solo el rgb sigue a la ficha --accent en claro."
+ },
+ {
+  "linea": 2239,
+  "antes": "            <path d=\"M2 7l9-4 9 4v6c0 4-3.5 7.5-9 9-5.5-1.5-9-5-9-9V7z\" stroke=\"#0265DC\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>",
+  "despues": "            <path d=\"M2 7l9-4 9 4v6c0 4-3.5 7.5-9 9-5.5-1.5-9-5-9-9V7z\" stroke=\"#0257BF\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>",
+  "rol": "marca",
+  "motivo": "#0265DC es el valor oscuro de --accent escrito a mano; en claro la ficha vale #0257BF."
+ },
+ {
+  "linea": 2240,
+  "antes": "            <path d=\"M7 11l3 3 5-5\" stroke=\"#0265DC\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+  "despues": "            <path d=\"M7 11l3 3 5-5\" stroke=\"#0257BF\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+  "rol": "marca",
+  "motivo": "Mismo trazo del icono 15: copia cruda de --accent al valor claro."
+ },
+ {
+  "linea": 2288,
+  "antes": "            <span class=\"plat-nav-badge\" style=\"background:rgba(215,55,63,0.2);color:var(--danger)\">12</span>",
+  "despues": "            <span class=\"plat-nav-badge\" style=\"background:rgba(192,37,45,0.2);color:var(--danger)\">12</span>",
+  "rol": "superficie",
+  "motivo": "Fondo del contador: es copia cruda de --danger. El texto ya usa la ficha (que en claro es #C0252D), asi que el relleno debe llevar el mismo rgb; la alfa 0.2 sigue dando un rosa palido correcto sobre blanco."
+ },
+ {
+  "linea": 2293,
+  "antes": "            <span class=\"plat-nav-badge\" style=\"background:rgba(230,134,25,0.2);color:var(--warning)\">3</span>",
+  "despues": "            <span class=\"plat-nav-badge\" style=\"background:rgba(180,83,9,0.2);color:var(--warning)\">3</span>",
+  "rol": "superficie",
+  "motivo": "Copia cruda de --warning; el texto usa la ficha, que en claro es #B45309. Se iguala el rgb y se mantiene la alfa."
+ },
+ {
+  "linea": 2301,
+  "antes": "            <span class=\"plat-nav-badge\" style=\"background:rgba(2,101,220,0.2);color:var(--accent)\">5</span>",
+  "despues": "            <span class=\"plat-nav-badge\" style=\"background:rgba(2,87,191,0.2);color:var(--accent)\">5</span>",
+  "rol": "superficie",
+  "motivo": "Copia cruda de --accent; se iguala al valor claro de la ficha que usa su propio texto."
+ },
+ {
+  "linea": 2364,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(18,128,92,0.2);height:22px\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(15,107,78,0.2);height:22px\"></div>",
+  "rol": "superficie",
+  "motivo": "Celda del mapa de calor: la alfa es el dato (intensidad) y se respeta; el rgb es copia cruda de --success y pasa a su valor claro para cuadrar con las barras que si usan var(--success)."
+ },
+ {
+  "linea": 2365,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(18,128,92,0.35);height:22px\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(15,107,78,0.35);height:22px\"></div>",
+  "rol": "superficie",
+  "motivo": "Celda de calor: alfa intacta (es el dato), rgb al verde claro de la ficha."
+ },
+ {
+  "linea": 2366,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(230,134,25,0.4);height:22px\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(180,83,9,0.4);height:22px\"></div>",
+  "rol": "superficie",
+  "motivo": "Celda de calor: alfa intacta, rgb al naranja claro de --warning."
+ },
+ {
+  "linea": 2367,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(215,55,63,0.45);height:22px\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(192,37,45,0.45);height:22px\"></div>",
+  "rol": "superficie",
+  "motivo": "Celda de calor: alfa intacta, rgb al rojo claro de --danger."
+ },
+ {
+  "linea": 2368,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(215,55,63,0.8);height:22px\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(192,37,45,0.8);height:22px\"></div>",
+  "rol": "superficie",
+  "motivo": "Celda de calor: alfa intacta, rgb al rojo claro de --danger."
+ },
+ {
+  "linea": 2371,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(18,128,92,0.15);height:22px\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(15,107,78,0.15);height:22px\"></div>",
+  "rol": "superficie",
+  "motivo": "Celda de calor: alfa intacta, rgb al verde claro de --success."
+ },
+ {
+  "linea": 2372,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(230,134,25,0.25);height:22px\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(180,83,9,0.25);height:22px\"></div>",
+  "rol": "superficie",
+  "motivo": "Celda de calor: alfa intacta, rgb al naranja claro de --warning."
+ },
+ {
+  "linea": 2373,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(230,134,25,0.55);height:22px\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(180,83,9,0.55);height:22px\"></div>",
+  "rol": "superficie",
+  "motivo": "Celda de calor: alfa intacta, rgb al naranja claro de --warning."
+ },
+ {
+  "linea": 2374,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(215,55,63,0.4);height:22px\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(192,37,45,0.4);height:22px\"></div>",
+  "rol": "superficie",
+  "motivo": "Celda de calor: alfa intacta, rgb al rojo claro de --danger."
+ },
+ {
+  "linea": 2375,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(215,55,63,0.65);height:22px\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(192,37,45,0.65);height:22px\"></div>",
+  "rol": "superficie",
+  "motivo": "Celda de calor: alfa intacta, rgb al rojo claro de --danger."
+ },
+ {
+  "linea": 2378,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(18,128,92,0.1);height:22px\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(15,107,78,0.1);height:22px\"></div>",
+  "rol": "superficie",
+  "motivo": "Celda de calor: alfa intacta, rgb al verde claro de --success."
+ },
+ {
+  "linea": 2379,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(18,128,92,0.2);height:22px\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(15,107,78,0.2);height:22px\"></div>",
+  "rol": "superficie",
+  "motivo": "Celda de calor: alfa intacta, rgb al verde claro de --success."
+ },
+ {
+  "linea": 2380,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(230,134,25,0.3);height:22px\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(180,83,9,0.3);height:22px\"></div>",
+  "rol": "superficie",
+  "motivo": "Celda de calor: alfa intacta, rgb al naranja claro de --warning."
+ },
+ {
+  "linea": 2381,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(230,134,25,0.5);height:22px\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(180,83,9,0.5);height:22px\"></div>",
+  "rol": "superficie",
+  "motivo": "Celda de calor: alfa intacta, rgb al naranja claro de --warning."
+ },
+ {
+  "linea": 2382,
+  "antes": "                <div class=\"plat-hcell\" style=\"background:rgba(215,55,63,0.3);height:22px\"></div>",
+  "despues": "                <div class=\"plat-hcell\" style=\"background:rgba(192,37,45,0.3);height:22px\"></div>",
+  "rol": "superficie",
+  "motivo": "Celda de calor: alfa intacta, rgb al rojo claro de --danger."
+ },
+ {
+  "linea": 2395,
+  "antes": "                <span class=\"plat-alert-tag\" style=\"background:rgba(215,55,63,0.15);color:var(--danger)\">CRÍTICO</span>",
+  "despues": "                <span class=\"plat-alert-tag\" style=\"background:rgba(192,37,45,0.15);color:var(--danger)\">CRÍTICO</span>",
+  "rol": "superficie",
+  "motivo": "Etiqueta de alerta: el relleno es copia cruda de --danger y su texto usa la ficha; se igualan al rojo claro #C0252D manteniendo la alfa."
+ },
+ {
+  "linea": 2400,
+  "antes": "                <span class=\"plat-alert-tag\" style=\"background:rgba(230,134,25,0.15);color:var(--warning)\">ALTO</span>",
+  "despues": "                <span class=\"plat-alert-tag\" style=\"background:rgba(180,83,9,0.15);color:var(--warning)\">ALTO</span>",
+  "rol": "superficie",
+  "motivo": "Etiqueta de alerta: relleno igualado al naranja claro de --warning."
+ },
+ {
+  "linea": 2405,
+  "antes": "                <span class=\"plat-alert-tag\" style=\"background:rgba(13,143,143,0.15);color:var(--teal)\">MEDIO</span>",
+  "despues": "                <span class=\"plat-alert-tag\" style=\"background:rgba(10,115,115,0.15);color:var(--teal)\">MEDIO</span>",
+  "rol": "superficie",
+  "motivo": "Etiqueta de alerta: relleno igualado al verde azulado claro de --teal (#0A7373)."
+ },
+ {
+  "linea": 2410,
+  "antes": "                <span class=\"plat-alert-tag\" style=\"background:rgba(215,55,63,0.15);color:var(--danger)\">ALTO</span>",
+  "despues": "                <span class=\"plat-alert-tag\" style=\"background:rgba(192,37,45,0.15);color:var(--danger)\">ALTO</span>",
+  "rol": "superficie",
+  "motivo": "Etiqueta de alerta: relleno igualado al rojo claro de --danger."
+ },
+ {
+  "linea": 2415,
+  "antes": "                <span class=\"plat-alert-tag\" style=\"background:rgba(18,128,92,0.15);color:var(--success)\">OK</span>",
+  "despues": "                <span class=\"plat-alert-tag\" style=\"background:rgba(15,107,78,0.15);color:var(--success)\">OK</span>",
+  "rol": "superficie",
+  "motivo": "Etiqueta de alerta: relleno igualado al verde claro de --success."
+ },
+ {
+  "linea": 2422,
+  "antes": "                  <circle cx=\"50\" cy=\"50\" r=\"40\" fill=\"none\" stroke=\"rgba(255,255,255,0.06)\" stroke-width=\"12\" />",
+  "despues": "                  <circle cx=\"50\" cy=\"50\" r=\"40\" fill=\"none\" stroke=\"rgba(14,14,14,0.09)\" stroke-width=\"12\"/>",
+  "rol": "borde",
+  "motivo": "Carril del anillo del marcador: blanco al 6% sobre blanco desaparece. Se invierte a negro con la alfa subida un poco (regla 3: +0.03), quedando un gris claro visible. [corregido: El campo \"antes\" NO coincide con el fichero: la propuesta escribe stroke-width=\"12\" /> con un espacio antes de la barra, y la linea real termina en stroke-width=\"12\"/> sin espacio. Ademas el \"despues\" arrastra ese espacio, o sea que colaria un cambio que no es de color. El color en si (blanco al 6% -> rgba(14,14,14,0.09), regla 3) esta bien.]"
+ },
+ {
+  "linea": 2423,
+  "antes": "                  <circle cx=\"50\" cy=\"50\" r=\"40\" fill=\"none\" stroke=\"#7B2FBE\" stroke-width=\"12\" stroke-dasharray=\"251.3\" stroke-dashoffset=\"65\" stroke-linecap=\"round\" transform=\"rotate(-90 50 50)\" opacity=\"0.8\"/>",
+  "despues": "                  <circle cx=\"50\" cy=\"50\" r=\"40\" fill=\"none\" stroke=\"#6B27A8\" stroke-width=\"12\" stroke-dasharray=\"251.3\" stroke-dashoffset=\"65\" stroke-linecap=\"round\" transform=\"rotate(-90 50 50)\" opacity=\"0.8\"/>",
+  "rol": "marca",
+  "motivo": "Arco del anillo: copia cruda de --purple; en claro la ficha vale #6B27A8 y ademas con opacity 0.8 sobre tarjeta clara el morado original quedaba lavado."
+ },
+ {
+  "linea": 2425,
+  "antes": "                  <text x=\"50\" y=\"46\" text-anchor=\"middle\" font-size=\"18\" font-weight=\"800\" fill=\"#F0F0F0\" font-family=\"Source Sans 3,sans-serif\">B+</text>",
+  "despues": "                  <text x=\"50\" y=\"46\" text-anchor=\"middle\" font-size=\"18\" font-weight=\"800\" fill=\"#16181C\" font-family=\"Source Sans 3,sans-serif\">B+</text>",
+  "rol": "texto",
+  "motivo": "La nota B+ va sobre la tarjeta del panel, que en claro es gris muy claro: el casi blanco #F0F0F0 seria invisible. Equivale a --text (#16181C)."
+ },
+ {
+  "linea": 2426,
+  "antes": "                  <text x=\"50\" y=\"58\" text-anchor=\"middle\" font-size=\"8\" fill=\"rgba(240,240,240,0.4)\" font-family=\"Source Sans 3,sans-serif\">MADUREZ</text>",
+  "despues": "                  <text x=\"50\" y=\"58\" text-anchor=\"middle\" font-size=\"8\" fill=\"rgba(22,24,28,0.52)\" font-family=\"Source Sans 3,sans-serif\">MADUREZ</text>",
+  "rol": "texto",
+  "motivo": "Rotulo secundario del anillo sobre tarjeta clara: se invierte a tinta oscura con la alfa ajustada segun la curva de las fichas (0.35->0.48, 0.65->0.68), que para 0.4 da ~0.52."
+ },
+ {
+  "linea": 2135,
+  "antes": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><rect x=\"2\" y=\"7\" width=\"18\" height=\"13\" rx=\"2\" stroke=\"#e5b84a\" stroke-width=\"1.8\"/><path d=\"M7 7V5a4 4 0 0 1 8 0v2\" stroke=\"#e5b84a\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><line x1=\"7\" y1=\"13\" x2=\"15\" y2=\"13\" stroke=\"#e5b84a\" stroke-width=\"1.5\" stroke-linecap=\"round\"/><line x1=\"7\" y1=\"16\" x2=\"11\" y2=\"16\" stroke=\"#e5b84a\" stroke-width=\"1.5\" stroke-linecap=\"round\"/></svg>",
+  "despues": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><rect x=\"2\" y=\"7\" width=\"18\" height=\"13\" rx=\"2\" stroke=\"#8A6A12\" stroke-width=\"1.8\"/><path d=\"M7 7V5a4 4 0 0 1 8 0v2\" stroke=\"#8A6A12\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><line x1=\"7\" y1=\"13\" x2=\"15\" y2=\"13\" stroke=\"#8A6A12\" stroke-width=\"1.5\" stroke-linecap=\"round\"/><line x1=\"7\" y1=\"16\" x2=\"11\" y2=\"16\" stroke=\"#8A6A12\" stroke-width=\"1.5\" stroke-linecap=\"round\"/></svg>",
+  "motivo": "Icono 09. El dorado #e5b84a sobre su chapa clara (rgba(229,184,74,0.08) sobre la tarjeta #F7F8F9) da 1.68:1. Un icono necesita 3:1, o sea que el dibujo desaparece. No es color de objeto real (no es una medalla ni un logo), es el tono decorativo del modulo elegido para fondo negro: hay que bajarle la luz manteniendo el tono. #8A6A12 da 4.56:1.",
+  "rol": "olvidado"
+ },
+ {
+  "linea": 2152,
+  "antes": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><circle cx=\"16\" cy=\"18\" r=\"2.5\" stroke=\"#06b6d4\" stroke-width=\"1.6\"/><circle cx=\"6\" cy=\"18\" r=\"2.5\" stroke=\"#06b6d4\" stroke-width=\"1.6\"/><circle cx=\"11\" cy=\"6\" r=\"2.5\" stroke=\"#06b6d4\" stroke-width=\"1.6\"/><path d=\"M6 15.5v-2a5 5 0 0 1 10 0v2\" stroke=\"#06b6d4\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></svg>",
+  "despues": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><circle cx=\"16\" cy=\"18\" r=\"2.5\" stroke=\"#067E93\" stroke-width=\"1.6\"/><circle cx=\"6\" cy=\"18\" r=\"2.5\" stroke=\"#067E93\" stroke-width=\"1.6\"/><circle cx=\"11\" cy=\"6\" r=\"2.5\" stroke=\"#067E93\" stroke-width=\"1.6\"/><path d=\"M6 15.5v-2a5 5 0 0 1 10 0v2\" stroke=\"#067E93\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></svg>",
+  "motivo": "Icono 10. El cian #06b6d4 sobre su chapa clara da 2.13:1, por debajo del 3:1 de un icono. Mismo tono, mas hondo: #067E93 da 4.17:1.",
+  "rol": "olvidado"
+ },
+ {
+  "linea": 2169,
+  "antes": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><path d=\"M3 11a8 8 0 1 0 8-8 8.67 8.67 0 0 0-6 2.44L3 7\" stroke=\"#f97316\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M3 3v4h4\" stroke=\"#f97316\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M11 7v4l3 3\" stroke=\"#f97316\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></svg>",
+  "despues": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><path d=\"M3 11a8 8 0 1 0 8-8 8.67 8.67 0 0 0-6 2.44L3 7\" stroke=\"#C25508\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M3 3v4h4\" stroke=\"#C25508\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M11 7v4l3 3\" stroke=\"#C25508\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></svg>",
+  "motivo": "Icono 11. El naranja #f97316 sobre su chapa clara da 2.44:1, por debajo del 3:1. #C25508 mantiene el tono (25 grados de matiz) y da 3.97:1; se deja distinto del #B45309 de --warning para que no se confunda con el naranja del tema.",
+  "rol": "olvidado"
+ },
+ {
+  "linea": 2186,
+  "antes": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><path d=\"M20 17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2z\" stroke=\"#a78bfa\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/><line x1=\"11\" y1=\"10\" x2=\"11\" y2=\"15\" stroke=\"#a78bfa\" stroke-width=\"1.6\" stroke-linecap=\"round\"/><line x1=\"8.5\" y1=\"12.5\" x2=\"13.5\" y2=\"12.5\" stroke=\"#a78bfa\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></svg>",
+  "despues": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><path d=\"M20 17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2z\" stroke=\"#6D4FD1\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/><line x1=\"11\" y1=\"10\" x2=\"11\" y2=\"15\" stroke=\"#6D4FD1\" stroke-width=\"1.6\" stroke-linecap=\"round\"/><line x1=\"8.5\" y1=\"12.5\" x2=\"13.5\" y2=\"12.5\" stroke=\"#6D4FD1\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></svg>",
+  "motivo": "Icono 12. El lila #a78bfa sobre su chapa clara da 2.39:1, por debajo del 3:1. #6D4FD1 guarda el matiz (254 grados) y da 5.01:1.",
+  "rol": "olvidado"
+ },
+ {
+  "linea": 2203,
+  "antes": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><rect x=\"3\" y=\"7\" width=\"16\" height=\"11\" rx=\"3\" stroke=\"#f59e0b\" stroke-width=\"1.8\"/><path d=\"M7 7V5.5a4 4 0 0 1 8 0V7\" stroke=\"#f59e0b\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><circle cx=\"8.5\" cy=\"13\" r=\"1.5\" fill=\"#f59e0b\"/><circle cx=\"13.5\" cy=\"13\" r=\"1.5\" fill=\"#f59e0b\"/><path d=\"M9 17h4\" stroke=\"#f59e0b\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></svg>",
+  "despues": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><rect x=\"3\" y=\"7\" width=\"16\" height=\"11\" rx=\"3\" stroke=\"#9A6206\" stroke-width=\"1.8\"/><path d=\"M7 7V5.5a4 4 0 0 1 8 0V7\" stroke=\"#9A6206\" stroke-width=\"1.8\" stroke-linecap=\"round\"/><circle cx=\"8.5\" cy=\"13\" r=\"1.5\" fill=\"#9A6206\"/><circle cx=\"13.5\" cy=\"13\" r=\"1.5\" fill=\"#9A6206\"/><path d=\"M9 17h4\" stroke=\"#9A6206\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></svg>",
+  "motivo": "Icono 13, incluidos los dos ojos rellenos. El ambar #f59e0b sobre su chapa clara da 1.91:1: los ojos del robot casi no se ven. #9A6206 guarda el matiz (37 grados) y da 4.52:1.",
+  "rol": "olvidado"
+ },
+ {
+  "linea": 2220,
+  "antes": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><path d=\"M7 3H4a2 2 0 0 0-2 2v3m16 0V5a2 2 0 0 0-2-2h-3M2 14v3a2 2 0 0 0 2 2h3m10 0h3a2 2 0 0 0 2-2v-3\" stroke=\"#34d399\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M8 8.5l2 2-2 2M11.5 8.5l2 2-2 2\" stroke=\"#34d399\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+  "despues": "          <svg width=\"22\" height=\"22\" viewBox=\"0 0 22 22\" fill=\"none\"><path d=\"M7 3H4a2 2 0 0 0-2 2v3m16 0V5a2 2 0 0 0-2-2h-3M2 14v3a2 2 0 0 0 2 2h3m10 0h3a2 2 0 0 0 2-2v-3\" stroke=\"#0E8A5F\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M8 8.5l2 2-2 2M11.5 8.5l2 2-2 2\" stroke=\"#0E8A5F\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+  "motivo": "Icono 14. El verde menta #34d399 sobre su chapa clara da 1.72:1, el peor de todos junto al dorado. #0E8A5F guarda el matiz y da 3.89:1.",
+  "rol": "olvidado"
+ },
+ {
+  "linea": 2488,
+  "antes": "          <circle cx=\"100\" cy=\"100\" r=\"82\" fill=\"#c8d8e8\" opacity=\"0.15\"/>",
+  "despues": "          <circle cx=\"100\" cy=\"100\" r=\"82\" fill=\"#1a6faf\" opacity=\"0.15\"/>",
+  "rol": "superficie",
+  "motivo": "Baño del disco de la insignia ISO 27001. Era un azul casi blanco que sobre el fondo oscuro levantaba el disco; sobre la tarjeta clara (var(--dark-2) = #F7F8F9) desaparece. Lo paso al azul propio de la insignia, que es lo que ya hacen sus hermanas (ISO 22301 usa fill=#0D8F8F, ISO 31000 #7B2FBE, ISO 37301 #12805C). No toco el atributo opacity porque no es un valor de color."
+ },
+ {
+  "linea": 2489,
+  "antes": "          <circle cx=\"100\" cy=\"100\" r=\"55\" fill=\"none\" stroke=\"rgba(200,220,240,0.25)\" stroke-width=\"1.2\"/>",
+  "despues": "          <circle cx=\"100\" cy=\"100\" r=\"55\" fill=\"none\" stroke=\"rgba(26,111,175,0.3)\" stroke-width=\"1.2\"/>",
+  "rol": "rejilla",
+  "motivo": "Meridiano del globo dentro de la insignia: línea clara sobre oscuro, invisible sobre claro. Las otras tres insignias ISO dibujan esta misma rejilla con su color de marca al 0.3 (rgba(13,143,143,0.3), rgba(123,47,190,0.3), rgba(18,128,92,0.3)); aquí uso el azul #1a6faf al mismo 0.3."
+ },
+ {
+  "linea": 2490,
+  "antes": "          <ellipse cx=\"100\" cy=\"100\" rx=\"30\" ry=\"55\" fill=\"none\" stroke=\"rgba(200,220,240,0.25)\" stroke-width=\"1.2\"/>",
+  "despues": "          <ellipse cx=\"100\" cy=\"100\" rx=\"30\" ry=\"55\" fill=\"none\" stroke=\"rgba(26,111,175,0.3)\" stroke-width=\"1.2\"/>",
+  "rol": "rejilla",
+  "motivo": "Mismo meridiano del globo ISO 27001; mismo criterio que la línea 2489."
+ },
+ {
+  "linea": 2491,
+  "antes": "          <line x1=\"45\" y1=\"100\" x2=\"155\" y2=\"100\" stroke=\"rgba(200,220,240,0.25)\" stroke-width=\"1.2\"/>",
+  "despues": "          <line x1=\"45\" y1=\"100\" x2=\"155\" y2=\"100\" stroke=\"rgba(26,111,175,0.3)\" stroke-width=\"1.2\"/>",
+  "rol": "rejilla",
+  "motivo": "Paralelo del globo ISO 27001; mismo criterio que la línea 2489."
+ },
+ {
+  "linea": 2492,
+  "antes": "          <line x1=\"100\" y1=\"45\" x2=\"100\" y2=\"155\" stroke=\"rgba(200,220,240,0.25)\" stroke-width=\"1.2\"/>",
+  "despues": "          <line x1=\"100\" y1=\"45\" x2=\"100\" y2=\"155\" stroke=\"rgba(26,111,175,0.3)\" stroke-width=\"1.2\"/>",
+  "rol": "rejilla",
+  "motivo": "Eje vertical del globo ISO 27001; mismo criterio que la línea 2489."
+ },
+ {
+  "linea": 2493,
+  "antes": "          <text x=\"100\" y=\"97\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"900\" font-size=\"38\" fill=\"white\" letter-spacing=\"-1\">ISO</text>",
+  "despues": "          <text x=\"100\" y=\"97\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"900\" font-size=\"38\" fill=\"#16181C\" letter-spacing=\"-1\">ISO</text>",
+  "rol": "texto",
+  "motivo": "La palabra ISO de la insignia 27001. Detrás sólo hay un disco al 15% de opacidad, o sea que en la práctica se lee sobre el fondo de la tarjeta (var(--dark-2)). En claro esa tarjeta es #F7F8F9 y el texto blanco desaparece del todo. No aplica la excepción de relleno saturado."
+ },
+ {
+  "linea": 2517,
+  "antes": "          <text x=\"100\" y=\"97\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"900\" font-size=\"38\" fill=\"white\" letter-spacing=\"-1\">ISO</text>",
+  "despues": "          <text x=\"100\" y=\"97\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"900\" font-size=\"38\" fill=\"#16181C\" letter-spacing=\"-1\">ISO</text>",
+  "rol": "texto",
+  "motivo": "Igual en la insignia ISO 22301: detrás hay un disco teal al 8% de opacidad, casi transparente, así que el blanco se pierde sobre la tarjeta clara."
+ },
+ {
+  "linea": 2541,
+  "antes": "          <text x=\"100\" y=\"97\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"900\" font-size=\"38\" fill=\"white\" letter-spacing=\"-1\">ISO</text>",
+  "despues": "          <text x=\"100\" y=\"97\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"900\" font-size=\"38\" fill=\"#16181C\" letter-spacing=\"-1\">ISO</text>",
+  "rol": "texto",
+  "motivo": "Igual en la insignia ISO 31000: disco morado al 8%, el blanco se pierde sobre la tarjeta clara."
+ },
+ {
+  "linea": 2560,
+  "antes": "          <text x=\"125\" y=\"84\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"600\" font-size=\"10\" fill=\"#aac4e0\" letter-spacing=\"0.3\">National Institute of Standards</text>",
+  "despues": "          <text x=\"125\" y=\"84\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"600\" font-size=\"10\" fill=\"rgba(0,48,135,0.75)\" letter-spacing=\"0.3\">National Institute of Standards</text>",
+  "rol": "texto",
+  "motivo": "Este renglón cae FUERA del rectángulo azul del NIST (el rect llega a y=64 y esta línea va en y=84), o sea que se pinta sobre el fondo de la tarjeta. El azul pálido #aac4e0 sobre #F7F8F9 no se lee. Uso el azul de la propia marca (#003087) rebajado, para que siga siendo texto secundario."
+ },
+ {
+  "linea": 2561,
+  "antes": "          <text x=\"125\" y=\"97\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"600\" font-size=\"10\" fill=\"#aac4e0\" letter-spacing=\"0.3\">and Technology</text>",
+  "despues": "          <text x=\"125\" y=\"97\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"600\" font-size=\"10\" fill=\"rgba(0,48,135,0.75)\" letter-spacing=\"0.3\">and Technology</text>",
+  "rol": "texto",
+  "motivo": "Segundo renglón del mismo subtítulo NIST, también fuera del rectángulo azul; mismo criterio que la línea 2560."
+ },
+ {
+  "linea": 2562,
+  "antes": "          <text x=\"125\" y=\"118\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"800\" font-size=\"11\" fill=\"#4a9be8\" letter-spacing=\"1.8\">CYBERSECURITY FRAMEWORK</text>",
+  "despues": "          <text x=\"125\" y=\"118\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"800\" font-size=\"11\" fill=\"#1A5FB4\" letter-spacing=\"1.8\">CYBERSECURITY FRAMEWORK</text>",
+  "rol": "texto",
+  "motivo": "También va sobre el fondo de la tarjeta (y=118, muy por debajo del rect azul). El #4a9be8 es un azul claro pensado para fondo negro; sobre blanco queda lavado. Lo bajo a un azul del mismo aire pero legible. Ojo: este mismo #4A9BE8 en COBIT y NORTIC SÍ lo dejo, porque allí va encima de placas oscuras que no cambian."
+ },
+ {
+  "linea": 2578,
+  "antes": "          <text x=\"100\" y=\"128\" text-anchor=\"middle\" font-family=\"Arial Black,Arial,sans-serif\" font-weight=\"900\" font-size=\"36\" fill=\"white\">2</text>",
+  "despues": "          <text x=\"100\" y=\"128\" text-anchor=\"middle\" font-family=\"Arial Black,Arial,sans-serif\" font-weight=\"900\" font-size=\"36\" fill=\"#16181C\">2</text>",
+  "rol": "texto",
+  "motivo": "El 2 de la insignia SOC 2. El único relleno detrás es rgba(212,53,59,0.06), un rosa al 6% que no tapa nada: el número se lee sobre la tarjeta, que pasa a clara."
+ },
+ {
+  "linea": 2620,
+  "antes": "          <text x=\"100\" y=\"96\" text-anchor=\"middle\" font-family=\"Arial Black,Arial,sans-serif\" font-weight=\"900\" font-size=\"32\" fill=\"white\" letter-spacing=\"-1\">GDPR</text>",
+  "despues": "          <text x=\"100\" y=\"96\" text-anchor=\"middle\" font-family=\"Arial Black,Arial,sans-serif\" font-weight=\"900\" font-size=\"32\" fill=\"#16181C\" letter-spacing=\"-1\">GDPR</text>",
+  "rol": "texto",
+  "motivo": "La palabra GDPR sobre un disco azul al 12% de opacidad: en claro ese disco es un azul muy pálido y el texto blanco desaparece. Las estrellas doradas de la UE no las toco."
+ },
+ {
+  "linea": 2621,
+  "antes": "          <text x=\"100\" y=\"120\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"700\" font-size=\"9.5\" fill=\"#6699FF\" letter-spacing=\"0.5\">General Data Protection</text>",
+  "despues": "          <text x=\"100\" y=\"120\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"700\" font-size=\"9.5\" fill=\"#003399\" letter-spacing=\"0.5\">General Data Protection</text>",
+  "rol": "texto",
+  "motivo": "Texto pequeño en azul claro sobre lo que pasa a ser fondo claro. Lo llevo al azul de la propia insignia (#003399, el mismo del aro y del disco), que es el patrón que ya siguen las insignias ISO: aro y texto comparten el color de marca."
+ },
+ {
+  "linea": 2622,
+  "antes": "          <text x=\"100\" y=\"134\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"700\" font-size=\"9.5\" fill=\"#6699FF\" letter-spacing=\"0.5\">Regulation · EU 2016/679</text>",
+  "despues": "          <text x=\"100\" y=\"134\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"700\" font-size=\"9.5\" fill=\"#003399\" letter-spacing=\"0.5\">Regulation · EU 2016/679</text>",
+  "rol": "texto",
+  "motivo": "Segundo renglón del mismo pie de la insignia GDPR; mismo criterio que la línea 2621."
+ },
+ {
+  "linea": 2765,
+  "antes": "          <text x=\"100\" y=\"97\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"900\" font-size=\"38\" fill=\"white\" letter-spacing=\"-1\">ISO</text>",
+  "despues": "          <text x=\"100\" y=\"97\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"900\" font-size=\"38\" fill=\"#16181C\" letter-spacing=\"-1\">ISO</text>",
+  "rol": "texto",
+  "motivo": "Igual en la insignia ISO 37301: disco verde al 8%, el blanco se pierde sobre la tarjeta clara."
+ },
+ {
+  "linea": 2783,
+  "antes": "          <circle cx=\"100\" cy=\"100\" r=\"82\" fill=\"rgba(0,45,98,0.5)\"/>",
+  "despues": "          <circle cx=\"100\" cy=\"100\" r=\"82\" fill=\"rgba(0,45,98,0.9)\"/>",
+  "rol": "superficie",
+  "motivo": "Disco azul marino de la insignia BVRD. Al 50% sobre negro salía marino oscuro, pero al 50% sobre blanco sale un azul grisáceo claro y los tres textos blancos que van encima (BVRD, Bolsa de Valores, Rep. Dom.) dejarían de leerse. Subiendo la alfa el disco vuelve a ser marino sólido y esos blancos siguen valiendo, igual que en la insignia hermana BCRD, que usa #002D62 con opacity 0.9."
+ },
+ {
+  "linea": 2824,
+  "antes": "          <circle cx=\"100\" cy=\"100\" r=\"96\" fill=\"none\" stroke=\"#D7373F\" stroke-width=\"6\"/>",
+  "despues": "          <circle cx=\"100\" cy=\"100\" r=\"96\" fill=\"none\" stroke=\"#C0252D\" stroke-width=\"6\"/>",
+  "rol": "otro",
+  "motivo": "#D7373F es exactamente la ficha --danger del modo oscuro escrita en crudo; en claro le toca #C0252D. Aro del sello ISO 37003 sobre tarjeta ahora clara."
+ },
+ {
+  "linea": 2825,
+  "antes": "          <circle cx=\"100\" cy=\"100\" r=\"84\" fill=\"none\" stroke=\"#D7373F\" stroke-width=\"1.5\"/>",
+  "despues": "          <circle cx=\"100\" cy=\"100\" r=\"84\" fill=\"none\" stroke=\"#C0252D\" stroke-width=\"1.5\"/>",
+  "rol": "otro",
+  "motivo": "Mismo aro interior del sello; misma ficha --danger a su valor claro."
+ },
+ {
+  "linea": 2826,
+  "antes": "          <circle cx=\"100\" cy=\"100\" r=\"82\" fill=\"#D7373F\" opacity=\"0.08\"/>",
+  "despues": "          <circle cx=\"100\" cy=\"100\" r=\"82\" fill=\"#C0252D\" opacity=\"0.08\"/>",
+  "rol": "superficie",
+  "motivo": "Disco de fondo del sello al 8%; se conserva la opacidad y se cambia sólo el color a la ficha --danger clara."
+ },
+ {
+  "linea": 2827,
+  "antes": "          <circle cx=\"100\" cy=\"100\" r=\"55\" fill=\"none\" stroke=\"rgba(215,55,63,0.3)\" stroke-width=\"1.2\"/>",
+  "despues": "          <circle cx=\"100\" cy=\"100\" r=\"55\" fill=\"none\" stroke=\"rgba(192,37,45,0.3)\" stroke-width=\"1.2\"/>",
+  "rol": "otro",
+  "motivo": "rgba de #D7373F (el globo del sello). Mismo color a su valor claro #C0252D con la misma alfa."
+ },
+ {
+  "linea": 2828,
+  "antes": "          <ellipse cx=\"100\" cy=\"100\" rx=\"30\" ry=\"55\" fill=\"none\" stroke=\"rgba(215,55,63,0.3)\" stroke-width=\"1.2\"/>",
+  "despues": "          <ellipse cx=\"100\" cy=\"100\" rx=\"30\" ry=\"55\" fill=\"none\" stroke=\"rgba(192,37,45,0.3)\" stroke-width=\"1.2\"/>",
+  "rol": "otro",
+  "motivo": "Meridiano del globo del sello; mismo cambio de ficha, alfa intacta."
+ },
+ {
+  "linea": 2829,
+  "antes": "          <line x1=\"45\" y1=\"100\" x2=\"155\" y2=\"100\" stroke=\"rgba(215,55,63,0.3)\" stroke-width=\"1.2\"/>",
+  "despues": "          <line x1=\"45\" y1=\"100\" x2=\"155\" y2=\"100\" stroke=\"rgba(192,37,45,0.3)\" stroke-width=\"1.2\"/>",
+  "rol": "otro",
+  "motivo": "Eje horizontal del globo; mismo cambio de ficha, alfa intacta."
+ },
+ {
+  "linea": 2830,
+  "antes": "          <line x1=\"100\" y1=\"45\" x2=\"100\" y2=\"155\" stroke=\"rgba(215,55,63,0.3)\" stroke-width=\"1.2\"/>",
+  "despues": "          <line x1=\"100\" y1=\"45\" x2=\"100\" y2=\"155\" stroke=\"rgba(192,37,45,0.3)\" stroke-width=\"1.2\"/>",
+  "rol": "otro",
+  "motivo": "Eje vertical del globo; mismo cambio de ficha, alfa intacta."
+ },
+ {
+  "linea": 2831,
+  "antes": "          <text x=\"100\" y=\"97\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"900\" font-size=\"38\" fill=\"white\" letter-spacing=\"-1\">ISO</text>",
+  "despues": "          <text x=\"100\" y=\"97\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"900\" font-size=\"38\" fill=\"#16181C\" letter-spacing=\"-1\">ISO</text>",
+  "rol": "texto",
+  "motivo": "La palabra ISO NO va sobre relleno saturado: debajo sólo hay un lavado rojo al 8% sobre tarjeta clara. En blanco desaparecería. Blanco puro -> #16181C."
+ },
+ {
+  "linea": 2832,
+  "antes": "          <text x=\"100\" y=\"128\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"900\" font-size=\"20\" fill=\"#D7373F\" letter-spacing=\"0.5\">37003</text>",
+  "despues": "          <text x=\"100\" y=\"128\" text-anchor=\"middle\" font-family=\"Arial,sans-serif\" font-weight=\"900\" font-size=\"20\" fill=\"#C0252D\" letter-spacing=\"0.5\">37003</text>",
+  "rol": "texto",
+  "motivo": "Número del sello en rojo sobre fondo casi blanco; la ficha --danger clara (#C0252D) se lee, la oscura queda floja."
+ },
+ {
+  "linea": 2834,
+  "antes": "          <text font-family=\"Arial,sans-serif\" font-size=\"10\" font-weight=\"700\" fill=\"#D7373F\" letter-spacing=\"0.5\">",
+  "despues": "          <text font-family=\"Arial,sans-serif\" font-size=\"10\" font-weight=\"700\" fill=\"#C0252D\" letter-spacing=\"0.5\">",
+  "rol": "texto",
+  "motivo": "Texto curvo de 10px en rojo sobre claro: es justo el caso de texto chico que pide el rojo más hondo."
+ },
+ {
+  "linea": 2838,
+  "antes": "          <text font-family=\"Arial,sans-serif\" font-size=\"11\" font-weight=\"700\" fill=\"#D7373F\" letter-spacing=\"2\">",
+  "despues": "          <text font-family=\"Arial,sans-serif\" font-size=\"11\" font-weight=\"700\" fill=\"#C0252D\" letter-spacing=\"2\">",
+  "rol": "texto",
+  "motivo": "Igual que la anterior: texto curvo pequeño del sello."
+ },
+ {
+  "linea": 2848,
+  "antes": "          <circle cx=\"60\" cy=\"60\" r=\"56\" fill=\"none\" stroke=\"rgba(240,240,240,0.2)\" stroke-width=\"3\" stroke-dasharray=\"6 4\"/>",
+  "despues": "          <circle cx=\"60\" cy=\"60\" r=\"56\" fill=\"none\" stroke=\"rgba(22,24,28,0.25)\" stroke-width=\"3\" stroke-dasharray=\"6 4\"/>",
+  "rol": "borde",
+  "motivo": "Aro discontinuo hecho con el color de texto claro al 20%: sobre blanco sería invisible. Base #F0F0F0 -> #16181C y la alfa sube un poco por ser borde."
+ },
+ {
+  "linea": 3039,
+  "antes": "      <div style=\"width:1px;height:14px;background:rgba(255,255,255,0.1);margin:0 4px\"></div>",
+  "despues": "      <div style=\"width:1px;height:14px;background:rgba(14,14,14,0.13);margin:0 4px\"></div>",
+  "rol": "borde",
+  "motivo": "Barrita separadora del pie: raya blanca al 10% que sobre blanco no se ve. Pasa a negro con alfa +0.03."
+ },
+ {
+  "linea": 3063,
+  "antes": "    nav.style.background = 'rgba(14,14,14,0.97)';",
+  "despues": "    nav.style.background = 'rgba(255,255,255,0.97)';",
+  "rol": "fondo",
+  "motivo": "Fondo de la barra de navegación al bajar la página. Si se queda, el nav se vuelve negro en cuanto se hace scroll. --dark -> #FFFFFF, misma opacidad."
+ },
+ {
+  "linea": 3065,
+  "antes": "    nav.style.background = 'rgba(14,14,14,0.85)';",
+  "despues": "    nav.style.background = 'rgba(255,255,255,0.85)';",
+  "rol": "fondo",
+  "motivo": "Fondo del nav arriba del todo; espeja el valor del CSS de nav. Mismo cambio de --dark a blanco, misma opacidad."
+ },
+ {
+  "linea": 3090,
+  "antes": "        <path d=\"M8 1.5L13 3.5V7.5C13 10.8 10.5 13.5 8 14.5C5.5 13.5 3 10.8 3 7.5V3.5L8 1.5Z\" stroke=\"#12805C\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/>",
+  "despues": "        <path d=\"M8 1.5L13 3.5V7.5C13 10.8 10.5 13.5 8 14.5C5.5 13.5 3 10.8 3 7.5V3.5L8 1.5Z\" stroke=\"#0F6B4E\" stroke-width=\"1.4\" stroke-linejoin=\"round\"/>",
+  "rol": "otro",
+  "motivo": "Escudo del aviso de cookies: #12805C es la ficha --success oscura en crudo; el recuadro que lo rodea es un verde muy claro, así que el trazo necesita el verde hondo #0F6B4E."
+ },
+ {
+  "linea": 3091,
+  "antes": "        <path d=\"M5.5 8l2 2 3-3\" stroke=\"#12805C\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+  "despues": "        <path d=\"M5.5 8l2 2 3-3\" stroke=\"#0F6B4E\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+  "rol": "otro",
+  "motivo": "Palomita dentro del mismo escudo; misma ficha --success a su valor claro."
+ },
+ {
+  "linea": 3103,
+  "antes": "    Usamos cookies para mejorar tu experiencia. Tu información es tuya — <strong style=\"color:rgba(240,240,240,0.8)\">no la compartimos con terceros</strong> ni la usamos para fines distintos a los de esta plataforma. <a href=\"https://clerigo.io/legal\" target=\"_blank\">Más información →</a>",
+  "despues": "    Usamos cookies para mejorar tu experiencia. Tu información es tuya — <strong style=\"color:rgba(22,24,28,0.85)\">no la compartimos con terceros</strong> ni la usamos para fines distintos a los de esta plataforma. <a href=\"https://clerigo.io/legal\" target=\"_blank\">Más información →</a>",
+  "rol": "texto",
+  "motivo": "Texto destacado del aviso de cookies sobre panel claro. Base #F0F0F0 -> #16181C y la alfa sube un pelo como en las fichas de texto."
+ },
+ {
+  "linea": 3108,
+  "antes": "      <svg width=\"9\" height=\"9\" viewBox=\"0 0 10 10\" fill=\"none\"><path d=\"M5 1L9 2.5V5.5C9 7.8 7 9.5 5 10C3 9.5 1 7.8 1 5.5V2.5L5 1Z\" stroke=\"#12805C\" stroke-width=\"1.2\"/></svg>",
+  "despues": "      <svg width=\"9\" height=\"9\" viewBox=\"0 0 10 10\" fill=\"none\"><path d=\"M5 1L9 2.5V5.5C9 7.8 7 9.5 5 10C3 9.5 1 7.8 1 5.5V2.5L5 1Z\" stroke=\"#0F6B4E\" stroke-width=\"1.2\"/></svg>",
+  "rol": "otro",
+  "motivo": "Icono de 9px en una píldora clara y además al 60% de opacidad: la ficha --success clara es la que aguanta."
+ },
+ {
+  "linea": 3112,
+  "antes": "      <svg width=\"9\" height=\"9\" viewBox=\"0 0 10 10\" fill=\"none\"><circle cx=\"5\" cy=\"5\" r=\"4\" stroke=\"#4a9be8\" stroke-width=\"1.2\"/><path d=\"M3 5l1.5 1.5L7 3.5\" stroke=\"#4a9be8\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+  "despues": "      <svg width=\"9\" height=\"9\" viewBox=\"0 0 10 10\" fill=\"none\"><circle cx=\"5\" cy=\"5\" r=\"4\" stroke=\"#0257BF\" stroke-width=\"1.2\"/><path d=\"M3 5l1.5 1.5L7 3.5\" stroke=\"#0257BF\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+  "rol": "otro",
+  "motivo": "Azul aclarado para fondo negro; sobre la píldora clara (y al 60% de opacidad) se lava. Papel de acento -> ficha --accent clara #0257BF."
+ },
+ {
+  "linea": 3116,
+  "antes": "      <svg width=\"9\" height=\"9\" viewBox=\"0 0 10 10\" fill=\"none\"><circle cx=\"5\" cy=\"5\" r=\"4\" stroke=\"#7B2FBE\" stroke-width=\"1.2\"/><path d=\"M3 5l1.5 1.5L7 3.5\" stroke=\"#7B2FBE\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+  "despues": "      <svg width=\"9\" height=\"9\" viewBox=\"0 0 10 10\" fill=\"none\"><circle cx=\"5\" cy=\"5\" r=\"4\" stroke=\"#6B27A8\" stroke-width=\"1.2\"/><path d=\"M3 5l1.5 1.5L7 3.5\" stroke=\"#6B27A8\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+  "rol": "otro",
+  "motivo": "#7B2FBE es la ficha --purple oscura en crudo; en claro es #6B27A8. Icono chico y al 60% sobre píldora clara."
+ },
+ {
+  "linea": 53,
+  "antes": "html { scroll-behavior: smooth; }",
+  "despues": "html { scroll-behavior: smooth; color-scheme: light; }",
+  "rol": "repaso",
+  "motivo": "La página no declara esquema de color en ningún sitio. Sin esta línea, Chrome en móvil con \"forzar modo oscuro\" reinvierte todo el landing claro y lo deja irreconocible, y los controles nativos (barra de desplazamiento en Firefox, botones) se pintan oscuros."
+ },
+ {
+  "linea": 112,
+  "antes": ".btn-primary:hover { background: #c80d00; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(235,16,0,0.3); }",
+  "despues": ".btn-primary:hover { background: #c80d00; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(235,16,0,0.20); }",
+  "rol": "repaso",
+  "motivo": "Sobre negro ese halo rojo era un brillo; sobre blanco es una mancha rosa de 20px alrededor del botón de Contacto. Se acorta y se baja."
+ },
+ {
+  "linea": 218,
+  "antes": ".btn-large.red:hover { background: #c80d00; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(235,16,0,0.35); }",
+  "despues": ".btn-large.red:hover { background: #c80d00; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(235,16,0,0.22); }",
+  "rol": "repaso",
+  "motivo": "Mismo halo rojo, aquí a 32px y 0.35, en los dos botones grandes (hero y CTA final). Sobre blanco es el sitio donde más se ensucia."
+ },
+ {
+  "linea": 847,
+  "antes": "  box-shadow: 0 4px 16px rgba(235,16,0,0.3);",
+  "despues": "  box-shadow: 0 4px 12px rgba(235,16,0,0.20);",
+  "rol": "repaso",
+  "motivo": "Tercer halo rojo, el del botón \"Aceptar todo\" del banner de cookies, que además va sobre una tarjeta ya blanca."
+ },
+ {
+  "linea": 511,
+  "antes": "  height: 1px; background: linear-gradient(90deg, var(--red), rgba(235,16,0,0.2), transparent);",
+  "despues": "  height: 1px; background: linear-gradient(90deg, var(--red), rgba(235,16,0,0.35), transparent);",
+  "rol": "repaso",
+  "motivo": "Es la línea de 1px que une los cuatro pasos de \"Cómo funciona\". Con 0.2 de rojo sobre blanco desaparece a media línea y los pasos quedan sueltos; sobre negro sí se veía."
+ },
+ {
+  "linea": 597,
+  "antes": "  font-size: 80px; line-height: 1; color: rgba(235,16,0,0.07);",
+  "despues": "  font-size: 80px; line-height: 1; color: rgba(235,16,0,0.11);",
+  "rol": "repaso",
+  "motivo": "La comilla decorativa de 80px de cada testimonio. Al 7% sobre la tarjeta clara (#F7F8F9) no se ve nada; sobre #141414 sí se notaba."
+ },
+ {
+  "linea": 611,
+  "antes": ".star { color: #F5A623; font-size: 13px; }",
+  "despues": ".star { color: #C68A00; font-size: 13px; }",
+  "rol": "repaso",
+  "motivo": "Las cinco estrellas de cada testimonio son texto (★) de 13px. #F5A623 sobre blanco queda en 2.0:1 y se lee como amarillo lavado; el ámbar hondo mantiene el sentido y se ve."
+ },
+ {
+  "linea": 1201,
+  "antes": "  border: 1px solid rgba(255,255,255,0.15);",
+  "despues": "  border: 1px solid rgba(122,88,0,0.35);",
+  "rol": "repaso",
+  "motivo": "Borde de la cinta dorada de la medalla del hero. En blanco sobre fondo blanco el canto de la cinta se pierde y la cinta parece flotar sin recortar."
+ },
+ {
+  "linea": 1524,
+  "antes": "          <circle cx=\"100\" cy=\"100\" r=\"82\" fill=\"#c8d8e8\" opacity=\"0.25\"/>",
+  "despues": "          <circle cx=\"100\" cy=\"100\" r=\"82\" fill=\"#1a6faf\" opacity=\"0.12\"/>",
+  "rol": "repaso",
+  "motivo": "Disco del sello ISO 27001 del panel de certificaciones del hero. #c8d8e8 al 25% sobre blanco da rgb(245,248,251): el sello se queda hueco. Es el gemelo olvidado de la línea 2488, que sí se cambió a #1a6faf."
+ },
+ {
+  "linea": 1588,
+  "antes": "          <circle cx=\"100\" cy=\"100\" r=\"82\" fill=\"#c8d8e8\" opacity=\"0.25\"/>",
+  "despues": "          <circle cx=\"100\" cy=\"100\" r=\"82\" fill=\"#1a6faf\" opacity=\"0.12\"/>",
+  "rol": "repaso",
+  "motivo": "Lo mismo en el sello ISO 22301 del mismo panel del hero."
+ },
+ {
+  "linea": 2112,
+  "antes": "        <div class=\"module-icon-wrap\" style=\"background:rgba(168,85,247,0.08)\">",
+  "despues": "        <div class=\"module-icon-wrap\" style=\"background:rgba(107,39,168,0.08)\">",
+  "rol": "repaso",
+  "motivo": "Caja del icono del módulo \"Gobernanza IA\". A todos sus hermanos se les cambió el color base del relleno (naranja, verde, cian, violeta…); a éste no."
+ },
+ {
+  "linea": 2114,
+  "antes": "            <rect x=\"3\" y=\"3\" width=\"16\" height=\"16\" rx=\"2.5\" stroke=\"#a855f7\" stroke-width=\"1.8\"/>",
+  "despues": "            <rect x=\"3\" y=\"3\" width=\"16\" height=\"16\" rx=\"2.5\" stroke=\"#6B27A8\" stroke-width=\"1.8\"/>",
+  "rol": "repaso",
+  "motivo": "Trazo del icono de Gobernanza IA. #a855f7 sobre blanco es 3.0:1 en trazo de 1.8px; es el único icono de módulo cuyo trazo se quedó sin oscurecer."
+ },
+ {
+  "linea": 2115,
+  "antes": "            <path d=\"M7 14l3-4 2.5 3 2-2.5 2 3\" stroke=\"#a855f7\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+  "despues": "            <path d=\"M7 14l3-4 2.5 3 2-2.5 2 3\" stroke=\"#6B27A8\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>",
+  "rol": "repaso",
+  "motivo": "Segundo trazo del mismo icono."
+ },
+ {
+  "linea": 2116,
+  "antes": "            <circle cx=\"16.5\" cy=\"5.5\" r=\"2.5\" fill=\"rgba(168,85,247,0.2)\" stroke=\"#a855f7\" stroke-width=\"1.3\"/>",
+  "despues": "            <circle cx=\"16.5\" cy=\"5.5\" r=\"2.5\" fill=\"rgba(107,39,168,0.2)\" stroke=\"#6B27A8\" stroke-width=\"1.3\"/>",
+  "rol": "repaso",
+  "motivo": "Tercer trazo del mismo icono, relleno y borde."
+ },
+ {
+  "linea": 2117,
+  "antes": "            <path d=\"M15.5 5.5h2M16.5 4.5v2\" stroke=\"#a855f7\" stroke-width=\"1.2\" stroke-linecap=\"round\"/>",
+  "despues": "            <path d=\"M15.5 5.5h2M16.5 4.5v2\" stroke=\"#6B27A8\" stroke-width=\"1.2\" stroke-linecap=\"round\"/>",
+  "rol": "repaso",
+  "motivo": "Cuarto trazo del mismo icono; a 1.2px es el que peor se ve."
+ },
+ {
+  "linea": 2353,
+  "antes": "            <div class=\"plat-kpi\" style=\"border-top:2px solid #a855f7\">",
+  "despues": "            <div class=\"plat-kpi\" style=\"border-top:2px solid #6B27A8\">",
+  "rol": "repaso",
+  "motivo": "Barra superior de la tarjeta \"Score GRC\" de la maqueta del panel. Las otras cinco tarjetas llevan var(--danger/--warning/--teal/--accent/--success), que sí se oscurecen solas; ésta lleva el morado crudo y se quedaría más clara que sus cinco hermanas."
+ },
+ {
+  "linea": 2355,
+  "antes": "              <div class=\"plat-kpi-val\" style=\"color:#a855f7\">B+</div>",
+  "despues": "              <div class=\"plat-kpi-val\" style=\"color:#6B27A8\">B+</div>",
+  "rol": "repaso",
+  "motivo": "El \"B+\" es la cifra del KPI, texto de 20px sobre tarjeta clara. #a855f7 sobre #F7F8F9 se queda en 3:1 y desentona con las otras cinco cifras, ya oscurecidas. La ficha del pill de IA (línea 465) ya se llevó a #6B27A8."
+ },
+ {
+  "linea": 2608,
+  "antes": "          <g fill=\"#FFD700\">",
+  "despues": "          <g fill=\"#A67C00\">",
+  "rol": "repaso",
+  "motivo": "Son las doce estrellas de la UE del sello GDPR, y NO caen dentro del disco azul: están en el anillo, es decir, sobre el fondo de la tarjeta. Sobre #141414 brillaban; sobre #F7F8F9 el oro puro es 1.35:1 y el sello se queda sin corona de estrellas."
+ }
+]
