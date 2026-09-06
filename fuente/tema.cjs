@@ -150,9 +150,9 @@ function restosDeTemaOscuro(lineas) {
  * cualquier atajo se queda a la mitad o se lleva de más el cierre del bloque
  * que lo envuelve. Las dos cosas pasaron antes de escribir esto.
  */
-function sinPanelDeCertificaciones(texto) {
+function sinBloqueDiv(texto, marca, comentarioDeArriba) {
   const li = texto.split("\n");
-  const ini = li.findIndex((l) => l.includes('<div class="cert-panel'));
+  const ini = li.findIndex((l) => l.includes(marca));
   if (ini < 0) return texto;
 
   let prof = 0;
@@ -164,9 +164,25 @@ function sinPanelDeCertificaciones(texto) {
   }
   if (fin < 0) return texto;
 
-  const desde = li[ini - 1] && li[ini - 1].includes("CERT LOGOS PANEL") ? ini - 1 : ini;
+  const desde = comentarioDeArriba && li[ini - 1] && li[ini - 1].includes(comentarioDeArriba)
+    ? ini - 1 : ini;
   li.splice(desde, fin - desde + 1);
   return li.join("\n");
 }
 
-module.exports = { COLOR, pelado, VALE_EL_BLANCO, EXCEPCIONES, restosDeTemaOscuro, sinPanelDeCertificaciones };
+function sinPanelDeCertificaciones(texto) {
+  return sinBloqueDiv(texto, '<div class="cert-panel', "CERT LOGOS PANEL");
+}
+
+/**
+ * Quita las dos maquetas del producto que traía el original: la ventanita del
+ * encabezado y el panel grande de la sección Plataforma, 248 líneas de CSS
+ * dibujando un panel que no existía. En su sitio va una foto del sistema de
+ * verdad, y aquí se recortan del ORIGINAL para poder seguir comparando el
+ * resto de la página línea por línea.
+ */
+function sinLasMaquetas(texto) {
+  return sinBloqueDiv(sinBloqueDiv(texto, '<div class="preview-body">'), '<div class="platform-body">');
+}
+
+module.exports = { COLOR, pelado, VALE_EL_BLANCO, EXCEPCIONES, restosDeTemaOscuro, sinPanelDeCertificaciones, sinBloqueDiv, sinLasMaquetas };

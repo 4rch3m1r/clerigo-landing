@@ -6,7 +6,7 @@
  */
 const RAIZ = require("node:path").join(__dirname, "..");
 const fs = require("fs");
-const { pelado, restosDeTemaOscuro, EXCEPCIONES, sinPanelDeCertificaciones } = require("./tema.cjs");
+const { pelado, restosDeTemaOscuro, EXCEPCIONES, sinPanelDeCertificaciones, sinLasMaquetas } = require("./tema.cjs");
 /* Donde vive el sitio: de aqui salen las direcciones absolutas de la cabecera. */
 const SITIO = JSON.parse(fs.readFileSync(require("node:path").join(__dirname, "sitio.json"), "utf8"));
 
@@ -98,8 +98,11 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
     "og:image aparece en el byte " + t.indexOf('property="og:image"'));
   comprueba(`el login apunta a app.clerigo.io en el ${n}`,
     t.includes('href="https://app.clerigo.io"') && !/truestoneadvisory/i.test(t));
-  comprueba(`el logotipo de Clèrigo se usa en los 3 sitios de marca del ${n}`,
-    cuenta(t, /var\(--logo\)/g) === 3, cuenta(t, /var\(--logo\)/g) + " usos");
+  /* Eran tres sitios; ahora son dos. El tercero estaba DENTRO de la maqueta del
+     panel, y esa maqueta ya no existe: en su lugar hay una foto del sistema, y
+     el logotipo que sale en ella es el de la aplicación de verdad. */
+  comprueba(`el logotipo de Clèrigo se usa en los 2 sitios de marca del ${n}`,
+    cuenta(t, /var\(--logo\)/g) === 2, cuenta(t, /var\(--logo\)/g) + " usos");
 }
 for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
   /* Nada dibujado con la fuente: ni el trofeo, ni las estrellas, ni las
@@ -148,6 +151,37 @@ comprueba("y en el original SÍ estaba, que si no esta comprobación no dice nad
     malas.length === 0, malas.join(" | "));
 }
 
+/* Las fotos del sistema. Otra vez: se mira el FICHERO, no la etiqueta. Con
+   `og.png` la etiqueta llevaba meses apuntando a algo que no existía. */
+for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
+  const pedidas = [...new Set([...t.matchAll(/src="(sistema\/[a-z0-9-]+\.png)"/g)].map((m) => m[1]))];
+  const faltan = pedidas.filter((f) => !fs.existsSync(require("node:path").join(RAIZ, f)));
+  comprueba(`las 6 fotos del sistema existen, en el ${n}`,
+    pedidas.length === 6 && faltan.length === 0,
+    `pide ${pedidas.length}` + (faltan.length ? `, faltan ${faltan.join(", ")}` : ""));
+  /* Y que sean fotos de verdad, no un recorte de 2 KB: se leen sus medidas de
+     la cabecera del PNG. */
+  const malas = [];
+  for (const f of pedidas) {
+    const ruta = require("node:path").join(RAIZ, f);
+    if (!fs.existsSync(ruta)) continue;
+    const cab = Buffer.alloc(24);
+    const fd = fs.openSync(ruta, "r");
+    fs.readSync(fd, cab, 0, 24, 0);
+    fs.closeSync(fd);
+    if (cab.readUInt32BE(16) !== 1600) malas.push(`${f}: ${cab.readUInt32BE(16)} px de ancho`);
+  }
+  comprueba(`y las 6 miden 1600 de ancho, en el ${n}`, malas.length === 0, malas.join(" | "));
+  comprueba(`la galería no se carga hasta que se baja, en el ${n}`,
+    cuenta(t, /loading="lazy"/g) === 5, cuenta(t, /loading="lazy"/g) + " con carga diferida");
+  comprueba(`toda foto lleva su descripción para quien no la ve, en el ${n}`,
+    cuenta(t, /<img[^>]*src="sistema\//g) === cuenta(t, /<img[^>]*src="sistema\/[^>]*alt="[^"]{30,}"/g));
+}
+/* Y que en el original SÍ estaban las maquetas, que si no esto no dice nada. */
+comprueba("y en el original el panel estaba dibujado con CSS, no fotografiado",
+  /<div class="platform-body">/.test(org) && /<div class="preview-body">/.test(org)
+  && !/foto-sistema/.test(org));
+
 comprueba("el favicon apunta a favicon.png y el fichero existe",
   /rel="icon"[^>]*href="favicon\.png"/.test(osc) && fs.existsSync(require("node:path").join(RAIZ, "favicon.png")));
 
@@ -159,7 +193,10 @@ const esqueleto = (s) => pelado(
      que usa el guion que lo quita: por regex se cortaba en el primer `</div>`
      —el panel tiene divs dentro— o se llevaba de más el cierre del bloque que
      lo envuelve. Las dos cosas pasaron. */
-  sinPanelDeCertificaciones(s)
+  /* Y las dos maquetas del producto, que ahora son fotos del sistema de
+     verdad: del original se recortan, y de las dos versiones se recorta lo
+     que las sustituye. */
+  sinLasMaquetas(sinPanelDeCertificaciones(s))
   /* Estas dos van ANTES de pelar, porque `pelado` aplana cada bloque `{ … }` a
      una línea y después un `^--logo:` ya no existe como principio de línea. */
     .replace(/^.*(og:|twitter:|rel="canonical"|name="description"|name="theme-color"|rel="image_src"|application\/ld\+json).*$/gm, "")
@@ -180,6 +217,12 @@ const esqueleto = (s) => pelado(
      comparando línea por línea contra el original, donde eran rutas de
      archemir.com. No es una excepción nueva: es la misma normalización del
      dominio que ya había, un paso antes. */
+  /* Lo que ocupa el sitio de las maquetas —las dos fotos del sistema— y la
+     galería de cinco, que es lo único de la página que no sale del original.
+     Del original ya se recortaron las maquetas unas líneas más arriba; aquí se
+     recorta lo que las sustituye, y así el resto sigue comparándose entero. */
+  .replace(/[ \t]*<img class="foto-sistema"[\s\S]*?>\n/g, "")
+  .replace(/[ \t]*<div class="galeria-sistema">[\s\S]*?<\/div>\n/, "")
   .replace(/href="marcos\.html"/g, 'href="https://clerigo.io/marcos"')
   .replace(/href="legal\.html"/g, 'href="https://clerigo.io/legal"')
   .replace(/href="precios\.html"/g, 'href="https://clerigo.io/precios"')
@@ -257,8 +300,11 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
      «Contacto» se corta en cualquier pantalla de menos de 414 px. Es el único
      cambio de comportamiento respecto al original, y por eso se cuenta aquí
      en vez de darlo por bueno. */
-  comprueba(`las consultas de medios del original + las 3 del teléfono en el ${n}`,
-    cuenta(t, /@media/g) === cuenta(org, /@media/g) + 3
+  /* Las del original, más 3 del teléfono y 2 de la galería de fotos. Se cuentan
+     en vez de darlas por buenas: si alguien añade una regla de medios sin
+     pensarlo, esto lo dice. */
+  comprueba(`las consultas de medios del original + las 3 del teléfono + las 2 de la galería, en el ${n}`,
+    cuenta(t, /@media/g) === cuenta(org, /@media/g) + 5
     && /@media \(max-width: 480px\)/.test(t)
     && /\.nav-cta \.btn-ghost \+ \.btn-ghost \{ display: none; \}/.test(t)
     && /\.preview-sidebar \{ display: none; \}/.test(t)

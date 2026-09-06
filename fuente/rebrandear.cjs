@@ -579,6 +579,97 @@ cambia('href="https://clerigo.io"', 'href="index.html"', 2);
   parte.push(`  · direcciones absolutas de la cabecera -> ${SITIO.base}`);
 }
 
+/* ── 4d. Las fotos del sistema ──────────────────────────────────────────── */
+
+/* El original dibujaba el producto con CSS: dos maquetas de un panel que no
+ * existe, 249 líneas entre las dos. Ahora van fotos del sistema de verdad,
+ * tomadas del inquilino de demostración.
+ *
+ * Se cambia SÓLO lo de dentro. El marco de ventana —los tres puntos de colores
+ * y el rótulo— se queda: es lo que hace que la foto se lea como una pantalla y
+ * no como una imagen pegada. Y así el cambio es el mínimo que hace el trabajo.
+ *
+ * Es lo segundo que se le quita al original, después del panel de
+ * certificaciones, y por eso está declarado en `validar.cjs`: sin declararlo,
+ * la comprobación de «esto sale del original» dejaría de valer. */
+function cambiaBloque(marca, dentro, nombre) {
+  const li = h.split("\n");
+  const ini = li.findIndex((l) => l.includes(marca));
+  if (ini < 0) throw new Error(`no encuentro «${marca}» para ${nombre}`);
+  let prof = 0;
+  let fin = -1;
+  for (let i = ini; i < li.length; i++) {
+    prof += (li[i].match(/<div\b/g) || []).length;
+    prof -= (li[i].match(/<\/div>/g) || []).length;
+    if (prof === 0) { fin = i; break; }
+  }
+  if (fin < 0) throw new Error(`«${marca}» no cierra`);
+  const sangria = li[ini].match(/^\s*/)[0];
+  li.splice(ini, fin - ini + 1, ...dentro.split("\n").map((l) => (l ? sangria + l : l)));
+  h = li.join("\n");
+  parte.push(`${String(fin - ini + 1).padStart(3)} × líneas de dibujo → foto (${nombre})`);
+}
+
+cambiaBloque(
+  '<div class="preview-body">',
+  '<img class="foto-sistema" src="sistema/sistema-panel.png" width="1600" height="1000"\n'
+  + '     alt="Resumen General de Clèrigo: índice de cumplimiento, riesgos de terceros, controles ERM, plan de auditoría y hallazgos críticos.">',
+  "la ventana del encabezado",
+);
+cambiaBloque(
+  '<div class="platform-body">',
+  '<img class="foto-sistema" src="sistema/sistema-panel.png" width="1600" height="1000"\n'
+  + '     alt="Centro de Comando de Clèrigo con los indicadores de las cinco áreas y el radar de conocimiento.">',
+  "el panel de la sección Plataforma",
+);
+
+/* Y las otras cinco pantallas, debajo del panel. Esto SÍ es nuevo: no sale del
+ * original. Van con `loading="lazy"` porque pesan 1,4 MB entre las cinco y
+ * nadie las ve hasta bajar. */
+const GALERIA = `
+      <div class="galeria-sistema">
+        <figure><img src="sistema/sistema-riesgos.png" width="1600" height="1000" loading="lazy" alt="Gestión de Riesgos: madurez ERM, riesgo inherente frente a residual y mapa de calor."><figcaption>Riesgos</figcaption></figure>
+        <figure><img src="sistema/sistema-cumplimiento.png" width="1600" height="1000" loading="lazy" alt="Cumplimiento Regulatorio: estado por marco y requisitos."><figcaption>Cumplimiento</figcaption></figure>
+        <figure><img src="sistema/sistema-auditoria.png" width="1600" height="1000" loading="lazy" alt="Gestión de Auditorías: plan anual, hallazgos y seguimiento."><figcaption>Auditoría</figcaption></figure>
+        <figure><img src="sistema/sistema-activos.png" width="1600" height="1000" loading="lazy" alt="Inventario de activos tecnológicos con su clasificación."><figcaption>Activos</figcaption></figure>
+        <figure><img src="sistema/sistema-terceros.png" width="1600" height="1000" loading="lazy" alt="Evaluación de riesgos de terceros y estado de las contrapartes."><figcaption>Terceros</figcaption></figure>
+      </div>`;
+{
+  const cierre = "\n    </div>\n";
+  const i = h.indexOf('<div class="platform-frame');
+  const j = h.indexOf(cierre, h.indexOf("foto-sistema", i));
+  if (j < 0) throw new Error("no encuentro dónde acaba el marco de la plataforma");
+  h = h.slice(0, j + cierre.length) + GALERIA + "\n" + h.slice(j + cierre.length);
+  parte.push("  · galería de 5 pantallas añadida bajo el panel");
+}
+
+/* El CSS de las fotos va DENTRO del tramo de añadidos, entre el rótulo de los
+   ajustes de teléfono y el del pie oscuro: así la comprobación lo recorta con
+   el resto de lo añadido y no hace falta declararlo aparte. */
+cambia(
+  "/* ── BARRA Y PIE SIEMPRE EN OSCURO ──",
+  `/* ── LAS FOTOS DEL SISTEMA ─────────────────────────────────────────────── */
+.foto-sistema { display: block; width: 100%; height: auto; }
+.galeria-sistema {
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px;
+  max-width: 1160px; margin: 24px auto 0; padding: 0 48px;
+}
+.galeria-sistema figure { margin: 0; }
+.galeria-sistema img {
+  width: 100%; height: auto; display: block;
+  border: 1px solid var(--border); border-radius: 6px;
+}
+.galeria-sistema figcaption {
+  font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--text-3); margin-top: 10px; text-align: center;
+}
+@media (max-width: 900px) { .galeria-sistema { grid-template-columns: repeat(2, minmax(0,1fr)); padding: 0 20px; } }
+@media (max-width: 520px) { .galeria-sistema { grid-template-columns: minmax(0,1fr); } }
+
+/* ── BARRA Y PIE SIEMPRE EN OSCURO ──`,
+  1,
+);
+
 /* ── 5. Comprobación ────────────────────────────────────────────────────── */
 
 const restos = h.match(/archemir/gi) || [];

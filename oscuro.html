@@ -1399,6 +1399,24 @@ footer {
   .nav-logo-text small { display: none; }
 }
 
+/* ── LAS FOTOS DEL SISTEMA ─────────────────────────────────────────────── */
+.foto-sistema { display: block; width: 100%; height: auto; }
+.galeria-sistema {
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px;
+  max-width: 1160px; margin: 24px auto 0; padding: 0 48px;
+}
+.galeria-sistema figure { margin: 0; }
+.galeria-sistema img {
+  width: 100%; height: auto; display: block;
+  border: 1px solid var(--border); border-radius: 6px;
+}
+.galeria-sistema figcaption {
+  font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--text-3); margin-top: 10px; text-align: center;
+}
+@media (max-width: 900px) { .galeria-sistema { grid-template-columns: repeat(2, minmax(0,1fr)); padding: 0 20px; } }
+@media (max-width: 520px) { .galeria-sistema { grid-template-columns: minmax(0,1fr); } }
+
 /* ── BARRA Y PIE SIEMPRE EN OSCURO ─────────────────────────────────────── */
 nav, footer {
   --dark: #0E0E0E;
@@ -1577,89 +1595,8 @@ footer .social-icon:hover { background: rgba(255,255,255,0.09); border-color: rg
         <div class="preview-dot" style="background:#27C93F"></div>
         <span class="preview-title">clerigo.io — Centro de Comando</span>
       </div>
-      <div class="preview-body">
-        <div class="preview-sidebar">
-          <div style="padding:10px 14px 10px;border-bottom:1px solid rgba(255,255,255,0.05);margin-bottom:6px">
-            <div style="display:flex;align-items:center;gap:7px">
-              <div style="width:20px;height:20px;background:var(--logo) center / contain no-repeat;display:flex;align-items:center;justify-content:center"></div>
-              <span style="font-size:11px;font-weight:700;color:var(--text)">Clèrigo</span>
-            </div>
-          </div>
-          <div class="preview-nav-item active">
-            <div class="pni-dot" style="background:var(--red)"></div>Vista General
-          </div>
-          <div class="preview-nav-item">
-            <div class="pni-dot" style="background:var(--danger)"></div>Riesgos
-          </div>
-          <div class="preview-nav-item">
-            <div class="pni-dot" style="background:var(--warning)"></div>Cumplimiento
-          </div>
-          <div class="preview-nav-item">
-            <div class="pni-dot" style="background:var(--teal)"></div>Privacidad
-          </div>
-          <div class="preview-nav-item">
-            <div class="pni-dot" style="background:var(--accent)"></div>Ciberseguridad
-          </div>
-          <div class="preview-nav-item">
-            <div class="pni-dot" style="background:var(--success)"></div>Auditoría
-          </div>
-        </div>
-        <div class="preview-main">
-          <div class="preview-kpi-row">
-            <div class="preview-kpi" style="border-top:2px solid var(--danger)"><div class="preview-kpi-label">Riesgos</div><div class="preview-kpi-val" style="color:var(--danger)">47</div></div>
-            <div class="preview-kpi" style="border-top:2px solid var(--warning)"><div class="preview-kpi-label">Cumplimiento</div><div class="preview-kpi-val" style="color:var(--warning)">78%</div></div>
-            <div class="preview-kpi" style="border-top:2px solid var(--teal)"><div class="preview-kpi-label">Privacidad</div><div class="preview-kpi-val" style="color:var(--teal)">91%</div></div>
-            <div class="preview-kpi" style="border-top:2px solid var(--accent)"><div class="preview-kpi-label">Cyber Alertas</div><div class="preview-kpi-val" style="color:var(--accent)">23</div></div>
-            <div class="preview-kpi" style="border-top:2px solid var(--success)"><div class="preview-kpi-label">Controles</div><div class="preview-kpi-val" style="color:var(--success)">312</div></div>
-          </div>
-          <div class="preview-charts">
-            <div class="preview-panel">
-              <div class="preview-panel-title">Mapa de Calor — Riesgos</div>
-              <div class="plat-heatrow">
-                <div class="plat-hcell" style="background:rgba(18,128,92,0.2)"></div>
-                <div class="plat-hcell" style="background:rgba(18,128,92,0.35)"></div>
-                <div class="plat-hcell" style="background:rgba(230,134,25,0.35)"></div>
-                <div class="plat-hcell" style="background:rgba(215,55,63,0.4)"></div>
-                <div class="plat-hcell" style="background:rgba(215,55,63,0.7)"></div>
-              </div>
-              <div class="plat-heatrow">
-                <div class="plat-hcell" style="background:rgba(18,128,92,0.15)"></div>
-                <div class="plat-hcell" style="background:rgba(230,134,25,0.25)"></div>
-                <div class="plat-hcell" style="background:rgba(230,134,25,0.5)"></div>
-                <div class="plat-hcell" style="background:rgba(215,55,63,0.35)"></div>
-                <div class="plat-hcell" style="background:rgba(215,55,63,0.6)"></div>
-              </div>
-              <div class="plat-heatrow">
-                <div class="plat-hcell" style="background:rgba(18,128,92,0.1)"></div>
-                <div class="plat-hcell" style="background:rgba(18,128,92,0.2)"></div>
-                <div class="plat-hcell" style="background:rgba(230,134,25,0.3)"></div>
-                <div class="plat-hcell" style="background:rgba(230,134,25,0.45)"></div>
-                <div class="plat-hcell" style="background:rgba(215,55,63,0.3)"></div>
-              </div>
-              <div style="display:flex;justify-content:space-between;margin-top:6px">
-                <span style="font-size:8px;color:var(--text-3)">CUMPLIMIENTO</span>
-                <span style="font-size:8px;color:var(--text-3)">ISO 27001 · GDPR · PCI</span>
-              </div>
-            </div>
-            <div class="preview-panel">
-              <div class="preview-panel-title">Estado por Marco Regulatorio</div>
-              <div style="display:flex;flex-direction:column;gap:6px">
-                <div><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-3);margin-bottom:3px"><span>ISO 27001</span><span style="color:var(--success);font-weight:700">94%</span></div><div class="preview-bar"><div class="preview-bar-fill" style="width:94%;background:var(--success)"></div></div></div>
-                <div><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-3);margin-bottom:3px"><span>GDPR</span><span style="color:var(--warning);font-weight:700">73%</span></div><div class="preview-bar"><div class="preview-bar-fill" style="width:73%;background:var(--warning)"></div></div></div>
-                <div><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-3);margin-bottom:3px"><span>PCI-DSS</span><span style="color:var(--danger);font-weight:700">56%</span></div><div class="preview-bar"><div class="preview-bar-fill" style="width:56%;background:var(--danger)"></div></div></div>
-                <div><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-3);margin-bottom:3px"><span>SOC 2</span><span style="color:var(--success);font-weight:700">88%</span></div><div class="preview-bar"><div class="preview-bar-fill" style="width:88%;background:var(--success)"></div></div></div>
-              </div>
-            </div>
-            <div class="preview-panel">
-              <div class="preview-panel-title">Alertas Recientes</div>
-              <div class="preview-alert"><div class="preview-alert-dot" style="background:var(--danger)"></div><div><div style="font-size:9px;color:var(--text-2);font-weight:600">Acceso no autorizado</div><div style="font-size:8px;color:var(--text-3)">Ciberseguridad · 12m</div></div></div>
-              <div class="preview-alert"><div class="preview-alert-dot" style="background:var(--warning)"></div><div><div style="font-size:9px;color:var(--text-2);font-weight:600">Brecha PCI-DSS</div><div style="font-size:8px;color:var(--text-3)">Cumplimiento · 1h</div></div></div>
-              <div class="preview-alert"><div class="preview-alert-dot" style="background:var(--teal)"></div><div><div style="font-size:9px;color:var(--text-2);font-weight:600">ARCO pendientes ×8</div><div style="font-size:8px;color:var(--text-3)">Privacidad · 2h</div></div></div>
-              <div class="preview-alert"><div class="preview-alert-dot" style="background:var(--accent)"></div><div><div style="font-size:9px;color:var(--text-2);font-weight:600">Riesgo R-041</div><div style="font-size:8px;color:var(--text-3)">Riesgos · 4h</div></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <img class="foto-sistema" src="sistema/sistema-panel.png" width="1600" height="1000"
+           alt="Resumen General de Clèrigo: índice de cumplimiento, riesgos de terceros, controles ERM, plan de auditoría y hallazgos críticos.">
     </div>
   </div>
 </section>
@@ -2230,172 +2167,17 @@ footer .social-icon:hover { background: rgba(255,255,255,0.09); border-color: rg
         <div class="ptb-title">Clèrigo XGRC — Centro de Comando</div>
         <div class="ptb-live">En vivo</div>
       </div>
-      <div class="platform-body">
-        <div class="plat-sidebar">
-          <div class="plat-sidebar-logo">
-            <div class="plat-logo-mark"></div>
-            <span class="plat-logo-text">Clèrigo</span>
-          </div>
-          <div class="plat-nav-label">Principal</div>
-          <div class="plat-nav-item active">
-            <div class="plat-nav-dot" style="background:var(--red)"></div>Vista General
-          </div>
-          <div class="plat-nav-label">Módulos GRC</div>
-          <div class="plat-nav-item">
-            <div class="plat-nav-dot" style="background:var(--danger)"></div>
-            Gestión de Riesgos
-            <span class="plat-nav-badge" style="background:rgba(215,55,63,0.2);color:var(--danger)">12</span>
-          </div>
-          <div class="plat-nav-item">
-            <div class="plat-nav-dot" style="background:var(--warning)"></div>
-            Cumplimiento
-            <span class="plat-nav-badge" style="background:rgba(230,134,25,0.2);color:var(--warning)">3</span>
-          </div>
-          <div class="plat-nav-item">
-            <div class="plat-nav-dot" style="background:var(--teal)"></div>Privacidad de Datos
-          </div>
-          <div class="plat-nav-item">
-            <div class="plat-nav-dot" style="background:var(--accent)"></div>
-            Ciberseguridad
-            <span class="plat-nav-badge" style="background:rgba(2,101,220,0.2);color:var(--accent)">5</span>
-          </div>
-          <div class="plat-nav-item">
-            <div class="plat-nav-dot" style="background:var(--success)"></div>Auditoría & Control
-          </div>
-          <div class="plat-nav-item">
-            <div class="plat-nav-dot" style="background:#a855f7"></div>Gobernanza IA
-          </div>
-          <div class="plat-nav-label" style="margin-top:8px">Análisis</div>
-          <div class="plat-nav-item">
-            <div class="plat-nav-dot" style="background:var(--text-3)"></div>Reportes
-          </div>
-          <div class="plat-nav-item">
-            <div class="plat-nav-dot" style="background:var(--text-3)"></div>Configuración
-          </div>
-        </div>
-
-        <div class="plat-main">
-          <div class="plat-toprow">
-            <div>
-              <div class="plat-pagetitle">Centro de Comando GRC</div>
-              <div class="plat-subtitle">Domingo 8 Mar 2026 · Actualizado hace 3 min</div>
-            </div>
-            <div class="plat-ai-pill">Motor IA activo · 3 insights detectados</div>
-          </div>
-
-          <div class="plat-kpi-row">
-            <div class="plat-kpi" style="border-top:2px solid var(--danger)">
-              <div class="plat-kpi-lbl">Riesgos</div>
-              <div class="plat-kpi-val" style="color:var(--danger)">47</div>
-              <div class="plat-kpi-sub">4 críticos</div>
-            </div>
-            <div class="plat-kpi" style="border-top:2px solid var(--warning)">
-              <div class="plat-kpi-lbl">Cumplimiento</div>
-              <div class="plat-kpi-val" style="color:var(--warning)">78%</div>
-              <div class="plat-kpi-sub">6 marcos</div>
-            </div>
-            <div class="plat-kpi" style="border-top:2px solid var(--teal)">
-              <div class="plat-kpi-lbl">Privacidad</div>
-              <div class="plat-kpi-val" style="color:var(--teal)">91%</div>
-              <div class="plat-kpi-sub">8 ARCO</div>
-            </div>
-            <div class="plat-kpi" style="border-top:2px solid var(--accent)">
-              <div class="plat-kpi-lbl">Cyber</div>
-              <div class="plat-kpi-val" style="color:var(--accent)">23</div>
-              <div class="plat-kpi-sub">2 críticas</div>
-            </div>
-            <div class="plat-kpi" style="border-top:2px solid var(--success)">
-              <div class="plat-kpi-lbl">Controles</div>
-              <div class="plat-kpi-val" style="color:var(--success)">312</div>
-              <div class="plat-kpi-sub">de 401</div>
-            </div>
-            <div class="plat-kpi" style="border-top:2px solid #a855f7">
-              <div class="plat-kpi-lbl">Score GRC</div>
-              <div class="plat-kpi-val" style="color:#a855f7">B+</div>
-              <div class="plat-kpi-sub">Madurez</div>
-            </div>
-          </div>
-
-          <div class="plat-row2">
-            <div class="plat-panel">
-              <div class="plat-panel-title">Mapa de Calor — Riesgos Activos</div>
-              <div class="plat-heatrow">
-                <div class="plat-hcell" style="background:rgba(18,128,92,0.2);height:22px"></div>
-                <div class="plat-hcell" style="background:rgba(18,128,92,0.35);height:22px"></div>
-                <div class="plat-hcell" style="background:rgba(230,134,25,0.4);height:22px"></div>
-                <div class="plat-hcell" style="background:rgba(215,55,63,0.45);height:22px"></div>
-                <div class="plat-hcell" style="background:rgba(215,55,63,0.8);height:22px"></div>
-              </div>
-              <div class="plat-heatrow">
-                <div class="plat-hcell" style="background:rgba(18,128,92,0.15);height:22px"></div>
-                <div class="plat-hcell" style="background:rgba(230,134,25,0.25);height:22px"></div>
-                <div class="plat-hcell" style="background:rgba(230,134,25,0.55);height:22px"></div>
-                <div class="plat-hcell" style="background:rgba(215,55,63,0.4);height:22px"></div>
-                <div class="plat-hcell" style="background:rgba(215,55,63,0.65);height:22px"></div>
-              </div>
-              <div class="plat-heatrow">
-                <div class="plat-hcell" style="background:rgba(18,128,92,0.1);height:22px"></div>
-                <div class="plat-hcell" style="background:rgba(18,128,92,0.2);height:22px"></div>
-                <div class="plat-hcell" style="background:rgba(230,134,25,0.3);height:22px"></div>
-                <div class="plat-hcell" style="background:rgba(230,134,25,0.5);height:22px"></div>
-                <div class="plat-hcell" style="background:rgba(215,55,63,0.3);height:22px"></div>
-              </div>
-              <div style="margin-top:10px;display:flex;flex-direction:column;gap:5px">
-                <div><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-3);margin-bottom:3px"><span>ISO 27001</span><span style="color:var(--success);font-weight:700">94%</span></div><div class="preview-bar"><div class="preview-bar-fill" style="width:94%;background:var(--success)"></div></div></div>
-                <div><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-3);margin-bottom:3px"><span>GDPR</span><span style="color:var(--warning);font-weight:700">73%</span></div><div class="preview-bar"><div class="preview-bar-fill" style="width:73%;background:var(--warning)"></div></div></div>
-                <div><div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-3);margin-bottom:3px"><span>PCI-DSS</span><span style="color:var(--danger);font-weight:700">56%</span></div><div class="preview-bar"><div class="preview-bar-fill" style="width:56%;background:var(--danger)"></div></div></div>
-              </div>
-            </div>
-            <div class="plat-panel">
-              <div class="plat-panel-title">Alertas GRC Unificadas — Todos los módulos</div>
-              <div class="plat-alert-item">
-                <div class="plat-alert-dot" style="background:var(--danger)"></div>
-                <div><div class="plat-alert-text">Intento acceso no autorizado BD</div><div class="plat-alert-sub">Ciberseguridad · hace 12 min</div></div>
-                <span class="plat-alert-tag" style="background:rgba(215,55,63,0.15);color:var(--danger)">CRÍTICO</span>
-              </div>
-              <div class="plat-alert-item">
-                <div class="plat-alert-dot" style="background:var(--warning)"></div>
-                <div><div class="plat-alert-text">Brecha detectada PCI-DSS Req.3</div><div class="plat-alert-sub">Cumplimiento · hace 45 min</div></div>
-                <span class="plat-alert-tag" style="background:rgba(230,134,25,0.15);color:var(--warning)">ALTO</span>
-              </div>
-              <div class="plat-alert-item">
-                <div class="plat-alert-dot" style="background:var(--teal)"></div>
-                <div><div class="plat-alert-text">8 solicitudes ARCO por vencer</div><div class="plat-alert-sub">Privacidad · hace 2 h</div></div>
-                <span class="plat-alert-tag" style="background:rgba(13,143,143,0.15);color:var(--teal)">MEDIO</span>
-              </div>
-              <div class="plat-alert-item">
-                <div class="plat-alert-dot" style="background:var(--danger)"></div>
-                <div><div class="plat-alert-text">Riesgo R-041 sin tratamiento</div><div class="plat-alert-sub">Riesgos · hace 4 h</div></div>
-                <span class="plat-alert-tag" style="background:rgba(215,55,63,0.15);color:var(--danger)">ALTO</span>
-              </div>
-              <div class="plat-alert-item">
-                <div class="plat-alert-dot" style="background:var(--success)"></div>
-                <div><div class="plat-alert-text">Control ISO 27001 A.9 — Aprobado</div><div class="plat-alert-sub">Auditoría · hace 6 h</div></div>
-                <span class="plat-alert-tag" style="background:rgba(18,128,92,0.15);color:var(--success)">OK</span>
-              </div>
-            </div>
-            <div class="plat-panel">
-              <div class="plat-panel-title">Score GRC General</div>
-              <div style="text-align:center;padding:16px 0">
-                <svg width="100" height="100" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="12"/>
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#7B2FBE" stroke-width="12" stroke-dasharray="251.3" stroke-dashoffset="65" stroke-linecap="round" transform="rotate(-90 50 50)" opacity="0.8"/>
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="var(--success)" stroke-width="12" stroke-dasharray="251.3" stroke-dashoffset="170" stroke-linecap="round" transform="rotate(24 50 50)" opacity="0.6"/>
-                  <text x="50" y="46" text-anchor="middle" font-size="18" font-weight="800" fill="#F0F0F0" font-family="Source Sans 3,sans-serif">B+</text>
-                  <text x="50" y="58" text-anchor="middle" font-size="8" fill="rgba(240,240,240,0.4)" font-family="Source Sans 3,sans-serif">MADUREZ</text>
-                </svg>
-              </div>
-              <div style="display:flex;flex-direction:column;gap:4px">
-                <div style="display:flex;justify-content:space-between;font-size:9px"><span style="color:var(--text-3)">Riesgos</span><span style="color:var(--warning);font-weight:700">62%</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:9px"><span style="color:var(--text-3)">Cumplimiento</span><span style="color:var(--warning);font-weight:700">78%</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:9px"><span style="color:var(--text-3)">Privacidad</span><span style="color:var(--success);font-weight:700">91%</span></div>
-                <div style="display:flex;justify-content:space-between;font-size:9px"><span style="color:var(--text-3)">Auditoría</span><span style="color:var(--success);font-weight:700">85%</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <img class="foto-sistema" src="sistema/sistema-panel.png" width="1600" height="1000"
+           alt="Centro de Comando de Clèrigo con los indicadores de las cinco áreas y el radar de conocimiento.">
     </div>
+
+      <div class="galeria-sistema">
+        <figure><img src="sistema/sistema-riesgos.png" width="1600" height="1000" loading="lazy" alt="Gestión de Riesgos: madurez ERM, riesgo inherente frente a residual y mapa de calor."><figcaption>Riesgos</figcaption></figure>
+        <figure><img src="sistema/sistema-cumplimiento.png" width="1600" height="1000" loading="lazy" alt="Cumplimiento Regulatorio: estado por marco y requisitos."><figcaption>Cumplimiento</figcaption></figure>
+        <figure><img src="sistema/sistema-auditoria.png" width="1600" height="1000" loading="lazy" alt="Gestión de Auditorías: plan anual, hallazgos y seguimiento."><figcaption>Auditoría</figcaption></figure>
+        <figure><img src="sistema/sistema-activos.png" width="1600" height="1000" loading="lazy" alt="Inventario de activos tecnológicos con su clasificación."><figcaption>Activos</figcaption></figure>
+        <figure><img src="sistema/sistema-terceros.png" width="1600" height="1000" loading="lazy" alt="Evaluación de riesgos de terceros y estado de las contrapartes."><figcaption>Terceros</figcaption></figure>
+      </div>
   </div>
 </section>
 

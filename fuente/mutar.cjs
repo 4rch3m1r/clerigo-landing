@@ -34,6 +34,12 @@ const MUTANTES=[
   ['dejar texto casi blanco',   s=>s.replace('color:rgba(22,24,28,0.85)','color:rgba(240,240,240,0.8)')],
   ['dejar una flecha de texto', s=>s.replace('Más información <svg','Más información → <svg')],
   ['dejar una estrella de texto',s=>s.replace('<span class="star"><svg','<span class="star">★<svg')],
+  /* Las fotos del sistema. La etiqueta sola no vale: con og.png ya pasó que
+     apuntaba a un fichero que no existía y nadie se enteró. */
+  ['apuntar una foto a un fichero que no está', s=>s.replace('sistema/sistema-panel.png','sistema/sistema-inventado.png')],
+  ['quitarle la descripcion a una foto',   s=>s.replace(/alt="Resumen General de[^"]*"/,'alt=""')],
+  ['quitar la galeria de pantallas',        s=>s.replace('<div class="galeria-sistema">','<div class="galeria-quitada">')],
+  ['cargar la galeria de golpe',            s=>s.replace(/ loading="lazy"/g,'')],
 ];
 
 let visto=0;

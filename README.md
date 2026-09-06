@@ -81,6 +81,35 @@ completa y no lleva barra ni pie. Su panel de marca se queda en oscuro a
 propósito, como el acceso de la aplicación, y va rotulado como tal para que el
 validador no lo confunda con un descuido.
 
+## Las fotos del sistema
+
+El original dibujaba el producto con CSS: dos maquetas de un panel que no
+existía, 248 líneas entre las dos. Ahora hay fotos del sistema de verdad,
+tomadas del inquilino de demostración con datos sembrados.
+
+El marco de ventana —los tres puntos de colores y el rótulo— se queda: es lo
+que hace que la foto se lea como una pantalla. Lo que cambia es lo de dentro.
+
+| | |
+|---|---|
+| `sistema/sistema-panel.png` | el Resumen General. Va en los dos sitios donde había maqueta |
+| `sistema/sistema-riesgos.png` | Gestión de Riesgos |
+| `sistema/sistema-cumplimiento.png` | Cumplimiento Regulatorio |
+| `sistema/sistema-auditoria.png` | Gestión de Auditorías |
+| `sistema/sistema-activos.png` | Inventario de activos |
+| `sistema/sistema-terceros.png` | Riesgos de terceros |
+
+Las cinco últimas van en una galería bajo el panel, con `loading="lazy"`: pesan
+1,4 MB entre todas y nadie las ve hasta bajar. Todas de 1600 px de ancho.
+
+Es lo **segundo** que se le quita al original, después de los sellos de
+certificación, y por eso está declarado en `validar.cjs`. El validador no se
+cree las etiquetas: abre cada PNG, comprueba que existe y que mide lo que dice.
+
+El nombre que sale en las capturas es «Ana Gómez», no el de quien las tomó. Se
+sustituye al hacer la foto, no en la base: el nombre viaja dentro del testigo de
+sesión. Los datos de las pantallas son los de verdad.
+
 ## La tarjeta que sale al pegar el enlace
 
 Las páginas declaraban `og:image` apuntando a `clerigo.io/og.png` desde el
