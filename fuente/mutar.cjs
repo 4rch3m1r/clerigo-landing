@@ -40,6 +40,14 @@ const MUTANTES=[
   ['quitarle la descripcion a una foto',   s=>s.replace(/alt="Resumen General de[^"]*"/,'alt=""')],
   ['quitar la galeria de pantallas',        s=>s.replace('<div class="galeria-sistema">','<div class="galeria-quitada">')],
   ['cargar la galeria de golpe',            s=>s.replace(/ loading="lazy"/g,'')],
+  /* El panel del hero. Las tres rompen algo que no se nota mirando: la página
+     queda entera y lo único que cambia es lo que dice de sí misma. */
+  ['devolver el rotulo viejo del panel',
+    s=>s.replace('ECOSISTEMA DE NIVEL ENTERPRISE','Nuestras Certificaciones')],
+  ['quitar la segunda linea del rotulo',
+    s=>s.replace(/<span class="cert-panel-sub">[^<]*<\/span>/,'')],
+  ['quitar uno de los cuatro sellos',
+    s=>s.replace('<div class="cert-logo-item">','<div class="cert-logo-quitado">')],
 ];
 
 let visto=0;

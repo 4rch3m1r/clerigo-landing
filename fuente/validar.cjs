@@ -6,7 +6,7 @@
  */
 const RAIZ = require("node:path").join(__dirname, "..");
 const fs = require("fs");
-const { pelado, restosDeTemaOscuro, EXCEPCIONES, sinPanelDeCertificaciones, sinLasMaquetas, sinLaTiraDeIntegraciones } = require("./tema.cjs");
+const { pelado, restosDeTemaOscuro, EXCEPCIONES, sinLasMaquetas, sinLaTiraDeIntegraciones } = require("./tema.cjs");
 /* Donde vive el sitio: de aqui salen las direcciones absolutas de la cabecera. */
 const SITIO = JSON.parse(fs.readFileSync(require("node:path").join(__dirname, "sitio.json"), "utf8"));
 
@@ -114,20 +114,24 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
   const pict = sinDatos.match(/[\u{1F000}-\u{1FAFF}\u{2605}\u{2606}\u{2190}-\u{21FF}\u{2794}-\u{27BF}\u{2B00}-\u{2BFF}]/gu) || [];
   comprueba(`sin emojis, estrellas ni flechas de texto en el ${n}`, pict.length === 0, [...new Set(pict)].join(" "));
 }
-/* Lo ÚNICO que se le quita al original. El panel decía «Nuestras
-   Certificaciones» y traía sellos con la palabra «Certified» sobre ISO 27001,
-   ISO 22301 y SOC 2 Type II: son marcos que la plataforma cubre, no
-   certificaciones que Clèrigo tenga. La página es pública. */
+/* Lo ÚNICO que se le cambia de texto al original. El panel decía «Nuestras
+   Certificaciones» y traía cuatro sellos —ISO 27001, NIST CSF, SOC 2 Type II e
+   ISO 22301—. Los sellos se quedan: son marcos que la plataforma cubre y
+   estándares que cumple la infraestructura donde vive. Lo que no se sostenía
+   era el rótulo, y es el rótulo lo que cambia. La página es pública. */
 for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
-  /* Ojo: «ISO 22301» y «SOC 2 Type II» SÍ siguen en la página, en la lista de
-     marcos compatibles, y ahí están bien: son marcos que la plataforma cubre.
-     Lo que se comprueba es que no quede el panel que los presentaba como
-     certificaciones propias — ni su marcado ni su CSS. */
-  comprueba(`sin el panel de certificaciones en el ${n}`,
-    !/cert-panel|cert-logo-item|cert-divider|cert-logo-name|Nuestras Certificaciones/.test(t));
+  comprueba(`el panel del hero sigue ahí, con sus cuatro sellos, en el ${n}`,
+    cuenta(t, /class="cert-logo-item"/g) === 4 && /class="cert-panel /.test(t),
+    `${cuenta(t, /class="cert-logo-item"/g)} sellos`);
+  comprueba(`y con el rótulo nuevo, no con el viejo, en el ${n}`,
+    t.includes("ECOSISTEMA DE NIVEL ENTERPRISE")
+    && t.includes("Alojada en datacenters bajo estándares internacionales")
+    && !/Nuestras Certificaciones/.test(t));
 }
-comprueba("y en el original SÍ estaba, que si no esta comprobación no dice nada",
-  /class="cert-panel/.test(org) && /Nuestras Certificaciones/.test(org));
+/* Y que en el original el rótulo era el viejo, que si no esto no dice nada. */
+comprueba("y en el original el rótulo decía «Nuestras Certificaciones»",
+  /class="cert-panel/.test(org) && /Nuestras Certificaciones/.test(org)
+  && !/ECOSISTEMA DE NIVEL ENTERPRISE/.test(org));
 
 /* Las seis tarjetas: la de la portada y una por página interior. Se miran los
    BYTES del fichero, no la etiqueta que dice que existe. */
@@ -188,6 +192,12 @@ comprueba("el favicon apunta a favicon.png y el fichero existe",
 console.log("\n── Estructura intacta ──────────────────────────────────────────");
 /* La prueba dura: quitando marca, dominio, logotipo y color, los tres ficheros
    tienen que ser LA MISMA página. */
+/* El rótulo nuevo del panel, tal y como lo escribe `rebrandear.cjs`. Vive aquí
+   con nombre y no dentro del encadenado: es la ÚNICA frase añadida a la
+   portada y conviene poder leerla de un vistazo. */
+const RÓTULO_NUEVO = '<div class="cert-panel-label">ECOSISTEMA DE NIVEL ENTERPRISE'
+  + '<span class="cert-panel-sub">Alojada en datacenters bajo estándares internacionales</span></div>';
+
 const esqueleto = (s) => pelado(
   /* El marcado del panel se recorta contando etiquetas, con el mismo ayudante
      que usa el guion que lo quita: por regex se cortaba en el primer `</div>`
@@ -196,7 +206,7 @@ const esqueleto = (s) => pelado(
   /* Y las dos maquetas del producto, que ahora son fotos del sistema de
      verdad: del original se recortan, y de las dos versiones se recorta lo
      que las sustituye. */
-  sinLaTiraDeIntegraciones(sinLasMaquetas(sinPanelDeCertificaciones(s)))
+  sinLaTiraDeIntegraciones(sinLasMaquetas(s))
   /* Estas dos van ANTES de pelar, porque `pelado` aplana cada bloque `{ … }` a
      una línea y después un `^--logo:` ya no existe como principio de línea. */
     .replace(/^.*(og:|twitter:|rel="canonical"|name="description"|name="theme-color"|rel="image_src"|application\/ld\+json).*$/gm, "")
@@ -204,13 +214,11 @@ const esqueleto = (s) => pelado(
     /* El bloque de ajustes de teléfono es el ÚNICO añadido de verdad, y se
        quita aquí a propósito para que el resto de la página siga comparándose
        carácter a carácter. Que exista se comprueba aparte, más abajo. */
-    .replace(/\/\* ── AJUSTES DE TELÉFONO[\s\S]*?── FIN DE LA BARRA Y EL PIE EN OSCURO ──[^\n]*\n/, "")
-    /* Y el panel de certificaciones es lo ÚNICO que se quita del original: se
-       recorta también aquí —del original, donde sí está— para que el resto de
-       la página siga comparándose línea por línea. Que NO esté en las dos
-       versiones se comprueba aparte, más abajo. */
-    .replace(/\/\* ── CERT LOGOS PANEL \(static, in hero\) ── \*\/[\s\S]*?(?=\/\* ── SECURITY TRUST STRIP ── \*\/)/, "")
-    .replace(/[ \t]*\.hero-inner > \.cert-panel \{ order: 3; \}\n/, ""),
+    .replace(/\/\* ── AJUSTES DE TELÉFONO[\s\S]*?── FIN DE LA BARRA Y EL PIE EN OSCURO ──[^\n]*\n/, ""),
+    /* El CSS del panel de certificaciones YA NO se recorta: el panel volvió a
+       la página, así que está en los tres ficheros y se compara entero. Lo
+       único suyo que se declara es la regla del subtítulo, unas líneas más
+       abajo, porque ésa sí es nueva. */
 )
   /* Los enlaces al resto del sitio apuntan al fichero de al lado en vez de a
      una ruta de clerigo.io. Se deshace aquí —y sólo aquí— para poder seguir
@@ -225,6 +233,17 @@ const esqueleto = (s) => pelado(
   .replace(/[ \t]*<div class="galeria-sistema">[\s\S]*?<\/div>\n/, "")
   /* Y el enlace al Centro de Confianza, que es lo único añadido a la página. */
   .replace(/[ \t]*<a href="confianza\.html">[^<]*<\/a>\n/, "")
+  /* El rótulo del panel del hero. Es lo ÚNICO que se le cambia de TEXTO al
+     original: decía «Nuestras Certificaciones» encima de cuatro sellos que no
+     son certificados de Clèrigo, y ahora dice lo que son. Se deshace aquí —y
+     sólo aquí— para que el resto de la página siga comparándose línea por
+     línea. Que el texto nuevo esté, y el viejo no, se comprueba aparte. */
+  .replace(RÓTULO_NUEVO, '<div class="cert-panel-label">Nuestras Certificaciones</div>')
+  /* Y la regla de estilo de esa segunda línea, que el original no tenía. */
+  .replace(/[ \t]*\.cert-panel-sub \{[^}]*\}\n/, "")
+  /* Y el sello de la ISO 42001, la norma de gestión de inteligencia artificial:
+     no estaba en el original —es de 2023— y se añadió a la rejilla de marcos. */
+  .replace(/[ \t]*<!-- ── ISO 42001 ── -->\n[\s\S]*?<span class="fw-logo-label">ISO 42001<\/span>\n[ \t]*<\/div>\n\n/, "")
   .replace(/href="marcos\.html"/g, 'href="https://clerigo.io/marcos"')
   .replace(/href="legal\.html"/g, 'href="https://clerigo.io/legal"')
   .replace(/href="precios\.html"/g, 'href="https://clerigo.io/precios"')
@@ -338,15 +357,13 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
   comprueba(`mismo número de enlaces en el ${n}`,
     cuenta(t, /<a /g) === cuenta(org, /<a /g) + 1,
     `${cuenta(t, /<a /g)} vs ${cuenta(org, /<a /g)}`);
-  /* Una transición MENOS que el original, y sólo una: la de
-     `.cert-logo-item`, que crecía al pasar el ratón por encima de un sello.
-     El sello ya no está, así que su animación tampoco. */
-  /* Las del original, menos la del sello de certificación que se quitó, más la
-     de la ficha de integración, que ahora se levanta al pasar por encima.
-     Salen las mismas que el original, pero no son las mismas: por eso se
-     escribe la cuenta y no un número suelto. */
-  comprueba(`las transiciones del original, menos la del sello y más la de la ficha, en el ${n}`,
-    cuenta(t, /transition:/g) === cuenta(org, /transition:/g) - 1 + 1,
+  /* Una transición MÁS que el original, y sólo una: la de la ficha de
+     integración, que ahora se levanta al pasar por encima. La del sello
+     —`.cert-logo-item`, que crece al pasar el ratón— sigue estando: el panel
+     volvió a la página. Se escribe la cuenta y no un número suelto para que
+     se vea de dónde sale. */
+  comprueba(`las transiciones del original más la de la ficha, en el ${n}`,
+    cuenta(t, /transition:/g) === cuenta(org, /transition:/g) + 1,
     `${cuenta(t, /transition:/g)} vs ${cuenta(org, /transition:/g)} del original`);
   comprueba(`mismos observadores de aparición en el ${n}`,
     cuenta(t, /IntersectionObserver/g) === cuenta(org, /IntersectionObserver/g));

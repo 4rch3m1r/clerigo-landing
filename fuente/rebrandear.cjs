@@ -365,6 +365,24 @@ cambia(
      medalla de la otra cuando iban en vertical. En fila sobra. */
   .award-ipexpert { grid-column: 2; grid-row: 1 / span 4; margin-top: 0 !important; }
 
+  /* Y los sellos, en rejilla de dos por dos ─────────────────────────────
+     Lo mismo que las medallas, y por lo mismo. Apilados en vertical el panel
+     medía 592 px de alto en una pantalla de 844: él solo se comía el 70% del
+     teléfono antes de llegar a nada. En dos filas de dos baja a la mitad.
+     Las rayas de separación sobran cuando ya no hay una columna que cortar. */
+  .cert-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: start;
+    width: auto;
+    max-width: 320px;
+    margin-left: 0;
+    row-gap: 18px;
+  }
+  .cert-panel-label { grid-column: 1 / -1; }
+  .cert-divider { display: none; }
+
 
 }
 @media (max-width: 480px) {
@@ -430,76 +448,50 @@ footer .social-icon:hover { background: rgba(255,255,255,0.09); border-color: rg
   1,
 );
 
-/* ── 2 septies. Fuera el panel de certificaciones ───────────────────────────
-   ESTO QUITA CONTENIDO DEL ORIGINAL, y va aparte por eso.
+/* ── 2 septies. El panel del hero: los mismos sellos, otro rótulo ──────────
+   ESTO CAMBIA UN TEXTO DEL ORIGINAL, y va aparte por eso.
 
    El panel se titulaba «Nuestras Certificaciones» y traía cuatro sellos: ISO
-   27001 y ISO 22301 con la palabra «Certified» dentro del dibujo, SOC 2 con
-   «TYPE II · CERTIFIED», y NIST CSF.
+   27001, NIST CSF, SOC 2 Type II e ISO 22301.
 
-   Ninguno es una certificación que Clèrigo tenga: son marcos que la plataforma
-   CUBRE. Publicar lo uno como lo otro, en un producto de cumplimiento, es la
-   clase de afirmación que mira precisamente quien compra cumplimiento. Y la
-   página está en internet.
+   El problema nunca fueron los sellos: era el rótulo. Son marcos que la
+   plataforma cubre y estándares que cumple la infraestructura donde vive, no
+   papeles que Clèrigo tenga colgados. Así que cambia el rótulo y los sellos se
+   quedan:
 
-   Se quita el bloque entero —rótulo y sellos—, no sólo los que dicen
-   «Certified»: el problema es el título, que afirma tener certificaciones.
+     «Nuestras Certificaciones»
+        →  «ECOSISTEMA DE NIVEL ENTERPRISE»
+           «Alojada en datacenters bajo estándares internacionales»
 
-   Se localiza contando etiquetas, no por número de línea: así sigue valiendo
-   si el original cambia de sitio. */
-{
-  const MARCA = '<div class="cert-panel';
-  const li = h.split("\n");
-  const ini = li.findIndex((l) => l.includes(MARCA));
-  if (ini < 0) throw new Error("no encuentro el panel de certificaciones");
-
-  /* Se baja contando `<div>` que abren y `</div>` que cierran hasta volver a
-     cero: ahí acaba el bloque, sin depender de cómo esté sangrado. */
-  let prof = 0;
-  let fin = -1;
-  for (let i = ini; i < li.length; i++) {
-    prof += (li[i].match(/<div\b/g) || []).length;
-    prof -= (li[i].match(/<\/div>/g) || []).length;
-    if (prof === 0) { fin = i; break; }
-  }
-  if (fin < 0) throw new Error("el panel de certificaciones no cierra");
-
-  /* El comentario que lo anuncia se va con él. */
-  const desde = li[ini - 1].includes("CERT LOGOS PANEL") ? ini - 1 : ini;
-  const cuantas = fin - desde + 1;
-  li.splice(desde, cuantas);
-  h = li.join("\n");
-  parte.push(`${String(cuantas).padStart(3)} × líneas del panel de certificaciones (fuera)`);
-
-  if (h.includes(MARCA)) throw new Error("queda algún panel de certificaciones");
-}
-
-/* Con el panel fuera, la regla de teléfono que lo colocaba sobra. Esto va
-   ANTES de barrer el CSS, porque el barrido comprueba al final que no quede
-   ni una mención del panel — y esta regla es una. */
+   La segunda línea es la única frase AÑADIDA a la portada, y por eso está
+   declarada en `validar.cjs`: sin declararla, la comprobación de que las tres
+   versiones dicen lo mismo dejaría de cuadrar. */
 cambia(
-  `  .hero-inner > .hero-text  { order: 1; }
-  .hero-inner > .hero-award { order: 2; }
-  .hero-inner > .cert-panel { order: 3; }`,
-  `  .hero-inner > .hero-text  { order: 1; }
-  .hero-inner > .hero-award { order: 2; }`,
+  '      <div class="cert-panel-label">Nuestras Certificaciones</div>',
+  '      <div class="cert-panel-label">ECOSISTEMA DE NIVEL ENTERPRISE'
+    + '<span class="cert-panel-sub">Alojada en datacenters bajo estándares internacionales</span></div>',
   1,
 );
 
-/* Y su CSS es código muerto: cincuenta y pico líneas de estilos para algo que
-   ya no existe. Se van también, que un repositorio que otro vaya a leer no
-   debe dejar preguntas sin respuesta. */
-{
-  const desde = h.indexOf("/* ── CERT LOGOS PANEL (static, in hero) ── */");
-  const hasta = h.indexOf("/* ── SECURITY TRUST STRIP ── */");
-  if (desde < 0 || hasta < 0 || hasta < desde) throw new Error("no acoto el CSS del panel de certificaciones");
-  const cuantas = h.slice(desde, hasta).split("\n").length - 1;
-  h = h.slice(0, desde) + h.slice(hasta);
-  parte.push(`${String(cuantas).padStart(3)} × líneas de CSS del panel (fuera)`);
-  for (const resto of [".cert-panel", ".cert-logo-item", ".cert-divider", ".cert-logo-name"]) {
-    if (h.includes(resto)) throw new Error(`queda CSS de ${resto}`);
-  }
+/* El estilo de esa segunda línea: la única regla de CSS que se añade aquí.
+   Cuelga DENTRO del rótulo —comparte su raya de abajo— para que las dos líneas
+   se lean como un bloque y no como dos rótulos pegados. */
+cambia(
+  `.cert-logo-item {`,
+  `.cert-panel-sub {
+  display: block;
+  font-size: 7.5px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: none;
+  line-height: 1.35;
+  margin-top: 5px;
+  color: rgba(240,240,240,0.38);
 }
+.cert-logo-item {`,
+  1,
+);
+
 
 /* ── 3. El nombre de la marca ───────────────────────────────────────────── */
 
@@ -604,17 +596,51 @@ cambia(
   1,
 );
 
+/* Los distintivos de Microsoft y Google van dibujados con su forma y sus
+ * colores de marca, como los que ya traía el original. Los otros cuatro
+ * —Vicarius, Tenable, Rapid7 y ManageEngine— llevan de momento una chapa con
+ * sus iniciales: no tengo su trazado oficial y dibujarlo de memoria saldría
+ * parecido pero mal, que en un logotipo es lo mismo que mal. */
+const LOGOS = {
+  teams: `<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#5059C9" d="M16.8 8.5h5.1c.6 0 1.1.5 1.1 1.1v4.7a3.6 3.6 0 0 1-3.6 3.6h-.1a3.6 3.6 0 0 1-3.6-3.6V9.1c0-.3.3-.6.6-.6z"/>
+          <circle fill="#5059C9" cx="19.4" cy="5.3" r="2.2"/>
+          <circle fill="#7B83EB" cx="12.4" cy="4.7" r="2.8"/>
+          <path fill="#7B83EB" d="M15.9 8.5H8.2c-.6 0-1.1.5-1.1 1.1v5.6a5 5 0 0 0 5 5 5 5 0 0 0 5-5V9.6c0-.6-.5-1.1-1.2-1.1z"/>
+          <rect fill="#4B53BC" x="2" y="7.3" width="10.4" height="10.4" rx="1.2"/>
+          <text x="7.2" y="15" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="8" fill="white">T</text>
+        </svg>`,
+  defender: `<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#0F6CBD" d="M12 1.8 3.6 5v6.2c0 5.2 3.5 8.9 8.4 10.4V1.8z"/>
+          <path fill="#50E6FF" d="M12 1.8 20.4 5v6.2c0 5.2-3.5 8.9-8.4 10.4V1.8z"/>
+        </svg>`,
+  meet: `<svg width="22" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#00832D" d="M15.5 12 22 7.3v9.4z"/>
+          <path fill="#0066DA" d="M3.6 5.6h9.7c1.2 0 2.2 1 2.2 2.2v8.4c0 1.2-1 2.2-2.2 2.2H3.6z"/>
+          <path fill="#E94235" d="M3.6 5.6 1 8.2v2.3l2.6-2.6z"/>
+          <path fill="#FFBA00" d="M3.6 18.4 1 15.8v-2.3l2.6 2.6z"/>
+          <path fill="#2684FC" d="M1 8.2h2.6v7.6H1z"/>
+        </svg>`,
+};
+
 /* Y las seis que faltan, al final de la tira. */
 {
   const marca = "        <span class=\"int-logo-name\">Azure</span>\n      </div>";
+  const conLogo = (titulo, nombre, svg) => `
+      <div class="int-logo" title="${titulo}">
+        ${svg}
+        <span class="int-logo-name">${nombre}</span>
+      </div>`;
   const nuevas = [
-    ["Microsoft Teams", "Microsoft Teams", "#6264A7", "T", false],
-    ["Microsoft Defender", "Microsoft Defender", "#0078D4", "D", false],
-    ["Google Meet", "Google Meet", "#00832D", "M", false],
-    ["Vicarius", "Vicarius", "#6C4BF4", "V", false],
-    ["Tenable Nessus", "Tenable Nessus", "#0B7285", "N", true],
-    ["NexPose — Rapid7", "NexPose", "#F03C21", "R7", true],
-  ].map(([t, n, c, i, r]) => `\n\n      <!-- ${n} -->${CHAPA(t, n, c, i, r)}`).join("");
+    ["Microsoft Teams", "Microsoft Teams", LOGOS.teams],
+    ["Microsoft Defender", "Microsoft Defender", LOGOS.defender],
+    ["Google Meet", "Google Meet", LOGOS.meet],
+  ].map(([t, n, svg]) => `\n\n      <!-- ${n} -->${conLogo(t, n, svg)}`).join("")
+    + [
+      ["Vicarius", "Vicarius", "#6C4BF4", "V", false],
+      ["Tenable Nessus", "Tenable Nessus", "#0B7285", "N", true],
+      ["NexPose — Rapid7", "NexPose", "#F03C21", "R7", true],
+    ].map(([t, n, c, i, r]) => `\n\n      <!-- ${n} -->${CHAPA(t, n, c, i, r)}`).join("");
   const donde = h.indexOf(marca);
   if (donde < 0) throw new Error("no encuentro el final de la tira de integraciones");
   h = h.slice(0, donde + marca.length) + nuevas + h.slice(donde + marca.length);
@@ -648,6 +674,44 @@ cambia(
 .int-logo-name { font-size: 13px; color: var(--text); }
 
 /* ── BARRA Y PIE SIEMPRE EN OSCURO ──`,
+  1,
+);
+
+/* ── 4b-quater. ISO 42001 ───────────────────────────────────────────────── */
+
+/* La norma de sistemas de gestión de inteligencia artificial. Entra en la
+ * rejilla de marcos compatibles, con el mismo sello que las demás ISO: el aro
+ * doble, la retícula del globo y el texto en arco.
+ *
+ * Va la última de las ISO, justo antes de la ficha de «y más marcos», porque es
+ * la más nueva —2023— y así se lee como lo último que se ha añadido. */
+cambia(
+  "      <!-- ── Entre Otros ── -->",
+  `      <!-- ── ISO 42001 ── -->
+      <div class="fw-logo-card reveal reveal-4">
+        <svg width="64" height="64" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="96" fill="none" stroke="#5B21B6" stroke-width="6"/>
+          <circle cx="100" cy="100" r="84" fill="none" stroke="#5B21B6" stroke-width="1.5"/>
+          <circle cx="100" cy="100" r="82" fill="#5B21B6" opacity="0.08"/>
+          <circle cx="100" cy="100" r="55" fill="none" stroke="rgba(91,33,182,0.3)" stroke-width="1.2"/>
+          <ellipse cx="100" cy="100" rx="30" ry="55" fill="none" stroke="rgba(91,33,182,0.3)" stroke-width="1.2"/>
+          <line x1="45" y1="100" x2="155" y2="100" stroke="rgba(91,33,182,0.3)" stroke-width="1.2"/>
+          <line x1="100" y1="45" x2="100" y2="155" stroke="rgba(91,33,182,0.3)" stroke-width="1.2"/>
+          <text x="100" y="97" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="38" fill="white" letter-spacing="-1">ISO</text>
+          <text x="100" y="128" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="20" fill="#5B21B6" letter-spacing="0.5">42001</text>
+          <path id="g8-top" d="M 22,100 A 78,78 0 0,1 178,100" fill="none"/>
+          <text font-family="Arial,sans-serif" font-size="10" font-weight="700" fill="#5B21B6" letter-spacing="0.5">
+            <textPath href="#g8-top" startOffset="14%">Artificial Intelligence</textPath>
+          </text>
+          <path id="g8-bot" d="M 45,132 A 65,65 0 0,0 155,132" fill="none"/>
+          <text font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#5B21B6" letter-spacing="1.5">
+            <textPath href="#g8-bot" startOffset="12%">Management</textPath>
+          </text>
+        </svg>
+        <span class="fw-logo-label">ISO 42001</span>
+      </div>
+
+      <!-- ── Entre Otros ── -->`,
   1,
 );
 

@@ -490,6 +490,13 @@
   "motivo": "Rotulo del panel en blanco atenuado: pasa al gris de texto oscuro con la alfa subida un poco para mantener la misma presencia. [corregido: No se lee. Sobre el panel (negro al 4% sobre blanco, gris ~#F5F5F5), rgba(22,24,28,0.55) da 3.9:1, por debajo del 4.5 que exige un texto de 8px. La regla 4 sugiere +0.05, pero el minimo de contraste manda: con 0.65 sube a 5.3:1. Solo cambia la alfa del color, nada mas.]"
  },
  {
+  "linea": 1105,
+  "antes": "  color: rgba(240,240,240,0.38);",
+  "despues": "  color: rgba(22,24,28,0.5);",
+  "rol": "texto",
+  "motivo": "Segunda linea del rotulo del panel del hero, en blanco muy atenuado sobre el fondo oscuro. En claro pasa al gris de texto, un peldano por debajo del rotulo que lleva encima (0.65): sigue siendo secundaria, pero al 0.38 sobre papel blanco no se leeria."
+ },
+ {
   "linea": 1084,
   "antes": "  border-bottom: 1px solid rgba(255,255,255,0.1);",
   "despues": "  border-bottom: 1px solid rgba(14,14,14,0.13);",

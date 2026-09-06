@@ -141,14 +141,14 @@ function restosDeTemaOscuro(lineas) {
 }
 
 /**
- * Quita el panel de certificaciones de un texto, si lo tiene.
+ * Quita de un texto el bloque `<div>` que arranca en la marca dada.
  *
- * Lo usa el validador sobre el ORIGINAL, para poder comparar el resto de la
- * página con las versiones publicadas, de las que el panel ya salió.
+ * Lo usan los recortes DECLARADOS del validador: lo que se le quita a las tres
+ * versiones por igual para poder seguir comparando el resto línea por línea.
  *
- * Cuenta etiquetas en vez de buscar un `</div>`: el panel tiene divs dentro y
- * cualquier atajo se queda a la mitad o se lleva de más el cierre del bloque
- * que lo envuelve. Las dos cosas pasaron antes de escribir esto.
+ * Cuenta etiquetas en vez de buscar un `</div>`: estos bloques tienen divs
+ * dentro y cualquier atajo se queda a la mitad o se lleva de más el cierre del
+ * bloque que los envuelve. Las dos cosas pasaron antes de escribir esto.
  */
 function sinBloqueDiv(texto, marca, comentarioDeArriba) {
   const li = texto.split("\n");
@@ -168,10 +168,6 @@ function sinBloqueDiv(texto, marca, comentarioDeArriba) {
     ? ini - 1 : ini;
   li.splice(desde, fin - desde + 1);
   return li.join("\n");
-}
-
-function sinPanelDeCertificaciones(texto) {
-  return sinBloqueDiv(texto, '<div class="cert-panel', "CERT LOGOS PANEL");
 }
 
 /**
@@ -194,4 +190,4 @@ function sinLasMaquetas(texto) {
   return sinBloqueDiv(sinBloqueDiv(texto, '<div class="preview-body">'), '<div class="platform-body">');
 }
 
-module.exports = { COLOR, pelado, VALE_EL_BLANCO, EXCEPCIONES, restosDeTemaOscuro, sinPanelDeCertificaciones, sinBloqueDiv, sinLasMaquetas, sinLaTiraDeIntegraciones };
+module.exports = { COLOR, pelado, VALE_EL_BLANCO, EXCEPCIONES, restosDeTemaOscuro, sinBloqueDiv, sinLasMaquetas, sinLaTiraDeIntegraciones };
