@@ -82,8 +82,9 @@ El repositorio tiene que ser público, o hacer falta un plan de pago.
 **Con hosting propio:** subir los tres ficheros por FTP a la raíz del sitio y
 apuntar el dominio ahí.
 
-## De dónde sale
+## Este repositorio es el único dueño
 
-El origen vive en el repositorio del producto, en `app-saas/landing/`, junto a
-los guiones que generaron estos ficheros a partir del original. Si se toca algo
-aquí, conviene llevarlo también allí para que las dos copias no se separen.
+Estuvo un tiempo también en el repositorio del producto, en `app-saas/landing/`.
+Se quitó de allí: dos copias del mismo fichero se separan solas, y esto es HTML
+estático que no importa nadie ni toca ninguna prueba. Si hay que cambiar algo,
+se cambia aquí y sólo aquí.
