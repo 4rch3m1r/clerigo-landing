@@ -1,7 +1,10 @@
 /** Rompe la version clara a proposito y comprueba que el validador lo ve. */
 const RAIZ = require("node:path").join(__dirname, "..");
 const fs=require('fs'), {execFileSync}=require('child_process');
-const CLARO=require('node:path').join(RAIZ,'index.html');
+/* El castellano es la FUENTE y vive en su carpeta; el ingles ocupa la raiz.
+   Ver `fuente/donde.cjs`, que es donde esta escrito el porque. */
+const { CASTELLANO } = require('./donde.cjs');
+const CLARO=require('node:path').join(CASTELLANO,'index.html');
 const bueno=fs.readFileSync(CLARO);
 
 /* Antes de romper nada, la pagina tiene que estar VERDE.
@@ -37,7 +40,7 @@ const MUTANTES=[
   /* Las fotos del sistema. La etiqueta sola no vale: con og.png ya pasó que
      apuntaba a un fichero que no existía y nadie se enteró. */
   ['apuntar una foto a un fichero que no está', s=>s.replace('sistema/sistema-panel.png','sistema/sistema-inventado.png')],
-  ['quitarle la descripcion a una foto',   s=>s.replace(/alt="Resumen General de[^"]*"/,'alt=""')],
+  ['quitarle la descripcion a una foto',   s=>s.replace(/alt="Centro de Comando: [^"]*"/,'alt=""')],
   /* El carrusel son DOS piezas: las laminas, dentro de la ventana de la
      plataforma, y los mandos, debajo y fuera. Se rompen por separado porque
      quitar una sola deja la pagina en pie y con pinta de estar bien. */
@@ -47,9 +50,13 @@ const MUTANTES=[
   /* La primera lamina NO va diferida: es la que se ve al llegar. Ponersela
      tambien a ella es el fallo silencioso de este bloque —la pagina sigue
      entera y solo se nota que la primera pantalla aparece tarde—. */
+  /* Con expresion y no con texto a pelo: la castellana cita las imagenes con
+     `../` —vive un nivel mas adentro— y un ancla sin ese prefijo no casaba, asi
+     que la mutacion no llegaba a aplicarse y salia «SE LE ESCAPA» por un cambio
+     que nunca se hizo. */
   ['diferir tambien la primera lamina',
-    s=>s.replace('<img src="sistema/sistema-panel.png" width="1600" height="1000" alt=',
-                 '<img src="sistema/sistema-panel.png" width="1600" height="1000" loading="lazy" alt=')],
+    s=>s.replace(/(<img src="(?:\.\.\/)?sistema\/sistema-panel\.png" width="1600" height="1000" )alt=/,
+                 '$1loading="lazy" alt=')],
   /* El guion del carrusel. Sin el, las flechas y los rotulos no hacen nada y la
      pagina se queda en la primera pantalla, sin un solo error en consola.
      Va con expresion y no con texto a pelo: el fichero se escribe con CRLF y un

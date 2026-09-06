@@ -17,6 +17,10 @@ const fs = require("node:fs");
 
 const AQUI = __dirname;
 const RAIZ = path.join(AQUI, "..", "..");
+/* El castellano es la FUENTE y vive en su carpeta; el ingles ocupa la raiz.
+   Ver `fuente/donde.cjs`, que es donde esta escrito el porque. */
+const { CASTELLANO } = require("../donde.cjs");
+require("fs").mkdirSync(CASTELLANO, { recursive: true });
 const lee = (p) => fs.readFileSync(p, "utf8").split("\r\n").join("\n");
 
 const PLANTILLA = lee(path.join(AQUI, "plantilla.html"));
@@ -67,7 +71,7 @@ function despieza(html) {
 
 let tocadas = 0;
 for (const { slug, chrome } of PAGINAS) {
-  const f = path.join(RAIZ, slug + ".html");
+  const f = path.join(CASTELLANO, slug + ".html");
   if (!fs.existsSync(f)) { console.log(`  ·  ${slug}.html todavía no existe`); continue; }
   const antes = lee(f);
 

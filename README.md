@@ -227,21 +227,49 @@ apuntar el dominio ahí.
 Los tres ficheros de arriba **están generados**. No se editan a mano: se
 regeneran desde el original de Archemir con los guiones de `fuente/`.
 
-```bash
-# la portada
-node fuente/rebrandear.cjs     # el original  ->  oscuro.html + favicon.png
-node fuente/a-modo-claro.cjs   # oscuro.html  ->  index.html
-node fuente/validar.cjs        # comprueba que todo cuadra
-node fuente/mutar.cjs          # rompe el validador a propósito, once veces
+El sitio está en dos idiomas, y **el castellano es la fuente**: se genera desde
+el original de Archemir, se comprueba entero, y de ahí sale el inglés
+sustituyendo texto. Por eso vive en su propia carpeta y el inglés ocupa la raíz
+—que es el idioma por omisión—. El porqué, en `fuente/donde.cjs`.
 
-# las cinco páginas interiores
-node fuente/paginas/sincronizar.cjs   # les vuelve a pasar la plantilla común
-node fuente/paginas/validar.cjs       # 122 comprobaciones
-node fuente/paginas/mutar.cjs marcos  # rompe la guarda a propósito, quince veces
+```
+clerigo.io/        inglés      <- lo que se sirve por omisión
+clerigo.io/es/     castellano  <- la fuente
+```
+
+El orden importa: primero se genera y se comprueba el castellano, y sólo
+después se traduce.
+
+```bash
+# 1. el castellano, que es la fuente
+node fuente/rebrandear.cjs            # el original  ->  es/oscuro.html + favicon.png
+node fuente/a-modo-claro.cjs          # es/oscuro.html  ->  es/index.html
+node fuente/paginas/sincronizar.cjs   # la plantilla común, a las seis interiores
+node fuente/validar.cjs               # la portada cuadra con el original
+node fuente/paginas/validar.cjs       # 157 comprobaciones sobre las interiores
+
+# 2. el inglés, por sustitución de texto
+node fuente/idiomas/reunir.cjs        # qué falta por traducir, y qué ya está
+node fuente/idiomas/a-ingles.cjs      # es/  ->  la raíz, traducida
+node fuente/idiomas/validar.cjs       # quitando el texto, son la MISMA página
+
+# 3. y romperlo todo a propósito, que es lo único que prueba una guarda
+node fuente/mutar.cjs                 # 22 mutaciones sobre la portada
+node fuente/paginas/mutar.cjs marcos  # 15 sobre una interior
+node fuente/idiomas/mutar.cjs         # 7 sobre el bilingüe
 
 # las tarjetas de vista previa (Windows: usa System.Drawing)
 powershell -ExecutionPolicy Bypass -File fuente/hacer-og.ps1
 ```
+
+**El idioma se elige solo.** Quien llega con el navegador en castellano va a
+`/es/` sin buscar nada; los demás se quedan en inglés. Pero en cuanto alguien
+toca el selector `EN | ES`, se guarda su elección y no se le vuelve a mover: un
+sitio que te devuelve a su idioma cada vez que navegas es peor que uno que no
+detecta nada. Y sólo se mira una vez por visita, para que el botón de atrás no
+te reenvíe en bucle. El reenvío es de navegador y no de servidor a propósito:
+así el buscador indexa las dos versiones y se guía por las etiquetas
+`hreflang` de la cabecera.
 
 Las cinco páginas **no se editan a mano en lo que es común**. Cabecera, tokens,
 hoja de estilo, barra y pie salen de `fuente/paginas/plantilla.html`: se cambia

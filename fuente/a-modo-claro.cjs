@@ -17,8 +17,11 @@ const RAIZ = require("node:path").join(__dirname, "..");
 const fs = require("fs");
 const { pelado, restosDeTemaOscuro, EXCEPCIONES } = require("./tema.cjs");
 
-const OSCURO = require("node:path").join(RAIZ, "oscuro.html");
-const CLARO = require("node:path").join(RAIZ, "index.html");
+/* El castellano es la FUENTE y vive en su carpeta; el ingles ocupa la raiz.
+   Ver `fuente/donde.cjs`, que es donde esta escrito el porque. */
+const { CASTELLANO } = require("./donde.cjs");
+const OSCURO = require("node:path").join(CASTELLANO, "oscuro.html");
+const CLARO = require("node:path").join(CASTELLANO, "index.html");
 const CAMBIOS = process.argv[2] || __dirname + "/cambios-de-color.json";
 
 const CRUDO = fs.readFileSync(OSCURO, "utf8");

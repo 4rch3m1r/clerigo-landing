@@ -16,7 +16,12 @@ const { execFileSync } = require("node:child_process");
 const AQUI = __dirname;
 const RAIZ = path.join(AQUI, "..", "..");
 const SLUG = process.argv[2] || "contacto";
-const FICHERO = path.join(RAIZ, SLUG + ".html");
+/* El castellano es la FUENTE y vive en su carpeta; el validador lo mira ahí.
+   Mutando el fichero de la raíz —que ahora es la versión INGLESA— el validador
+   no veía ni una: daba 0 de 15, que parece un agujero enorme y en realidad era
+   que se estaba rompiendo un fichero que nadie miraba. Ver `fuente/donde.cjs`. */
+const { CASTELLANO } = require("../donde.cjs");
+const FICHERO = path.join(CASTELLANO, SLUG + ".html");
 
 function guarda() {
   try {

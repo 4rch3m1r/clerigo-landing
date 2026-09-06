@@ -19,6 +19,9 @@
 const path = require("node:path");
 const fs = require("node:fs");
 const RAIZ = path.join(__dirname, "..", "..");
+/* El castellano es la FUENTE y vive en su carpeta; el ingles ocupa la raiz.
+   Ver `fuente/donde.cjs`, que es donde esta escrito el porque. */
+const { CASTELLANO } = require("../donde.cjs");
 const AQUI = __dirname;
 
 const { palabras, aplicaMarca, comportamiento, PICTOGRAMAS } = require("./palabras.cjs");
@@ -53,6 +56,14 @@ const CABECERA = PLANTILLA.slice(0, iEstilo);
 const CIERRE = PLANTILLA.slice(iEstilo + "{{ESTILO}}".length, iCuerpo);
 const PIE = PLANTILLA.slice(iCuerpo + "{{CUERPO}}".length, iGuion);
 /* Sin la barra ni el pie: lo que le toca a la página de acceso. */
+/* El selector de idioma se recorta antes de comparar el trozo compartido:
+   son dos enlaces y una hoja de estilo que la plantilla no trae, y sus dos
+   enlaces cambian de una pagina a otra a proposito —desde legal.html se salta
+   a legal.html del otro idioma—. Exigir que fueran iguales seria exigir que
+   el selector no funcionara. */
+const sinSelector = (h) => h.replace(/\n?<script>\n\/\* El idioma del navegador decide[\s\S]*?<\/script>\n/, "")
+  .replace(/<div class="idiomas">[\s\S]*?<\/div>\n?[ \t]*/, "").replace(/\/\* ── EL SELECTOR DE IDIOMA ──[\s\S]*?── FIN DEL SELECTOR DE IDIOMA ── \*\/\n/, "");
+
 const CIERRE_SIN_BARRA = CIERRE.replace(/<!-- ══════════ BARRA ══════════ -->[\s\S]*?<\/nav>\n/, "");
 const PIE_SIN_PIE = PIE.replace(/<!-- ══════════ PIE ══════════ -->[\s\S]*?<\/footer>\n/, "");
 
@@ -84,7 +95,7 @@ if (soloUna && aRevisar.length === 0) {
 
 for (const { slug, chrome, sinOriginal } of aRevisar) {
   const fOrigen = path.join(AQUI, "..", "paginas-originales", slug + ".html");
-  const fSalida = path.join(RAIZ, slug + ".html");
+  const fSalida = path.join(CASTELLANO, slug + ".html");
 
   console.log(`\n── ${slug}.html ${"─".repeat(Math.max(0, 56 - slug.length))}`);
 
@@ -108,7 +119,12 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
   const sal = lee(fSalida);
 
   /* ── 1. LAS PALABRAS ──────────────────────────────────────────────── */
-  const dePagina = sinLetrasDeLogotipo(palabras(sal, { abre: `<main class="pagina">`, cierra: "</main>" }) || []);
+  /* Sin el selector de idioma: sus dos rótulos son «EN» y «ES», y en las
+     páginas que lo llevan DENTRO del cuerpo —partners, que tiene cabecera
+     propia— se colaban en la lista de palabras. El original no los tiene, así
+     que la comparación cantaba una diferencia en la palabra 4 de 366. No es
+     texto de la página: es un mando. */
+  const dePagina = sinLetrasDeLogotipo(palabras(sinSelector(sal), { abre: `<main class="pagina">`, cierra: "</main>" }) || []);
   const deOrigen = sinOriginal ? null : sinLetrasDeLogotipo(palabras(aplicaMarca(soloElCuerpo(org), MARCA)));
 
   if (sinOriginal) {
@@ -185,7 +201,10 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
      página diga exactamente eso. Leerlas de la página sería preguntarle al
      examinado por la respuesta. */
   const donde = SITIO.paginas[slug] || {};
-  const canonica = SITIO.base + "/" + donde.fichero;
+  /* La canónica de la CASTELLANA lleva /es/: es la dirección donde vive de
+     verdad. La imagen de la tarjeta NO, porque es la misma en los dos idiomas
+     y está en la raíz. */
+  const canonica = SITIO.base + "/es/" + donde.fichero;
   const imagen = SITIO.base + "/" + donde.imagen;
   const cabeceraEsperada = CABECERA
     .split("{{TITULO}}").join(titulo)
@@ -193,12 +212,28 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
     .split("{{CANONICA}}").join(canonica)
     .split("{{IMAGEN}}").join(imagen)
     .split("{{BASE}}").join(SITIO.base);
+  /* De la página se quitan las tres etiquetas de idioma alternativo antes de
+     comparar: las pone el paso bilingüe, no la plantilla, y son idénticas en
+     las siete páginas salvo por su propia dirección. */
+  /* Y el `../` del icono: la castellana está un nivel más adentro que la raíz,
+     donde vive el fichero, y la plantilla lo cita sin prefijo porque no sabe en
+     qué idioma se va a usar. */
+  const salSinAlternativas = sal
+    .replace(/[ \t]*<link rel="alternate" hreflang="[a-z-]+" href="[^"]*">\n/g, "")
+    .replace(/(\s(?:src|href)=")\.\.\/((?:sistema\/[a-z0-9-]+|favicon)\.png)"/g, '$1$2"');
   comprueba(`${slug}: la cabecera, los tokens y la hoja compartida salen de la plantilla`,
-    sal.startsWith(cabeceraEsperada));
+    salSinAlternativas.startsWith(cabeceraEsperada));
   comprueba(`${slug}: la canónica y la tarjeta son las que dice sitio.json`,
     sal.includes(`<link rel="canonical" href="${canonica}">`)
     && sal.includes(`<meta property="og:image" content="${imagen}">`),
     canonica);
+  /* Y que las tres alternativas estén: sin ellas, el buscador trata las dos
+     versiones como páginas distintas que dicen casi lo mismo y elige una por
+     su cuenta. */
+  comprueba(`${slug}: declara sus dos idiomas y cuál se sirve por omisión`,
+    sal.includes(`hreflang="en" href="${SITIO.base}/${donde.fichero}"`)
+    && sal.includes(`hreflang="es" href="${SITIO.base}/es/${donde.fichero}"`)
+    && sal.includes(`hreflang="x-default" href="${SITIO.base}/${donde.fichero}"`));
   comprueba(`${slug}: tiene título y descripción propios`,
     titulo.includes("Clèrigo") && desc.length > 40,
     `título «${titulo}», descripción de ${desc.length} letras`);
@@ -237,8 +272,14 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
   comprueba(`${slug}: y están en el primer kilobyte y medio de la página`,
     sal.indexOf('property="og:image"') > 0 && sal.indexOf('property="og:image"') < 1536,
     "og:image aparece en el byte " + sal.indexOf('property="og:image"'));
+  /* El trozo compartido se compara SIN el selector de idioma: sus dos enlaces
+     llevan a la MISMA pagina en el otro idioma, asi que cambian de una a otra.
+     Eso es lo correcto —desde legal.html se salta a legal.html— y por eso se
+     recorta antes de comparar, en vez de exigir que sean iguales. */
+  const salSinSelector = sinSelector(sal);
   comprueba(`${slug}: ${chrome ? "la barra y el pie son" : "el cierre de la hoja es"} el de la plantilla`,
-    sal.includes(chrome ? CIERRE : CIERRE_SIN_BARRA) && sal.includes(chrome ? PIE : PIE_SIN_PIE));
+    salSinSelector.includes(chrome ? CIERRE : CIERRE_SIN_BARRA)
+    && salSinSelector.includes(chrome ? PIE : PIE_SIN_PIE));
 
   /* ── 4. NADA DE LA MARCA VIEJA ────────────────────────────────────── */
   let sinLosIntactos = sal;
@@ -293,7 +334,7 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
 
   /* ── 8. LOS ENLACES LLEVAN A ALGÚN SITIO ──────────────────────────── */
   const internos = [...new Set([...sal.matchAll(/href="([a-z0-9-]+\.html)(?:#[^"]*)?"/g)].map((m) => m[1]))];
-  const rotos = internos.filter((f) => !fs.existsSync(path.join(RAIZ, f)));
+  const rotos = internos.filter((f) => !fs.existsSync(path.join(CASTELLANO, f)));
   comprueba(`${slug}: todos los enlaces internos llevan a un fichero que existe`,
     rotos.length === 0, rotos.join(", "));
 }
@@ -301,8 +342,10 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
 /* ── Y la comprobación que vigila a las demás ───────────────────────────── */
 if (!soloUna) {
   console.log("\n── La línea gráfica es UNA ─────────────────────────────────────");
-  const conChrome = PAGINAS.filter((p) => p.chrome).map((p) => path.join(RAIZ, p.slug + ".html"))
-    .filter((f) => fs.existsSync(f)).map(lee);
+  const conChrome = PAGINAS.filter((p) => p.chrome).map((p) => path.join(CASTELLANO, p.slug + ".html"))
+    .filter((f) => fs.existsSync(f)).map(lee)
+    /* Sin el selector, por lo mismo de arriba. */
+    .map(sinSelector);
   comprueba("las páginas con barra y pie llevan EL MISMO trozo compartido",
     conChrome.length > 1 && conChrome.every((h) => h.includes(CIERRE) && h.includes(PIE)),
     conChrome.length + " páginas encontradas");

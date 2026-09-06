@@ -36,7 +36,11 @@ if (!fs.existsSync(ORIGEN)) {
   console.error("");
   process.exit(1);
 }
-const DESTINO = path.join(RAIZ, "oscuro.html");
+/* El castellano es la FUENTE y vive en su carpeta; el inglés ocupa la raíz.
+   Ver `fuente/donde.cjs`, que es donde está escrito el porqué. */
+const { CASTELLANO } = require("./donde.cjs");
+fs.mkdirSync(CASTELLANO, { recursive: true });
+const DESTINO = path.join(CASTELLANO, "oscuro.html");
 const LOGO_PNG = path.join(__dirname, "logo.png");
 
 /* El original viene con finales de línea de Windows. Se trabaja en memoria con

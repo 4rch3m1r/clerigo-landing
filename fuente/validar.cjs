@@ -20,8 +20,11 @@ if (!require("node:fs").existsSync(ORIGINAL)) {
   console.error("  Mira la nota de fuente/rebrandear.cjs.\n");
   process.exit(1);
 }
-const OSCURO = require("node:path").join(RAIZ, "oscuro.html");
-const CLARO = require("node:path").join(RAIZ, "index.html");
+/* El castellano es la FUENTE y vive en su carpeta; el ingles ocupa la raiz.
+   Ver `fuente/donde.cjs`, que es donde esta escrito el porque. */
+const { CASTELLANO } = require("./donde.cjs");
+const OSCURO = require("node:path").join(CASTELLANO, "oscuro.html");
+const CLARO = require("node:path").join(CASTELLANO, "index.html");
 
 const lee = (p) => fs.readFileSync(p, "utf8").split("\r\n").join("\n");
 const org = lee(ORIGINAL);
@@ -38,7 +41,14 @@ function comprueba(punto, condicion, detalle) {
 const cuenta = (t, re) => (t.match(re) || []).length;
 
 console.log("── Rebranding ──────────────────────────────────────────────────");
-for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
+for (const [n, tConSelector] of [["oscuro", osc], ["claro", cla]]) {
+  /* Las cuentas de este bloque se hacen SIN el selector de idioma.
+     Sus dos enlaces se comprueban aparte —abajo, con su propia comprobación— y
+     además cambian de destino según la página: en `oscuro.html` apuntan a
+     `oscuro.html` y en `index.html` a `index.html`. Meterlos en estas cuentas
+     obligaría a un número distinto por página, que es justo la clase de cifra
+     que envejece mal. */
+  const t = tConSelector.replace(/<div class="idiomas">[\s\S]*?<\/div>/, "");
   comprueba(`sin «archemir» en el ${n}`, cuenta(t, /archemir/gi) === 0, cuenta(t, /archemir/gi) + " restos");
   comprueba(`sin «GRC Intelligence» ni «Axioma GRC» en el ${n}`,
     !/GRC Intelligence|Axioma GRC|grc-intelligence/i.test(t));
@@ -49,8 +59,11 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
      Las direcciones absolutas de la cabecera salen de fuente/sitio.json —hoy
      GitHub Pages, provisionalmente— y las dos del cuerpo que NO son el sitio
      se quedan donde estaban: la academia y la aplicación. */
+  /* La castellana vive en /es/, así que su canónica y su og:url apuntan ahí y
+     no a la raíz: si las dos versiones se declararan la misma dirección, la
+     castellana estaría pidiendo que no la indexen. */
   comprueba(`las direcciones absolutas son las de sitio.json en el ${n}`,
-    t.includes(`<link rel="canonical" href="${SITIO.base}/"`)
+    t.includes(`<link rel="canonical" href="${SITIO.base}/es/"`)
     /* og:image, og:image:secure_url y twitter:image */
     && cuenta(t, new RegExp(`content="${SITIO.base.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/og\\.png"`, "g")) === 3
     && t.includes('href="https://app.clerigo.io"')
@@ -68,18 +81,21 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
     + ", contacto " + cuenta(t, /href="contacto\.html"/g)
     + ", partners " + cuenta(t, /href="partners\.html"/g)
     + ", index " + cuenta(t, /href="index\.html"/g));
+  /* Los enlaces son RELATIVOS, así que se resuelven al lado de la página que
+     los escribe — y esa página vive en la carpeta del castellano. Buscarlos en
+     la raíz era mirar la versión inglesa, que es otra cosa. */
   comprueba(`y los ficheros a los que apunta existen, en el ${n}`,
     ["marcos", "legal", "precios", "contacto", "partners", "index", "confianza"]
-      .every((f) => fs.existsSync(require("node:path").join(RAIZ, f + ".html"))),
+      .every((f) => fs.existsSync(require("node:path").join(CASTELLANO, f + ".html"))),
     ["marcos", "legal", "precios", "contacto", "partners", "index"]
-      .filter((f) => !fs.existsSync(require("node:path").join(RAIZ, f + ".html")))
+      .filter((f) => !fs.existsSync(require("node:path").join(CASTELLANO, f + ".html")))
       .map((f) => f + ".html") + " no está");
   comprueba(`la marca es «Clèrigo» en el ${n}`, cuenta(t, /Clèrigo/g) >= 18,
     cuenta(t, /Clèrigo/g) + " apariciones");
   comprueba(`el título es de Clèrigo en el ${n}`, /<title>Clèrigo — /.test(t));
   comprueba(`hay canonical, Open Graph y Twitter en el ${n}`,
-    t.includes(`rel="canonical" href="${SITIO.base}/"`)
-    && t.includes(`og:url" content="${SITIO.base}/"`)
+    t.includes(`rel="canonical" href="${SITIO.base}/es/"`)
+    && t.includes(`og:url" content="${SITIO.base}/es/"`)
     && /twitter:card/.test(t));
   /* La tarjeta de la vista previa. La etiqueta sola no vale de nada: durante
      meses apuntó a og.png y ese fichero NO existía —el servidor contestaba a
@@ -166,7 +182,9 @@ comprueba("y en el original el rótulo decía «Nuestras Certificaciones»",
 /* Las fotos del sistema. Otra vez: se mira el FICHERO, no la etiqueta. Con
    `og.png` la etiqueta llevaba meses apuntando a algo que no existía. */
 for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
-  const pedidas = [...new Set([...t.matchAll(/src="(sistema\/[a-z0-9-]+\.png)"/g)].map((m) => m[1]))];
+  /* El `../` con el que las cita la castellana se descuenta: el fichero vive en
+     la raíz en los dos idiomas, y lo que cambia es desde dónde se mira. */
+  const pedidas = [...new Set([...t.matchAll(/src="(?:\.\.\/)?(sistema\/[a-z0-9-]+\.png)"/g)].map((m) => m[1]))];
   const faltan = pedidas.filter((f) => !fs.existsSync(require("node:path").join(RAIZ, f)));
   comprueba(`las 14 fotos del sistema existen, en el ${n}`,
     pedidas.length === 14 && faltan.length === 0,
@@ -190,8 +208,19 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
      todas, o ponérselo también a la primera. */
   comprueba(`el carrusel no se carga entero hasta que se baja, en el ${n}`,
     cuenta(t, /loading="lazy"/g) === 13, cuenta(t, /loading="lazy"/g) + " con carga diferida");
-  comprueba(`toda foto lleva su descripción para quien no la ve, en el ${n}`,
-    cuenta(t, /<img[^>]*src="sistema\//g) === cuenta(t, /<img[^>]*src="sistema\/[^>]*alt="[^"]{30,}"/g));
+  /* El `(?:\.\.\/)?` no es cosmético: sin él, en la castellana —que cita las
+     imágenes con `../`— las dos cuentas daban CERO y la comprobación pasaba por
+     vacío. Una guarda que compara cero con cero no mira nada, y esta lleva
+     puesta para que ninguna captura salga sin descripción. Se vio al romperla
+     a propósito: la mutación quitaba un `alt` y el validador seguía en verde.
+     Y se exige que haya alguna: con `> 0` delante, quedarse sin fotos deja de
+     ser una forma de aprobar. */
+  {
+    const conFoto = cuenta(t, /<img[^>]*src="(?:\.\.\/)?sistema\//g);
+    const conTexto = cuenta(t, /<img[^>]*src="(?:\.\.\/)?sistema\/[^>]*alt="[^"]{30,}"/g);
+    comprueba(`toda foto lleva su descripción para quien no la ve, en el ${n}`,
+      conFoto > 0 && conFoto === conTexto, `${conTexto} descripciones para ${conFoto} fotos`);
+  }
 }
 /* Y que en el original SÍ estaban las maquetas, que si no esto no dice nada. */
 comprueba("y en el original el panel estaba dibujado con CSS, no fotografiado",
@@ -199,7 +228,7 @@ comprueba("y en el original el panel estaba dibujado con CSS, no fotografiado",
   && !/foto-sistema/.test(org));
 
 comprueba("el favicon apunta a favicon.png y el fichero existe",
-  /rel="icon"[^>]*href="favicon\.png"/.test(osc) && fs.existsSync(require("node:path").join(RAIZ, "favicon.png")));
+  /rel="icon"[^>]*href="(?:\.\.\/)?favicon\.png"/.test(osc) && fs.existsSync(require("node:path").join(RAIZ, "favicon.png")));
 
 console.log("\n── Estructura intacta ──────────────────────────────────────────");
 /* La prueba dura: quitando marca, dominio, logotipo y color, los tres ficheros
@@ -248,6 +277,20 @@ const esqueleto = (s) => pelado(
   .replace(/[ \t]*<div class="carrusel-marco">[\s\S]*?\n      <\/div>\n/, "")
   .replace(/[ \t]*<div class="carrusel-mandos" data-carrusel>[\s\S]*?\n    <\/div>\n/, "")
   .replace(/<script>\n\/[*] El carrusel de pantallas[\s\S]*?<\/script>\n/, "")
+  /* El selector de idioma: dos enlaces en la barra y su estilo. Es lo único
+     que se le añade a la página por ser bilingüe, y se recorta aquí para que
+     el resto siga comparándose contra el original línea por línea. */
+  .replace(/<div class="idiomas">.*?<\/div>\n?[ \t]*/s, "")
+  .replace(/\/[*] ── EL SELECTOR DE IDIOMA ──[\s\S]*?── FIN DEL SELECTOR DE IDIOMA ── [*]\/\n/, "")
+  .replace(/[ \t]*<link rel="alternate" hreflang="[a-z-]+" href="[^"]*">\n/g, "")
+  /* Las capturas del sistema y el icono viven en la RAÍZ y son los MISMOS en
+     los dos idiomas: duplicar dos megas de PNG por traducir unas palabras no
+     tiene sentido, y dejaría dos copias que se pueden desincronizar. La página
+     castellana está un nivel más adentro, así que los cita con `../`. Se
+     normaliza aquí para poder seguir comparándola contra el original. */
+  .replace(/(\s(?:src|href)=")\.\.\/((?:sistema\/[a-z0-9-]+|favicon)\.png)"/g, '$1$2"')
+  /* El guion que mira el idioma del navegador. */
+  .replace(/\n?<script>\n\/\* El idioma del navegador decide[\s\S]*?<\/script>\n/, "")
   /* Y el enlace al Centro de Confianza, que es lo único añadido a la página. */
   .replace(/[ \t]*<a href="confianza\.html">[^<]*<\/a>\n/, "")
   /* El rótulo del panel del hero. Es lo ÚNICO que se le cambia de TEXTO al
@@ -362,24 +405,30 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
        · el de datos estructurados de la cabecera, que no es código —no se
          ejecuta— sino la ficha que leen Google y LinkedIn para pintar la
          tarjeta del enlace;
-       · el del carrusel de pantallas, que es lo ÚNICO que se le añade de
-         comportamiento a la página.
+       · el del carrusel de pantallas;
+       · el que mira el idioma del navegador y manda a /es/ a quien lo tiene
+         en castellano. Va en la cabecera y sin `defer` a propósito: tiene
+         que decidir ANTES de que se pinte nada, o se vería la página en un
+         idioma y saltaría al otro delante de quien la lee.
      Se comprueban los dos por separado y no sólo la cuenta: con la cuenta a
      secas, cambiar uno por otro pasaría de largo. */
-  comprueba(`los guiones del original más los dos declarados, en el ${n}`,
-    cuenta(t, /<script/g) === cuenta(org, /<script/g) + 2
+  comprueba(`los guiones del original más los tres declarados, en el ${n}`,
+    cuenta(t, /<script/g) === cuenta(org, /<script/g) + 3
     && cuenta(t, /<script type="application\/ld\+json">/g) === 1
     && cuenta(t, /<div class="carrusel-mandos" data-carrusel>/g) === 1
+    && cuenta(t, /clerigo-idioma/g) >= 1
     && t.includes("carrusel-pista"),
     `${cuenta(t, /<script/g)} vs ${cuenta(org, /<script/g)} + 2`);
   comprueba(`mismas secciones en el ${n}`,
     cuenta(t, /<section/g) === cuenta(org, /<section/g),
     `${cuenta(t, /<section/g)} vs ${cuenta(org, /<section/g)}`);
-  /* Los del original más UNO: el del Centro de Confianza, en la fila legal del
-     pie. Es el único enlace AÑADIDO a la página; los demás ya estaban y sólo
-     cambiaron de destino. */
+  /* Los del original más TRES, y se escribe de donde sale cada uno:
+       +1  el Centro de Confianza, en la fila legal del pie;
+       +2  el selector de idioma, que son dos enlaces —EN y ES— y va en las
+           dos versiones para poder saltar de una a la otra.
+     Los demás ya estaban y sólo cambiaron de destino. */
   comprueba(`mismo número de enlaces en el ${n}`,
-    cuenta(t, /<a /g) === cuenta(org, /<a /g) + 1,
+    cuenta(t, /<a /g) === cuenta(org, /<a /g) + 1 + 2,
     `${cuenta(t, /<a /g)} vs ${cuenta(org, /<a /g)}`);
   /* Las del original más SEIS, y se escribe de dónde sale cada una en vez de
      poner un número suelto:
@@ -388,8 +437,8 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
            «sin movimiento» para quien lo pide en su sistema.
      La del sello sigue contada dentro de las del original: `.cert-logo-item`
      volvió con el panel. */
-  comprueba(`las transiciones del original más la de la ficha y las 5 del carrusel, en el ${n}`,
-    cuenta(t, /transition:/g) === cuenta(org, /transition:/g) + 1 + 5,
+  comprueba(`las transiciones del original, más la ficha, las 5 del carrusel y la del selector, en el ${n}`,
+    cuenta(t, /transition:/g) === cuenta(org, /transition:/g) + 1 + 5 + 1,
     `${cuenta(t, /transition:/g)} vs ${cuenta(org, /transition:/g)} del original`);
   comprueba(`mismos observadores de aparición en el ${n}`,
     cuenta(t, /IntersectionObserver/g) === cuenta(org, /IntersectionObserver/g));
