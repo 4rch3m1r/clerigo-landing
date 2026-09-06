@@ -181,8 +181,17 @@ function sinPanelDeCertificaciones(texto) {
  * verdad, y aquí se recortan del ORIGINAL para poder seguir comparando el
  * resto de la página línea por línea.
  */
+/**
+ * Quita la tira de logotipos de integraciones. El camino de integraciones lo
+ * fijó el dueño y ya no es el del original: salió ServiceNow y entraron siete.
+ * Se recorta de los tres ficheros para poder seguir comparando el resto.
+ */
+function sinLaTiraDeIntegraciones(texto) {
+  return sinBloqueDiv(texto, '<div class="integrations-logos">');
+}
+
 function sinLasMaquetas(texto) {
   return sinBloqueDiv(sinBloqueDiv(texto, '<div class="preview-body">'), '<div class="platform-body">');
 }
 
-module.exports = { COLOR, pelado, VALE_EL_BLANCO, EXCEPCIONES, restosDeTemaOscuro, sinPanelDeCertificaciones, sinBloqueDiv, sinLasMaquetas };
+module.exports = { COLOR, pelado, VALE_EL_BLANCO, EXCEPCIONES, restosDeTemaOscuro, sinPanelDeCertificaciones, sinBloqueDiv, sinLasMaquetas, sinLaTiraDeIntegraciones };

@@ -1399,6 +1399,28 @@ footer {
   .nav-logo-text small { display: none; }
 }
 
+/* ── LA TIRA DE INTEGRACIONES, VISIBLE ──────────────────────────────────── */
+.integrations-bar { padding: 80px 0 8px; }
+.integrations-bar-label {
+  font-size: 11px; letter-spacing: 2.2px; color: var(--text-2); margin-bottom: 30px;
+}
+.integrations-logos { gap: 12px; max-width: 1020px; margin: 0 auto; }
+.int-logo {
+  opacity: 1;
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 16px;
+  transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s;
+}
+.int-logo:hover {
+  opacity: 1;
+  border-color: var(--border-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(14,14,14,0.07);
+}
+.int-logo-name { font-size: 13px; color: var(--text); }
+
 /* ── LAS FOTOS DEL SISTEMA ─────────────────────────────────────────────── */
 .foto-sistema { display: block; width: 100%; height: auto; }
 .galeria-sistema {
@@ -1743,13 +1765,13 @@ footer .social-icon:hover { background: rgba(255,255,255,0.09); border-color: rg
         <span class="int-logo-name">Jira</span>
       </div>
 
-      <!-- ServiceNow -->
-      <div class="int-logo" title="ServiceNow">
+      <!-- ServiceDesk Plus -->
+      <div class="int-logo" title="ServiceDesk Plus — ManageEngine">
         <svg width="20" height="20" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="30" cy="30" r="30" fill="#62D84E"/>
-          <text x="30" y="37" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="18" fill="white">SN</text>
+          <rect x="0" y="0" width="60" height="60" rx="12" fill="#F58220"/>
+          <text x="30" y="38" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="20" fill="white">SD</text>
         </svg>
-        <span class="int-logo-name">ServiceNow</span>
+        <span class="int-logo-name">ServiceDesk Plus</span>
       </div>
 
       <!-- AWS -->
@@ -1776,6 +1798,60 @@ footer .social-icon:hover { background: rgba(255,255,255,0.09); border-color: rg
           <path fill="url(#az3)" d="M66.82 7.98a4.38 4.38 0 0 0-4.15-2.97H33.65a4.38 4.38 0 0 1 4.15 2.97l24.71 79.2a4.38 4.38 0 0 1-4.15 5.79h29.02a4.38 4.38 0 0 0 4.15-5.79z"/>
         </svg>
         <span class="int-logo-name">Azure</span>
+      </div>
+
+      <!-- Microsoft Teams -->
+      <div class="int-logo" title="Microsoft Teams">
+        <svg width="20" height="20" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="60" height="60" rx="12" fill="#6264A7"/>
+          <text x="30" y="38" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="20" fill="white">T</text>
+        </svg>
+        <span class="int-logo-name">Microsoft Teams</span>
+      </div>
+
+      <!-- Microsoft Defender -->
+      <div class="int-logo" title="Microsoft Defender">
+        <svg width="20" height="20" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="60" height="60" rx="12" fill="#0078D4"/>
+          <text x="30" y="38" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="20" fill="white">D</text>
+        </svg>
+        <span class="int-logo-name">Microsoft Defender</span>
+      </div>
+
+      <!-- Google Meet -->
+      <div class="int-logo" title="Google Meet">
+        <svg width="20" height="20" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="60" height="60" rx="12" fill="#00832D"/>
+          <text x="30" y="38" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="20" fill="white">M</text>
+        </svg>
+        <span class="int-logo-name">Google Meet</span>
+      </div>
+
+      <!-- Vicarius -->
+      <div class="int-logo" title="Vicarius">
+        <svg width="20" height="20" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="60" height="60" rx="12" fill="#6C4BF4"/>
+          <text x="30" y="38" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="20" fill="white">V</text>
+        </svg>
+        <span class="int-logo-name">Vicarius</span>
+      </div>
+
+      <!-- Tenable Nessus -->
+      <div class="int-logo" title="Tenable Nessus">
+        <svg width="20" height="20" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="30" cy="30" r="30" fill="#0B7285"/>
+          <text x="30" y="38" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="20" fill="white">N</text>
+        </svg>
+        <span class="int-logo-name">Tenable Nessus</span>
+      </div>
+
+      <!-- NexPose -->
+      <div class="int-logo" title="NexPose — Rapid7">
+        <svg width="20" height="20" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="30" cy="30" r="30" fill="#F03C21"/>
+          <text x="30" y="38" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="20" fill="white">R7</text>
+        </svg>
+        <span class="int-logo-name">NexPose</span>
       </div>
 
     </div>

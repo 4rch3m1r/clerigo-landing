@@ -6,7 +6,7 @@
  */
 const RAIZ = require("node:path").join(__dirname, "..");
 const fs = require("fs");
-const { pelado, restosDeTemaOscuro, EXCEPCIONES, sinPanelDeCertificaciones, sinLasMaquetas } = require("./tema.cjs");
+const { pelado, restosDeTemaOscuro, EXCEPCIONES, sinPanelDeCertificaciones, sinLasMaquetas, sinLaTiraDeIntegraciones } = require("./tema.cjs");
 /* Donde vive el sitio: de aqui salen las direcciones absolutas de la cabecera. */
 const SITIO = JSON.parse(fs.readFileSync(require("node:path").join(__dirname, "sitio.json"), "utf8"));
 
@@ -196,7 +196,7 @@ const esqueleto = (s) => pelado(
   /* Y las dos maquetas del producto, que ahora son fotos del sistema de
      verdad: del original se recortan, y de las dos versiones se recorta lo
      que las sustituye. */
-  sinLasMaquetas(sinPanelDeCertificaciones(s))
+  sinLaTiraDeIntegraciones(sinLasMaquetas(sinPanelDeCertificaciones(s)))
   /* Estas dos van ANTES de pelar, porque `pelado` aplana cada bloque `{ … }` a
      una línea y después un `^--logo:` ya no existe como principio de línea. */
     .replace(/^.*(og:|twitter:|rel="canonical"|name="description"|name="theme-color"|rel="image_src"|application\/ld\+json).*$/gm, "")
@@ -341,8 +341,12 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
   /* Una transición MENOS que el original, y sólo una: la de
      `.cert-logo-item`, que crecía al pasar el ratón por encima de un sello.
      El sello ya no está, así que su animación tampoco. */
-  comprueba(`las transiciones del original menos la del sello, en el ${n}`,
-    cuenta(t, /transition:/g) === cuenta(org, /transition:/g) - 1,
+  /* Las del original, menos la del sello de certificación que se quitó, más la
+     de la ficha de integración, que ahora se levanta al pasar por encima.
+     Salen las mismas que el original, pero no son las mismas: por eso se
+     escribe la cuenta y no un número suelto. */
+  comprueba(`las transiciones del original, menos la del sello y más la de la ficha, en el ${n}`,
+    cuenta(t, /transition:/g) === cuenta(org, /transition:/g) - 1 + 1,
     `${cuenta(t, /transition:/g)} vs ${cuenta(org, /transition:/g)} del original`);
   comprueba(`mismos observadores de aparición en el ${n}`,
     cuenta(t, /IntersectionObserver/g) === cuenta(org, /IntersectionObserver/g));

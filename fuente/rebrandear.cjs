@@ -570,6 +570,87 @@ cambia(
   1,
 );
 
+/* ── 4b-ter. La tira de integraciones ───────────────────────────────────── */
+
+/* El camino de integraciones que fijó el dueño el 2026-09-06. Sale ServiceNow y
+ * entran siete: ServiceDesk Plus, Teams, Vicarius, Tenable Nessus, NexPose,
+ * Defender y Meet. Catorce en total.
+ *
+ * Los distintivos se dibujan como el original dibujaba el de ServiceNow: la
+ * forma de la marca, su color y sus iniciales. No son los logotipos oficiales
+ * ni pretenden serlo. */
+const CHAPA = (titulo, nombre, color, iniciales, redondo) => `
+      <div class="int-logo" title="${titulo}">
+        <svg width="20" height="20" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          ${redondo
+    ? `<circle cx="30" cy="30" r="30" fill="${color}"/>`
+    : `<rect x="0" y="0" width="60" height="60" rx="12" fill="${color}"/>`}
+          <text x="30" y="38" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="${iniciales.length > 2 ? 16 : 20}" fill="white">${iniciales}</text>
+        </svg>
+        <span class="int-logo-name">${nombre}</span>
+      </div>`;
+
+/* ServiceNow deja su sitio a ServiceDesk Plus. */
+cambia(
+  `      <!-- ServiceNow -->
+      <div class="int-logo" title="ServiceNow">
+        <svg width="20" height="20" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="30" cy="30" r="30" fill="#62D84E"/>
+          <text x="30" y="37" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="18" fill="white">SN</text>
+        </svg>
+        <span class="int-logo-name">ServiceNow</span>
+      </div>`,
+  `      <!-- ServiceDesk Plus -->${CHAPA("ServiceDesk Plus — ManageEngine", "ServiceDesk Plus", "#F58220", "SD", false)}`,
+  1,
+);
+
+/* Y las seis que faltan, al final de la tira. */
+{
+  const marca = "        <span class=\"int-logo-name\">Azure</span>\n      </div>";
+  const nuevas = [
+    ["Microsoft Teams", "Microsoft Teams", "#6264A7", "T", false],
+    ["Microsoft Defender", "Microsoft Defender", "#0078D4", "D", false],
+    ["Google Meet", "Google Meet", "#00832D", "M", false],
+    ["Vicarius", "Vicarius", "#6C4BF4", "V", false],
+    ["Tenable Nessus", "Tenable Nessus", "#0B7285", "N", true],
+    ["NexPose — Rapid7", "NexPose", "#F03C21", "R7", true],
+  ].map(([t, n, c, i, r]) => `\n\n      <!-- ${n} -->${CHAPA(t, n, c, i, r)}`).join("");
+  const donde = h.indexOf(marca);
+  if (donde < 0) throw new Error("no encuentro el final de la tira de integraciones");
+  h = h.slice(0, donde + marca.length) + nuevas + h.slice(donde + marca.length);
+  parte.push("  · 6 integraciones más en la tira (14 en total)");
+}
+
+/* Y que se vean. Estaban al 55% de opacidad, como fantasmas; ahora son fichas
+   con su borde, a color entero. Va dentro del tramo de añadidos. */
+cambia(
+  "/* ── BARRA Y PIE SIEMPRE EN OSCURO ──",
+  `/* ── LA TIRA DE INTEGRACIONES, VISIBLE ──────────────────────────────────── */
+.integrations-bar { padding: 80px 0 8px; }
+.integrations-bar-label {
+  font-size: 11px; letter-spacing: 2.2px; color: var(--text-2); margin-bottom: 30px;
+}
+.integrations-logos { gap: 12px; max-width: 1020px; margin: 0 auto; }
+.int-logo {
+  opacity: 1;
+  background: var(--dark-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 16px;
+  transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s;
+}
+.int-logo:hover {
+  opacity: 1;
+  border-color: var(--border-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(14,14,14,0.07);
+}
+.int-logo-name { font-size: 13px; color: var(--text); }
+
+/* ── BARRA Y PIE SIEMPRE EN OSCURO ──`,
+  1,
+);
+
 /* ── 4c. Dónde vive el sitio ────────────────────────────────────────────── */
 
 /* Las direcciones ABSOLUTAS de la cabecera —la canónica, og:url, og:image,
