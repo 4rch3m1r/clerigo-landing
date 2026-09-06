@@ -22,17 +22,37 @@
     "Y pasa las páginas por el depurador de Facebook y el validador de X, que si",
     "no WhatsApp puede seguir enseñando la tarjeta vieja durante días."
   ],
-
   "base": "https://4rch3m1r.github.io/clerigo-landing",
   "definitiva": "https://clerigo.io",
-
   "_rutas": "Qué fichero es cada página y con qué tarjeta se comparte.",
   "paginas": {
-    "index": { "fichero": "", "imagen": "og.png" },
-    "legal": { "fichero": "legal.html", "imagen": "og-legal.png" },
-    "precios": { "fichero": "precios.html", "imagen": "og-precios.png" },
-    "marcos": { "fichero": "marcos.html", "imagen": "og-marcos.png" },
-    "contacto": { "fichero": "contacto.html", "imagen": "og-contacto.png" },
-    "partners": { "fichero": "partners.html", "imagen": "og-partners.png" }
+    "index": {
+      "fichero": "",
+      "imagen": "og.png"
+    },
+    "legal": {
+      "fichero": "legal.html",
+      "imagen": "og-legal.png"
+    },
+    "precios": {
+      "fichero": "precios.html",
+      "imagen": "og-precios.png"
+    },
+    "marcos": {
+      "fichero": "marcos.html",
+      "imagen": "og-marcos.png"
+    },
+    "contacto": {
+      "fichero": "contacto.html",
+      "imagen": "og-contacto.png"
+    },
+    "partners": {
+      "fichero": "partners.html",
+      "imagen": "og-partners.png"
+    },
+    "confianza": {
+      "fichero": "confianza.html",
+      "imagen": "og-confianza.png"
+    }
   }
 }

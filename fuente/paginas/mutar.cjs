@@ -31,6 +31,32 @@ if (!fs.existsSync(FICHERO)) {
   process.exit(1);
 }
 
+/* Cuatro de las mutaciones sólo tienen sentido si hay un original contra el
+   que comparar. En una página escrita de cero no se le escapan a la guarda:
+   es que no hay nada que comparar. Decirlo es la diferencia entre un hueco
+   real y un hueco imaginario. */
+const PAGINAS = require("./paginas.cjs");
+const SIN_ORIGINAL = (PAGINAS.find((x) => x.slug === SLUG) || {}).sinOriginal === true;
+const PIDEN_ORIGINAL = new Set([
+  "cambiar una palabra que se lee",
+  "quitar un párrafo entero",
+  "colar un rótulo que nadie pidió",
+  "cambiar una palabra de dentro del guion",
+  "renombrar un identificador",
+]);
+
+/* Y otras cuatro sólo aplican a una página que TENGA afirmaciones declaradas:
+   son las que cambian lo que la página promete. En las demás no hay nada que
+   romper, y contarlas como escapadas sería inventarse un hueco. */
+const AFIRMACIONES = JSON.parse(fs.readFileSync(path.join(AQUI, "afirmaciones.json"), "utf8"));
+const TIENE_AFIRMACIONES = Boolean(AFIRMACIONES[SLUG]);
+const PIDEN_AFIRMACIONES = new Set([
+  "decir que la ISO ya está obtenida",
+  "prometer cifrado en reposo",
+  "borrar el nombre del auditor",
+  "llamar certificación al informe SOC 2",
+]);
+
 const bueno = fs.readFileSync(FICHERO, "utf8");
 const limpio = guarda();
 if (limpio.codigo !== 0) {
@@ -95,13 +121,31 @@ const MUTANTES = [
     s.replace('<main class="pagina">', '<main class="pagina">\n<a href="inexistente.html"></a>')],
   ["dejarse la marca vieja", (s) =>
     s.replace("</main>", "<!-- viene de Archemir -->\n</main>")],
+  /* Las afirmaciones de una página escrita de cero. Sólo se le pueden aplicar
+     a la que las tiene declaradas; en las demás no hay nada que romper. */
+  ["decir que la ISO ya está obtenida", (s) => s.replace("certificación está en curso", "certificación está obtenida")],
+  ["prometer cifrado en reposo", (s) =>
+    s.replace('<main class="pagina">', '<main class="pagina">\n<p>Cifrado en reposo.</p>')],
+  ["borrar el nombre del auditor", (s) => s.replace("We2Sec", "un tercero")],
+  ["llamar certificación al informe SOC 2", (s) => s.replace("informe SOC 2 Tipo II se entrega", "certificación SOC 2 se entrega")],
   ["sacar el cuerpo de su sitio", (s) =>
     s.replace('<main class="pagina">', '<div class="pagina">').replace(/<\/main>(?![\s\S]*<\/main>)/, "</div>")],
 ];
 
 let visto = 0;
 let rotas = 0;
+let noAplican = 0;
 for (const [nombre, romper] of MUTANTES) {
+  if (SIN_ORIGINAL && PIDEN_ORIGINAL.has(nombre)) {
+    noAplican++;
+    console.log("  NO APLICA     " + nombre + "  ·  esta página no sale de ningún original");
+    continue;
+  }
+  if (!TIENE_AFIRMACIONES && PIDEN_AFIRMACIONES.has(nombre)) {
+    noAplican++;
+    console.log("  NO APLICA     " + nombre + "  ·  esta página no declara afirmaciones propias");
+    continue;
+  }
   const malo = romper(bueno);
   if (malo === null || malo === bueno) {
     rotas++;
@@ -118,6 +162,8 @@ for (const [nombre, romper] of MUTANTES) {
 }
 fs.writeFileSync(FICHERO, bueno);
 
-console.log(`\n${visto}/${MUTANTES.length} mutaciones detectadas sobre ${SLUG}.html · fichero restaurado`);
+const cuentan = MUTANTES.length - noAplican;
+console.log(`\n${visto}/${cuentan} mutaciones detectadas sobre ${SLUG}.html · fichero restaurado`);
+if (noAplican) console.log(`${noAplican} no aplican: esta página no sale de ningún original.`);
 if (rotas) console.log(`${rotas} mutaciones no encontraron dónde morder: eso NO cuenta como aprobado.`);
-process.exitCode = visto === MUTANTES.length ? 0 : 1;
+process.exitCode = visto === cuentan ? 0 : 1;

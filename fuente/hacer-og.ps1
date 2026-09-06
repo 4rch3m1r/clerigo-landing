@@ -47,7 +47,8 @@ $TARJETAS = @(
   @{ f = 'og-precios.png';  r = 'PLANES Y PRECIOS';      t = "Elige solo lo que`ntu empresa necesita" },
   @{ f = 'og-marcos.png';   r = 'COBERTURA REGULATORIA'; t = "Módulos, marcos y reguladores.`nTodo en un solo entorno" },
   @{ f = 'og-contacto.png'; r = 'CONTACTO';              t = "El primer paso`nno cuesta nada" },
-  @{ f = 'og-partners.png'; r = 'PROGRAMA DE PARTNERS';  t = "Conecta. Construye. Crece" }
+  @{ f = 'og-partners.png'; r = 'PROGRAMA DE PARTNERS';  t = "Conecta. Construye. Crece" },
+  @{ f = 'og-confianza.png'; r = 'CENTRO DE CONFIANZA';  t = "Cómo se guardan`ny se protegen tus datos" }
 )
 
 function New-Tarjeta {

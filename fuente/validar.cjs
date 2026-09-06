@@ -69,7 +69,7 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
     + ", partners " + cuenta(t, /href="partners\.html"/g)
     + ", index " + cuenta(t, /href="index\.html"/g));
   comprueba(`y los ficheros a los que apunta existen, en el ${n}`,
-    ["marcos", "legal", "precios", "contacto", "partners", "index"]
+    ["marcos", "legal", "precios", "contacto", "partners", "index", "confianza"]
       .every((f) => fs.existsSync(require("node:path").join(RAIZ, f + ".html"))),
     ["marcos", "legal", "precios", "contacto", "partners", "index"]
       .filter((f) => !fs.existsSync(require("node:path").join(RAIZ, f + ".html")))
@@ -223,6 +223,8 @@ const esqueleto = (s) => pelado(
      recorta lo que las sustituye, y así el resto sigue comparándose entero. */
   .replace(/[ \t]*<img class="foto-sistema"[\s\S]*?>\n/g, "")
   .replace(/[ \t]*<div class="galeria-sistema">[\s\S]*?<\/div>\n/, "")
+  /* Y el enlace al Centro de Confianza, que es lo único añadido a la página. */
+  .replace(/[ \t]*<a href="confianza\.html">[^<]*<\/a>\n/, "")
   .replace(/href="marcos\.html"/g, 'href="https://clerigo.io/marcos"')
   .replace(/href="legal\.html"/g, 'href="https://clerigo.io/legal"')
   .replace(/href="precios\.html"/g, 'href="https://clerigo.io/precios"')
@@ -330,8 +332,11 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
   comprueba(`mismas secciones en el ${n}`,
     cuenta(t, /<section/g) === cuenta(org, /<section/g),
     `${cuenta(t, /<section/g)} vs ${cuenta(org, /<section/g)}`);
+  /* Los del original más UNO: el del Centro de Confianza, en la fila legal del
+     pie. Es el único enlace AÑADIDO a la página; los demás ya estaban y sólo
+     cambiaron de destino. */
   comprueba(`mismo número de enlaces en el ${n}`,
-    cuenta(t, /<a /g) === cuenta(org, /<a /g),
+    cuenta(t, /<a /g) === cuenta(org, /<a /g) + 1,
     `${cuenta(t, /<a /g)} vs ${cuenta(org, /<a /g)}`);
   /* Una transición MENOS que el original, y sólo una: la de
      `.cert-logo-item`, que crecía al pasar el ratón por encima de un sello.

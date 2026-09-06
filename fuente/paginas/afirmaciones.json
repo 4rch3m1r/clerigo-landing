@@ -1,0 +1,74 @@
+{
+  "_por_que": [
+    "El Centro de Confianza se escribió de cero, así que la comprobación de «las",
+    "mismas palabras que el original» no le aplica: no hay original. Eso deja sus",
+    "frases sin vigilar, y son justo las frases donde una palabra cambiada hace",
+    "más daño — es la página que lee el comité de seguridad de un cliente antes",
+    "de firmar.",
+    "",
+    "Así que se vigilan a mano. Lo que TIENE que decir, y sobre todo lo que NO",
+    "puede decir.",
+    "",
+    "Esta lista no es decorativa: sale de una verificación sobre el código de la",
+    "plataforma que devolvió 116 afirmaciones con prueba de fichero y línea, y 74",
+    "cosas que el código NO sostiene. Lo de `no_pueden_estar` son las que suenan",
+    "obvias y no lo son.",
+    "",
+    "CUANDO ALGO DEJE DE SER MENTIRA, se quita de aquí y se escribe en la página.",
+    "El orden es ése y no el contrario."
+  ],
+
+  "confianza": {
+    "_deben_estar": [
+      "Los datos que el dueño confirmó el 2026-09-06 y que la página promete.",
+      "Si alguien los borra o los cambia por otros, esto salta."
+    ],
+    "deben_estar": [
+      "SOC 2 Tipo II",
+      "We2Sec",
+      "Enero – diciembre 2025",
+      "Bajo acuerdo de confidencialidad",
+      "Microsoft Azure",
+      "East US",
+      "WAF de Cloudflare",
+      "Respaldo inmutable",
+      "security@clerigo.io"
+    ],
+
+    "_iso_en_proceso": [
+      "La certificación ISO 27001 está EN CURSO, no emitida. La página tiene que",
+      "decirlo con esas palabras y decir además que hoy no está certificado.",
+      "Esta misma sesión ya quitó del landing un panel que presentaba ISO 27001 y",
+      "SOC 2 como certificaciones obtenidas cuando no lo eran."
+    ],
+    "iso_en_proceso": [
+      "certificación está en curso",
+      "no está certificado en ISO 27001"
+    ],
+
+    "_no_pueden_estar": [
+      "Cada una es una afirmación que el código NO sostiene, o una forma de decir",
+      "las cosas que es falsa de origen. El motivo va al lado.",
+      "",
+      "Son EXPRESIONES REGULARES, no trozos de texto, y por un motivo concreto:",
+      "buscando trozos, «RTO» saltaba dentro de «isPartOf» y «certificado en ISO",
+      "27001» saltaba dentro de la propia frase de la página que dice «Clèrigo NO",
+      "está certificado en ISO 27001». Una guarda que da falsos positivos se",
+      "acaba desactivando, y entonces no guarda nada."
+    ],
+    "no_pueden_estar": [
+      ["(?<!no está )certificad[oa]s? en ISO 27001|ISO 27001 certificad", "la certificación está en curso, no emitida"],
+      ["SOC ?2 certificad|certificaci[óo]n SOC ?2", "SOC 2 no se certifica, se atestigua: es un informe"],
+      ["cifrado en reposo|cifrado de disco|cifrado del almacenamiento", "no verificado: el repositorio no configura cifrado de disco ni de base"],
+      ["extremo a extremo", "el servidor descifra: no es cifrado extremo a extremo"],
+      ["inicio de sesi[óo]n [úu]nico|\\bSSO\\b|\\bSAML\\b|OpenID Connect", "no verificado: no hay entrada con cuenta corporativa"],
+      ["alta disponibilidad|conmutaci[óo]n por error", "no verificado: no hay nada en el repositorio que lo sostenga"],
+      ["\\bRTO\\b|\\bRPO\\b|recuperaci[óo]n ante desastres", "no verificado: no hay objetivos de recuperación en el código"],
+      ["99[.,]9\\s*%|\\bSLA\\b", "no verificado: no hay compromiso de disponibilidad que se pueda sostener"],
+      ["\\bHSM\\b|Key Vault|\\bBYOK\\b|llave gestionada por el cliente", "no verificado: la llave maestra vive en una variable de entorno"],
+      ["pruebas de intrusi[óo]n|\\bpentest|red team", "no verificado: no consta ninguna"],
+      ["ISO 27017|ISO 27018", "son certificaciones de Azure, no de Clèrigo: mezclarlas induce a error"],
+      ["\\bType II\\b", "en español se escribe «Tipo II»"]
+    ]
+  }
+}

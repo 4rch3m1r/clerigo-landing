@@ -81,6 +81,32 @@ completa y no lleva barra ni pie. Su panel de marca se queda en oscuro a
 propósito, como el acceso de la aplicación, y va rotulado como tal para que el
 validador no lo confunda con un descuido.
 
+## El Centro de Confianza
+
+`confianza.html` es la única página que **no sale de ningún original**: se
+escribió de cero. Es la que lee el comité de seguridad de un cliente antes de
+firmar, así que una frase de más ahí no es un adorno.
+
+Lo que dice sale de dos sitios y de ninguno más:
+
+- **Lo que confirmó el dueño:** informe SOC 2 Tipo II de We2Sec (enero–diciembre
+  2025, bajo NDA), ISO 27001 **en proceso**, Azure East US, WAF de Cloudflare
+  delante del sitio y de la aplicación, y respaldo inmutable.
+- **Lo que se verificó en el código de la plataforma:** una revisión de seis
+  áreas devolvió 116 afirmaciones con prueba de fichero y línea, y **74 cosas
+  que el código no sostiene**. Ninguna de esas 74 está en la página.
+
+**Sin original no hay comparación de palabras**, así que sus frases quedarían
+sin vigilar. Por eso tiene guarda propia en
+[`fuente/paginas/afirmaciones.json`](fuente/paginas/afirmaciones.json): lo que
+tiene que decir, y lo que no puede decir con el motivo al lado. Se probó
+rompiéndola —decir que la ISO ya está obtenida, prometer cifrado en reposo,
+borrar el nombre del auditor, llamar «certificación» al informe SOC 2— y las
+cuatro saltan.
+
+Cuando algo deje de ser mentira, **se quita de esa lista y se escribe en la
+página**. En ese orden.
+
 ## Las fotos del sistema
 
 El original dibujaba el producto con CSS: dos maquetas de un panel que no

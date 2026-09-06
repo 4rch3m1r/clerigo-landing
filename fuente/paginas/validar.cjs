@@ -26,18 +26,11 @@ const { restosDeTemaOscuro } = require("../tema.cjs");
 
 const MARCA = JSON.parse(fs.readFileSync(path.join(AQUI, "marca.json"), "utf8"));
 const SITIO = JSON.parse(fs.readFileSync(path.join(AQUI, "..", "sitio.json"), "utf8"));
+/* Lo que una página escrita de cero TIENE y NO PUEDE decir. */
+const AFIRMACIONES = JSON.parse(fs.readFileSync(path.join(AQUI, "afirmaciones.json"), "utf8"));
 const PLANTILLA = lee(path.join(AQUI, "plantilla.html"));
 
-/** Las cinco. `chrome:false` es la única que no lleva barra ni pie: es una
- *  pantalla de acceso a plena página, y colgarle la barra de un sitio de
- *  marketing encima le cambiaría la composición, que no es lo que se pidió. */
-const PAGINAS = [
-  { slug: "legal", chrome: true },
-  { slug: "precios", chrome: true },
-  { slug: "marcos", chrome: true },
-  { slug: "contacto", chrome: true },
-  { slug: "partners", chrome: false },
-];
+const PAGINAS = require("./paginas.cjs");
 
 function lee(p) {
   return fs.readFileSync(p, "utf8").split("\r\n").join("\n");
@@ -89,29 +82,65 @@ if (soloUna && aRevisar.length === 0) {
   process.exit(1);
 }
 
-for (const { slug, chrome } of aRevisar) {
+for (const { slug, chrome, sinOriginal } of aRevisar) {
   const fOrigen = path.join(AQUI, "..", "paginas-originales", slug + ".html");
   const fSalida = path.join(RAIZ, slug + ".html");
 
   console.log(`\n── ${slug}.html ${"─".repeat(Math.max(0, 56 - slug.length))}`);
 
-  if (!fs.existsSync(fOrigen)) {
+  if (!sinOriginal && !fs.existsSync(fOrigen)) {
     comprueba(`el original de ${slug} está en fuente/paginas-originales/`, false);
     continue;
+  }
+  /* Y si dice que no tiene original, que de verdad no lo tenga: una página con
+     original marcada como «sin original» se saltaría la comprobación de las
+     palabras sin que se notara. */
+  if (sinOriginal) {
+    comprueba(`${slug}: escrita de cero, no hay original contra el que comparar`,
+      !fs.existsSync(fOrigen), "hay un original y entonces SÍ habría que compararla");
   }
   if (!fs.existsSync(fSalida)) {
     comprueba(`existe ${slug}.html`, false, "todavía no se ha escrito");
     continue;
   }
 
-  const org = lee(fOrigen);
+  const org = sinOriginal ? "" : lee(fOrigen);
   const sal = lee(fSalida);
 
   /* ── 1. LAS PALABRAS ──────────────────────────────────────────────── */
   const dePagina = sinLetrasDeLogotipo(palabras(sal, { abre: `<main class="pagina">`, cierra: "</main>" }) || []);
-  const deOrigen = sinLetrasDeLogotipo(palabras(aplicaMarca(soloElCuerpo(org), MARCA)));
+  const deOrigen = sinOriginal ? null : sinLetrasDeLogotipo(palabras(aplicaMarca(soloElCuerpo(org), MARCA)));
 
-  if (!sal.includes(`<main class="pagina">`)) {
+  if (sinOriginal) {
+    /* Sin original no hay palabras que comparar, pero sí hay algo que exigir:
+       que el cuerpo esté donde toca y que tenga contenido de verdad. */
+    comprueba(`${slug}: el cuerpo va dentro de <main class="pagina">`,
+      sal.includes(`<main class="pagina">`));
+    comprueba(`${slug}: tiene texto, no es una plantilla vacía`,
+      dePagina.length > 150, dePagina.length + " palabras");
+
+    /* Y sus AFIRMACIONES, que es lo que de verdad hay que vigilar aquí: una
+       página de confianza sin original es una página donde nadie se entera si
+       «en proceso» pasa a «certificado». */
+    const af = AFIRMACIONES[slug];
+    if (af) {
+      const faltan = (af.deben_estar || []).filter((x) => !sal.includes(x));
+      comprueba(`${slug}: dice todo lo que prometió decir`, faltan.length === 0,
+        "falta: " + faltan.join(" · "));
+
+      const iso = (af.iso_en_proceso || []).filter((x) => !sal.includes(x));
+      comprueba(`${slug}: la ISO 27001 sigue dicha como EN CURSO, no como obtenida`,
+        iso.length === 0, "falta: " + iso.join(" · "));
+
+      const coladas = [];
+      for (const [patron, motivo] of af.no_pueden_estar || []) {
+        const m = sal.match(new RegExp(patron, "i"));
+        if (m) coladas.push(`«${m[0]}» — ${motivo}`);
+      }
+      comprueba(`${slug}: no promete nada que el código no sostenga`,
+        coladas.length === 0, coladas.slice(0, 3).join(" | "));
+    }
+  } else if (!sal.includes(`<main class="pagina">`)) {
     comprueba(`${slug}: el cuerpo va dentro de <main class="pagina">`, false);
   } else {
     let corte = -1;
@@ -274,7 +303,7 @@ if (!soloUna) {
   console.log("\n── La línea gráfica es UNA ─────────────────────────────────────");
   const conChrome = PAGINAS.filter((p) => p.chrome).map((p) => path.join(RAIZ, p.slug + ".html"))
     .filter((f) => fs.existsSync(f)).map(lee);
-  comprueba("las cuatro páginas con barra y pie llevan EL MISMO trozo compartido",
+  comprueba("las páginas con barra y pie llevan EL MISMO trozo compartido",
     conChrome.length > 1 && conChrome.every((h) => h.includes(CIERRE) && h.includes(PIE)),
     conChrome.length + " páginas encontradas");
 }

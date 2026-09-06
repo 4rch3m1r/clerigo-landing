@@ -23,13 +23,7 @@ const PLANTILLA = lee(path.join(AQUI, "plantilla.html"));
 /* Dónde vive el sitio. Una sola línea, en fuente/sitio.json, y de ahí salen
    todas las direcciones absolutas de las seis páginas. */
 const SITIO = JSON.parse(fs.readFileSync(path.join(AQUI, "..", "sitio.json"), "utf8"));
-const PAGINAS = [
-  { slug: "legal", chrome: true },
-  { slug: "precios", chrome: true },
-  { slug: "marcos", chrome: true },
-  { slug: "contacto", chrome: true },
-  { slug: "partners", chrome: false },
-];
+const PAGINAS = require("./paginas.cjs");
 
 /* Las marcas por las que se corta. Están en la plantilla y por tanto en las
    cinco páginas: son el borde entre lo compartido y lo de cada una. */

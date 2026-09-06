@@ -555,6 +555,21 @@ cambia('href="https://clerigo.io"', 'href="index.html"', 2);
      https://clerigo.io/academia    no hay página de academia todavía
      https://app.clerigo.io         la aplicación, que es otro sitio */
 
+/* ── 4b-bis. El Centro de Confianza ─────────────────────────────────────── */
+
+/* El ÚNICO enlace que se le añade a la página. Todos los demás ya estaban y
+ * sólo cambiaron de destino.
+ *
+ * Va en la fila legal del pie, al lado de Términos y Privacidad, porque es ahí
+ * donde lo busca quien tiene que aprobar la compra: el comité de seguridad del
+ * cliente. Es la página que dice dónde viven sus datos y quién responde. */
+cambia(
+  '      <a href="legal.html">Términos de uso</a>',
+  '      <a href="confianza.html">Centro de Confianza</a>\n'
+  + '      <a href="legal.html">Términos de uso</a>',
+  1,
+);
+
 /* ── 4c. Dónde vive el sitio ────────────────────────────────────────────── */
 
 /* Las direcciones ABSOLUTAS de la cabecera —la canónica, og:url, og:image,
