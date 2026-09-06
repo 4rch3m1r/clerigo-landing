@@ -171,13 +171,6 @@ function sinBloqueDiv(texto, marca, comentarioDeArriba) {
 }
 
 /**
- * Quita las dos maquetas del producto que traía el original: la ventanita del
- * encabezado y el panel grande de la sección Plataforma, 248 líneas de CSS
- * dibujando un panel que no existía. En su sitio va una foto del sistema de
- * verdad, y aquí se recortan del ORIGINAL para poder seguir comparando el
- * resto de la página línea por línea.
- */
-/**
  * Quita la tira de logotipos de integraciones. El camino de integraciones lo
  * fijó el dueño y ya no es el del original: salió ServiceNow y entraron siete.
  * Se recorta de los tres ficheros para poder seguir comparando el resto.
@@ -186,6 +179,13 @@ function sinLaTiraDeIntegraciones(texto) {
   return sinBloqueDiv(texto, '<div class="integrations-logos">');
 }
 
+/**
+ * Quita las dos maquetas del producto que traía el original: la ventanita del
+ * encabezado y el panel grande de la sección Plataforma, 248 líneas de CSS
+ * dibujando un panel que no existía. En su sitio va una foto del sistema de
+ * verdad, y aquí se recortan del ORIGINAL para poder seguir comparando el
+ * resto de la página línea por línea.
+ */
 function sinLasMaquetas(texto) {
   return sinBloqueDiv(sinBloqueDiv(texto, '<div class="preview-body">'), '<div class="platform-body">');
 }

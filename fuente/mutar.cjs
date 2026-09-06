@@ -48,6 +48,19 @@ const MUTANTES=[
     s=>s.replace(/<span class="cert-panel-sub">[^<]*<\/span>/,'')],
   ['quitar uno de los cuatro sellos',
     s=>s.replace('<div class="cert-logo-item">','<div class="cert-logo-quitado">')],
+  /* Y esta cuarta existe por otro motivo, que conviene entender antes de
+     tocarla. Las tres de arriba las caza la comprobacion de PRESENCIA —cuatro
+     sellos, rotulo nuevo—, no la comparacion linea por linea. Asi que si
+     alguien volviera a recortar el panel antes de comparar, la comparacion
+     dejaria de mirar el panel entero y las tres seguirian saliendo «LO VE»:
+     el validador diria TODO PASA y esto 18/18, con el panel sin comparar.
+     Medido: pasa exactamente eso.
+     Esta cambia texto de DENTRO del panel que ninguna comprobacion de
+     presencia mira. Solo la puede cazar la comparacion. Con el recorte
+     puesto SE LE ESCAPA; sin el, LO VE. Es la guarda de que el panel se
+     sigue comparando de verdad. */
+  ['cambiar el nombre de un sello',
+    s=>s.replace('cert-logo-name">SOC 2 Type II','cert-logo-name">SOC 9 Type XX')],
 ];
 
 let visto=0;

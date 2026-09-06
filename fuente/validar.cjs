@@ -127,6 +127,14 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
     t.includes("ECOSISTEMA DE NIVEL ENTERPRISE")
     && t.includes("Alojada en datacenters bajo estándares internacionales")
     && !/Nuestras Certificaciones/.test(t));
+  /* Y sus dos reglas de teléfono, que NO las mira nadie más. Viven dentro del
+     bloque «AJUSTES DE TELÉFONO», que la comparación línea por línea recorta
+     entero, y las comprobaciones de aquí arriba miran marcado y texto, no CSS.
+     Sin ellas el panel vuelve a ser una columna de 592 px de alto —el 70% de
+     una pantalla de teléfono— y el validador seguiría diciendo TODO PASA. */
+  comprueba(`y con sus dos reglas de teléfono —baja del titular y va en rejilla—, en el ${n}`,
+    /\.hero-inner > \.cert-panel \{ order: 3; \}/.test(t)
+    && /\.cert-panel \{\s*\n\s*display: grid;/.test(t));
 }
 /* Y que en el original el rótulo era el viejo, que si no esto no dice nada. */
 comprueba("y en el original el rótulo decía «Nuestras Certificaciones»",
@@ -199,11 +207,13 @@ const RÓTULO_NUEVO = '<div class="cert-panel-label">ECOSISTEMA DE NIVEL ENTERPR
   + '<span class="cert-panel-sub">Alojada en datacenters bajo estándares internacionales</span></div>';
 
 const esqueleto = (s) => pelado(
-  /* El marcado del panel se recorta contando etiquetas, con el mismo ayudante
-     que usa el guion que lo quita: por regex se cortaba en el primer `</div>`
-     —el panel tiene divs dentro— o se llevaba de más el cierre del bloque que
-     lo envuelve. Las dos cosas pasaron. */
-  /* Y las dos maquetas del producto, que ahora son fotos del sistema de
+  /* El panel del hero NO se recorta: está en los tres ficheros y se compara
+     entero, rótulo y sellos incluidos. Lo declarado de él son dos cosas y sólo
+     dos, unas líneas más abajo: el rótulo nuevo y la regla de estilo del
+     subtítulo. Que se siga comparando de verdad lo vigila la mutación
+     «cambiar el nombre de un sello» de `mutar.cjs`, que es la única que sólo
+     puede cazar esta comparación. */
+  /* Las dos maquetas del producto, que ahora son fotos del sistema de
      verdad: del original se recortan, y de las dos versiones se recorta lo
      que las sustituye. */
   sinLaTiraDeIntegraciones(sinLasMaquetas(s))
