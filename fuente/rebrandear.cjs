@@ -844,6 +844,17 @@ ${PANTALLAS.map((p, i) => `        <button class="carrusel-tira" type="button" r
       <button class="carrusel-flecha carrusel-adelante" type="button" aria-label="Pantalla siguiente">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
       </button>
+      <button class="carrusel-flecha carrusel-pausa" type="button" aria-label="Pausar el pase automático">
+        <svg class="icono-pausa" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg>
+        <svg class="icono-play" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.54.84l10-6.5a1 1 0 0 0 0-1.68l-10-6.5A1 1 0 0 0 8 5.5z"/></svg>
+        <!-- Los dos rótulos van en el MARCADO y no dentro del guion: lo que
+             está en el guion no se traduce, y en la versión inglesa el botón
+             habría cambiado a un rótulo en castellano al pulsarlo. -->
+        <span class="carrusel-rotulos" hidden>
+          <span data-rotulo="parar">Pausar el pase automático</span>
+          <span data-rotulo="seguir">Reanudar el pase automático</span>
+        </span>
+      </button>
     </div>`;
 
 cambiaBloque(
@@ -888,31 +899,89 @@ cambia(
 .foto-sistema { display: block; width: 100%; height: auto; }
 
 /* ── EL CARRUSEL DE PANTALLAS ───────────────────────────────────────────────
-   Una lámina cada vez, y la pista entera se desplaza.
+   Una lámina cada vez, y la pista entera se desplaza. Pasa solo cada tres
+   segundos.
 
-   Sobre la curva: 'cubic-bezier(.32,.72,0,1)' arranca deprisa y frena mucho al
-   final. Es lo que da la sensación de que la lámina «llega» y se posa, en vez
-   de pararse en seco. Con la curva de siempre —ease— el movimiento es
-   simétrico y parece mecánico.
+   ── POR QUÉ NO ES UN SOLO MOVIMIENTO ──
+
+   La curva ya era la buena: 'cubic-bezier(.32,.72,0,1)' arranca deprisa y
+   frena mucho al final —al 25% del tiempo lleva el 77% del camino, y el 3%
+   final se come la mitad del tiempo—. Es la de las hojas de iOS.
+
+   Pero con la curva sola no basta, y eso es lo que fallaba: la pista y la
+   lámina llevaban la MISMA curva y los MISMOS 700 ms. Dos cosas que empiezan
+   juntas y acaban juntas se leen como un cartón rígido, y por eso parecía un
+   pase de diapositivas caro en vez de un objeto con peso.
+
+   Lo que se hace ahora es repartir el mismo movimiento en cuatro capas que
+   NO llegan a la vez:
+
+     1. LA PISTA           700 ms. Es la referencia.
+     2. LA LÁMINA          820 ms, y otra curva. Cuando la pista ya ha
+                           llegado, la lámina todavía se está posando. Ese
+                           desfase de 120 ms es lo que se lee como peso.
+     3. LA IMAGEN DE DENTRO  el paralaje. Recorre un 3% menos que su propio
+                           marco, así que se queda atrás y luego se coloca:
+                           es lo que la sitúa DETRÁS del cristal en vez de
+                           pegada a él.
+     4. EL BRILLO          la que entra se enciende en 420 ms pero con 90 ms
+                           de retraso; la que sale se apaga en 560 ms. Si el
+                           brillo fuera a la vez que el movimiento, la lámina
+                           estaría encendida antes de llegar. Y la asimetría
+                           —entra rápido, sale lento— es lo que evita el
+                           parpadeo entre las dos.
 
    La lámina que no toca NO se esconde con display:none: se deja en su sitio,
    más pequeña y más apagada. Así se ve que hay más a los lados, que es la
-   mitad de lo que invita a pasar. */
-.carrusel-marco { overflow: hidden; }
+   mitad de lo que invita a pasar.
+
+   Sólo se anima 'transform' y 'opacity', que el navegador resuelve en la capa
+   de composición sin volver a pintar. Nada de 'filter: blur' ni de sombras
+   animadas: sobre una imagen de 950 px de ancho, sesenta veces por segundo,
+   eso se nota en un portátil normal. */
+.carrusel-marco {
+  overflow: hidden;
+  /* Sólo para la vuelta de la última a la primera: ver el guion. */
+  transition: opacity 240ms ease;
+}
+.carrusel-marco.dando-la-vuelta { opacity: 0; }
 .carrusel-pista {
   display: flex;
   transition: transform 700ms cubic-bezier(.32,.72,0,1);
   will-change: transform;
 }
+/* El salto de la vuelta no se viaja: se corta. */
+.carrusel-pista.sin-viaje, .carrusel-pista.sin-viaje .carrusel-lamina,
+.carrusel-pista.sin-viaje .carrusel-lamina img { transition: none; }
 .carrusel-lamina {
   flex: 0 0 100%; margin: 0; min-width: 0;
   transform: scale(.94); opacity: .35;
-  transition: transform 700ms cubic-bezier(.32,.72,0,1), opacity 500ms ease;
+  /* Hacia la barra de título, no hacia el centro: se aleja como una ventana. */
+  transform-origin: 50% 42%;
+  transition: transform 820ms cubic-bezier(.16,.84,.24,1),
+              opacity 560ms cubic-bezier(.4,0,.2,1);
 }
-.carrusel-lamina.es-la-que-toca { transform: scale(1); opacity: 1; }
+.carrusel-lamina.es-la-que-toca {
+  transform: scale(1); opacity: 1;
+  transition: transform 820ms cubic-bezier(.16,.84,.24,1),
+              opacity 420ms cubic-bezier(.4,0,.2,1) 90ms;
+}
 /* Sin borde ni redondeo propios: la lamina va DENTRO de la ventana de
-   «platform-frame», que ya los pone. */
-.carrusel-lamina img { width: 100%; height: auto; display: block; }
+   «platform-frame», que ya los pone.
+   El desfase lo pone el guion en cada cambio: 0 en la que toca, y ±3% en las
+   demás. La MISMA curva y la MISMA duración que la pista — si difieren, el
+   paralaje rebota en vez de arrastrar. */
+.carrusel-lamina img {
+  width: 100%; height: auto; display: block;
+  transform: translate3d(var(--desfase, 0%), 0, 0);
+  transition: transform 700ms cubic-bezier(.32,.72,0,1);
+}
+
+/* El rótulo de la ventana. Sale apagándose SIN moverse y entra subiendo seis
+   píxeles: simétrico parecería un parpadeo. */
+.ptb-title { transition: opacity 260ms cubic-bezier(.4,0,.2,1), transform 260ms cubic-bezier(.4,0,.2,1); }
+.ptb-title.se-va { opacity: 0; transition: opacity 160ms ease; }
+.ptb-title.llega { opacity: 0; transform: translateY(6px); transition: none; }
 
 /* Los mandos: una fila debajo del marco. Las flechas NO van encima de la
    pantalla —taparian justo lo que se ha venido a ver— y el marco lleva
@@ -942,6 +1011,7 @@ cambia(
 }
 .carrusel-tiras::-webkit-scrollbar { display: none; }
 .carrusel-tira {
+  position: relative; overflow: hidden;
   flex: 0 0 auto; cursor: pointer;
   font-size: 11px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase;
   color: var(--text-3); background: transparent;
@@ -952,12 +1022,48 @@ cambia(
 .carrusel-tira:hover { color: var(--text-2); border-color: var(--border-light); }
 .carrusel-tira[aria-selected="true"] { color: var(--text); border-color: var(--red); background: var(--red-soft); }
 
-@media (max-width: 900px) { .carrusel-mandos { padding: 0 20px; } .carrusel-flecha { display: none; } }
+/* LA CUENTA DE LOS TRES SEGUNDOS.
+   Un pelo de dos píxeles que se llena dentro de la pastilla que toca. Va aquí
+   y no en un cartel aparte porque así el indicador señala A LA VEZ qué se está
+   viendo y cuánto queda, sin añadir un elemento más a una fila que ya tiene
+   catorce.
+   LINEAL, obligatoriamente: una barra de progreso con curva miente sobre el
+   tiempo que falta.
+   Se dibuja con 'transform', y el guion sólo mueve una variable: es lo único
+   que cambia cuadro a cuadro y no obliga a repintar nada. */
+.carrusel-tira::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: var(--red); opacity: 0;
+  transform: scaleX(0); transform-origin: left center;
+  transition: opacity .2s;
+}
+.carrusel-tira[aria-selected="true"]::after { opacity: .5; transform: scaleX(var(--avance, 0)); }
 
-/* Quien pide menos movimiento lo recibe: la lámina cambia igual, pero sin el
-   desplazamiento. */
+/* EL BOTÓN DE PARAR.
+   No es un adorno ni una comodidad: algo que se mueve solo y dura más de
+   cinco segundos tiene que poder pararse, y pararlo al pasar el ratón no
+   sirve a quien va con el teclado o con el dedo. Catorce láminas a tres
+   segundos son cuarenta y dos segundos de movimiento. */
+.carrusel-pausa .icono-play { display: none; }
+.carrusel-pausa.esta-parado .icono-pausa { display: none; }
+.carrusel-pausa.esta-parado .icono-play { display: block; }
+
+@media (max-width: 900px) {
+  .carrusel-mandos { padding: 0 20px; }
+  /* Las flechas se van en el móvil —ahí se pasa con el dedo—, pero el botón
+     de parar se queda: es el único mando para detener el pase. */
+  .carrusel-flecha:not(.carrusel-pausa) { display: none; }
+}
+
+/* Quien pide menos movimiento lo recibe, y lo recibe entero: sin
+   desplazamiento, sin paralaje, sin cuenta y SIN PASE AUTOMÁTICO. Quitar la
+   transición y dejar que siga cambiando de lámina sola cada tres segundos
+   sería no haber entendido la petición. Que no se avanza lo decide el guion,
+   que lee la misma consulta. */
 @media (prefers-reduced-motion: reduce) {
-  .carrusel-pista, .carrusel-lamina { transition: none; }
+  .carrusel-pista, .carrusel-lamina, .carrusel-lamina img,
+  .carrusel-marco, .ptb-title { transition: none; }
+  .carrusel-tira::after { display: none; }
 }
 
 /* ── BARRA Y PIE SIEMPRE EN OSCURO ──`,
@@ -985,10 +1091,13 @@ cambia(
   var caja = document.querySelector('[data-carrusel]');
   var pista = document.querySelector('.carrusel-pista');
   if (!caja || !pista) return;
+  var marco = pista.parentNode;
   var laminas = [].slice.call(document.querySelectorAll('.carrusel-lamina'));
   var tiras = [].slice.call(caja.querySelectorAll('.carrusel-tira'));
+  var franja = caja.querySelector('.carrusel-tiras');
   var atras = caja.querySelector('.carrusel-atras');
   var adelante = caja.querySelector('.carrusel-adelante');
+  var boton = caja.querySelector('.carrusel-pausa');
   if (!laminas.length) return;
   var cual = 0;
   /* El rótulo de la barra de la ventana. Decía siempre «Centro de Comando»,
@@ -998,54 +1107,210 @@ cambia(
   var barra = document.querySelector('.ptb-title');
   var marca = barra ? (barra.textContent.split('—')[0] || '').trim() : '';
 
+  /* ── EL PASE AUTOMÁTICO ───────────────────────────────────────────────
+   *
+   * UN SOLO RELOJ, y el mismo que dibuja la cuenta. Si el avance lo llevara un
+   * setInterval y la barra una animación de CSS, serían dos relojes: se
+   * separan en cuanto la pestaña se oculta un momento, y entonces la barra
+   * dice una cosa y la lámina hace otra.
+   *
+   * El reloj SÓLO suma tiempo cuando nadie sujeta el carrusel. Lo sujeta:
+   * el ratón encima, el foco del teclado dentro, la pestaña oculta, el marco
+   * fuera de pantalla, o el botón de parar.
+   *
+   * Y hay un tope por cuadro: si el navegador se fue a hacer otra cosa, al
+   * volver no se le regala el tiempo perdido. Sin ese tope, volver a la
+   * pestaña después de un minuto salta veinte láminas de golpe. */
+  var PAUSA = 3000;      /* de cambio a cambio */
+  var DESFASE = 3;       /* % que la imagen se queda detrás de su marco */
+  var pocoMovimiento = !!(window.matchMedia
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  var llevaba = 0;       /* ms acumulados en esta lámina */
+  var ultimo = 0;        /* marca del cuadro anterior */
+  var anda = !pocoMovimiento;
+  var pidiendo = false;
+  var raton = false, foco = false, aLaVista = true;
+
+  function sujeto() { return !anda || raton || foco || !aLaVista || document.hidden; }
+
+  function cuadro(t) {
+    if (!anda) { pidiendo = false; ultimo = 0; return; }
+    if (ultimo) {
+      var d = t - ultimo;
+      if (d > 250) d = 250;
+      if (!sujeto()) {
+        llevaba += d;
+        if (llevaba >= PAUSA) { llevaba = 0; ir(cual + 1); }
+      }
+    }
+    ultimo = t;
+    if (tiras[cual]) tiras[cual].style.setProperty('--avance', llevaba / PAUSA);
+    requestAnimationFrame(cuadro);
+  }
+
+  function enMarcha() {
+    if (pidiendo || !anda) return;
+    pidiendo = true; ultimo = 0;
+    requestAnimationFrame(cuadro);
+  }
+
+  /* El rótulo de la ventana no cambia de golpe: se apaga sin moverse y el
+     nuevo entra subiendo. Los 160 ms son los de la salida; hay que esperarlos
+     antes de cambiar el texto o se ve cambiar la palabra a plena luz. */
+  function ponRotulo() {
+    if (!barra || !tiras[cual]) return;
+    var texto = marca + ' — ' + tiras[cual].textContent;
+    if (barra.textContent === texto) return;
+    if (pocoMovimiento) { barra.textContent = texto; return; }
+    barra.classList.add('se-va');
+    setTimeout(function () {
+      barra.textContent = texto;
+      barra.classList.add('llega');
+      barra.classList.remove('se-va');
+      void barra.offsetWidth;          /* se fuerza el cálculo: si no, el
+                                          navegador junta los dos cambios y no
+                                          hay transición ninguna */
+      barra.classList.remove('llega');
+    }, 160);
+  }
+
+  /* La tira se recoloca SOLA, y sólo la tira.
+     Antes se usaba scrollIntoView, que mueve el documento entero: con el pase
+     automático eso sería la página desplazándose sola cada tres segundos
+     mientras alguien lee otra cosa más abajo. */
+  function centraLaTira() {
+    if (!franja || !tiras[cual]) return;
+    var t = tiras[cual];
+    var destino = t.offsetLeft - (franja.clientWidth - t.offsetWidth) / 2;
+    var tope = franja.scrollWidth - franja.clientWidth;
+    if (destino < 0) destino = 0;
+    if (destino > tope) destino = tope;
+    if (franja.scrollTo) {
+      franja.scrollTo({ left: destino, behavior: pocoMovimiento ? 'auto' : 'smooth' });
+    } else { franja.scrollLeft = destino; }
+  }
+
   function pinta() {
-    pista.style.transform = 'translateX(' + (-cual * 100) + '%)';
+    pista.style.transform = 'translate3d(' + (-cual * 100) + '%,0,0)';
     for (var i = 0; i < laminas.length; i++) {
       var toca = i === cual;
       laminas[i].classList.toggle('es-la-que-toca', toca);
       /* Lo que no se ve tampoco se lee en voz alta. */
       if (toca) laminas[i].removeAttribute('aria-hidden');
       else laminas[i].setAttribute('aria-hidden', 'true');
-      if (tiras[i]) tiras[i].setAttribute('aria-selected', toca ? 'true' : 'false');
+      /* El paralaje. La que viene por la derecha entra desplazada hacia la
+         izquierda, así que recorre menos que su marco y llega tarde. El signo
+         es fácil de invertir, y al revés las láminas parecen empujarse. */
+      var foto = laminas[i].querySelector('img');
+      if (foto) {
+        foto.style.setProperty('--desfase',
+          toca ? '0%' : ((i > cual ? -DESFASE : DESFASE) + '%'));
+      }
+      if (tiras[i]) {
+        tiras[i].setAttribute('aria-selected', toca ? 'true' : 'false');
+        if (!toca) tiras[i].style.setProperty('--avance', 0);
+      }
     }
-    if (barra && tiras[cual]) barra.textContent = marca + ' — ' + tiras[cual].textContent;
-    if (atras) atras.disabled = cual === 0;
-    if (adelante) adelante.disabled = cual === laminas.length - 1;
-    /* Que el rótulo elegido se vea sin tener que arrastrar la tira. */
-    if (tiras[cual] && tiras[cual].scrollIntoView) {
-      tiras[cual].scrollIntoView({ block: 'nearest', inline: 'nearest' });
-    }
+    ponRotulo();
+    centraLaTira();
   }
 
+  /* La vuelta de la última a la primera NO se viaja: trece láminas en ráfaga
+     marean y además tardarían nueve segundos. Se apaga el marco, se salta sin
+     transición y se enciende. */
   function ir(n) {
-    cual = Math.max(0, Math.min(laminas.length - 1, n));
+    var ultima = laminas.length - 1;
+    var destino = n, vuelta = false;
+    if (destino > ultima) { destino = 0; vuelta = true; }
+    if (destino < 0) { destino = ultima; vuelta = true; }
+
+    if (vuelta && !pocoMovimiento) {
+      marco.classList.add('dando-la-vuelta');
+      setTimeout(function () {
+        pista.classList.add('sin-viaje');
+        cual = destino;
+        pinta();
+        void pista.offsetWidth;
+        pista.classList.remove('sin-viaje');
+        marco.classList.remove('dando-la-vuelta');
+      }, 240);
+      return;
+    }
+    cual = destino;
     pinta();
   }
 
-  if (atras) atras.addEventListener('click', function () { ir(cual - 1); });
-  if (adelante) adelante.addEventListener('click', function () { ir(cual + 1); });
-  tiras.forEach(function (t, i) { t.addEventListener('click', function () { ir(i); }); });
+  /* Cuando lo pide una persona, el reloj vuelve a cero.
+     No se apaga el pase —lo pedido es que cambie cada tres segundos— pero
+     tampoco puede arrancarle la lámina de las manos medio segundo después de
+     que la haya elegido. Para pararlo del todo está el botón. */
+  function aMano(n) { llevaba = 0; ir(n); }
+
+  if (atras) atras.addEventListener('click', function () { aMano(cual - 1); });
+  if (adelante) adelante.addEventListener('click', function () { aMano(cual + 1); });
+  tiras.forEach(function (t, i) { t.addEventListener('click', function () { aMano(i); }); });
+
+  if (boton) {
+    var rotulos = boton.querySelectorAll('[data-rotulo]');
+    var diParar = rotulos[0] ? rotulos[0].textContent : 'Pausar';
+    var diSeguir = rotulos[1] ? rotulos[1].textContent : 'Reanudar';
+    boton.addEventListener('click', function () {
+      anda = !anda;
+      boton.classList.toggle('esta-parado', !anda);
+      boton.setAttribute('aria-label', anda ? diParar : diSeguir);
+      if (anda) { enMarcha(); }
+      else if (tiras[cual]) { tiras[cual].style.setProperty('--avance', 0); }
+    });
+    /* Quien pidió menos movimiento ya lo tiene parado; el botón lo dice. */
+    if (!anda) {
+      boton.classList.add('esta-parado');
+      boton.setAttribute('aria-label', diSeguir);
+    }
+  }
 
   /* Flechas del teclado, cuando el foco está dentro. */
   caja.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowLeft') { ir(cual - 1); e.preventDefault(); }
-    if (e.key === 'ArrowRight') { ir(cual + 1); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { aMano(cual - 1); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { aMano(cual + 1); e.preventDefault(); }
   });
+
+  /* Lo que sujeta el reloj. El ratón se mira en los dos sitios —la ventana y
+     la fila de mandos— porque son hermanos, no uno dentro del otro. */
+  function miraElRaton(donde) {
+    if (!donde) return;
+    donde.addEventListener('mouseenter', function () { raton = true; });
+    donde.addEventListener('mouseleave', function () { raton = false; });
+  }
+  miraElRaton(marco);
+  miraElRaton(caja);
+  caja.addEventListener('focusin', function () { foco = true; });
+  caja.addEventListener('focusout', function () { foco = false; });
+  document.addEventListener('visibilitychange', function () { ultimo = 0; });
+
+  /* Y que no corra mientras nadie lo mira: catorce láminas pasando solas al
+     principio de la página, para alguien que está leyendo el pie, son catorce
+     cambios que nadie ve y una animación que no para. */
+  if (window.IntersectionObserver) {
+    new IntersectionObserver(function (entradas) {
+      for (var i = 0; i < entradas.length; i++) aLaVista = entradas[i].isIntersecting;
+    }, { threshold: 0.35 }).observe(marco);
+  }
 
   /* Arrastrar, que en un teléfono es lo único que se intenta. Se mira el
      desplazamiento total al soltar y no durante: seguir el dedo en tiempo real
      obliga a quitar la transición y a volver a ponerla, y se ve el salto. */
   var x0 = null;
-  var zona = pista.parentNode;
-  zona.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
-  zona.addEventListener('touchend', function (e) {
+  marco.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  marco.addEventListener('touchend', function (e) {
     if (x0 === null) return;
     var d = e.changedTouches[0].clientX - x0;
-    if (Math.abs(d) > 40) ir(cual + (d < 0 ? 1 : -1));
+    if (Math.abs(d) > 40) aMano(cual + (d < 0 ? 1 : -1));
     x0 = null;
   });
 
   pinta();
+  enMarcha();
 })();
 </script>
 `;
