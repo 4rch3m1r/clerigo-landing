@@ -363,6 +363,35 @@ footer { position: relative; }
   color: var(--success); font-size: 9px; font-weight: 800; letter-spacing: 0.8px;
   text-transform: uppercase; padding: 2px 8px; border-radius: 20px; margin-left: 6px;
 }
+/* EL «+20%» CUANDO EL BOTÓN ESTÁ ENCENDIDO.
+   El distintivo es verde oscuro sobre verde al 10%. Apagado se lee bien —está
+   sobre el gris claro de la barra—, pero al encender el botón el fondo pasa a
+   ser el rojo de la marca y ese verde encima queda en 1,23 de contraste. El
+   mínimo para leer un texto es 4,5: no es que se lea mal, es que no se lee.
+   Y ese verde al 10% sobre rojo ni siquiera se ve verde, sale rojo sucio.
+   Encendido va en blanco sobre el rojo oscurecido un poco: 6,83. Se midió
+   contra cinco alternativas más —pastilla blanca con el texto rojo, con el
+   texto verde, blanco translúcido, sin fondo— y ésta es la que pasa el mínimo
+   sin convertir el distintivo en una segunda pastilla que le compita a la
+   roja. Apagado no se toca: ahí está en 4,98 y no hay nada que arreglar.
+
+   SE OSCURECE CON NEGRO, NO SE PINTA DE UN ROJO MÁS OSCURO ESCRITO A MANO,
+   para que el día que cambie `--red` el distintivo cambie con él en vez de
+   quedarse con el rojo de hace dos años.
+
+   Y EL BORDE VA EN NEGRO, NO EN BLANCO. El primer intento lo puso en blanco
+   translúcido y lo cazó la comprobación de «nada sigue pintando en oscuro
+   fuera de la barra y el pie», que toma cualquier blanco translúcido por un
+   resto del tema oscuro. Aquí no lo era —iba sobre el rojo, no sobre negro—,
+   así que se podía declarar la excepción en `tema.cjs`; pero eso es ensanchar
+   un permiso que comparten todas las páginas por el borde de un distintivo de
+   una sola. El relleno ya separa el distintivo de la pastilla.
+
+   Y OJO CON EL COMENTARIO: esa comprobación lee las líneas TAL CUAL, sin
+   distinguir lo que pinta de lo que sólo lo cuenta. La primera versión de este
+   párrafo escribía el color con sus tres doscientos cincuenta y cincos, y
+   saltó ella sola. El comentario que explica un color no debe escribirlo. */
+.bill-btn.active .save-badge { background: rgba(0,0,0,0.22); border-color: rgba(0,0,0,0.28); color: #FFFFFF; }
 
 /* ── COLUMNA CENTRAL ── */
 .main { max-width: 1300px; margin: 0 auto; padding: 0 48px 80px; position: relative; z-index: 1; }

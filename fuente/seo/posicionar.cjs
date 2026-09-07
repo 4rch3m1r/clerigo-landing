@@ -232,8 +232,16 @@ function ficha(pagina, idioma, esIngles, titulo, descripcion, imagen, canonica) 
  *  documento para pintar la tarjeta del enlace; pasado ese punto, deja de
  *  verla. O sea, por poner unas palabras que no posicionan se habría roto la
  *  tarjeta que sí funciona. Hay una comprobación que lo vigila y saltó. */
+/* EL `\r?` NO SOBRA. Las páginas tienen fin de línea de Windows, así que cada
+   etiqueta acaba en `\r\n`. Pidiendo sólo `\n?`, la expresión se comía la
+   etiqueta y dejaba el `\r` suelto, y detrás se escribía una línea nueva: cada
+   pasada de este guion añadía un renglón en blanco a la cabecera. Se veía como
+   «cambios» en páginas que nadie había tocado, y la cabecera es justo donde no
+   hay sitio de sobra —`og:image` tiene que caber en el primer kilobyte y medio
+   o WhatsApp deja de pintar la tarjeta—. Lo mismo, más abajo, con el idioma
+   alternativo. */
 function meta(html, clave, atributo, valor) {
-  const re = new RegExp(`<meta ${atributo}="${clave.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}" content="[^"]*">\n?`);
+  const re = new RegExp(`<meta ${atributo}="${clave.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}" content="[^"]*">\r?\n?`);
   const nueva = `<meta ${atributo}="${clave}" content="${valor.replace(/"/g, "&quot;")}">`;
   if (re.test(html)) return html.replace(re, nueva + "\n");
   return html.replace("</head>", nueva + "\n</head>");
@@ -287,7 +295,7 @@ for (const carpeta of [CASTELLANO, INGLES]) {
     /* 3. El idioma de la tarjeta, que estaba mal en las dieciséis. */
     h = h.replace(/<meta property="og:locale" content="[^"]*">/,
       `<meta property="og:locale" content="${esIngles ? "en_US" : "es_ES"}">`);
-    h = h.replace(/<meta property="og:locale:alternate" content="[^"]*">\n?/g, "");
+    h = h.replace(/<meta property="og:locale:alternate" content="[^"]*">\r?\n?/g, "");
     h = h.replace(/(<meta property="og:locale" content="[^"]*">)/,
       `$1\n<meta property="og:locale:alternate" content="${esIngles ? "es_ES" : "en_US"}">`);
 

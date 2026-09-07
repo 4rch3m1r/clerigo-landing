@@ -456,6 +456,75 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
     restos.length === 0,
     restos.slice(0, 3).map((r) => "línea " + r.n + ": " + r.l).join(" | "));
 
+  /* ── 6 bis. QUE EL «+20%» SE LEA, EN LOS DOS ESTADOS ──────────────────
+   *
+   * El distintivo del interruptor «Anual / Mensual» es verde oscuro sobre
+   * verde al 10%. Apagado se lee. Encendido, el fondo pasa a ser el rojo de la
+   * marca y ese verde encima quedaba en 1,23 de contraste: no es que se leyera
+   * mal, es que no se leía, y así estuvo publicado hasta que alguien lo miró.
+   *
+   * NO SE COMPRUEBA QUE ESTÉ ESCRITO UN COLOR CONCRETO, SE MIDE. Una guarda
+   * que dijera «tiene que poner #FFFFFF» pasaría el día que se cambie el rojo
+   * de la marca por uno más claro y el blanco deje de leerse encima, que es
+   * exactamente el fallo que esto viene a impedir. Aquí se sacan los colores
+   * de la propia página —el rojo de su ficha, el fondo del interruptor, lo que
+   * diga cada regla—, se superponen las capas translúcidas como las superpone
+   * el navegador, y se calcula el contraste de verdad. El mínimo son 4,5, que
+   * es lo que pide la norma para un texto.
+   *
+   * Se miran LOS DOS estados. Con mirar sólo el encendido, apagar el otro sin
+   * querer pasaría de largo. */
+  if (slug === "precios") {
+    const hex = (s) => ({ r: parseInt(s.slice(1, 3), 16), g: parseInt(s.slice(3, 5), 16), b: parseInt(s.slice(5, 7), 16), a: 1 });
+    /* Los colores de esta página se escriben casi siempre como `var(--algo)`,
+       así que hay que ir a buscar el valor a la ficha. Con leer sólo lo que
+       pone la regla, el fondo del interruptor salía «var(--dark-3)», no se
+       entendía como color, y la medida se hacía contra un blanco inventado. */
+    const valorDe = (nombre) => (sal.match(new RegExp("--" + nombre + ":\\s*([^;}]+)")) || [])[1];
+    const col = (s, vueltas = 0) => {
+      s = String(s || "").trim();
+      const v = s.match(/^var\(\s*--([\w-]+)\s*\)$/);
+      if (v) return vueltas > 4 ? null : col(valorDe(v[1]), vueltas + 1);
+      if (s[0] === "#") return hex(s.length === 4 ? "#" + s[1] + s[1] + s[2] + s[2] + s[3] + s[3] : s);
+      const m = s.match(/[\d.]+/g);
+      return m ? { r: +m[0], g: +m[1], b: +m[2], a: m.length > 3 ? +m[3] : 1 } : null;
+    };
+    const encima = (f, d) => ({ r: f.r * f.a + d.r * (1 - f.a), g: f.g * f.a + d.g * (1 - f.a), b: f.b * f.a + d.b * (1 - f.a), a: 1 });
+    const lin = (c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
+    const luz = (p) => 0.2126 * lin(p.r) + 0.7152 * lin(p.g) + 0.0722 * lin(p.b);
+    const contraste = (a, b) => { const x = luz(a), y = luz(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+    const dime = (re) => (sal.match(re) || [])[1];
+    /* EL PREFIJO NO ES ADORNO. Sin él, buscar «color:» encontraba primero el
+       «border-color:» de la línea de al lado y la guarda medía el contraste
+       del texto contra el borde: decía 3,08 donde el navegador dice 6,83. Una
+       guarda que se equivoca a la baja da tanta guerra como una que no ve. */
+    const declara = (bloque, prop) =>
+      (String(bloque || "").match(new RegExp("(?:^|[;{\\s])" + prop + ":\\s*([^;}]+)")) || [])[1];
+
+    const rojo = col(dime(/--red:\s*(#[0-9a-fA-F]{3,6})/));
+    const verde = col(dime(/--success:\s*(#[0-9a-fA-F]{3,6})/));
+    const base = col(dime(/\.billing-toggle\s*\{[^}]*background:\s*([^;}]+)/)) || { r: 255, g: 255, b: 255, a: 1 };
+    const suyo = dime(/\.save-badge\s*\{([^}]*)\}/);
+    const encendida = dime(/\.bill-btn\.active\s+\.save-badge\s*\{([^}]*)\}/);
+
+    const papel = { r: 255, g: 255, b: 255, a: 1 };
+    const mide = (fondoDelBoton, bloque, tintaPorOmision) => {
+      const f = col(declara(bloque, "background")) || col(declara(bloque, "background-color"));
+      const tinta = col(declara(bloque, "color")) || tintaPorOmision;
+      if (!f || !tinta) return null;
+      return contraste(tinta, encima(f, fondoDelBoton));
+    };
+    const apagado = rojo && verde && suyo ? mide(encima(base, papel), suyo, verde) : null;
+    const enc = rojo && suyo ? mide(rojo, (encendida || "") + ";" + suyo, verde) : null;
+    const MINIMO = 4.5;
+    comprueba(`${slug}: el «+20%» se lee con el botón apagado`,
+      apagado !== null && apagado >= MINIMO,
+      apagado === null ? "no se han podido leer sus colores" : "contraste " + apagado.toFixed(2) + " (mínimo " + MINIMO + ")");
+    comprueba(`${slug}: el «+20%» se lee con el botón encendido, sobre el rojo`,
+      enc !== null && enc >= MINIMO,
+      enc === null ? "no se han podido leer sus colores" : "contraste " + enc.toFixed(2) + " (mínimo " + MINIMO + ")");
+  }
+
   /* ── 7. LA LETRA ──────────────────────────────────────────────────── */
   const familias = [...new Set([...sal.matchAll(/font-family:\s*([^;}"]+)/g)].map((m) => m[1].trim()))];
   /* `inherit` vale: es lo que se le pone a los controles de formulario para
