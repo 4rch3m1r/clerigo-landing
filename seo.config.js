@@ -170,7 +170,7 @@ const ROUTES = {
     lang: "es",
     locale: "es_ES",
     alternateLocale: "en_US",
-    alternateEn: "https://clerigo.io/confianza.html",
+    alternateEn: "https://clerigo.io/trustcenter.html",
     alternateEs: "https://clerigo.io/es/confianza.html",
     title: "Centro de Confianza, Seguridad y Privacidad | Clérigo GRC",
     description: "Conoce nuestra arquitectura de seguridad: cifrado AES-256 en reposo y tránsito, Zero Trust, alta disponibilidad del 99.9% y soberanía de datos.",
@@ -183,12 +183,12 @@ const ROUTES = {
   },
 
   // ── CENTRO DE CONFIANZA Y SEGURIDAD (EN) ──
-  "confianza.html": {
-    canonicalPath: "confianza.html",
+  "trustcenter.html": {
+    canonicalPath: "trustcenter.html",
     lang: "en",
     locale: "en_US",
     alternateLocale: "es_ES",
-    alternateEn: "https://clerigo.io/confianza.html",
+    alternateEn: "https://clerigo.io/trustcenter.html",
     alternateEs: "https://clerigo.io/es/confianza.html",
     title: "Trust Center, Security & Privacy | Clérigo GRC",
     description: "Explore our enterprise security posture: AES-256 encryption at rest and in transit, Zero Trust architecture, 99.9% uptime SLA, and data residency.",
@@ -529,7 +529,7 @@ function generateJsonLdGraph(fileKey, overrides = {}) {
       "@id": `${siteUrl}/#sitelink-trust-center`,
       "name": isEs ? "Centro de Confianza & Seguridad" : "Trust Center & Security",
       "description": isEs ? "Arquitectura de seguridad, cifrado AES-256, Zero Trust y soberanía de datos." : "Enterprise security posture, AES-256 encryption, Zero Trust, and compliance.",
-      "url": isEs ? `${siteUrl}/es/confianza.html` : `${siteUrl}/confianza.html`
+      "url": isEs ? `${siteUrl}/es/confianza.html` : `${siteUrl}/trustcenter.html`
     },
     {
       "@type": "SiteNavigationElement",

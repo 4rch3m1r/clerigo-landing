@@ -182,7 +182,7 @@
       "lang": "es",
       "locale": "es_ES",
       "alternateLocale": "en_US",
-      "alternateEn": "https://clerigo.io/confianza.html",
+      "alternateEn": "https://clerigo.io/trustcenter.html",
       "alternateEs": "https://clerigo.io/es/confianza.html",
       "title": "Centro de Confianza, Seguridad y Privacidad | Clérigo GRC",
       "description": "Conoce nuestra arquitectura de seguridad: cifrado AES-256 en reposo y tránsito, Zero Trust, alta disponibilidad del 99.9% y soberanía de datos.",
@@ -192,22 +192,6 @@
       "pageType": "website",
       "schemaType": "ItemPage",
       "breadcrumbName": "Centro de Confianza"
-    },
-    "confianza.html": {
-      "canonicalPath": "confianza.html",
-      "lang": "en",
-      "locale": "en_US",
-      "alternateLocale": "es_ES",
-      "alternateEn": "https://clerigo.io/confianza.html",
-      "alternateEs": "https://clerigo.io/es/confianza.html",
-      "title": "Trust Center, Security & Privacy | Clérigo GRC",
-      "description": "Explore our enterprise security posture: AES-256 encryption at rest and in transit, Zero Trust architecture, 99.9% uptime SLA, and data residency.",
-      "keywords": "trust center, security posture, AES-256 encryption, data privacy, cloud compliance, Zero Trust",
-      "ogImage": "https://clerigo.io/public/og/confianza-og.png",
-      "ogImageAlt": "Clérigo Trust and Security Center",
-      "pageType": "website",
-      "schemaType": "ItemPage",
-      "breadcrumbName": "Trust Center"
     },
     "es/contacto.html": {
       "canonicalPath": "es/contacto.html",
@@ -369,6 +353,22 @@
       "ogImage": "https://clerigo.io/public/og/compliance-og.png",
       "ogImageAlt": "Cumplimiento Continuo - Clérigo GRC",
       "breadcrumbName": "Cumplimiento"
+    },
+    "trustcenter.html": {
+      "canonicalPath": "trustcenter.html",
+      "lang": "en",
+      "locale": "en_US",
+      "alternateLocale": "es_ES",
+      "alternateEn": "https://clerigo.io/trustcenter.html",
+      "alternateEs": "https://clerigo.io/es/confianza.html",
+      "title": "Trust Center, Security & Privacy | Clérigo GRC",
+      "description": "Explore our enterprise security posture: AES-256 encryption at rest and in transit, Zero Trust architecture, 99.9% uptime SLA, and data residency.",
+      "keywords": "trust center, security posture, AES-256 encryption, data privacy, cloud compliance, Zero Trust",
+      "ogImage": "https://clerigo.io/public/og/confianza-og.png",
+      "ogImageAlt": "Clérigo Trust and Security Center",
+      "pageType": "website",
+      "schemaType": "ItemPage",
+      "breadcrumbName": "Trust Center"
     }
   }
 }
