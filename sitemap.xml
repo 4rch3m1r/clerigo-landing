@@ -127,4 +127,22 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://clerigo.io/es/legal"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/legal"/>
   </url>
+  <url>
+    <loc>https://clerigo.io/login</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/login"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://clerigo.io/es/login"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/login"/>
+  </url>
+  <url>
+    <loc>https://clerigo.io/es/login</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/login"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://clerigo.io/es/login"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/login"/>
+  </url>
 </urlset>

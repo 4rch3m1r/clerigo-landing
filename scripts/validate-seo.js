@@ -20,7 +20,9 @@ const files = [
   'partners.html',
   'es/partners.html',
   'legal.html',
-  'es/legal.html'
+  'es/legal.html',
+  'login.html',
+  'es/login.html'
 ];
 
 let allPassed = true;
@@ -64,7 +66,7 @@ files.forEach(f => {
 
 if (allPassed) {
   console.log("\n=======================================================");
-  console.log("🎉 TODAS LAS 14 PÁGINAS PASARON LA VALIDACIÓN AL 100%");
+  console.log("🎉 TODAS LAS 16 PÁGINAS PASARON LA VALIDACIÓN AL 100%");
   console.log("=======================================================");
 } else {
   process.exit(1);
