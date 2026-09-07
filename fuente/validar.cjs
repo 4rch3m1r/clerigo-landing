@@ -344,6 +344,15 @@ const esqueleto = (s) => pelado(
      se ancla en lo que viene justo detrás, y si los dominios ya no están, no
      encuentra dónde terminar. */
   .replace(/[ \t]*<!-- ══ DOMINIOS ══ -->[\s\S]*?<!-- ══ FIN DE DOMINIOS ══ -->\n?/, "")
+  /* Las dos cifras de la fila de arriba. El original decía «15+» las dos y no
+     salía de ningún sitio; ahora dicen 32 módulos y 66 marcos, normas y leyes,
+     contados del producto y con la cuenta escrita en `secciones/cifras.cjs`.
+     Se normalizan a las del original para poder seguir comparando el resto de
+     la fila —el 90 % y las 48 h siguen dentro de la comparación—. */
+  .replace(/<div class="number-val">32<span><\/span><\/div>\n(\s*)<div class="number-label">(?:Módulos integrados|Integrated modules)<\/div>\n\s*<div class="number-desc">[^<]*<\/div>/,
+    (_, sangria) => `<div class="number-val">15<span>+</span></div>\n${sangria}<div class="number-label">Módulos integrados</div>\n${sangria}<div class="number-desc">Un solo entorno para toda tu operación GRC</div>`)
+  .replace(/<div class="number-val">66<span><\/span><\/div>\n(\s*)<div class="number-label">(?:Marcos, normas y leyes|Frameworks, standards and laws)<\/div>\n\s*<div class="number-desc">[^<]*<\/div>/,
+    (_, sangria) => `<div class="number-val">15<span>+</span></div>\n${sangria}<div class="number-label">Marcos regulatorios</div>\n${sangria}<div class="number-desc">ISO, SWIFT, REGLAMENTOS CIBERSEGURIDAD SIMV, BCRD, NORTIC, PCI-DSS, SOC 2, NIST, HIPAA, GDPR y más</div>`)
   /* Y la rejilla de quince tarjetas de módulo, que es lo que los cinco
      dominios sustituyeron. Esta línea sólo muerde en el ORIGINAL —la nuestra
      ya no la tiene—, y así los dos lados quedan sin ella y se puede seguir

@@ -34,6 +34,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { ES, EN } = require("./contenido.cjs");
 const { M, CSS, seccionesNuevas, dominios } = require("./marcado.cjs");
+const CIFRAS = require("./cifras.cjs");
 
 const RAIZ = path.join(__dirname, "..", "..");
 const PAGINAS = [
@@ -110,6 +111,24 @@ for (const { f, t } of PAGINAS) {
     const nueva = cabecera.replace(RE_CABECERA,
       (_, a, b, c, d) => `${a}${q.chip}${b}\n        ${q.titulo}\n      ${c}\n        ${q.subtitulo}\n      ${d}`);
     h = h.slice(0, iSol) + nueva + h.slice(finSol);
+  }
+
+  /* 5. Las dos cifras de la fila de arriba, que decían «15+» las dos sin
+        salir de ningún sitio. Se sustituye la tarjeta ENTERA —valor, rótulo y
+        descripción— buscando por su rótulo viejo, que es lo único estable:
+        el valor cambia y la descripción también. */
+  const c = t === ES ? CIFRAS.es : CIFRAS.en;
+  for (const [rotuloViejo, dato] of [
+    [t === ES ? "Módulos integrados" : "Integrated modules", c.modulos],
+    [t === ES ? "Marcos regulatorios" : "Regulatory frameworks", c.marcos],
+  ]) {
+    const re = new RegExp(
+      `(<div class="number-val">)[^<]*(<span>)[^<]*(</span></div>\\s*<div class="number-label">)`
+      + rotuloViejo.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+      + `(</div>\\s*<div class="number-desc">)[^<]*(</div>)`);
+    if (!re.test(h)) continue;
+    h = h.replace(re, (_, a, b, d, e, g) =>
+      `${a}${dato.valor}${b}${dato.sufijo}${d}${dato.rotulo}${e}${dato.desc}${g}`);
   }
 
   if (h === antes) { console.log(`  ${f.padEnd(16)} ya estaba al día`); continue; }
