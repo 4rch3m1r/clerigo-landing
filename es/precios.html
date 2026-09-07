@@ -722,6 +722,22 @@ footer { background: #0E0E0E; }
 footer .social-icon { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
 footer .social-icon:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.24); }
 /* ── FIN DE LA BARRA Y EL PIE EN OSCURO ────────────────────────────────── */
+
+/* ── EL SELECTOR DE IDIOMA ─────────────────────────────────────────────
+   Cuál está activo lo dice el `lang` del documento y no una clase escrita a
+   mano: así el marcado es el mismo en las dos versiones y lo único que
+   cambia entre ellas son los dos enlaces. */
+.idiomas { display: flex; align-items: center; gap: 2px; margin-right: 4px; }
+.idiomas .idioma {
+  font-size: 11px; font-weight: 700; letter-spacing: .6px;
+  color: var(--text-3); padding: 5px 7px; border-radius: 5px;
+  transition: color .2s, background .2s;
+}
+.idiomas .idioma:hover { color: var(--text-2); }
+html[lang="en"] .idioma[data-idioma="en"],
+html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(--dark-3); }
+@media (max-width: 768px) { .idiomas { display: none; } }
+/* ── FIN DEL SELECTOR DE IDIOMA ── */
 </style>
 <script>
 /* El idioma del navegador decide; la eleccion de la persona manda. Ver
@@ -1258,22 +1274,7 @@ function renderModules() {
           style="background:linear-gradient(to right,${m.color} ${(userCount[m.id]-1)/199*100}%,rgba(14,14,14,0.12) ${(userCount[m.id]-1)/199*100}%)"
           oninput="updateUsers('${m.id}', this.value)"
           ${(isOn || isAutoIncluded(m)) ? '' : 'disabled'}>
-        <style>#card-${m.id} input[type=range]::-webkit-slider-thumb{background:${m.color};}/* ── EL SELECTOR DE IDIOMA ─────────────────────────────────────────────
-   Cuál está activo lo dice el `lang` del documento y no una clase escrita a
-   mano: así el marcado es el mismo en las dos versiones y lo único que
-   cambia entre ellas son los dos enlaces. */
-.idiomas { display: flex; align-items: center; gap: 2px; margin-right: 4px; }
-.idiomas .idioma {
-  font-size: 11px; font-weight: 700; letter-spacing: .6px;
-  color: var(--text-3); padding: 5px 7px; border-radius: 5px;
-  transition: color .2s, background .2s;
-}
-.idiomas .idioma:hover { color: var(--text-2); }
-html[lang="en"] .idioma[data-idioma="en"],
-html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(--dark-3); }
-@media (max-width: 768px) { .idiomas { display: none; } }
-/* ── FIN DEL SELECTOR DE IDIOMA ── */
-</style>
+        <style>#card-${m.id} input[type=range]::-webkit-slider-thumb{background:${m.color};}</style>
       </div>
       <div class="mod-bottom">
         <div><div class="mod-price-label">Precio</div></div>

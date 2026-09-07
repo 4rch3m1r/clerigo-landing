@@ -79,7 +79,8 @@ const ESTILO_PUESTO = /\/\* ── EL SELECTOR DE IDIOMA ──[\s\S]*?── FI
 
 function conEstilo(html) {
   const limpio = html.replace(ESTILO_PUESTO, "");
-  const j = limpio.lastIndexOf("</style>");
+  const finHead = limpio.indexOf("</head>");
+  const j = finHead >= 0 ? limpio.lastIndexOf("</style>", finHead) : limpio.lastIndexOf("</style>");
   if (j < 0) throw new Error("la página no tiene hoja de estilo donde poner el selector");
   return limpio.slice(0, j) + ESTILO + "\n" + limpio.slice(j);
 }
