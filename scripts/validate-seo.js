@@ -9,7 +9,7 @@ const ROOT = path.resolve(__dirname, '..');
 const files = [
   'index.html',
   'es/index.html',
-  'marcos.html',
+  'frameworks.html',
   'es/marcos.html',
   'precios.html',
   'es/precios.html',

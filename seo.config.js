@@ -98,7 +98,7 @@ const ROUTES = {
     lang: "es",
     locale: "es_ES",
     alternateLocale: "en_US",
-    alternateEn: "https://clerigo.io/marcos.html",
+    alternateEn: "https://clerigo.io/frameworks.html",
     alternateEs: "https://clerigo.io/es/marcos.html",
     title: "Marcos Regulatorios y Normativos Soportados | Clérigo GRC",
     description: "23+ marcos y estándares regulatorios integrados: ISO 27001, SOC 2, HIPAA, GDPR, NIST CSF, PCI-DSS, SIMV y Superintendencia de Bancos con mapeo cruzado inteligente.",
@@ -111,12 +111,12 @@ const ROUTES = {
   },
 
   // ── MARCOS REGULATORIOS (EN) ──
-  "marcos.html": {
-    canonicalPath: "marcos.html",
+  "frameworks.html": {
+    canonicalPath: "frameworks.html",
     lang: "en",
     locale: "en_US",
     alternateLocale: "es_ES",
-    alternateEn: "https://clerigo.io/marcos.html",
+    alternateEn: "https://clerigo.io/frameworks.html",
     alternateEs: "https://clerigo.io/es/marcos.html",
     title: "Supported Compliance Frameworks & Standards | Clérigo GRC",
     description: "23+ integrated regulatory standards: ISO 27001, SOC 2, HIPAA, GDPR, NIST CSF, PCI-DSS, and financial regulations with automated cross-mapping.",

@@ -9,9 +9,9 @@
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="theme-color" content="#0E0E0E">
 <link rel="canonical" href="https://clerigo.io/es/marcos.html">
-<link rel="alternate" hreflang="en" href="https://clerigo.io/marcos.html">
+<link rel="alternate" hreflang="en" href="https://clerigo.io/frameworks.html">
 <link rel="alternate" hreflang="es" href="https://clerigo.io/es/marcos.html">
-<link rel="alternate" hreflang="x-default" href="https://clerigo.io/marcos.html">
+<link rel="alternate" hreflang="x-default" href="https://clerigo.io/frameworks.html">
 <!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Clérigo">
@@ -501,7 +501,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
 
   var destino = quiere === 'es'
     ? ruta.replace(/\/([^\/]*)$/, '/es/$1')
-    : ruta.replace('/es/', '/');
+    : quiere === 'en' ? '/frameworks.html' : '/es/marcos.html';
   if (destino === ruta) return;
   location.replace(destino + location.search + location.hash);
 })();
@@ -519,11 +519,11 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
     <a href="index.html#solution">Módulos</a>
     <a href="index.html#platform">Plataforma</a>
     <a href="index.html#how">Cómo funciona</a>
-    <a href="marcos.html">Marcos</a>
+    <a href="marcos.html" class="aqui">Marcos</a>
     <a href="index.html#testimonials">Clientes</a>
   </div>
   <div class="nav-cta">
-    <div class="idiomas"><a href="../marcos.html" class="idioma" data-idioma="en" hreflang="en">EN</a><a href="marcos.html" class="idioma" data-idioma="es" hreflang="es">ES</a></div>
+    <div class="idiomas"><a href="../frameworks.html" class="idioma" data-idioma="en" hreflang="en">EN</a><a href="marcos.html" class="idioma" data-idioma="es" hreflang="es">ES</a></div>
     <a href="https://app.clerigo.io" class="btn-ghost">login</a>
     <a href="precios.html" class="btn-ghost">Planes</a>
     <a href="contacto.html" class="btn-primary">
