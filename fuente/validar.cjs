@@ -114,6 +114,31 @@ for (const [n, tConSelector] of [["oscuro", osc], ["claro", cla]]) {
       .map((f) => f + ".html") + " no está");
   comprueba(`la marca es «Clèrigo» en el ${n}`, cuenta(t, /Clèrigo/g) >= 18,
     cuenta(t, /Clèrigo/g) + " apariciones");
+  /* QUIÉN FIRMA LOS TRES TESTIMONIOS.
+   *
+   * La comparación contra el original no puede decir esto. Ella declara que en
+   * ese hueco vale el nombre del original o el nuestro —tiene que declararlo,
+   * si no, no podría comparar el resto—, así que si mañana vuelven los del
+   * original se queda callada. Y volver es exactamente lo que pasó: los tres
+   * se cambiaron a mano el 2026-09-06 y una regeneración de tres horas después
+   * los devolvió sin que ninguna comprobación abriera la boca.
+   *
+   * Esto lo dice en positivo: tienen que ser ESTOS TRES, y los del original no
+   * pueden estar. Junto con la declaración en `rebrandear.cjs`, el cambio ya
+   * no se puede perder en silencio: o está, o esto se pone rojo.
+   *
+   * Se busca el bloque ENTERO —bolita con sus iniciales y nombre— y no las dos
+   * cosas por separado, para que no se pueda quedar «GA» junto a otro nombre. */
+  const FIRMAS = [["--red", "GA", "Grace Anderson"], ["--teal", "JW", "Joseph Walker"],
+    ["--purple", "MC", "Michael Collins"]];
+  const faltan = FIRMAS.filter(([color, ini, nombre]) => !new RegExp(
+    `<div class="testimonial-avatar" style="background:var\\(${color}\\)">${ini}</div>\\n[ \\t]*<div>\\n[ \\t]*<div class="testimonial-name">${nombre}</div>`,
+  ).test(t)).map(([, ini, nombre]) => ini + " " + nombre);
+  const viejos = ["Carlos Ramos", "Laura González", "Alejandro Mora"].filter((x) => t.includes(x));
+  comprueba(`los tres testimonios los firman quienes deben, en el ${n}`,
+    faltan.length === 0 && viejos.length === 0,
+    [faltan.length ? "falta la pareja de " + faltan.join(", ") : "",
+      viejos.length ? "han vuelto los del original: " + viejos.join(", ") : ""].filter(Boolean).join(" · "));
   /* El título empieza por la marca y sigue por una barra vertical. Es el
      patrón que usan Microsoft, AWS y Atlassian —«Microsoft Trust Center |
      Data Security, Privacy, and Compliance»— y no es estética: en el
@@ -458,6 +483,31 @@ const esqueleto = (s) => pelado(
     '<a href="BOTON-ROJO" class="btn-large red">\nROTULO-DEL-BOTON-ROJO\n')
   .replace(/<a href="https:\/\/DOM\/precios" class="btn-large red">\n[ \t]*Planes y Precios\n/g,
     '<a href="BOTON-ROJO" class="btn-large red">\nROTULO-DEL-BOTON-ROJO\n')
+  /* LOS TRES NOMBRES DE LOS TESTIMONIOS.
+     El original los firma Carlos Ramos, Laura González y Alejandro Mora; aquí
+     van Grace Anderson, Joseph Walker y Michael Collins. La bolita de la
+     izquierda lleva las iniciales de cada uno.
+     CADA PAREJA VA ENTERA EN SU PROPIA SUSTITUCIÓN —iniciales Y nombre, y una
+     por color—, por lo mismo que el botón rojo de más arriba: escrito como una
+     lista de alternativas, esto aceptaría también «CR» junto a «Grace
+     Anderson», que es justo el descuido que puede colarse el día que alguien
+     cambie un nombre y se olvide de la bolita. Así no encaja y sale. */
+  /* Los paréntesis van escapados. Sin escapar, `var(--red)` es un grupo que
+     pide el texto `var--red`, que no existe en ninguna página: la sustitución
+     no encajaba nunca y la comparación seguía cantando la diferencia como si
+     no se hubiera declarado nada. */
+  .replace(/<div class="testimonial-avatar" style="background:var\(--red\)">CR<\/div>\n[ \t]*<div>\n[ \t]*<div class="testimonial-name">Carlos Ramos<\/div>/,
+    'TESTIMONIO-1')
+  .replace(/<div class="testimonial-avatar" style="background:var\(--red\)">GA<\/div>\n[ \t]*<div>\n[ \t]*<div class="testimonial-name">Grace Anderson<\/div>/,
+    'TESTIMONIO-1')
+  .replace(/<div class="testimonial-avatar" style="background:var\(--teal\)">LG<\/div>\n[ \t]*<div>\n[ \t]*<div class="testimonial-name">Laura González<\/div>/,
+    'TESTIMONIO-2')
+  .replace(/<div class="testimonial-avatar" style="background:var\(--teal\)">JW<\/div>\n[ \t]*<div>\n[ \t]*<div class="testimonial-name">Joseph Walker<\/div>/,
+    'TESTIMONIO-2')
+  .replace(/<div class="testimonial-avatar" style="background:var\(--purple\)">AM<\/div>\n[ \t]*<div>\n[ \t]*<div class="testimonial-name">Alejandro Mora<\/div>/,
+    'TESTIMONIO-3')
+  .replace(/<div class="testimonial-avatar" style="background:var\(--purple\)">MC<\/div>\n[ \t]*<div>\n[ \t]*<div class="testimonial-name">Michael Collins<\/div>/,
+    'TESTIMONIO-3')
   /* EL RELLENO DEL PIE DEL ORIGINAL, QUE AQUÍ NO SE PUBLICA.
      Archemir dejaba en el pie diez enlaces que no llevaban a ninguna parte:
      nueve con `href="#"` —al pulsarlos la página salta arriba y se queda uno

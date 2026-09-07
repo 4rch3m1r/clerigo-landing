@@ -514,6 +514,42 @@ cambia("grc-intelligence.app", "clerigo.io", 1);
 cambia("GRC Intelligence", "Clèrigo", 7);
 cambia("Axioma GRC", "Clèrigo", 2);
 
+/* ── 3b. Los nombres de los tres testimonios ──────────────────────────
+ *
+ * El original firma los tres testimonios con Carlos Ramos, Laura González y
+ * Alejandro Mora. Aquí van con otros tres nombres.
+ *
+ * ESTO YA SE HIZO UNA VEZ Y SE PERDIÓ, y por eso está aquí y no en el HTML. El
+ * 2026-09-06 se cambiaron los tres a mano en `es/index.html`, `es/oscuro.html`
+ * y la inglesa (commit bbf31a4). Tres horas después, otro commit volvió a
+ * generar las páginas desde este guion y los tres nombres volvieron a ser los
+ * del original, sin que nadie lo notara: la regeneración no se equivocó, hizo
+ * exactamente lo suyo. Un cambio escrito sólo en el fichero generado dura
+ * hasta la siguiente pasada.
+ *
+ * VA EL NOMBRE Y LAS INICIALES EN LA MISMA SUSTITUCIÓN, no en dos. Separadas,
+ * el día que alguien cambie un nombre se queda la bolita con las iniciales del
+ * anterior —«GA» junto a otro nombre— y eso no lo canta ninguna comprobación
+ * porque las dos cosas siguen existiendo. Juntas no pueden separarse.
+ *
+ * Los colores de las bolitas —rojo, verde azulado y morado— son los del
+ * original y se quedan. */
+for (const [ini, nombre, iniNueva, nombreNuevo, color] of [
+  ["CR", "Carlos Ramos", "GA", "Grace Anderson", "--red"],
+  ["LG", "Laura González", "JW", "Joseph Walker", "--teal"],
+  ["AM", "Alejandro Mora", "MC", "Michael Collins", "--purple"],
+]) {
+  cambia(
+    `<div class="testimonial-avatar" style="background:var(${color})">${ini}</div>\n`
+    + '          <div>\n'
+    + `            <div class="testimonial-name">${nombre}</div>`,
+    `<div class="testimonial-avatar" style="background:var(${color})">${iniNueva}</div>\n`
+    + '          <div>\n'
+    + `            <div class="testimonial-name">${nombreNuevo}</div>`,
+    1,
+  );
+}
+
 /* ── 4. El dominio ──────────────────────────────────────────────────────── */
 
 /* El botón «login» apuntaba a truestoneadvisory.com, que no es Archemir pero
@@ -1320,6 +1356,53 @@ cambia(
   h = h.slice(0, i) + GUION_CARRUSEL + h.slice(i);
   parte.push("  · guion del carrusel");
 }
+
+/* ── 4c. EL RELLENO DEL PIE Y EL BOTÓN DE LA PORTADA ──────────────────────
+ *
+ * VA AQUÍ, AL FINAL, Y NO ES CAPRICHO: estas sustituciones miran los enlaces
+ * YA reescritos por los apartados 4 y 4b. Puestas antes, buscarían direcciones
+ * de archemir.com que en ese momento todavía existen y en la página terminada
+ * ya no, y no encajarían.
+ *
+ * Y VA AQUÍ Y NO EN EL HTML, que es la lección del día. Todo esto se hizo el
+ * 2026-09-07 editando `es/index.html` y `es/oscuro.html` a mano. Funcionaba, se
+ * publicó, y habría durado hasta la siguiente pasada de `fuente/hacer.cjs`:
+ * este guion rehace la portada desde el original de Archemir, que sigue
+ * trayendo los diez enlaces muertos, el botón de la demo y la falta de
+ * ortografía. Ya pasó una vez con los nombres de los testimonios —ver 3b— y
+ * habría vuelto a pasar con esto.
+ *
+ * Cada `cambia` exige un número exacto de coincidencias, así que si el original
+ * cambia de forma esto se para en vez de escribir una página a medias. */
+
+/* Los nueve que no llevaban a ninguna parte. */
+for (const rotulo of ["Integraciones", "Changelog", "Blog GRC", "Webinars", "Casos de éxito",
+  "API Developers", "Sobre nosotros", "Prensa", "Carreras"]) {
+  cambia(`        <a href="#">${rotulo}</a>\n`, "", 1);
+}
+/* Y «Academia», que es peor que los nueve: prometía una página y daba un 404. */
+cambia('        <a href="https://clerigo.io/academia">Academia</a>\n', "", 1);
+/* La columna «Recursos» se queda sin nada dentro y desaparece entera: el pie
+   pasa de cuatro columnas a tres. */
+cambia('      <div class="footer-col">\n        <div class="footer-col-title">Recursos</div>\n      </div>\n', "", 1);
+
+/* Tres que no se quitan, se arreglan: tenían destino, sólo que no el suyo.
+   `#solution` a secas funciona en la portada y en ninguna otra página; con el
+   fichero delante funciona en las siete. */
+cambia('<a href="#">Plataforma</a>', '<a href="index.html#platform">Plataforma</a>', 1);
+cambia('<a href="#solution">Entrenamiento</a>', '<a href="index.html#solution">Entrenamiento</a>', 1);
+cambia('<a href="#">Socios</a>', '<a href="partners.html">Socios</a>', 1);
+
+/* El botón rojo de la portada: ya no pide una demo, lleva al precio. La demo
+   sigue en el botón «Contacto» de la barra y en la sección del final. */
+cambia(
+  '<a href="#cta" class="btn-large red">\n          Ver demo en vivo',
+  '<a href="precios.html" class="btn-large red">\n          Planes y Precios',
+  1,
+);
+
+/* Y una falta heredada, en el botón que hay encima del pie. */
+cambia("Portal de Pathner", "Portal de Partners", 1);
 
 /* ── 5. Comprobación ────────────────────────────────────────────────────── */
 
