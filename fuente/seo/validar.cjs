@@ -220,6 +220,36 @@ if (producto) {
     producto.offers ? `declara «${JSON.stringify(producto.offers).slice(0, 60)}»` : "");
 }
 
+/* ── LAS REDIRECCIONES SE LEEN DE VERDAD ────────────────────────────────
+ *
+ * `_redirects` empezaba con un BOM —los tres bytes EF BB BF que algunos
+ * editores meten al guardar en UTF-8—, y con eso la PRIMERA REGLA del fichero
+ * deja de leerse: el servidor ve «﻿/marcos» y eso no es una ruta.
+ *
+ * El resultado se vio en vivo: `clerigo.io/marcos` no redirigía a `/frameworks`
+ * como manda el fichero, sino que servía `marcos.html`, que estaba en
+ * castellano y con el título en castellano dentro de la raíz inglesa. Un byte
+ * invisible al principio de un fichero, y una página en el idioma equivocado
+ * publicada.
+ *
+ * No hay forma de notarlo leyendo: el fichero se ve perfecto en cualquier
+ * editor. Por eso se comprueba en bytes. */
+if (fs.existsSync(path.join(RAIZ, "_redirects"))) {
+  const crudo = fs.readFileSync(path.join(RAIZ, "_redirects"));
+  comprueba("_redirects no empieza con BOM (mataría su primera regla)",
+    !(crudo[0] === 0xEF && crudo[1] === 0xBB && crudo[2] === 0xBF),
+    "empieza con EF BB BF: la primera regla no se lee");
+
+  /* Y que cada regla tenga la forma que espera el servidor: origen, destino y
+     código. Una línea mal escrita tampoco da error: simplemente no redirige. */
+  const malas = crudo.toString("utf8").split(/\r?\n/)
+    .map((l, i) => [i + 1, l.trim()])
+    .filter(([, l]) => l && !l.startsWith("#"))
+    .filter(([, l]) => !/^\S+\s+\S+(\s+\d{3})?$/.test(l));
+  comprueba("todas las reglas de _redirects tienen forma de regla",
+    malas.length === 0, malas.map(([n, l]) => "línea " + n + ": «" + l + "»").join(" · "));
+}
+
 console.log("\n────────────────────────────────────────────────────────────────");
 console.log(fallos.length === 0 ? `TODO PASA  ·  ${cuantas} comprobaciones` : `FALLAN ${fallos.length} de ${cuantas}:`);
 fallos.forEach((f) => console.log("  · " + f));
