@@ -154,6 +154,7 @@ for (const p of TODAS) {
     "Superintendencia de Bancos", "Bolsa de Valores", "Mercado de Valores",
     "Banco Central", "Banco del Norte", "Grupo Financiero Andino",
     "Laura González", "Carlos Ramos", "Alejandro Mora", "María García",
+    "Grace Anderson", "Joseph Walker", "Michael Collins",
     "García", "González", "Santo Domingo",
     /* Un logotipo parte el nombre en dos líneas y cada mitad es su propio
        nodo de texto: dentro del SVG del sello, «Bolsa» va en una y
