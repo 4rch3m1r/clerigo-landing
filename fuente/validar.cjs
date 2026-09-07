@@ -87,7 +87,11 @@ for (const [n, tConSelector] of [["oscuro", osc], ["claro", cla]]) {
   comprueba(`los enlaces del sitio van a las páginas de al lado en el ${n}`,
     cuenta(t, /href="marcos\.html"/g) === 6
     && cuenta(t, /href="legal\.html"/g) === 5
-    && cuenta(t, /href="precios\.html"/g) === 3
+    /* Cuatro: «Planes» en la barra de arriba, el botón rojo de la portada, y
+       «Módulos GRC» y «Precios» en el pie. El botón rojo llevaba a `#cta` —la
+       sección de demo del final de la misma página— y ahora lleva a la de
+       precios. */
+    && cuenta(t, /href="precios\.html"/g) === 4
     && cuenta(t, /href="contacto\.html"/g) === 3
     /* Dos: el botón «Portal de Socios» de la sección, y el «Socios» del pie,
        que hasta ahora era un `#` y no llevaba a ninguna parte. */
@@ -438,6 +442,22 @@ const esqueleto = (s) => pelado(
   /* El enlace del pie venía sin protocolo —un fallo del original— y ahora lo
      lleva. Se iguala para que el resto de la línea sí se compare. */
   .replace(/href="(https:\/\/)?DOM"/g, 'href="DOM"')
+  /* EL BOTÓN ROJO DE LA PORTADA, QUE YA NO PIDE UNA DEMO SINO QUE ENSEÑA EL
+     PRECIO. En el original decía «Ver demo en vivo» y llevaba a `#cta`, que es
+     la sección de demo del final de la misma página. Ahora dice «Planes y
+     Precios» y lleva a `precios.html`.
+     SON DOS SUSTITUCIONES Y NO UNA CON DOS ALTERNATIVAS, y la diferencia no es
+     de estilo. Escrito como una sola —«cualquiera de estos dos destinos con
+     cualquiera de estos dos rótulos»— la declaración acepta también las dos
+     mezclas que nunca existieron: el rótulo viejo con el destino nuevo, y al
+     revés. Se probó rompiéndolo así en las dos gemelas a la vez, y pasaba de
+     largo. Cada pareja va por su lado: el destino viejo SÓLO con el rótulo
+     viejo, el nuevo SÓLO con el nuevo. Cualquier otra combinación no encaja en
+     ninguna de las dos y sale por la comparación. */
+  .replace(/<a href="#cta" class="btn-large red">\n[ \t]*Ver demo en vivo\n/g,
+    '<a href="BOTON-ROJO" class="btn-large red">\nROTULO-DEL-BOTON-ROJO\n')
+  .replace(/<a href="https:\/\/DOM\/precios" class="btn-large red">\n[ \t]*Planes y Precios\n/g,
+    '<a href="BOTON-ROJO" class="btn-large red">\nROTULO-DEL-BOTON-ROJO\n')
   /* EL RELLENO DEL PIE DEL ORIGINAL, QUE AQUÍ NO SE PUBLICA.
      Archemir dejaba en el pie diez enlaces que no llevaban a ninguna parte:
      nueve con `href="#"` —al pulsarlos la página salta arriba y se queda uno
