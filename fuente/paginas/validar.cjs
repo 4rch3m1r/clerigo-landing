@@ -32,6 +32,24 @@ const MARCA = JSON.parse(fs.readFileSync(path.join(AQUI, "marca.json"), "utf8"))
 const SITIO = JSON.parse(fs.readFileSync(path.join(AQUI, "..", "sitio.json"), "utf8"));
 /* Lo que una página escrita de cero TIENE y NO PUEDE decir. */
 const AFIRMACIONES = JSON.parse(fs.readFileSync(path.join(AQUI, "afirmaciones.json"), "utf8"));
+
+/* Lo que una página dejó de hacer A PROPÓSITO.
+ *
+ * La regla es que no se pierde nada de lo que la página hacía. Cuando algo se
+ * retira a conciencia se apunta aquí con su porqué, y sigue fallando todo lo
+ * que no esté en la lista. Aflojar la comprobación en vez de declarar la
+ * excepción es quedarse sin comprobación. */
+const RETIRADOS = {
+  precios: {
+    /* El deslizador de usuarios estaba en CADA tarjeta de módulo. Ahora hay uno
+       solo, de cuenta (`setUsuarios`), porque las siete licencias incluidas
+       —2 administradores y 5 gestores— son de la cuenta y no del módulo: sumar
+       un deslizador por módulo cobraba tres veces a quien usa tres módulos.
+       Decisión del cliente, 2026-09-07. */
+    manejadores: ["updateUsers('${m.id}', this.value)"],
+    funciones: ["updateUsers"],
+  },
+};
 const PLANTILLA = lee(path.join(AQUI, "plantilla.html"));
 
 const PAGINAS = require("./paginas.cjs");
@@ -125,18 +143,52 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
      propia— se colaban en la lista de palabras. El original no los tiene, así
      que la comparación cantaba una diferencia en la palabra 4 de 366. No es
      texto de la página: es un mando. */
-  /* ── EL PRECIO SALE DE LA RESPUESTA DE LAS DUDAS, Y SE DECLARA AQUÍ ────
+  /* ── LO QUE LAS PÁGINAS DICEN Y EL ORIGINAL NO, DECLARADO UNO A UNO ────
    *
-   * El original decía «los usuarios adicionales tienen un costo de $20
-   * USD/usuario/mes». Ese precio TODAVÍA NO ESTÁ DECIDIDO, así que la página
-   * dice cómo funciona sin decir cuánto cuesta.
+   * La regla de la casa es que las palabras son las del original. Cuando el
+   * cliente cambia una a propósito, se declara AQUÍ y se normaliza a la frase
+   * vieja, de modo que el resto de la página se sigue comparando palabra por
+   * palabra. Bajarle el listón a la guarda sería no tener guarda.
    *
-   * Se normaliza a la frase del original para poder seguir comparando el resto
-   * de la página palabra por palabra, que es de lo que esta guarda responde. */
-  const sinPrecio = sal.replace(
-    /Cada módulo incluye 1 usuario\. Los usuarios adicionales se facturan aparte, con periodicidad anual\. Escríbenos y te pasamos la propuesta para tu caso; para más de 200 usuarios o necesidades especiales hay plan Enterprise\./,
-    "Cada módulo incluye 1 usuario. Los usuarios adicionales tienen un costo de $20 USD/usuario/mes, facturados anualmente. Para más de 200 usuarios o necesidades especiales, contáctanos para un plan Enterprise.");
-  const dePagina = sinLetrasDeLogotipo(palabras(sinSelector(sinPrecio), { abre: `<main class="pagina">`, cierra: "</main>" }) || []);
+   * Cada entrada lleva escrito su porqué: dentro de un año nadie se acuerda de
+   * cuál de estas frases fue una decisión y cuál un despiste. */
+  const DECLARADAS = [
+    /* El modelo de licencias cambió: ya no es «1 usuario por módulo», sino un
+       paquete con 2 administradores y 5 licencias de gestor —riesgos,
+       cumplimiento, ciberseguridad y auditoría interna— para la cuenta entera.
+       Lo decidió el cliente el 2026-09-07. */
+    ["incluye <strong>2 administradores y 5 licencias de gestor</strong> (riesgos, cumplimiento, ciberseguridad y auditoría interna). Usuarios adicionales",
+     "1 usuario incluido. Usuarios adicionales"],
+    ["includes <strong>2 administrators and 5 manager licences</strong> (risk, compliance, cybersecurity and internal audit). Additional users",
+     "1 user included. Additional users"],
+    /* La misma decisión, en la respuesta de las dudas. La pregunta cambió con
+       ella: ya no se pregunta cuánto cuesta añadir, sino cuántos vienen. */
+    ["{q:'¿Cuántos usuarios vienen incluidos?',a:'El precio incluye 2 administradores y 5 licencias de gestor —riesgos, cumplimiento, ciberseguridad y auditoría interna—, para toda la cuenta y actives los módulos que actives. Los usuarios adicionales se facturan aparte, con periodicidad anual. Para más de 200 usuarios o necesidades especiales hay plan Enterprise.'}",
+     "{q:'¿Cuánto cuesta agregar usuarios?',a:'Cada módulo incluye 1 usuario. Los usuarios adicionales tienen un costo de $20 USD/usuario/mes, facturados anualmente. Para más de 200 usuarios o necesidades especiales, contáctanos para un plan Enterprise.'}"],
+    /* Y la misma decisión, en la calculadora. El deslizador estaba en CADA
+       tarjeta de módulo; ahora hay uno solo, en el panel de resumen, porque las
+       siete licencias son de la cuenta y no del módulo: sumar un deslizador por
+       módulo contaba tres veces a quien usa tres módulos. Aquí se deshace el
+       traslado —se quita el control nuevo y se devuelve el rótulo viejo a la
+       tarjeta— para que el resto de las 1.326 palabras se sigan comparando. */
+    [/<div class="cuenta-users">[\s\S]*?<div class="sum-divider"><\/div>\n\s*/, ""],
+    [/(<div class="mod-features">)/, '<div class="users-label"><span>Usuarios</span></div>$1'],
+    /* La línea de usuarios del panel de resumen es NUEVA: antes no existía,
+       porque lo que costaba la gente iba escondido dentro del precio de cada
+       módulo y no se enseñaba en ninguna parte. */
+    [/function lineaUsuariosResumen\(\) \{[\s\S]*?\n\}\n/, ""],
+    /* Y el rótulo del contador dice lo mismo que decía —lo que trae el
+       paquete— con el número nuevo. */
+    ["`${usuariosCuenta} usuarios incluidos`", "`1 usuario incluido`"],
+    ["`${usuariosCuenta} users included`", "`1 user included`"],
+  ];
+  let normalizada = sal;
+  for (const [ahora, antes] of DECLARADAS) {
+    normalizada = typeof ahora === "string"
+      ? normalizada.split(ahora).join(antes)
+      : normalizada.replace(ahora, antes);
+  }
+  const dePagina = sinLetrasDeLogotipo(palabras(sinSelector(normalizada), { abre: `<main class="pagina">`, cierra: "</main>" }) || []);
   const deOrigen = sinOriginal ? null : sinLetrasDeLogotipo(palabras(aplicaMarca(soloElCuerpo(org), MARCA)));
 
   if (sinOriginal) {
@@ -196,9 +248,18 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
     sal.slice(sal.lastIndexOf("</main>")),
   );
   for (const clave of ["identificadores", "manejadores", "funciones"]) {
-    const faltan = hOrg[clave].filter((x) => !hSal[clave].includes(x));
+    const quitados = (RETIRADOS[slug] || {})[clave] || [];
+    const faltan = hOrg[clave].filter((x) => !hSal[clave].includes(x) && !quitados.includes(x));
     comprueba(`${slug}: no se ha perdido ningún ${clave.slice(0, -2)}or`.replace("ionor", "ion"),
       faltan.length === 0, "faltan: " + faltan.join(", "));
+    /* Y al revés: una retirada declarada que SIGUE ahí es una declaración
+       podrida, y una declaración podrida es un agujero por el que mañana se
+       cuela una pérdida de verdad sin que nadie se entere. */
+    const siguen = quitados.filter((x) => hSal[clave].includes(x));
+    if (quitados.length) {
+      comprueba(`${slug}: lo que se declara retirado (${clave}) de verdad no está`,
+        siguen.length === 0, "siguen ahí: " + siguen.join(", "));
+    }
   }
   for (const clave of ["entradas", "listas", "opciones", "areas", "botones"]) {
     comprueba(`${slug}: los mismos controles (${clave})`, hSal[clave] >= hOrg[clave],

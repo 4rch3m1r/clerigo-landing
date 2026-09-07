@@ -412,6 +412,10 @@ input[type=range]::-webkit-slider-thumb {
   width: 16px; height: 16px; border-radius: 50%; cursor: pointer; border: 2px solid var(--dark-2);
 }
 input[type=range]:disabled { cursor: not-allowed; opacity: 0.7; }
+/* El contador de usuarios de la cuenta, en el panel de resumen. */
+.cuenta-users { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.cuenta-users input[type=range]::-webkit-slider-thumb { background: var(--red); }
+.cuenta-users-note { font-size: 10px; line-height: 1.55; color: var(--text-3); }
 
 /* ── PANEL DE RESUMEN ── */
 .summary-section { display: grid; grid-template-columns: minmax(0,1fr) 360px; gap: 24px; align-items: start; }
@@ -807,7 +811,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
   <div class="stripe"></div><div class="stripe2"></div>
   <div class="label-chip fade-up">Flexible per-module plans</div>
   <h1 class="fade-up fade-up-1">Choose only what<br>your company <em>needs.</em></h1>
-  <p class="hero-desc fade-up fade-up-2">12 specialised modules. Activate only the ones you need. <strong>All modules = $5,000 USD / year</strong> — 1 user included. Additional users at <strong>$20 USD / user / month</strong>.</p>
+  <p class="hero-desc fade-up fade-up-2">12 specialised modules. Activate only the ones you need. <strong>All modules = $5,000 USD / year</strong> — includes <strong>2 administrators and 5 manager licences</strong> (risk, compliance, cybersecurity and internal audit). Additional users at <strong>$20 USD / user / month</strong>.</p>
   <div class="billing-toggle fade-up fade-up-3" id="billingToggle">
     <button class="bill-btn active" onclick="setBilling('annual')">Annual</button>
     <button class="bill-btn" onclick="setBilling('monthly')">Monthly <span class="save-badge">+20%</span></button>
@@ -862,6 +866,13 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
     <div>
       <div class="summary-card reveal" id="summaryCard">
         <div class="summary-title">Your selected plan</div>
+        <div class="cuenta-users">
+          <div class="users-label"><span>Account users</span><span class="users-val" id="usuariosVal">&nbsp;</span></div>
+          <input type="range" max="200" step="1" id="usuariosRango" oninput="setUsuarios(this.value)"
+            aria-label="Account users">
+          <div class="cuenta-users-note">Includes 2 administrators and 5 manager licences: risk, compliance, cybersecurity and internal audit. Beyond that, $20 USD per user per month.</div>
+        </div>
+        <div class="sum-divider"></div>
         <div class="summary-items" id="summaryItems"></div>
         <div class="sum-divider"></div>
         <div class="sum-total-row">
@@ -1075,7 +1086,13 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
 // ════════════════════════════════
 //  DATOS
 // ════════════════════════════════
-const PER_MODULE = 5000; // USD/año, 1 usuario incluido
+const PER_MODULE = 5000; // USD/año, todos los módulos
+/* Lo que trae el precio, sea cual sea el número de módulos: dos personas que
+   administran y cinco que gestionan —riesgos, cumplimiento, ciberseguridad y
+   auditoría interna—. Son de la CUENTA, no de cada módulo. */
+const ADMINS_INCLUIDOS = 2;
+const GESTORES_INCLUIDOS = 5;
+const USUARIOS_INCLUIDOS = ADMINS_INCLUIDOS + GESTORES_INCLUIDOS;
 const PER_USER_MONTHLY = 20; // USD/usuario adicional/mes
 
 // Los iconos de estado, dibujados: ni un pictograma en toda la página.
@@ -1173,7 +1190,7 @@ const modules = [
 const faqs = [
   {q:'¿Puedo activar módulos después?',a:'Sí. Puedes añadir o quitar módulos desde tu panel de administración en cualquier momento. El cambio aplica en el siguiente ciclo de facturación.'},
   {q:'¿Hay un período de prueba gratuito?',a:'Todos los planes incluyen 14 días de prueba gratuita con acceso completo a los módulos seleccionados. No se requiere tarjeta de crédito para comenzar.'},
-  {q:'¿Cuánto cuesta agregar usuarios?',a:'Cada módulo incluye 1 usuario. Los usuarios adicionales se facturan aparte, con periodicidad anual. Escríbenos y te pasamos la propuesta para tu caso; para más de 200 usuarios o necesidades especiales hay plan Enterprise.'},
+  {q:'¿Cuántos usuarios vienen incluidos?',a:'El precio incluye 2 administradores y 5 licencias de gestor —riesgos, cumplimiento, ciberseguridad y auditoría interna—, para toda la cuenta y actives los módulos que actives. Los usuarios adicionales se facturan aparte, con periodicidad anual. Para más de 200 usuarios o necesidades especiales hay plan Enterprise.'},
   {q:'¿Puedo integrar Clèrigo con otros sistemas?',a:'Sí. La plataforma incluye una API REST documentada para integrarse con tu ecosistema digital. También tiene conectores nativos con SharePoint, Teams y Power Apps.'},
   {q:'¿Cómo funciona la firma digital?',a:'Integramos con proveedores de firma digital certificados. Los documentos siguen un flujo de aprobación configurable antes de ser firmados y archivados automáticamente en SharePoint.'},
   {q:'¿Qué marcos regulatorios están preconfigurados?',a:'ISO 27001, ISO 22301, NIST CSF, PCI-DSS, SWIFT, BCR (Banco Central RD), SIMV, NORTIC A5/A6/A7, Ley 172-13 y más. Nuevos marcos se añaden regularmente.'},
@@ -1186,12 +1203,16 @@ const faqs = [
 // ════════════════════════════════
 let billing = 'annual';
 let selected = {};
-let userCount = {};
+/* Los usuarios son de la CUENTA, no de cada modulo: el paquete trae siete
+   licencias —2 administradores y 5 gestores— y a partir de ahi se paga por
+   persona. Por eso hay UN contador y no uno por modulo: sumar un deslizador
+   por modulo contaba tres veces a quien usa tres modulos. */
+let usuariosCuenta = USUARIOS_INCLUIDOS;
 let discount = 0;
 let currentStep = 0;
 let payMethod = 'card';
 
-modules.forEach(m => { selected[m.id] = false; userCount[m.id] = 1; });
+modules.forEach(m => { selected[m.id] = false; });
 
 // Cierto cuando un complemento entra gratis con su módulo padre o con el plan
 function isAutoIncluded(m) {
@@ -1220,7 +1241,6 @@ function renderModules() {
     const auto = isAutoIncluded(m);           // gratis con el padre
     const standalone = isStandalone(m);       // contratado aparte (cuesta)
     const price = calcModulePrice(m);
-    const extraU = Math.max(userCount[m.id] - 1, 0);
 
     // el canto de color de los complementos
     const addonStyle = m.addonOf
@@ -1261,14 +1281,6 @@ function renderModules() {
             ${f}
           </div>`).join('')}
       </div>
-      <div class="users-row">
-        <div class="users-label"><span>Usuarios</span><span class="users-val">${userCount[m.id]} usuario${userCount[m.id] === 1 ? '' : 's'}</span></div>
-        <input type="range" min="1" max="200" step="1" value="${userCount[m.id]}"
-          style="background:linear-gradient(to right,${m.color} ${(userCount[m.id]-1)/199*100}%,rgba(14,14,14,0.12) ${(userCount[m.id]-1)/199*100}%)"
-          oninput="updateUsers('${m.id}', this.value)"
-          ${(isOn || isAutoIncluded(m)) ? '' : 'disabled'}>
-        <style>#card-${m.id} input[type=range]::-webkit-slider-thumb{background:${m.color};}</style>
-      </div>
       <div class="mod-bottom">
         <div><div class="mod-price-label">Precio</div></div>
         <div class="mod-price-val" id="price-${m.id}">
@@ -1282,13 +1294,40 @@ function renderModules() {
 }
 
 function calcModulePrice(m) {
-  // basePrice = costo anual del módulo (1 usuario incluido)
-  // Módulos incluidos (addonOf): base = 0, pero usuarios adicionales = $240/año c/u
-  // alwaysFree (Riesgos Terceros): igual, base = 0, pero adicionales cobran
+  // basePrice = costo anual del módulo, y nada más. La gente se cobra una
+  // sola vez y para toda la cuenta, en costeUsuariosExtra(), no aquí.
+  // Módulos incluidos (addonOf) y alwaysFree (Riesgos Terceros): base = 0.
   const base = (isAutoIncluded(m) || m.alwaysFree) ? 0 : m.basePrice;
-  const extraUsers = Math.max(userCount[m.id] - 1, 0);
-  if (billing === 'annual') return base + (extraUsers * 240);
-  return Math.round(base / 12) + (extraUsers * 20);
+  return billing === 'annual' ? base : Math.round(base / 12);
+}
+
+/* Lo que cuesta la gente. UNA función: las dos pantallas que enseñan un total
+   —el panel de resumen y la caja del pedido— llaman aquí, de modo que no
+   pueden discrepar. Antes cada una hacía su cuenta. */
+function costeUsuariosExtra() {
+  const extra = Math.max(usuariosCuenta - USUARIOS_INCLUIDOS, 0);
+  return extra * (billing === 'annual' ? 240 : 20);
+}
+
+/* La línea de la gente en el panel de resumen. Se enseña siempre que haya
+   módulos, aunque sume cero: quien lee un resumen tiene que ver lo que trae
+   el paquete, no solo lo que se le cobra de más. */
+function lineaUsuariosResumen() {
+  if (!modules.some(m => selected[m.id] || isAutoIncluded(m))) return '';
+  const coste = costeUsuariosExtra();
+  const extra = Math.max(usuariosCuenta - USUARIOS_INCLUIDOS, 0);
+  return `<div class="sum-item">
+      <div class="sum-item-name">
+        <div class="sum-dot" style="background:var(--text-3)"></div>
+        <div>
+          <div>Users</div>
+          <div style="font-size:9px;color:var(--text-3);margin-top:1px">${ADMINS_INCLUIDOS} administrators and ${GESTORES_INCLUIDOS} managers included${extra ? ' · ' + extra + ' additional' : ''}</div>
+        </div>
+      </div>
+      <div class="sum-item-price">${coste === 0
+        ? '<span style=\"color:var(--success);font-size:11px;font-weight:700\">Included</span>'
+        : '$' + coste.toLocaleString()}</div>
+    </div>`;
 }
 
 function toggleModule(id) {
@@ -1309,18 +1348,21 @@ function toggleModule(id) {
   updateSummary();
 }
 
-function updateUsers(id, val) {
-  userCount[id] = parseInt(val);
-  // el relleno de la barra
-  const card = document.getElementById(`card-${id}`);
-  const input = card.querySelector('input[type=range]');
-  const m = modules.find(x=>x.id===id);
-  const pct = (val-1)/199*100;
-  input.style.background = `linear-gradient(to right,${m.color} ${pct}%,rgba(14,14,14,0.12) ${pct}%)`;
-  // el rótulo
-  card.querySelector('.users-val').textContent = val == 1 ? `1 usuario incluido` : `${val} usuarios (${val-1} adicionales)`;
-  const price = calcModulePrice(m);
-  document.getElementById(`price-${id}`).innerHTML = `$${price.toLocaleString()}<span> ${billing === 'annual' ? '/año' : '/mes'}</span>`;
+/* El contador de la cuenta. No baja de las licencias incluidas: por debajo de
+   siete no hay plan que vender. */
+function setUsuarios(val) {
+  usuariosCuenta = Math.max(parseInt(val, 10) || USUARIOS_INCLUIDOS, USUARIOS_INCLUIDOS);
+  const input = document.getElementById('usuariosRango');
+  /* El control se pone al día con el estado, no al revés: si alguien llama aquí
+     con un número por debajo de las licencias incluidas, el tope de arriba lo
+     sube y el pulgar tiene que irse con él. */
+  if (input.value !== String(usuariosCuenta)) input.value = usuariosCuenta;
+  const pct = (usuariosCuenta - USUARIOS_INCLUIDOS) / (200 - USUARIOS_INCLUIDOS) * 100;
+  input.style.background = `linear-gradient(to right,var(--red) ${pct}%,rgba(14,14,14,0.12) ${pct}%)`;
+  const extra = usuariosCuenta - USUARIOS_INCLUIDOS;
+  document.getElementById('usuariosVal').textContent = extra === 0
+    ? `${usuariosCuenta} users included`
+    : `${usuariosCuenta} users (${extra} additional)`;
   updateSummary();
 }
 
@@ -1342,7 +1384,6 @@ function updateSummary() {
     const auto = isAutoIncluded(m);
     const shown = isOn || auto;
     const price = calcModulePrice(m);
-    const extraU = Math.max(userCount[m.id] - 1, 0);
     if (!shown) {
       return `<div class="sum-item disabled">
         <div class="sum-item-name"><div class="sum-dot" style="background:rgba(14,14,14,0.18)"></div>${m.shortName}</div>
@@ -1357,8 +1398,7 @@ function updateSummary() {
           <div>${m.shortName}${auto ? ` <span style="font-size:9px;font-weight:800;color:${m.color};margin-left:4px">INCLUIDO</span>` : ''}</div>
           <div style="font-size:9px;color:var(--text-3);margin-top:1px">${
             auto || m.alwaysFree ? 'Incluido' :
-            extraU === 0 ? '1 usuario incluido' :
-            '+' + extraU + ' usuario' + (extraU > 1 ? 's' : '') + ' adicional' + (extraU > 1 ? 'es' : '')
+            (billing === 'annual' ? 'Annual billing' : 'Monthly billing')
           }</div>
         </div>
       </div>
@@ -1368,8 +1408,11 @@ function updateSummary() {
           : '$' + price.toLocaleString()
       }</div>
     </div>`;
-  }).join('');
+  }).join('') + lineaUsuariosResumen();
 
+  /* La gente entra UNA vez, sobre el total de módulos y antes del descuento.
+     Sin módulos no se cobra a nadie: no hay plan que cobrar. */
+  if (activeModules.length > 0) total += costeUsuariosExtra();
   total = Math.round(total * (1 - discount));
   totalEl.textContent = total.toLocaleString();
   checkBtn.disabled = activeModules.length === 0;
@@ -1488,14 +1531,18 @@ function prevStep() {
 
 function renderOrderBox() {
   const active = modules.filter(m => selected[m.id] || isAutoIncluded(m));
-  const subtotal = active.reduce((s,m) => s + calcModulePrice(m), 0);
+  /* Los usuarios adicionales se cuentan sobre TODA la cuenta y se cobran una
+     sola vez: las siete licencias incluidas —2 administradores y 5 gestores—
+     no son por modulo. */
+  const usuariosExtra = Math.max(usuariosCuenta - USUARIOS_INCLUIDOS, 0);
+  const costeUsuarios = active.length ? costeUsuariosExtra() : 0;
+  const subtotal = active.reduce((s,m) => s + calcModulePrice(m), 0) + costeUsuarios;
   const discAmt = Math.round(subtotal * discount);
   const final = subtotal - discAmt;
   document.getElementById('orderBox').innerHTML = `
     <div class="order-box-title">Resumen del pedido · Ciclo ${billing === 'annual' ? 'anual' : 'mensual'}</div>
     ${active.map(m => {
       const auto = isAutoIncluded(m);
-      const extraU = Math.max(userCount[m.id] - 1, 0);
       const price = calcModulePrice(m);
       if ((auto || m.alwaysFree) && price === 0) return `<div class="order-line">
         <div style="display:flex;align-items:center;gap:8px">
@@ -1508,11 +1555,25 @@ function renderOrderBox() {
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
           <div class="order-dot" style="background:${m.color}"></div>
           ${m.shortName}
-          <span style="color:var(--text-3);font-size:10px">(${extraU === 0 ? '1 usuario' : '+' + extraU + ' adicional' + (extraU>1?'es':'')})</span>
         </div>
         <div>$${price.toLocaleString()}</div>
       </div>`;
     }).join('')}
+    ${active.length ? `<div class="order-line">
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+        <div class="order-dot" style="background:var(--text-3)"></div>
+        ${ADMINS_INCLUIDOS} administrators and ${GESTORES_INCLUIDOS} manager licences
+      </div>
+      <div><span style="color:var(--success);font-size:11px;font-weight:700">Included</span></div>
+    </div>` : ''}
+    ${usuariosExtra > 0 ? `<div class="order-line">
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+        <div class="order-dot" style="background:var(--text-3)"></div>
+        ${usuariosExtra} additional user${usuariosExtra > 1 ? 's' : ''}
+        <span style="color:var(--text-3);font-size:10px">(${usuariosCuenta} total)</span>
+      </div>
+      <div>$${costeUsuarios.toLocaleString()}</div>
+    </div>` : ''}
     ${discount > 0 ? `<div class="order-line" style="color:var(--success)"><div>Descuento (${(discount*100).toFixed(0)}%)</div><div>−$${discAmt.toLocaleString()}</div></div>` : ''}
     <div class="order-line total"><div>Total</div><div>$${final.toLocaleString()} USD${billing === 'annual' ? '/año' : '/mes'}</div></div>
     ${active.length === 0 ? '<div style="text-align:center;color:var(--text-3);font-size:12px;padding:12px 0">No hay módulos seleccionados</div>' : ''}`;
@@ -1601,7 +1662,13 @@ function processPayment() {
 //  ARRANQUE
 // ════════════════════════════════
 renderModules();
-updateSummary();
+/* El contador arranca en las licencias que ya trae el paquete y no baja de
+   ahí. El número sale de la constante para que la página no lo repita por su
+   cuenta y se le quede viejo. */
+const rangoUsuarios = document.getElementById('usuariosRango');
+rangoUsuarios.min = USUARIOS_INCLUIDOS;
+rangoUsuarios.value = USUARIOS_INCLUIDOS;
+setUsuarios(USUARIOS_INCLUIDOS);
 renderFAQ();
 
 // La barra de arriba se cierra al desplazar. Va en oscuro a propósito, como en la portada.
