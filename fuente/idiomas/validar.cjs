@@ -272,9 +272,21 @@ for (const p of TODAS) {
    *
    * No se compara el prefijo: se RESUELVE la ruta desde donde vive la página y
    * se mira si el fichero está. Es la única forma que no se puede engañar. */
+  /* Y NO SÓLO LOS ATRIBUTOS: TAMBIÉN LO QUE PIDE EL CSS.
+     Esta comprobación miraba `src=` y `href=`, y con eso creía haber mirado
+     todas las imágenes de la página. No: el logotipo de la barra no se pone
+     con un `<img>`, se pone con una ficha —`--logo: url("favicon.png")`—, y el
+     paso que sube un nivel las rutas al escribir en `es/` tampoco tocaba el
+     CSS. Las cinco páginas castellanas de la plantilla salían con el hueco del
+     logotipo vacío, arriba a la izquierda, y esto decía que todo bien.
+     Duró porque mirando la inglesa no se ve: vive en la raíz, donde el fichero
+     está al lado. Media web bien y media web sin logotipo. */
   for (const [cual, h, base] of [["inglesa", en, RAIZ], ["castellana", es, CASTELLANO]]) {
-    const citados = [...h.matchAll(/\s(?:src|href)="((?!https?:|\/\/|#|mailto:|data:)[^"]*\.(?:png|jpg|jpeg|svg|webp|ico))"/g)]
+    const deAtributos = [...h.matchAll(/\s(?:src|href)="((?!https?:|\/\/|#|mailto:|data:)[^"]*\.(?:png|jpg|jpeg|svg|webp|ico))"/g)]
       .map((m) => m[1]);
+    const deEstilos = [...h.matchAll(/\burl\(\s*(['"]?)((?!https?:|\/\/|#|data:)[^'")\s]*\.(?:png|jpg|jpeg|svg|webp|ico))\1\s*\)/g)]
+      .map((m) => m[2]);
+    const citados = [...deAtributos, ...deEstilos];
     const rotos = [...new Set(citados)].filter((r) => !fs.existsSync(path.resolve(base, r)));
     comprueba(`${p}: las imágenes que cita la ${cual} existen desde donde ella vive`,
       citados.length > 0 && rotos.length === 0,

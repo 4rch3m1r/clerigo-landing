@@ -226,8 +226,31 @@ function subeUnNivelLosRecursos(html) {
   return html.replace(
     /(\s(?:src|href)=")((?!https?:|\/|#|mailto:|\.\.\/|data:)[^"]*\.(?:png|jpg|jpeg|svg|webp|ico|css|js))"/g,
     (todo, antes, ruta) => antes + "../" + ruta + '"',
-  );
+  ).replace(URL_DEL_CSS, (todo, comilla, ruta) => "url(" + comilla + "../" + ruta + comilla + ")");
 }
+
+/**
+ * Y LO MISMO PARA LO QUE NO SE PIDE CON UN ATRIBUTO SINO CON CSS.
+ *
+ * Esto llegó tarde y costó un logotipo. El de la barra no se pone con un
+ * `<img>`: se pone con una ficha, `--logo: url("favicon.png")`, y arriba se
+ * subía el nivel sólo a `src=` y `href=`. Resultado: en las cinco páginas
+ * castellanas que usan la plantilla, el hueco del logotipo salía vacío. En la
+ * barra, arriba a la izquierda, en todas.
+ *
+ * Y NO SE VEÍA MIRANDO LA INGLESA, que es lo que lo hizo durar. Las inglesas
+ * viven en la raíz, donde `favicon.png` sí está al lado; las castellanas viven
+ * un nivel más adentro. Media web bien y media web sin logotipo.
+ *
+ * La guarda que comprueba que las imágenes citadas existen tampoco lo veía:
+ * miraba atributos. Ahora mira también esto.
+ *
+ * Se aceptan las tres formas que admite el CSS —comillas dobles, simples y sin
+ * comillas— y se deja fuera lo que ya lleva prefijo, lo absoluto y el base64,
+ * que es como va el logotipo de la portada.
+ */
+const URL_DEL_CSS = /\burl\(\s*(['"]?)((?!https?:|\/|#|data:|\.\.\/)[^'")\s]*\.(?:png|jpg|jpeg|svg|webp|ico|css|js))\1\s*\)/g;
+const URL_DEL_CSS_CON_PREFIJO = /\burl\(\s*(['"]?)\.\.\/((?!\.\.\/)[^'")\s]*\.(?:png|jpg|jpeg|svg|webp|ico|css|js))\1\s*\)/g;
 
 /**
  * Y lo contrario, para la página de la raíz.
@@ -249,7 +272,7 @@ function bajaUnNivelLosRecursos(html) {
   return html.replace(
     /(\s(?:src|href)=")\.\.\/((?!\.\.\/)[^"]*\.(?:png|jpg|jpeg|svg|webp|ico|css|js))"/g,
     (todo, antes, ruta) => antes + ruta + '"',
-  );
+  ).replace(URL_DEL_CSS_CON_PREFIJO, (todo, comilla, ruta) => "url(" + comilla + ruta + comilla + ")");
 }
 
 module.exports = { ponSelector, ponAlternativas, bloque, ESTILO,
