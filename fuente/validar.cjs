@@ -353,6 +353,10 @@ const esqueleto = (s) => pelado(
     (_, sangria) => `<div class="number-val">15<span>+</span></div>\n${sangria}<div class="number-label">Módulos integrados</div>\n${sangria}<div class="number-desc">Un solo entorno para toda tu operación GRC</div>`)
   .replace(/<div class="number-val">66<span><\/span><\/div>\n(\s*)<div class="number-label">(?:Marcos, normas y leyes|Frameworks, standards and laws)<\/div>\n\s*<div class="number-desc">[^<]*<\/div>/,
     (_, sangria) => `<div class="number-val">15<span>+</span></div>\n${sangria}<div class="number-label">Marcos regulatorios</div>\n${sangria}<div class="number-desc">ISO, SWIFT, REGLAMENTOS CIBERSEGURIDAD SIMV, BCRD, NORTIC, PCI-DSS, SOC 2, NIST, HIPAA, GDPR y más</div>`)
+  /* Y la de reducción de trabajo manual: el original decía 90 %, sin medición
+     detrás. El dueño la fijó en 78 % el 2026-09-07, y esa decisión suya es su
+     fuente — queda escrita en `secciones/cifras.cjs`. */
+  .replace(/<div class="number-val">78<span>%<\/span>/, '<div class="number-val">90<span>%</span>')
   /* Y la rejilla de quince tarjetas de módulo, que es lo que los cinco
      dominios sustituyeron. Esta línea sólo muerde en el ORIGINAL —la nuestra
      ya no la tiene—, y así los dos lados quedan sin ella y se puede seguir

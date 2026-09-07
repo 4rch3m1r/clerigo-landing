@@ -48,12 +48,29 @@
  *   última es la cifra más fuerte que tiene esta casa y hoy no se dice en
  *   ningún sitio de la portada.
  *
- * ── LAS OTRAS DOS CIFRAS DE LA SECCIÓN, QUE NO SE TOCAN ───────────────────
+ * ── LAS OTRAS DOS DE LA FILA ──────────────────────────────────────────────
  *
- * «90% de reducción de trabajo manual» y «48h de implementación» vienen del
- * original de Archemir y no se han comprobado contra nada. No se cambian
- * porque no se pidió, pero que quede dicho: son las dos únicas de esa fila
- * que no tienen fuente.
+ * REDUCCIÓN DE TRABAJO MANUAL = 78 %
+ *
+ *   Las dos venían del original de Archemir —decía 90 %— y no salían de
+ *   ninguna medición. Se avisó, y el dueño fijó el 78 % el 2026-09-07.
+ *
+ *   Su fuente es ésa: una decisión suya, no una cuenta. Se escribe aquí para
+ *   que conste, porque una cifra que nadie sabe de dónde viene acaba
+ *   repitiéndose en una propuesta sin que nadie pueda defenderla — y ésta sí
+ *   se puede: la puso quien responde del producto.
+ *
+ * TIEMPO DE IMPLEMENTACIÓN = 48 h
+ *
+ *   Igual: viene del original y el dueño la mantiene. Es la promesa que hace
+ *   la casa, no una media medida.
+ *
+ * ── LA CIFRA QUE HAY Y NO SE USA ──────────────────────────────────────────
+ *
+ * Detrás de los 66 documentos hay 557 cláusulas y 4.519 REQUISITOS cargados.
+ * «4.519 requisitos normativos mapeados» es más fuerte que cualquier otra cosa
+ * de esta fila y hoy no se dice en ninguna parte de la portada. Queda apuntado
+ * por si algún día se decide sustituir una de las dos de arriba.
  */
 
 module.exports = {
@@ -62,11 +79,15 @@ module.exports = {
       desc: "Un solo entorno para toda tu operación GRC" },
     marcos: { valor: "66", sufijo: "", rotulo: "Marcos, normas y leyes",
       desc: "De 16 organismos: ISO, NIST, COSO, ISACA, PCI SSC, SWIFT, AICPA, AXELOS, UE, y los dominicanos SIMV, JM/SB, BCRD, OGTIC, INDOTEL, UAF e IDECOOP" },
+    manual: { valor: "78", sufijo: "%", rotulo: "Reducción de trabajo manual",
+      desc: "Automatización de tareas repetitivas de cumplimiento" },
   },
   en: {
     modulos: { valor: "32", sufijo: "", rotulo: "Integrated modules",
       desc: "One environment for your entire GRC operation" },
     marcos: { valor: "66", sufijo: "", rotulo: "Frameworks, standards and laws",
       desc: "From 16 issuing bodies: ISO, NIST, COSO, ISACA, PCI SSC, SWIFT, AICPA, AXELOS, EU, and the Dominican SIMV, JM/SB, BCRD, OGTIC, INDOTEL, UAF and IDECOOP" },
+    manual: { valor: "78", sufijo: "%", rotulo: "Reduction in manual work",
+      desc: "Automation of repetitive compliance tasks" },
   },
 };

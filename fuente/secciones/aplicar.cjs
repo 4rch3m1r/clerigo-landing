@@ -121,6 +121,7 @@ for (const { f, t } of PAGINAS) {
   for (const [rotuloViejo, dato] of [
     [t === ES ? "Módulos integrados" : "Integrated modules", c.modulos],
     [t === ES ? "Marcos regulatorios" : "Regulatory frameworks", c.marcos],
+    [t === ES ? "Reducción de trabajo manual" : "Reduction in manual work", c.manual],
   ]) {
     const re = new RegExp(
       `(<div class="number-val">)[^<]*(<span>)[^<]*(</span></div>\\s*<div class="number-label">)`
