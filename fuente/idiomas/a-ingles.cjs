@@ -70,16 +70,32 @@ function diccionario() {
  * fallo que no se ve hasta que alguien pulsa algo.
  */
 function traduceLosGuiones(html, dic) {
-  const trozos = trozosDeLosGuiones(html);
+  /* SE ORDENA POR POSICIÓN, y no vale el orden en que vienen.
+     `trozosDeLosGuiones` los devuelve en orden de RECORRIDO: primero los textos
+     de un literal y luego lo que hay dentro de sus interpolaciones, que está
+     ANTES en el fichero. Recorrer el array del final al principio no es, por
+     tanto, recorrer el texto del final al principio: una sustitución temprana
+     movía las posiciones de las siguientes y el reemplazo caía desplazado.
+     Dejó `<div class="mod-price-label">Precio</dPriceiv>` en la página. */
+  const trozos = [...trozosDeLosGuiones(html)].sort((a, b) => a.ini - b.ini);
   let salida = html;
   for (let k = trozos.length - 1; k >= 0; k--) {
     const t = trozos[k];
     const en = dic[t.texto];
     if (en === undefined || en === t.texto) continue;
-    let puesto = en.split("\\").join("\\\\").split(t.comilla).join("\\" + t.comilla);
-    /* Dentro de una plantilla, un `${` de la traducción abriría un hueco que
-       no existe. No pasa nunca, y por eso mismo si pasara no lo vería nadie. */
-    if (t.comilla === "`") puesto = puesto.split("${").join("\\${");
+    /* Y antes de escribir, que el hueco sea el que se cree. Un desajuste de
+       posiciones no da error: deja la página torcida y sigue. */
+    if (salida.slice(t.ini, t.fin) !== t.texto) {
+      throw new Error("el hueco no coincide: esperaba " + JSON.stringify(t.texto).slice(0, 60) +
+        " y hay " + JSON.stringify(salida.slice(t.ini, t.fin)).slice(0, 60));
+    }
+    /* Se escapa la comilla que delimita el literal, y NADA MÁS.
+       En concreto, los `${…}` NO se escapan: son el sitio donde el programa
+       mete el número, viajan dentro de la clave a propósito —«${val} usuarios»
+       se traduce entero a «${val} users»— y escaparlos los convierte en texto.
+       La página inglesa llegó a enseñar «${usuariosCuenta} users included» tal
+       cual, con las llaves a la vista, por escaparlos «por seguridad». */
+    const puesto = en.split("\\").join("\\\\").split(t.comilla).join("\\" + t.comilla);
     salida = salida.slice(0, t.ini) + puesto + salida.slice(t.fin);
   }
   return salida;

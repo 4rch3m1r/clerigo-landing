@@ -82,7 +82,11 @@ const ABRE = "/* El idioma del navegador decide";
  * corre más de una vez sobre el mismo fichero.
  */
 function ponDeteccion(html) {
-  const PUESTO = /\n?<script>\n\/\* El idioma del navegador decide[\s\S]*?<\/script>\n/;
+  /* Los saltos van como `\r?\n` porque las páginas están en CRLF. Con `\n` a
+     secas esta limpieza NO casaba, y entonces cada pasada del generador dejaba
+     otra copia del guion de detección: dos redirecciones por idioma peleándose
+     en la misma cabecera. No se veía porque no se regeneraba casi nunca. */
+  const PUESTO = /\r?\n?<script>\r?\n\/\* El idioma del navegador decide[\s\S]*?<\/script>\r?\n/;
   const limpio = html.replace(PUESTO, "");
   const i = limpio.indexOf("</head>");
   if (i < 0) throw new Error("la página no tiene </head> donde poner la detección de idioma");

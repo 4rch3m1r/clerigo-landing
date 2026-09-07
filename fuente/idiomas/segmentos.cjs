@@ -170,6 +170,54 @@ const SOLO_SIGLAS = (t) => !/[a-zà-ÿ]/.test(t.replace(/\bv\d[\d.]*/gi, " "));
  * nuestra: dentro del catálogo va como «Control Interno», con su apellido, y
  * ése sí entra.
  */
+/**
+ * Esto es una declaración de estilo, no una frase.
+ *
+ * Hace falta por una rama concreta: las plantillas SIN marcado pero CON huecos.
+ * Ahí viven dos rótulos que se ven en pantalla —«${usuariosCuenta} usuarios
+ * incluidos»— y también esto:
+ *
+ *     `border-left: 3px solid ${m.color}55;`
+ *     `linear-gradient(to right,var(--red) ${pct}%,rgba(14,14,14,0.12) ${pct}%)`
+ *
+ * Las dos cosas tienen la misma forma para las señales de castellano: «3px
+ * solid» y «to right» son dos palabras seguidas igual que «usuarios incluidos».
+ * Lo que las separa es el vocabulario del CSS: una propiedad con su unidad, una
+ * función de color, una variable, un color en hexadecimal.
+ *
+ * LO QUE ESTO SE LLEVA POR DELANTE, y hay que saberlo: una frase de verdad que
+ * lleve dos puntos y una unidad —«Duración: 30 s»— también se descarta. No hay
+ * ninguna en el sitio; si algún día la hay, se quedará sin traducir y la guarda
+ * en crudo del validador la cantará, que para eso mira sin heurísticas.
+ */
+/* La unidad va PEGADA A UN NÚMERO —`3px`, `100%`, `1.5rem`—, y eso no es un
+   detalle: la lista incluía `s` de «segundos» suelta, y entonces cualquier
+   plural del castellano delante de una coma la disparaba. Con eso, la
+   respuesta entera del bloque de dudas —«…actives: 2 administradores, 5
+   licencias de gestor…»— dejaba de ser texto traducible y se quedó en
+   castellano dentro de la página inglesa. La cazó la guarda en crudo del
+   validador, que mira sin heurísticas; por eso está. */
+const PARECE_ESTILO = /(?:^|[\s;])[-a-z]+\s*:\s*[^;]*\d(?:px|%|rem|em|vh|vw|deg|fr|s)\b|var\(--|rgba?\(|linear-gradient\(|#[0-9a-fA-F]{3,8}\b|\(prefers-[a-z-]+\s*:/;
+
+/**
+ * Dos palabras de tres letras o más, con lo que sea en medio.
+ *
+ * En la rama de las plantillas sin marcado, la 2ª señal de castellano pide que
+ * las dos palabras estén separadas por ESPACIO, y eso deja fuera
+ * «${usuariosCuenta} usuarios (${extra} adicionales)» —un rótulo que se ve en
+ * pantalla— porque entre medias hay un paréntesis.
+ *
+ * Un identificador del código no la cumple: `card-${id}`, `price-${id}` y
+ * `faq${i}` tienen una sola palabra. Y lo que sí la cumple y no es texto —el
+ * CSS— ya lo descarta `PARECE_ESTILO`.
+ */
+const DOS_PALABRAS = /[A-Za-zÀ-ÿ]{3,}[^A-Za-zÀ-ÿ]*\s[^A-Za-zÀ-ÿ]*[A-Za-zÀ-ÿ]{3,}/;
+
+/* Un selector de CSS. Con la separación por guion valía «clerigo-idioma» y
+   «cookie-banner»; pidiendo un ESPACIO en medio caen esos, pero seguía
+   entrando «.preview-bar-fill, .module-bar-fill», que lleva coma y espacio. */
+const ES_SELECTOR = /^\s*[.#[]/;
+
 const PALABRAS_DEL_NAVEGADOR = new Set([
   "Escape", "Enter", "Tab", "Shift", "Alt", "Control", "Meta", "CapsLock",
   "Backspace", "Delete", "Insert", "Home", "End", "PageUp", "PageDown",
@@ -358,6 +406,11 @@ function tapaLasCadenasDeLasExpresiones(dentro, expresiones, desplazamiento) {
       if (t.tipo === "comentario") continue;
       tapado = tapado.slice(0, t.ini) + " ".repeat(t.fin - t.ini) + tapado.slice(t.fin);
     }
+    /* Y los `<` y `>` que queden, que son de código —`extra > 1`— y parten el
+       texto en dos. Sin esto, «${ADMINS} administradores, … ${extra > 1 ? …}»
+       no llegaba a ser un trozo: el `>` de `extra >` cortaba el barrido de
+       texto entre etiquetas por la mitad y la línea se quedaba en castellano. */
+    tapado = tapado.replace(/[<>]/g, " ");
     sale = sale.slice(0, ini) + tapado + sale.slice(fin);
   }
   return sale;
@@ -384,30 +437,51 @@ function trozosDeLosGuiones(html) {
         const donde = t.tipo === "plantilla"
           ? tapaLasCadenasDeLasExpresiones(dentro, t.expresiones, t.ini + 1)
           : dentro;
-        for (const m of donde.matchAll(/>([^<>]*)</g)) {
+        /* El cierre puede ser el `<` siguiente O EL FINAL DEL LITERAL. Sin el
+           `|$`, el texto que va detrás de la última etiqueta se perdía:
+           «`<svg …></svg> Continuar con ${…}`» es el rótulo de un botón y se
+           quedaba en castellano en la página inglesa. */
+        for (const m of donde.matchAll(/>([^<>]*)(?=<|$)/g)) {
           const crudo = dentro.slice(m.index + 1, m.index + 1 + m[1].length);
-          /* Si el trozo CRUZA una zona tapada, no vale. El texto se lee del
-             original, así que un trozo que empieza fuera y acaba pasada la
-             máscara se trae de vuelta lo tapado: el `>` de `discount > 0` y el
-             `<` del siguiente `<div` se emparejaban a través de la plantilla
-             anidada y devolvían el código entero como si fuera texto. */
-          if (crudo !== m[1]) continue;
+          /* SI EL TROZO CRUDO TRAE MARCADO DENTRO, NO ES TEXTO.
+             El texto se lee del original, no de la máscara, así que un trozo
+             que empieza fuera y acaba pasada una zona tapada se trae lo tapado
+             de vuelta: el `>` de `discount > 0` y el `<` del siguiente `<div`
+             se emparejaban a través de la plantilla anidada y devolvían el
+             código entero como si fuera texto.
+             Se busca MARCADO —un `<` seguido de letra o barra—, no un `>` a
+             secas: «${ADMINS} administradores, … ${extra > 1 ? 'es' : ''}»
+             lleva un `>` que es una comparación, y ése SÍ es texto. Igual que
+             «Resumen del pedido · Ciclo ${billing === 'annual' ? …}»: entero y
+             con su expresión, para que el inglés pueda reordenarlo. */
+          if (/<[a-zA-Z/!]/.test(crudo)) continue;
           const texto = crudo.trim();
           if (!texto || !esTraducible(sinInterpolar(crudo).trim())) continue;
           const ini = desdeDentro + m.index + 1 + crudo.indexOf(texto);
           fuera.push({ texto, ini, fin: ini + texto.length, comilla: t.comilla });
         }
-      } else if (t.tipo === "cadena" || !t.expresiones.length) {
+      } else {
+        /* Sin marcado. Se JUZGA sin los huecos —dentro hay código— y se DEVUELVE
+           con ellos: «${usuariosCuenta} usuarios incluidos» se traduce entero,
+           y así el inglés puede poner el número donde le toque. */
         const texto = dentro.trim();
-        if (texto.length >= 3 && PARECE_CASTELLANO.test(texto) && esTraducible(texto)
-          && !NOMBRE_DEL_CODIGO.test(texto) && !SOLO_SIGLAS(texto)
-          && !PALABRAS_DEL_NAVEGADOR.has(texto)) {
+        const juzgar = sinInterpolar(dentro).trim();
+        if (texto.length >= 3 && juzgar.length >= 3
+          && (PARECE_CASTELLANO.test(juzgar) || DOS_PALABRAS.test(juzgar)) && esTraducible(juzgar)
+          && !NOMBRE_DEL_CODIGO.test(juzgar) && !SOLO_SIGLAS(juzgar)
+          && !PALABRAS_DEL_NAVEGADOR.has(juzgar) && !PARECE_ESTILO.test(texto)
+          && !ES_SELECTOR.test(texto)) {
           const ini = desdeDentro + dentro.indexOf(texto);
           fuera.push({ texto, ini, fin: ini + texto.length, comilla: t.comilla });
         }
       }
 
+      /* No se entra en una expresión que ya vive DENTRO de un trozo emitido:
+         saldría dos veces y con huecos solapados, y al sustituir de atrás hacia
+         delante la segunda pisa a la primera. */
       for (const e of t.expresiones || []) {
+        const dentroDeUnTrozo = fuera.some((x) => base + e.ini >= x.ini && base + e.fin <= x.fin);
+        if (dentroDeUnTrozo) continue;
         deCodigo(js.slice(e.ini, e.fin), base + e.ini);
       }
     }
