@@ -25,6 +25,8 @@
 
 
 
+
+
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Transparent Plans and Pricing | Clèrigo GRC">
 <meta name="twitter:description" content="Choose and activate only the modules and frameworks your company needs. You pay for what you use, with no hidden charges and no card to start.">
@@ -750,11 +752,45 @@ html[lang="en"] .idioma[data-idioma="en"],
 html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(--dark-3); }
 @media (max-width: 768px) { .idiomas { display: none; } }
 /* ── FIN DEL SELECTOR DE IDIOMA ── */
+/* ── EL SELECTOR DE IDIOMA ─────────────────────────────────────────────
+   Cuál está activo lo dice el `lang` del documento y no una clase escrita a
+   mano: así el marcado es el mismo en las dos versiones y lo único que
+   cambia entre ellas son los dos enlaces. */
+.idiomas { display: flex; align-items: center; gap: 2px; margin-right: 4px; }
+.idiomas .idioma {
+  font-size: 11px; font-weight: 700; letter-spacing: .6px;
+  color: var(--text-3); padding: 5px 7px; border-radius: 5px;
+  transition: color .2s, background .2s;
+}
+.idiomas .idioma:hover { color: var(--text-2); }
+html[lang="en"] .idioma[data-idioma="en"],
+html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(--dark-3); }
+@media (max-width: 768px) { .idiomas { display: none; } }
+/* ── FIN DEL SELECTOR DE IDIOMA ── */
+/* ── EL SELECTOR DE IDIOMA ─────────────────────────────────────────────
+   Cuál está activo lo dice el `lang` del documento y no una clase escrita a
+   mano: así el marcado es el mismo en las dos versiones y lo único que
+   cambia entre ellas son los dos enlaces. */
+.idiomas { display: flex; align-items: center; gap: 2px; margin-right: 4px; }
+.idiomas .idioma {
+  font-size: 11px; font-weight: 700; letter-spacing: .6px;
+  color: var(--text-3); padding: 5px 7px; border-radius: 5px;
+  transition: color .2s, background .2s;
+}
+.idiomas .idioma:hover { color: var(--text-2); }
+html[lang="en"] .idioma[data-idioma="en"],
+html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(--dark-3); }
+@media (max-width: 768px) { .idiomas { display: none; } }
+/* ── FIN DEL SELECTOR DE IDIOMA ── */
 </style>
 <meta name="keywords" content="GRC software pricing, plans, price per user, free trial, GRC software cost, subscription, GRC software, GRC platform, GRC, governance risk and compliance, compliance software, risk management software">
 
 
+
+
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+
 
 
 
@@ -833,7 +869,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
   <div class="stripe"></div><div class="stripe2"></div>
   <div class="label-chip fade-up">Flexible per-module plans</div>
   <h1 class="fade-up fade-up-1">Choose only what<br>your company <em>needs.</em></h1>
-  <p class="hero-desc fade-up fade-up-2">12 specialised modules. Activate only the ones you need. <strong>All modules = $5,000 USD / year</strong> — includes <strong>2 administrators, 5 manager licences</strong> (risk, compliance, cybersecurity and internal audit) <strong>and 5 Team member licences</strong> for WorkSpace. Additional users at <strong>$20 USD / user / month</strong>.</p>
+  <p class="hero-desc fade-up fade-up-2">12 specialised modules. Activate only the ones you need. <strong>All modules = $5,000 USD / year</strong> — each module brings <strong>1 administrator and 1 manager</strong>, and the six together make the full package: <strong>2 administrators, 5 manager licences</strong> (risk, compliance, cybersecurity and internal audit) <strong>and 5 Team member licences</strong> for WorkSpace. Additional users at <strong>$20 USD / user / month</strong>.</p>
   <div class="billing-toggle fade-up fade-up-3" id="billingToggle">
     <button class="bill-btn active" onclick="setBilling('annual')">Annual</button>
     <button class="bill-btn" onclick="setBilling('monthly')">Monthly <span class="save-badge">+20%</span></button>
@@ -892,7 +928,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
           <div class="users-label"><span>Account users</span><span class="users-val" id="usuariosVal">&nbsp;</span></div>
           <input type="range" max="200" step="1" id="usuariosRango" oninput="setUsuarios(this.value)"
             aria-label="Account users">
-          <div class="cuenta-users-note">Includes 2 administrators, 5 manager licences (risk, compliance, cybersecurity and internal audit) and 5 Team member licences for WorkSpace. Beyond that, $20 USD per user per month.</div>
+          <div class="cuenta-users-note">Each module you take brings 1 administrator and 1 manager. With all six modules the full package applies: 2 administrators, 5 manager licences —risk, compliance, cybersecurity and internal audit— and 5 Team member licences for WorkSpace. Beyond that, $20 USD per user per month.</div>
         </div>
         <div class="sum-divider"></div>
         <div class="summary-items" id="summaryItems"></div>
@@ -1215,7 +1251,7 @@ const modules = [
 const faqs = [
   {q:'Can I activate modules later?',a:'Yes. You can add or remove modules from your administration panel at any time. The change takes effect in the next billing cycle.'},
   {q:'Is there a free trial?',a:'All plans include a 14-day free trial with full access to the selected modules. No credit card required to start.'},
-  {q:'How many users are included?',a:'The price includes, for the whole account and whichever modules you activate: 2 administrators, 5 manager licences —risk, compliance, cybersecurity and internal audit— and 5 Team member licences for WorkSpace. Additional users are billed separately, annually. For more than 200 users or special needs there is an Enterprise plan.'},
+  {q:'How many users are included?',a:'It depends on what you activate. Each module you take brings 1 administrator and 1 manager. If you activate all six modules the full package applies at $5,000 a year, with 2 administrators, 5 manager licences —risk, compliance, cybersecurity and internal audit— and 5 Team member licences for WorkSpace: the same 12 licences, better distributed and with WorkSpace access, which only comes with the package. Additional users are billed separately, annually. For more than 200 users or special needs there is an Enterprise plan.'},
   {q:'Can I integrate Clèrigo with other systems?',a:'Yes. The platform includes a documented REST API to integrate with your digital ecosystem. It also has native connectors for SharePoint, Teams and Power Apps.'},
   {q:'How does the digital signature work?',a:'We integrate with certified digital signature providers. Documents follow a configurable approval flow before being signed and filed automatically in SharePoint.'},
   {q:'Which regulatory frameworks are preconfigured?',a:'ISO 27001, ISO 22301, NIST CSF, PCI-DSS, SWIFT, BCR (Banco Central RD), SIMV, NORTIC A5/A6/A7, Law 172-13 and more. New frameworks are added regularly.'},
@@ -1330,9 +1366,91 @@ function calcModulePrice(m) {
 /* Lo que cuesta la gente. UNA función: las dos pantallas que enseñan un total
    —el panel de resumen y la caja del pedido— llaman aquí, de modo que no
    pueden discrepar. Antes cada una hacía su cuenta. */
+/* Los seis que se pagan de verdad. Un complemento entra gratis con su módulo
+   padre y los de plan entran con cualquier troncal: ninguno de ésos trae
+   licencias, porque no se paga por ellos. */
+function troncalesDePago() {
+  return modules.filter(m => !m.addonOf && !m.includedInAll && m.basePrice > 0);
+}
+function pagasPorEl(m) {
+  return !isAutoIncluded(m) && !m.alwaysFree && m.basePrice > 0;
+}
+
+/**
+ * LO QUE TRAE LO QUE HAS ELEGIDO.
+ *
+ * Dos caminos, y los dos dan doce con todo puesto:
+ *   · por módulos sueltos, cada uno que pagas trae 1 administrador y 1 gestor;
+ *   · con los seis troncales entra el PAQUETE: las mismas doce licencias, pero
+ *     repartidas 2 administradores + 5 gestores, y con los 5 Colaboradores de
+ *     WorkSpace, que sólo van en el paquete.
+ *
+ * Que los dos caminos coincidan en doce no es casualidad ni se puede tocar a
+ * la ligera: los seis módulos de pago suman exactamente los $5.000 del paquete
+ * y 6 × 2 = 12. Si alguien cambia un precio o añade un módulo troncal, esto
+ * deja de cuadrar y hay que rehacer la cuenta, no parchear el número.
+ */
+function licenciasIncluidas() {
+  if (troncalesDePago().every(m => selected[m.id])) {
+    return { paquete: true, admins: ADMINS_INCLUIDOS, gestores: GESTORES_INCLUIDOS,
+      colaboradores: COLABORADORES_INCLUIDOS, total: USUARIOS_INCLUIDOS };
+  }
+  const n = modules.filter(m => (selected[m.id] || isAutoIncluded(m)) && pagasPorEl(m)).length;
+  return { paquete: false, admins: n, gestores: n, colaboradores: 0, total: n * 2 };
+}
+
+/* Cómo se dice en una línea lo que trae. */
+function textoDeLasLicencias() {
+  const l = licenciasIncluidas();
+  /* Cada frase entera en UNA plantilla, y no pegando trozos: así es una sola
+     clave del diccionario y el inglés puede reordenarla. Concatenando, la
+     traducción sale a cachos —«administradores, » por un lado y « gestores y »
+     por otro— y la mitad ni llega a ser texto traducible. */
+  if (l.paquete) return `${l.admins} administrators, ${l.gestores} managers and ${l.colaboradores} team members`;
+  return `${l.admins} administrator${l.admins > 1 ? 's' : ''} and ${l.gestores} manager${l.gestores > 1 ? 's' : ''}`;
+}
+
+/* El precio del paquete completo, en el ciclo que toque. */
+function topeDelPaquete() {
+  return billing === 'annual' ? PER_MODULE : Math.round(PER_MODULE / 12);
+}
+
+/* La suma de los módulos, CON TOPE: nunca se paga más que llevárselo todo.
+   Sin él, contratar Continuidad o Privacidad sin su módulo padre sumaba 5.100,
+   más que el paquete entero. Salió al enumerar las 256 selecciones posibles. */
+function subtotalModulos(activos) {
+  return Math.min(activos.reduce((s, m) => s + calcModulePrice(m), 0), topeDelPaquete());
+}
+
 function costeUsuariosExtra() {
-  const extra = Math.max(usuariosCuenta - USUARIOS_INCLUIDOS, 0);
+  const extra = Math.max(usuariosCuenta - licenciasIncluidas().total, 0);
   return extra * (billing === 'annual' ? 240 : 20);
+}
+
+/* Lo que el panel tiene que explicar cuando la suma de los módulos se pasa
+   del precio del paquete: por qué el total es menor que la suma de arriba, y
+   —si aún no lo tiene— que el paquete entero le sale por lo mismo. */
+function lineaTopeResumen() {
+  const activos = modules.filter(m => selected[m.id] || isAutoIncluded(m));
+  if (!activos.length) return '';
+  const suma = activos.reduce((s, m) => s + calcModulePrice(m), 0);
+  if (suma <= topeDelPaquete()) return '';
+  const l = licenciasIncluidas();
+  /* La frase entera en UNA plantilla. Pegando trozos, el de después del número
+     —« licencias de Colaborador para WorkSpace»— no llega a ser texto
+     traducible y se queda en castellano dentro de la página inglesa. */
+  const ofrece = l.paquete ? '' :
+    `<div style="font-size:9px;color:var(--text-3);margin-top:1px">Activate the missing ones: the full package costs the same and adds ${COLABORADORES_INCLUIDOS} Team member licences for WorkSpace</div>`;
+  return `<div class="sum-item">
+      <div class="sum-item-name">
+        <div class="sum-dot" style="background:var(--success)"></div>
+        <div>
+          <div>Full package cap</div>
+          ${ofrece}
+        </div>
+      </div>
+      <div class="sum-item-price">$${topeDelPaquete().toLocaleString()}</div>
+    </div>`;
 }
 
 /* La línea de la gente en el panel de resumen. Se enseña siempre que haya
@@ -1341,13 +1459,13 @@ function costeUsuariosExtra() {
 function lineaUsuariosResumen() {
   if (!modules.some(m => selected[m.id] || isAutoIncluded(m))) return '';
   const coste = costeUsuariosExtra();
-  const extra = Math.max(usuariosCuenta - USUARIOS_INCLUIDOS, 0);
+  const extra = Math.max(usuariosCuenta - licenciasIncluidas().total, 0);
   return `<div class="sum-item">
       <div class="sum-item-name">
         <div class="sum-dot" style="background:var(--text-3)"></div>
         <div>
           <div>Users</div>
-          <div style="font-size:9px;color:var(--text-3);margin-top:1px">${ADMINS_INCLUIDOS} administrators, ${GESTORES_INCLUIDOS} managers and ${COLABORADORES_INCLUIDOS} team members included${extra ? ' · ' + extra + ' additional' : ''}</div>
+          <div style="font-size:9px;color:var(--text-3);margin-top:1px">${textoDeLasLicencias()} included${extra ? ' · ' + extra + ' additional' : ''}</div>
         </div>
       </div>
       <div class="sum-item-price">${coste === 0
@@ -1371,21 +1489,28 @@ function toggleModule(id) {
   const anyCoreOn = modules.some(x => !x.addonOf && !x.includedInAll && selected[x.id]);
   modules.filter(m => m.includedInAll).forEach(m => { selected[m.id] = anyCoreOn; });
   renderModules();
-  updateSummary();
+  /* Por `setUsuarios` y no por `updateSummary`: cambiar de módulos cambia las
+     licencias que trae el plan, y el contador tiene que reajustarse antes de
+     que se pinte ningún total. */
+  setUsuarios(usuariosCuenta);
 }
 
 /* El contador de la cuenta. No baja de las licencias incluidas: por debajo de
    las incluidas no hay plan que vender. */
 function setUsuarios(val) {
-  usuariosCuenta = Math.max(parseInt(val, 10) || USUARIOS_INCLUIDOS, USUARIOS_INCLUIDOS);
+  /* El suelo ya no es fijo: es lo que traiga la selección de ahora. Sube y baja
+     al encender y apagar módulos, y el contador se va con él. */
+  const minimo = licenciasIncluidas().total;
+  usuariosCuenta = Math.max(parseInt(val, 10) || minimo, minimo);
   const input = document.getElementById('usuariosRango');
+  input.min = minimo;
   /* El control se pone al día con el estado, no al revés: si alguien llama aquí
      con un número por debajo de las licencias incluidas, el tope de arriba lo
      sube y el pulgar tiene que irse con él. */
   if (input.value !== String(usuariosCuenta)) input.value = usuariosCuenta;
-  const pct = (usuariosCuenta - USUARIOS_INCLUIDOS) / (200 - USUARIOS_INCLUIDOS) * 100;
+  const pct = (usuariosCuenta - minimo) / Math.max(200 - minimo, 1) * 100;
   input.style.background = `linear-gradient(to right,var(--red) ${pct}%,rgba(14,14,14,0.12) ${pct}%)`;
-  const extra = usuariosCuenta - USUARIOS_INCLUIDOS;
+  const extra = usuariosCuenta - minimo;
   document.getElementById('usuariosVal').textContent = extra === 0
     ? `${usuariosCuenta} users included`
     : `${usuariosCuenta} users (${extra} additional)`;
@@ -1434,8 +1559,11 @@ function updateSummary() {
           : '$' + price.toLocaleString()
       }</div>
     </div>`;
-  }).join('') + lineaUsuariosResumen();
+  }).join('') + lineaTopeResumen() + lineaUsuariosResumen();
 
+  /* El tope del paquete, antes de sumar a la gente: nunca se paga por módulos
+     más que llevárselo todo. */
+  total = Math.min(total, topeDelPaquete());
   /* La gente entra UNA vez, sobre el total de módulos y antes del descuento.
      Sin módulos no se cobra a nadie: no hay plan que cobrar. */
   if (activeModules.length > 0) total += costeUsuariosExtra();
@@ -1558,11 +1686,13 @@ function prevStep() {
 function renderOrderBox() {
   const active = modules.filter(m => selected[m.id] || isAutoIncluded(m));
   /* Los usuarios adicionales se cuentan sobre TODA la cuenta y se cobran una
-     sola vez: las licencias incluidas —2 administradores, 5 gestores y 5
-     no son por modulo. */
-  const usuariosExtra = Math.max(usuariosCuenta - USUARIOS_INCLUIDOS, 0);
+     sola vez: las licencias incluidas no son por módulo, y cuántas son depende
+     de si lo elegido llega al paquete completo o no. */
+  const usuariosExtra = Math.max(usuariosCuenta - licenciasIncluidas().total, 0);
   const costeUsuarios = active.length ? costeUsuariosExtra() : 0;
-  const subtotal = active.reduce((s,m) => s + calcModulePrice(m), 0) + costeUsuarios;
+  const porModulos = subtotalModulos(active);
+  const conTope = active.reduce((s,m) => s + calcModulePrice(m), 0) > porModulos;
+  const subtotal = porModulos + costeUsuarios;
   const discAmt = Math.round(subtotal * discount);
   const final = subtotal - discAmt;
   document.getElementById('orderBox').innerHTML = `
@@ -1585,10 +1715,18 @@ function renderOrderBox() {
         <div>$${price.toLocaleString()}</div>
       </div>`;
     }).join('')}
+    ${conTope ? `<div class="order-line">
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+        <div class="order-dot" style="background:var(--text-3)"></div>
+        Tope del paquete completo
+        ${licenciasIncluidas().paquete ? '' : `<span style="color:var(--text-3);font-size:10px">(activate the missing ones and ${COLABORADORES_INCLUIDOS} Team member licences are added)</span>`}
+      </div>
+      <div><span style="color:var(--success);font-size:11px;font-weight:700">$${topeDelPaquete().toLocaleString()}</span></div>
+    </div>` : ''}
     ${active.length ? `<div class="order-line">
       <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
         <div class="order-dot" style="background:var(--text-3)"></div>
-        ${ADMINS_INCLUIDOS} administrators, ${GESTORES_INCLUIDOS} manager licences and ${COLABORADORES_INCLUIDOS} Team member licences
+        ${textoDeLasLicencias()}
       </div>
       <div><span style="color:var(--success);font-size:11px;font-weight:700">Included</span></div>
     </div>` : ''}
@@ -1691,10 +1829,9 @@ renderModules();
 /* El contador arranca en las licencias que ya trae el paquete y no baja de
    ahí. El número sale de la constante para que la página no lo repita por su
    cuenta y se le quede viejo. */
-const rangoUsuarios = document.getElementById('usuariosRango');
-rangoUsuarios.min = USUARIOS_INCLUIDOS;
-rangoUsuarios.value = USUARIOS_INCLUIDOS;
-setUsuarios(USUARIOS_INCLUIDOS);
+/* Arranca sin módulos, así que sin licencias: `setUsuarios` pone el suelo que
+   corresponda en cuanto se encienda el primero. */
+setUsuarios(licenciasIncluidas().total);
 renderFAQ();
 
 // La barra de arriba se cierra al desplazar. Va en oscuro a propósito, como en la portada.

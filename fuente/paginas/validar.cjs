@@ -158,15 +158,17 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
    * inglés que no podían dispararse jamás y parecían cobertura. La inglesa la
    * vigila `fuente/idiomas/validar.cjs`, que es otra cosa. */
   const DECLARADAS = [
-    /* El modelo de licencias cambió: ya no es «1 usuario por módulo», sino un
-       paquete de cuenta con 2 administradores, 5 licencias de gestor —riesgos,
-       cumplimiento, ciberseguridad y auditoría interna— y 5 de Colaborador
-       para WorkSpace. Decisión del cliente, 2026-09-07. */
-    ["incluye <strong>2 administradores, 5 licencias de gestor</strong> (riesgos, cumplimiento, ciberseguridad y auditoría interna) <strong>y 5 licencias de Colaborador</strong> para WorkSpace. Usuarios adicionales",
+    /* El modelo de licencias cambió, en tres pasos y todos del cliente el
+       2026-09-07: ya no es «1 usuario por módulo»; cada módulo que se paga trae
+       1 administrador y 1 gestor, y los seis juntos son el paquete —2
+       administradores, 5 licencias de gestor y 5 de Colaborador para
+       WorkSpace—. Los dos caminos dan doce porque los seis módulos de pago
+       suman exactamente los $5.000 del paquete. */
+    ["cada módulo trae <strong>1 administrador y 1 gestor</strong>, y los seis juntos son el paquete completo: <strong>2 administradores, 5 licencias de gestor</strong> (riesgos, cumplimiento, ciberseguridad y auditoría interna) <strong>y 5 licencias de Colaborador</strong> para WorkSpace. Usuarios adicionales",
      "1 usuario incluido. Usuarios adicionales"],
     /* La misma decisión, en la respuesta de las dudas. La pregunta cambió con
        ella: ya no se pregunta cuánto cuesta añadir, sino cuántos vienen. */
-    ["{q:'¿Cuántos usuarios vienen incluidos?',a:'El precio incluye, para toda la cuenta y actives los módulos que actives: 2 administradores, 5 licencias de gestor —riesgos, cumplimiento, ciberseguridad y auditoría interna— y 5 licencias de Colaborador para WorkSpace. Los usuarios adicionales se facturan aparte, con periodicidad anual. Para más de 200 usuarios o necesidades especiales hay plan Enterprise.'}",
+    ["{q:'¿Cuántos usuarios vienen incluidos?',a:'Depende de lo que actives. Cada módulo que contratas trae 1 administrador y 1 gestor. Si activas los seis módulos entra el paquete completo por $5,000 al año, con 2 administradores, 5 licencias de gestor —riesgos, cumplimiento, ciberseguridad y auditoría interna— y 5 licencias de Colaborador para WorkSpace: son las mismas 12 licencias, mejor repartidas y con el acceso a WorkSpace, que sólo va en el paquete. Los usuarios adicionales se facturan aparte, con periodicidad anual. Para más de 200 usuarios o necesidades especiales hay plan Enterprise.'}",
      "{q:'¿Cuánto cuesta agregar usuarios?',a:'Cada módulo incluye 1 usuario. Los usuarios adicionales tienen un costo de $20 USD/usuario/mes, facturados anualmente. Para más de 200 usuarios o necesidades especiales, contáctanos para un plan Enterprise.'}"],
     /* Y la misma decisión, en la calculadora. El deslizador estaba en CADA
        tarjeta de módulo; ahora hay uno solo, en el panel de resumen, porque las
@@ -180,6 +182,15 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
        porque lo que costaba la gente iba escondido dentro del precio de cada
        módulo y no se enseñaba en ninguna parte. */
     [/function lineaUsuariosResumen\(\) \{[\s\S]*?\n\}\n/, ""],
+    /* Y también son nuevas las dos piezas del tope: la línea que explica por qué
+       el total es menor que la suma de los módulos, y el aviso de que activando
+       los que faltan el paquete sale por lo mismo. Sin la primera, el resumen
+       enseña unas cuentas que no cuadran a la vista. */
+    [/function lineaTopeResumen\(\) \{[\s\S]*?\n\}\n/, ""],
+    [/\n\s*\$\{licenciasIncluidas\(\)\.paquete \? '' :[\s\S]*?licencias de Colaborador\)<\/span>`\}/, ""],
+    /* `textoDeLasLicencias` tampoco existía: el original no decía en ninguna
+       parte qué licencias trae lo que has elegido, porque no dependía de ello. */
+    [/function textoDeLasLicencias\(\) \{[\s\S]*?\n\}\n/, ""],
     /* Y el rótulo del contador dice lo mismo que decía —lo que trae el
        paquete— con el número nuevo. */
     ["`${usuariosCuenta} usuarios incluidos`", "`1 usuario incluido`"],
