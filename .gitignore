@@ -1,8 +1,15 @@
-﻿# El original de Archemir NO entra aquí.
+# El original de Archemir NO entra aquí.
 fuente/archemir-original.html
 fuente/paginas-originales/
 
+# Dependencias
+node_modules/
+bun.lockb
+bun.lock
+package-lock.json
+
 # IDE y herramientas locales
 .claude/
+.gemini/
 .vscode/
 *.log
