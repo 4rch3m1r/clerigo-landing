@@ -235,6 +235,41 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
     }
   } else if (!sal.includes(`<main class="pagina">`)) {
     comprueba(`${slug}: el cuerpo va dentro de <main class="pagina">`, false);
+  } else if (slug === "legal") {
+    /* ── LAS PALABRAS DE `legal` LAS VIGILA OTRO, Y ES MÁS ESTRICTO ──────
+     *
+     * Esta comprobación pregunta si la página dice lo mismo que el HTML
+     * original de Archemir. Para `legal` eso ya no es la pregunta correcta: los
+     * términos, la privacidad y las cookies se sirven desde el producto
+     * —`app-saas/src/app/legal/documentos.ts`—, que es donde la gente los
+     * acepta al registrarse, y el landing tiene que decir eso y no lo que
+     * dijera un fichero congelado.
+     *
+     * No es aflojar la guarda: es cambiarla por una más dura.
+     * `fuente/legal/validar.cjs` compara los treinta apartados palabra por
+     * palabra contra el contrato de verdad, y además comprueba que la copia no
+     * se haya quedado atrás respecto a la aplicación. Esta de aquí no podía ver
+     * ninguna de las dos cosas.
+     *
+     * Aquí queda lo que esta guarda SÍ puede afirmar por su cuenta: que los
+     * treinta apartados están, con su número y su título. Si mañana alguien
+     * borra media página, salta aquí aunque la otra no llegue a correr. */
+    const copia = path.join(AQUI, "..", "legal", "documentos.json");
+    if (!fs.existsSync(copia)) {
+      comprueba(`${slug}: existe la copia de los textos legales`, false, copia);
+    } else {
+      const docs = JSON.parse(fs.readFileSync(copia, "utf8")).documentos;
+      const faltan = [];
+      for (const d of docs) {
+        for (const s of d.secciones) {
+          const marca = `<span class="num">${s.n}</span> ${s.titulo}`;
+          if (!sal.includes(marca)) faltan.push(d.id + " " + s.n);
+        }
+      }
+      const cuantos = docs.reduce((n, d) => n + d.secciones.length, 0);
+      comprueba(`${slug}: están los ${cuantos} apartados legales (el texto lo vigila fuente/legal/validar.cjs)`,
+        faltan.length === 0, "faltan: " + faltan.join(", "));
+    }
   } else {
     let corte = -1;
     const hasta = Math.max(dePagina.length, deOrigen.length);

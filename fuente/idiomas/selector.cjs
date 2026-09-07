@@ -75,7 +75,21 @@ const ESTILO = [
  * el final en una declaración concreta deja de casar en cuanto cambia un
  * espacio. Misma lección que el tramo «BARRA Y PIE SIEMPRE EN OSCURO».
  */
-const ESTILO_PUESTO = /\/\* ── EL SELECTOR DE IDIOMA ──[\s\S]*?── FIN DEL SELECTOR DE IDIOMA ── \*\/\n/;
+/**
+ * El bloque de estilo ya puesto, para quitarlo antes de poner el nuevo.
+ *
+ * DOS DETALLES QUE FALTABAN Y COSTARON CARO:
+ *
+ *   · `\r?\n`, porque las páginas van en CRLF. Pidiendo un salto de línea a
+ *     secas detrás del cierre de comentario, la limpieza no casaba y cada
+ *     pasada del generador dejaba OTRA copia del bloque. `precios.html` llegó
+ *     a tener cuatro, y así se publicó.
+ *
+ *   · la bandera `g`. Sin ella, `replace` quita UNA copia y pone otra: un
+ *     fichero que ya arrastraba cuatro se quedaba en cuatro para siempre, y
+ *     nada lo cantaba porque el CSS repetido no rompe nada, sólo pesa.
+ */
+const ESTILO_PUESTO = /\/\* ── EL SELECTOR DE IDIOMA ──[\s\S]*?── FIN DEL SELECTOR DE IDIOMA ── \*\/\r?\n/g;
 
 function conEstilo(html) {
   const limpio = html.replace(ESTILO_PUESTO, "");

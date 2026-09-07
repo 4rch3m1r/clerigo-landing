@@ -1,0 +1,1256 @@
+{
+ "_": "Copia de app-saas/src/app/legal/documentos.ts. NO se edita a mano: se refresca con `node fuente/legal/traer-de-la-app.cjs`. Manda la aplicación.",
+ "version": "2.4",
+ "documentos": [
+  {
+   "id": "terminos",
+   "ruta": "/legal/terminos",
+   "titulo": "Términos y Condiciones de Uso",
+   "corto": "Términos",
+   "sumario": "Contrato de servicio entre Clèrigo y el Cliente.",
+   "entradilla": "Este acuerdo regula el acceso y uso de la plataforma Clèrigo XGRC y todos sus módulos, APIs, integraciones y servicios relacionados operados por Clèrigo (Delaware). Al continuar utilizando el servicio confirmas tu aceptación de estos términos.",
+   "actualizado": "20 de agosto de 2026",
+   "secciones": [
+    {
+     "n": "01",
+     "titulo": "Aceptación de los Términos",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Al registrarte, acceder o utilizar la plataforma Clèrigo XGRC («el Servicio»), operada por Clèrigo («Clèrigo», «nosotros», «la Compañía»), declaras que has leído, comprendido y aceptas estar vinculado por estos Términos y Condiciones de Uso, así como por nuestra Política de Privacidad y Política de Cookies."
+      },
+      {
+       "t": "p",
+       "texto": "Si accedes al Servicio en nombre de una organización, declaras que tienes la autoridad para vincular a dicha organización con estos Términos. En tal caso, «tú» y «el Cliente» se refieren a esa organización."
+      },
+      {
+       "t": "aviso",
+       "texto": "Si no aceptas estos Términos, no podrás utilizar el Servicio. El uso continuado del Servicio después de la publicación de cambios constituye la aceptación de dichos cambios."
+      }
+     ]
+    },
+    {
+     "n": "02",
+     "titulo": "Descripción del Servicio",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Clèrigo XGRC es una plataforma SaaS (Software as a Service) de Gobernanza, Riesgo y Cumplimiento que proporciona, entre otros, los siguientes módulos y capacidades:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "fuerte": "Gestión de Riesgos:",
+         "texto": "identificación, evaluación, tratamiento y monitoreo de riesgos empresariales."
+        },
+        {
+         "fuerte": "Cumplimiento Regulatorio:",
+         "texto": "gestión de marcos normativos, políticas, circulares y calendarios regulatorios."
+        },
+        {
+         "fuerte": "Ciberseguridad:",
+         "texto": "controles técnicos, gestión de vulnerabilidades e incidentes correlacionados con el contexto GRC."
+        },
+        {
+         "fuerte": "Auditoría y Control Interno:",
+         "texto": "planificación, ejecución y seguimiento de auditorías con recopilación de evidencias."
+        },
+        {
+         "fuerte": "Gobierno Corporativo:",
+         "texto": "gestión de comités, actas y estructura de gobernanza institucional."
+        },
+        {
+         "fuerte": "Privacidad y Protección de Datos:",
+         "texto": "gestión del ciclo de vida de datos personales bajo GDPR y Ley 172-13."
+        },
+        {
+         "fuerte": "Gestor Documental, Asistente de IA y API de Acceso:",
+         "texto": "capacidades complementarias incluidas en todos los planes."
+        }
+       ]
+      },
+      {
+       "t": "p",
+       "texto": "Clèrigo se reserva el derecho de modificar, agregar o discontinuar funcionalidades del Servicio en cualquier momento, notificando a los Clientes con al menos 30 días de anticipación cuando el cambio sea material."
+      }
+     ]
+    },
+    {
+     "n": "03",
+     "titulo": "Registro, Cuentas y Acceso",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Para utilizar el Servicio deberás crear una cuenta proporcionando información veraz, completa y actualizada. El Cliente es responsable de:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "texto": "Mantener la confidencialidad de las credenciales de acceso de todos los usuarios autorizados."
+        },
+        {
+         "texto": "Todas las actividades que ocurran bajo las cuentas asignadas a su organización."
+        },
+        {
+         "texto": "Notificar a Clèrigo de inmediato ante cualquier uso no autorizado o brecha de seguridad."
+        },
+        {
+         "texto": "Asegurar que el número de usuarios activos no exceda el volumen de licencias contratadas."
+        }
+       ]
+      },
+      {
+       "t": "p",
+       "texto": "El acceso de cada usuario se otorga de forma personal e intransferible. Está prohibido compartir credenciales entre múltiples personas bajo una misma cuenta de usuario."
+      }
+     ]
+    },
+    {
+     "n": "04",
+     "titulo": "Política de Uso Aceptable",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "El Cliente y sus usuarios se comprometen a utilizar el Servicio únicamente para fines legales y conforme a estos Términos. Está expresamente prohibido:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "texto": "Realizar ingeniería inversa, descompilar o intentar extraer el código fuente de la plataforma."
+        },
+        {
+         "texto": "Utilizar el Servicio para almacenar o transmitir contenido ilegal, difamatorio, malicioso o que infrinja derechos de terceros."
+        },
+        {
+         "texto": "Realizar pruebas de penetración, escaneos de vulnerabilidades o ataques de denegación de servicio sin autorización escrita previa de Clèrigo."
+        },
+        {
+         "texto": "Revender, sublicenciar o transferir el acceso al Servicio a terceros sin consentimiento expreso."
+        },
+        {
+         "texto": "Utilizar scrapers, bots o automatizaciones que sobrecarguen la infraestructura del Servicio."
+        },
+        {
+         "texto": "Cargar datos personales de terceros sin contar con la base legal adecuada para su tratamiento."
+        }
+       ]
+      },
+      {
+       "t": "aviso",
+       "texto": "El incumplimiento de esta política puede resultar en la suspensión inmediata del acceso sin derecho a reembolso, y en la interposición de acciones legales cuando corresponda."
+      }
+     ]
+    },
+    {
+     "n": "05",
+     "titulo": "Propiedad Intelectual",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Toda la propiedad intelectual asociada al Servicio, incluyendo pero no limitándose a el software, código fuente, algoritmos, diseño de interfaz, marca, logotipos, documentación y contenido propio, es propiedad exclusiva de Clèrigo y se encuentra protegida por las leyes de propiedad intelectual aplicables."
+      },
+      {
+       "t": "p",
+       "texto": "Clèrigo te otorga una licencia limitada, no exclusiva, no transferible y revocable para acceder y utilizar el Servicio durante el período de suscripción vigente, exclusivamente para los fines comerciales internos del Cliente."
+      },
+      {
+       "t": "p",
+       "texto": "El Cliente conserva todos los derechos sobre sus propios datos, documentos y contenido cargado en la plataforma («Datos del Cliente»). El Cliente otorga a Clèrigo una licencia limitada para procesar dichos datos exclusivamente con el fin de prestar el Servicio."
+      }
+     ]
+    },
+    {
+     "n": "06",
+     "titulo": "Datos del Cliente y Seguridad",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Clèrigo trata los Datos del Cliente como información confidencial y solo los procesa según las instrucciones del Cliente y lo establecido en nuestra Política de Privacidad. En particular:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "texto": "Aplicación de controles de cifrado estándar de la industria para la protección de datos en reposo y en tránsito."
+        },
+        {
+         "texto": "Clèrigo no vende ni comercializa los Datos del Cliente con terceros."
+        },
+        {
+         "texto": "Los datos se alojan en centros de datos ubicados en la región acordada con el Cliente."
+        },
+        {
+         "texto": "En caso de incidente de seguridad que afecte los Datos del Cliente, Clèrigo notificará al Cliente dentro de las 72 horas siguientes al descubrimiento, conforme a la normativa aplicable."
+        }
+       ]
+      },
+      {
+       "t": "p",
+       "texto": "El Cliente es responsable de la legalidad de los datos que carga en la plataforma y de obtener los consentimientos necesarios cuando corresponda."
+      }
+     ]
+    },
+    {
+     "n": "07",
+     "titulo": "Confidencialidad",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Ambas partes acuerdan mantener la confidencialidad de toda información no pública que reciban en el marco de este acuerdo («Información Confidencial»), incluyendo datos comerciales, técnicos, financieros o de cualquier otra naturaleza."
+      },
+      {
+       "t": "p",
+       "texto": "Esta obligación no aplica a información que: (a) sea de dominio público sin incumplimiento de este acuerdo; (b) ya fuera conocida por la parte receptora antes de su divulgación; (c) sea recibida legítimamente de un tercero; o (d) deba ser divulgada por mandato legal o judicial."
+      },
+      {
+       "t": "p",
+       "texto": "La obligación de confidencialidad permanece vigente durante 3 años después de la terminación del contrato de servicio."
+      }
+     ]
+    },
+    {
+     "n": "08",
+     "titulo": "Facturación, Pagos y Renovaciones",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "El Servicio se factura según el plan seleccionado al momento del registro. Los precios vigentes son los recogidos en el contrato de licencia del Cliente y pueden actualizarse con 30 días de aviso previo."
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "fuerte": "Planes anuales:",
+         "texto": "se facturan por adelantado al inicio de cada período anual."
+        },
+        {
+         "fuerte": "Planes mensuales:",
+         "texto": "se facturan cada mes en la fecha de suscripción, con un recargo del 20 % respecto al precio anual equivalente."
+        },
+        {
+         "fuerte": "Usuarios adicionales:",
+         "texto": "se facturan a $20 USD por usuario por mes, prorrateados según la fecha de activación."
+        },
+        {
+         "fuerte": "Renovación automática:",
+         "texto": "los planes se renuevan automáticamente al vencer, salvo que el Cliente notifique la cancelación con al menos 15 días de anticipación."
+        }
+       ]
+      },
+      {
+       "t": "p",
+       "texto": "Los pagos vencidos pueden resultar en la suspensión del Servicio tras un período de gracia de 10 días. Clèrigo no se responsabiliza por pérdidas derivadas de suspensiones por falta de pago."
+      },
+      {
+       "t": "p",
+       "texto": "Todos los planes incluyen un período de prueba gratuita de 14 días sin requerir tarjeta de crédito. Al finalizar la prueba, el Servicio se suspende automáticamente hasta que el Cliente active un plan de pago."
+      }
+     ]
+    },
+    {
+     "n": "09",
+     "titulo": "Suspensión y Terminación",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Cualquiera de las partes puede terminar el contrato de servicio con 30 días de aviso escrito. Clèrigo puede suspender o terminar el acceso de forma inmediata y sin previo aviso cuando:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "texto": "El Cliente incumpla estos Términos de forma material."
+        },
+        {
+         "texto": "Se detecte uso fraudulento, actividad ilegal o amenaza activa de seguridad."
+        },
+        {
+         "texto": "Un pago permanezca impago más de 30 días después de la fecha de vencimiento."
+        },
+        {
+         "texto": "Sea requerido por autoridad competente mediante resolución judicial o administrativa."
+        }
+       ]
+      },
+      {
+       "t": "p",
+       "texto": "Tras la terminación, el Cliente tendrá acceso de solo lectura a sus datos por un período de 30 días para facilitar la exportación. Transcurrido este plazo, los datos podrán ser eliminados de forma permanente. El Cliente puede solicitar la eliminación anticipada en cualquier momento."
+      }
+     ]
+    },
+    {
+     "n": "10",
+     "titulo": "Garantías y Exclusiones",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Clèrigo garantiza que el Servicio funcionará de manera sustancialmente conforme a la documentación publicada y mantendrá un nivel de disponibilidad del 99.5 % mensual (SLA), excluyendo mantenimientos programados notificados con 48 horas de anticipación."
+      },
+      {
+       "t": "p",
+       "texto": "Salvo lo expresamente establecido en este acuerdo, el Servicio se proporciona «tal cual» y «según disponibilidad». Clèrigo no garantiza que el Servicio sea ininterrumpido, libre de errores ni que satisfaga todos los requisitos específicos del Cliente."
+      },
+      {
+       "t": "aviso",
+       "texto": "En particular, Clèrigo no garantiza resultados específicos de cumplimiento regulatorio, aprobaciones de auditoría o ausencia de sanciones derivadas del uso o no uso de la plataforma. El Servicio es una herramienta de apoyo y no reemplaza el asesoramiento jurídico o regulatorio profesional."
+      }
+     ]
+    },
+    {
+     "n": "11",
+     "titulo": "Limitación de Responsabilidad",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "En la máxima medida permitida por la ley aplicable, la responsabilidad total de Clèrigo por cualquier reclamación derivada de este acuerdo no excederá el importe pagado por el Cliente en los 12 meses previos al evento que da origen a la reclamación."
+      },
+      {
+       "t": "p",
+       "texto": "Clèrigo no será responsable en ningún caso por: (a) pérdida de beneficios o ingresos; (b) pérdida de datos cuando el Cliente no haya realizado copias de seguridad; (c) daños indirectos, incidentales, especiales o consecuentes; o (d) daños derivados del incumplimiento regulatorio del Cliente."
+      },
+      {
+       "t": "p",
+       "texto": "Ninguna cláusula de este acuerdo excluye la responsabilidad por dolo, fraude, muerte o daños personales causados por negligencia grave, en la medida en que la ley lo prohíba."
+      }
+     ]
+    },
+    {
+     "n": "12",
+     "titulo": "Ley Aplicable y Resolución de Disputas",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Estos Términos se rigen por las leyes del Estado de Delaware, Estados Unidos, sin perjuicio de las disposiciones de derecho internacional privado que pudieran resultar aplicables."
+      },
+      {
+       "t": "p",
+       "texto": "Cualquier disputa que surja de o en relación con estos Términos será sometida en primer lugar a un proceso de mediación amigable de 30 días. De no resolverse, las partes se someten a la jurisdicción exclusiva de los tribunales estatales o federales ubicados en el Estado de Delaware, Estados Unidos."
+      },
+      {
+       "t": "p",
+       "texto": "Para Clientes ubicados en la Unión Europea, los derechos bajo el RGPD se mantienen íntegros y prevalecen sobre cualquier disposición contraria de este acuerdo."
+      }
+     ]
+    },
+    {
+     "n": "13",
+     "titulo": "Contacto Legal",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Para notificaciones legales, reclamaciones o consultas relacionadas con estos Términos, contacta a nuestro equipo legal:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "fuerte": "Departamento Legal:",
+         "texto": "Clèrigo"
+        },
+        {
+         "fuerte": "Email:",
+         "texto": "legal@clerigo.io"
+        },
+        {
+         "fuerte": "Incidentes de seguridad:",
+         "texto": "security@clerigo.io"
+        },
+        {
+         "fuerte": "Dirección:",
+         "texto": "Estados Unidos"
+        },
+        {
+         "fuerte": "Tiempo de respuesta:",
+         "texto": "hasta 5 días hábiles para consultas generales; 72 horas para notificaciones de incidentes de seguridad."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "privacidad",
+   "ruta": "/legal/privacidad",
+   "titulo": "Política de Privacidad",
+   "corto": "Privacidad",
+   "sumario": "Cómo tratamos tus datos personales con responsabilidad.",
+   "entradilla": "Esta política describe qué datos recopilamos, con qué finalidad los tratamos, cuánto tiempo los conservamos y cuáles son tus derechos. Cumplimos con la Ley 172-13 (RD), el RGPD (UE) y el CCPA (California, EE. UU.) según aplique. Los cambios materiales te serán notificados por email con al menos 30 días de anticipación.",
+   "actualizado": "21 de agosto de 2026",
+   "secciones": [
+    {
+     "n": "01",
+     "titulo": "Responsable del Tratamiento",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "El responsable del tratamiento de tus datos personales es Clèrigo, con domicilio en Estados Unidos. Puedes contactar a nuestro Delegado de Protección de Datos (DPO) en privacy@clerigo.io."
+      },
+      {
+       "t": "p",
+       "texto": "Cuando el Servicio es utilizado por una organización cliente, dicha organización actúa como responsable del tratamiento de los datos de sus empleados y usuarios finales, y Clèrigo actúa como encargado del tratamiento bajo las instrucciones del cliente."
+      }
+     ]
+    },
+    {
+     "n": "02",
+     "titulo": "Qué Datos Recopilamos",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Dependiendo de cómo interactúes con el Servicio, podemos recopilar las siguientes categorías de datos:"
+      },
+      {
+       "t": "tabla",
+       "cols": [
+        "Categoría",
+        "Ejemplos",
+        "Origen"
+       ],
+       "filas": [
+        [
+         "Datos de identidad",
+         "Nombre, apellido, cargo, empresa",
+         "Proporcionados por el usuario al registrarse"
+        ],
+        [
+         "Datos de contacto",
+         "Email corporativo, teléfono, país",
+         "Proporcionados por el usuario"
+        ],
+        [
+         "Datos de autenticación",
+         "Hash de contraseña, tokens de autenticación en dos factores, sesiones",
+         "Generados automáticamente al crear la cuenta"
+        ],
+        [
+         "Datos de uso",
+         "Módulos accedidos, acciones realizadas, frecuencia de uso",
+         "Recopilados automáticamente"
+        ],
+        [
+         "Datos técnicos",
+         "IP, navegador, sistema operativo, identificadores de dispositivo",
+         "Recopilados automáticamente"
+        ],
+        [
+         "Datos de pago",
+         "Últimos 4 dígitos de tarjeta, método de pago (sin número completo)",
+         "Procesados por pasarela de pago certificada PCI-DSS"
+        ],
+        [
+         "Datos del Cliente",
+         "Documentos, riesgos, hallazgos, datos GRC cargados por el Cliente",
+         "Cargados por el Cliente — tratados como datos confidenciales"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "texto": "No recopilamos datos de categorías especiales (salud, origen racial, creencias religiosas, orientación sexual) para la operación del Servicio, salvo que el propio Cliente los cargue como parte de sus Datos del Cliente."
+      }
+     ]
+    },
+    {
+     "n": "03",
+     "titulo": "Finalidades del Tratamiento",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Utilizamos tus datos para las siguientes finalidades:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "fuerte": "Prestación del Servicio:",
+         "texto": "autenticación, gestión de cuentas y provisión de funcionalidades contratadas."
+        },
+        {
+         "fuerte": "Comunicaciones de servicio:",
+         "texto": "notificaciones de sistema, alertas de seguridad, cambios en los Términos y actualizaciones de facturación."
+        },
+        {
+         "fuerte": "Soporte técnico:",
+         "texto": "diagnóstico de incidencias y asistencia al usuario."
+        },
+        {
+         "fuerte": "Mejora del Servicio:",
+         "texto": "análisis agregado y anonimizado de patrones de uso para el desarrollo de nuevas funcionalidades."
+        },
+        {
+         "fuerte": "Seguridad:",
+         "texto": "detección de accesos no autorizados, prevención de fraude y auditoría de seguridad interna."
+        },
+        {
+         "fuerte": "Cumplimiento legal:",
+         "texto": "respuesta a requerimientos de autoridades competentes y cumplimiento de obligaciones fiscales."
+        },
+        {
+         "fuerte": "Marketing (con consentimiento):",
+         "texto": "envío de contenido informativo, webinars y actualizaciones del producto. Puedes retirar este consentimiento en cualquier momento."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "n": "04",
+     "titulo": "Base Legal del Tratamiento",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Para cada finalidad, el tratamiento se basa en alguna de las siguientes bases legales:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "fuerte": "Ejecución contractual:",
+         "texto": "datos necesarios para la prestación del Servicio contratado."
+        },
+        {
+         "fuerte": "Interés legítimo:",
+         "texto": "seguridad del sistema, prevención de fraude y mejora del servicio (con evaluación de impacto realizada)."
+        },
+        {
+         "fuerte": "Obligación legal:",
+         "texto": "conservación de registros fiscales y respuesta a requerimientos de autoridades."
+        },
+        {
+         "fuerte": "Consentimiento explícito:",
+         "texto": "comunicaciones de marketing. Las cookies de la plataforma son todas estrictamente necesarias y no se apoyan en el consentimiento; si alguna vez incorporáramos una que no lo fuera, se pediría antes de activarla."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "n": "05",
+     "titulo": "Retención de Datos",
+     "bloques": [
+      {
+       "t": "tabla",
+       "cols": [
+        "Tipo de datos",
+        "Período de retención"
+       ],
+       "filas": [
+        [
+         "Datos de cuenta activa",
+         "Durante la vigencia del contrato + 30 días de acceso post-terminación"
+        ],
+        [
+         "Registros de auditoría y logs",
+         "2 años desde su generación"
+        ],
+        [
+         "Datos de facturación",
+         "7 años (obligación fiscal)"
+        ],
+        [
+         "Datos de soporte técnico",
+         "1 año desde el cierre del ticket"
+        ],
+        [
+         "Comunicaciones de marketing",
+         "Hasta que retires el consentimiento"
+        ],
+        [
+         "Datos anonimizados de uso",
+         "Indefinidamente (no son datos personales una vez anonimizados)"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "n": "06",
+     "titulo": "Transferencias Internacionales de Datos",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Los datos pueden ser procesados por proveedores de infraestructura y servicios ubicados en diversas jurisdicciones. Cuando esto ocurre, nos aseguramos de que existan garantías adecuadas:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "texto": "Contratos de procesamiento de datos con cláusulas de protección equivalentes al estándar GDPR."
+        },
+        {
+         "texto": "Proveedores certificados bajo marcos de privacidad reconocidos (ISO 27701, SOC 2 Type II)."
+        },
+        {
+         "texto": "Evaluaciones de impacto en transferencias (TIA) cuando los datos se transfieren a jurisdicciones con menor nivel de protección."
+        }
+       ]
+      },
+      {
+       "t": "p",
+       "texto": "Entre nuestros subprocesadores principales se incluyen proveedores de infraestructura cloud, pasarelas de pago y herramientas de análisis, todos debidamente auditados. La lista actualizada de subprocesadores está disponible bajo solicitud en privacy@clerigo.io."
+      }
+     ]
+    },
+    {
+     "n": "07",
+     "titulo": "Tus Derechos como Titular de Datos",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Tienes los siguientes derechos sobre tus datos personales, ejercibles en cualquier momento:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "fuerte": "Acceso:",
+         "texto": "solicitar confirmación y copia de los datos que tratamos sobre ti."
+        },
+        {
+         "fuerte": "Rectificación:",
+         "texto": "corregir datos inexactos o incompletos."
+        },
+        {
+         "fuerte": "Cancelación / Supresión:",
+         "texto": "solicitar la eliminación de tus datos cuando ya no sean necesarios o retires el consentimiento."
+        },
+        {
+         "fuerte": "Oposición:",
+         "texto": "oponerte al tratamiento basado en interés legítimo o con fines de marketing."
+        },
+        {
+         "fuerte": "Portabilidad:",
+         "texto": "recibir tus datos en formato estructurado y legible por máquina (JSON o CSV)."
+        },
+        {
+         "fuerte": "Limitación:",
+         "texto": "solicitar la restricción del tratamiento mientras se resuelve una reclamación."
+        },
+        {
+         "fuerte": "No ser objeto de decisiones automatizadas:",
+         "texto": "solicitar revisión humana de decisiones tomadas exclusivamente de forma automatizada con efectos significativos."
+        }
+       ]
+      },
+      {
+       "t": "p",
+       "texto": "Atendemos las solicitudes de ejercicio de derechos dentro de los 30 días hábiles siguientes a su recepción, con posibilidad de extensión a 60 días en casos complejos notificando al interesado. Puedes enviar tu solicitud a privacy@clerigo.io."
+      }
+     ]
+    },
+    {
+     "n": "08",
+     "titulo": "Medidas de Seguridad",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Implementamos medidas técnicas y organizativas apropiadas para proteger tus datos, incluyendo:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "texto": "Controles de cifrado robustos para datos en reposo y en tránsito."
+        },
+        {
+         "texto": "Autenticación en dos factores obligatoria para cuentas de administrador."
+        },
+        {
+         "texto": "Control de acceso basado en roles (RBAC) con principio de mínimo privilegio."
+        },
+        {
+         "texto": "Auditorías de seguridad independientes y pruebas de penetración periódicas."
+        },
+        {
+         "texto": "Monitoreo continuo de amenazas con herramientas de correlación de eventos y respuesta a incidentes 24/7."
+        },
+        {
+         "texto": "Plan de recuperación ante desastres con RTO de 4 horas y RPO de 1 hora."
+        },
+        {
+         "texto": "Capacitación periódica en privacidad y seguridad para todo el personal de Clèrigo."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "n": "09",
+     "titulo": "Menores de Edad",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "El Servicio está dirigido exclusivamente a organizaciones y profesionales mayores de 18 años. No recopilamos conscientemente datos personales de menores de edad. Si detectamos que hemos recopilado datos de un menor sin consentimiento parental, procederemos a su eliminación inmediata."
+      },
+      {
+       "t": "p",
+       "texto": "Si eres padre, madre o tutor y crees que un menor ha proporcionado datos a través de nuestro Servicio, contáctanos en privacy@clerigo.io."
+      }
+     ]
+    },
+    {
+     "n": "10",
+     "titulo": "Cambios a Esta Política",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Nos reservamos el derecho de actualizar esta Política de Privacidad para reflejar cambios en nuestras prácticas, en la legislación aplicable o en el Servicio. Cuando los cambios sean materiales, te notificaremos por email y/o mediante un aviso prominente en la plataforma con al menos 30 días de anticipación."
+      },
+      {
+       "t": "p",
+       "texto": "Te recomendamos revisar esta política periódicamente. La fecha de «última actualización» al inicio de este documento indica cuándo se realizaron los últimos cambios."
+      }
+     ]
+    },
+    {
+     "n": "11",
+     "titulo": "Contacto con el DPO",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Para ejercer tus derechos, plantear preguntas o presentar una queja relacionada con el tratamiento de tus datos personales:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "fuerte": "Delegado de Protección de Datos (DPO):",
+         "texto": "privacy@clerigo.io"
+        },
+        {
+         "fuerte": "Tiempo de respuesta:",
+         "texto": "máximo 30 días hábiles."
+        }
+       ]
+      },
+      {
+       "t": "p",
+       "texto": "También puedes presentar una reclamación ante la autoridad de protección de datos competente en tu jurisdicción."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cookies",
+   "ruta": "/legal/cookies",
+   "titulo": "Política de Cookies",
+   "corto": "Cookies",
+   "sumario": "Solo cookies técnicas: sesión, autenticación y seguridad.",
+   "entradilla": "Clèrigo XGRC utiliza únicamente cookies técnicas: las imprescindibles para iniciar sesión, mantenerla y protegerla. No usamos cookies de publicidad ni de analítica, no incrustamos rastreadores de terceros y no vendemos ni compartimos tus datos con nadie. Esta política te explica exactamente qué se guarda en tu navegador y por qué.",
+   "actualizado": "20 de agosto de 2026",
+   "secciones": [
+    {
+     "n": "01",
+     "titulo": "¿Qué son las Cookies?",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas un sitio web. Junto con las cookies, también utilizamos tecnologías similares —almacenamiento local (localStorage) y de sesión (sessionStorage)— para recordar preferencias de la interfaz."
+      },
+      {
+       "t": "p",
+       "texto": "Las cookies pueden ser:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "fuerte": "De sesión:",
+         "texto": "se eliminan automáticamente al cerrar el navegador."
+        },
+        {
+         "fuerte": "Persistentes:",
+         "texto": "permanecen en tu dispositivo durante un período definido o hasta que las elimines manualmente."
+        },
+        {
+         "fuerte": "Propias:",
+         "texto": "establecidas directamente por la plataforma desde su propio dominio. Todas las que usamos son de este tipo."
+        },
+        {
+         "fuerte": "De terceros:",
+         "texto": "establecidas por proveedores externos. La plataforma no establece ninguna."
+        }
+       ]
+      },
+      {
+       "t": "p",
+       "texto": "La diferencia práctica entre una cookie y el almacenamiento local es a dónde va el dato: la cookie viaja al servidor en cada petición; el almacenamiento local se queda en tu navegador y nunca se envía. Por eso las preferencias de interfaz no son cookies."
+      }
+     ]
+    },
+    {
+     "n": "02",
+     "titulo": "Cookies que Utilizamos",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Todas las cookies de la plataforma son estrictamente necesarias: sirven para autenticarte, mantener tu sesión y protegerla. Sin ellas no es posible iniciar sesión ni usar el Servicio, y por eso no están sujetas a consentimiento ni pueden desactivarse desde la plataforma."
+      },
+      {
+       "t": "tabla",
+       "cols": [
+        "Nombre",
+        "Tipo",
+        "Duración",
+        "Finalidad"
+       ],
+       "filas": [
+        [
+         "authjs.session-token",
+         "Esencial",
+         "Sesión de trabajo",
+         "Mantiene la sesión autenticada. En HTTPS se emite como __Secure-authjs.session-token"
+        ],
+        [
+         "authjs.csrf-token",
+         "Esencial",
+         "Sesión de trabajo",
+         "Protección contra falsificación de peticiones entre sitios (CSRF)"
+        ],
+        [
+         "authjs.callback-url",
+         "Esencial",
+         "Sesión de trabajo",
+         "Recuerda a qué pantalla volver después de autenticarte"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "texto": "Cuando tu organización activa la vigencia de dispositivo confiable, la plataforma recuerda ese dispositivo para no volver a pedir el segundo factor durante el plazo que fije su política de seguridad. Es también una función de seguridad y se trata como esencial."
+      },
+      {
+       "t": "p",
+       "texto": "Además, guardamos en tu propio navegador —sin enviarlo al servidor— las siguientes preferencias, que puedes borrar en cualquier momento desde la configuración de tu navegador:"
+      },
+      {
+       "t": "tabla",
+       "cols": [
+        "Dato",
+        "Dónde",
+        "Finalidad"
+       ],
+       "filas": [
+        [
+         "auth_theme",
+         "Almacenamiento local",
+         "Si prefieres la pantalla de acceso en claro u oscuro"
+        ],
+        [
+         "auth_cuentas_recordadas",
+         "Almacenamiento local",
+         "Correo y nombre de las cuentas que marcaron «recordar este dispositivo». Nunca la contraseña, y caduca sola a los 90 días sin usarse"
+        ],
+        [
+         "Preferencias de módulo",
+         "Almacenamiento local",
+         "Pestaña activa, filtros y columnas visibles de cada módulo, para que la vista sea la misma al volver"
+        ],
+        [
+         "ucrisk_tab",
+         "Almacenamiento de sesión",
+         "Pestaña abierta dentro de la sesión de trabajo en curso"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "n": "03",
+     "titulo": "Lo que NO Hacemos",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Para que quede por escrito y no haya que deducirlo de una ausencia:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "fuerte": "Sin publicidad:",
+         "texto": "no mostramos anuncios ni utilizamos cookies publicitarias de ningún tipo."
+        },
+        {
+         "fuerte": "Sin rastreadores de terceros:",
+         "texto": "no incrustamos píxeles ni etiquetas de redes sociales, plataformas publicitarias o proveedores de analítica."
+        },
+        {
+         "fuerte": "Sin analítica de comportamiento:",
+         "texto": "no usamos cookies para medir tu navegación ni para elaborar perfiles de uso individual."
+        },
+        {
+         "fuerte": "Sin venta ni cesión:",
+         "texto": "no vendemos, alquilamos ni compartimos con terceros los datos asociados a tu navegación."
+        },
+        {
+         "fuerte": "Sin decisiones automatizadas basadas en cookies:",
+         "texto": "ninguna cookie alimenta perfiles, puntuaciones ni decisiones sobre ti."
+        }
+       ]
+      },
+      {
+       "t": "p",
+       "texto": "Por eso la plataforma no muestra un banner de consentimiento de cookies: no hay categorías opcionales que aceptar o rechazar. Si en el futuro incorporáramos cualquier cookie no esencial, actualizaríamos esta política y pediríamos tu consentimiento previo antes de activarla."
+      }
+     ]
+    },
+    {
+     "n": "04",
+     "titulo": "Gestión de tus Preferencias",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Solo las cookies no esenciales pueden desactivarse, y en esta plataforma no hay ninguna. Aun así, mantienes el control completo sobre lo que se guarda en tu navegador:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "fuerte": "Configuración de tu navegador:",
+         "texto": "puedes bloquear o eliminar cookies y almacenamiento local desde los ajustes de privacidad de cualquier navegador, en cualquier momento."
+        },
+        {
+         "fuerte": "Cuentas recordadas:",
+         "texto": "se quitan desde la propia pantalla de acceso, con «Gestionar», sin tocar la configuración del navegador."
+        },
+        {
+         "fuerte": "Cierre de sesión:",
+         "texto": "al cerrar sesión se invalidan las cookies de autenticación."
+        }
+       ]
+      },
+      {
+       "t": "aviso",
+       "texto": "Bloquear las cookies esenciales impide iniciar sesión: sin ellas el servidor no puede reconocer que ya te has autenticado. Borrar el almacenamiento local no impide usar la plataforma; solo hace que se olviden tus preferencias de vista y las cuentas recordadas."
+      }
+     ]
+    },
+    {
+     "n": "05",
+     "titulo": "Señales Do Not Track (DNT) y Derechos CCPA",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Algunos navegadores envían señales «Do Not Track» (DNT) para indicar que el usuario no desea ser rastreado. La plataforma no realiza ningún seguimiento de tu comportamiento, por lo que no hay nada que estas señales deban desactivar: el resultado es el mismo las envíes o no."
+      },
+      {
+       "t": "p",
+       "texto": "Por la misma razón, el derecho a «No vender ni compartir mi información personal» previsto en el CCPA se cumple de partida: no vendemos ni compartimos información personal con terceros. Cualquier consulta sobre este punto puede dirigirse al Delegado de Protección de Datos indicado en la Política de Privacidad."
+      }
+     ]
+    },
+    {
+     "n": "06",
+     "titulo": "Actualizaciones de Esta Política",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Actualizamos esta Política de Cookies cuando cambian las cookies que utilizamos o los requisitos legales aplicables. La versión vigente está siempre publicada en esta misma dirección, con su fecha de última actualización al inicio."
+      },
+      {
+       "t": "p",
+       "texto": "Si alguna vez incorporamos cookies no esenciales, este documento se actualizará y se solicitará tu consentimiento antes de activarlas, no después. Para preguntas sobre el uso de cookies, escríbenos a privacy@clerigo.io. Respondemos dentro de los 5 días hábiles siguientes a tu consulta."
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "en": {
+  "Términos y Condiciones de Uso": "Terms and Conditions of Use",
+  "Términos": "Terms",
+  "Contrato de servicio entre Clèrigo y el Cliente.": "Service agreement between Clèrigo and the Client.",
+  "Este acuerdo regula el acceso y uso de la plataforma Clèrigo XGRC y todos sus módulos, APIs, integraciones y servicios relacionados operados por Clèrigo (Delaware). Al continuar utilizando el servicio confirmas tu aceptación de estos términos.": "This agreement governs access to and use of the Clèrigo XGRC platform and all its modules, APIs, integrations and related services operated by Clèrigo (Delaware). By continuing to use the service you confirm your acceptance of these terms.",
+  "20 de agosto de 2026": "20 August 2026",
+  "Aceptación de los Términos": "Acceptance of the Terms",
+  "Al registrarte, acceder o utilizar la plataforma Clèrigo XGRC («el Servicio»), operada por Clèrigo («Clèrigo», «nosotros», «la Compañía»), declaras que has leído, comprendido y aceptas estar vinculado por estos Términos y Condiciones de Uso, así como por nuestra Política de Privacidad y Política de Cookies.": "By registering for, accessing or using the Clèrigo XGRC platform (\"the Service\"), operated by Clèrigo (\"Clèrigo\", \"we\", \"the Company\"), you declare that you have read and understood these Terms and Conditions of Use and agree to be bound by them, as well as by our Privacy Policy and Cookie Policy.",
+  "Si accedes al Servicio en nombre de una organización, declaras que tienes la autoridad para vincular a dicha organización con estos Términos. En tal caso, «tú» y «el Cliente» se refieren a esa organización.": "If you access the Service on behalf of an organisation, you declare that you have authority to bind that organisation to these Terms. In that case, \"you\" and \"the Client\" refer to that organisation.",
+  "Si no aceptas estos Términos, no podrás utilizar el Servicio. El uso continuado del Servicio después de la publicación de cambios constituye la aceptación de dichos cambios.": "If you do not accept these Terms, you may not use the Service. Continued use of the Service after changes are published constitutes acceptance of those changes.",
+  "Descripción del Servicio": "Description of the Service",
+  "Clèrigo XGRC es una plataforma SaaS (Software as a Service) de Gobernanza, Riesgo y Cumplimiento que proporciona, entre otros, los siguientes módulos y capacidades:": "Clèrigo XGRC is a SaaS (Software as a Service) Governance, Risk and Compliance platform providing, among others, the following modules and capabilities:",
+  "Gestión de Riesgos:": "Risk management:",
+  "identificación, evaluación, tratamiento y monitoreo de riesgos empresariales.": "identifying, assessing, treating and monitoring enterprise risks.",
+  "Cumplimiento Regulatorio:": "Regulatory compliance:",
+  "gestión de marcos normativos, políticas, circulares y calendarios regulatorios.": "managing regulatory frameworks, policies, circulars and regulatory calendars.",
+  "Ciberseguridad:": "Cybersecurity:",
+  "controles técnicos, gestión de vulnerabilidades e incidentes correlacionados con el contexto GRC.": "technical controls, vulnerability and incident management correlated with the GRC context.",
+  "Auditoría y Control Interno:": "Audit and internal control:",
+  "planificación, ejecución y seguimiento de auditorías con recopilación de evidencias.": "planning, running and following up audits with evidence collection.",
+  "Gobierno Corporativo:": "Corporate governance:",
+  "gestión de comités, actas y estructura de gobernanza institucional.": "managing committees, minutes and the institutional governance structure.",
+  "Privacidad y Protección de Datos:": "Privacy and data protection:",
+  "gestión del ciclo de vida de datos personales bajo GDPR y Ley 172-13.": "managing the personal data life cycle under the GDPR and Law 172-13.",
+  "Gestor Documental, Asistente de IA y API de Acceso:": "Document manager, AI assistant and access API:",
+  "capacidades complementarias incluidas en todos los planes.": "supporting capabilities included in every plan.",
+  "Clèrigo se reserva el derecho de modificar, agregar o discontinuar funcionalidades del Servicio en cualquier momento, notificando a los Clientes con al menos 30 días de anticipación cuando el cambio sea material.": "Clèrigo reserves the right to modify, add or discontinue features of the Service at any time, giving Clients at least 30 days' notice where the change is material.",
+  "Registro, Cuentas y Acceso": "Registration, accounts and access",
+  "Para utilizar el Servicio deberás crear una cuenta proporcionando información veraz, completa y actualizada. El Cliente es responsable de:": "To use the Service you must create an account providing true, complete and up-to-date information. The Client is responsible for:",
+  "Mantener la confidencialidad de las credenciales de acceso de todos los usuarios autorizados.": "Keeping the access credentials of all authorised users confidential.",
+  "Todas las actividades que ocurran bajo las cuentas asignadas a su organización.": "All activity taking place under the accounts assigned to its organisation.",
+  "Notificar a Clèrigo de inmediato ante cualquier uso no autorizado o brecha de seguridad.": "Notifying Clèrigo immediately of any unauthorised use or security breach.",
+  "Asegurar que el número de usuarios activos no exceda el volumen de licencias contratadas.": "Ensuring the number of active users does not exceed the volume of licences contracted.",
+  "El acceso de cada usuario se otorga de forma personal e intransferible. Está prohibido compartir credenciales entre múltiples personas bajo una misma cuenta de usuario.": "Each user's access is granted personally and is non-transferable. Sharing credentials among several people under a single user account is prohibited.",
+  "Política de Uso Aceptable": "Acceptable Use Policy",
+  "El Cliente y sus usuarios se comprometen a utilizar el Servicio únicamente para fines legales y conforme a estos Términos. Está expresamente prohibido:": "The Client and its users undertake to use the Service only for lawful purposes and in accordance with these Terms. The following is expressly prohibited:",
+  "Realizar ingeniería inversa, descompilar o intentar extraer el código fuente de la plataforma.": "Reverse engineering, decompiling or attempting to extract the platform's source code.",
+  "Utilizar el Servicio para almacenar o transmitir contenido ilegal, difamatorio, malicioso o que infrinja derechos de terceros.": "Using the Service to store or transmit unlawful, defamatory or malicious content, or content infringing third-party rights.",
+  "Realizar pruebas de penetración, escaneos de vulnerabilidades o ataques de denegación de servicio sin autorización escrita previa de Clèrigo.": "Carrying out penetration tests, vulnerability scans or denial-of-service attacks without Clèrigo's prior written authorisation.",
+  "Revender, sublicenciar o transferir el acceso al Servicio a terceros sin consentimiento expreso.": "Reselling, sublicensing or transferring access to the Service to third parties without express consent.",
+  "Utilizar scrapers, bots o automatizaciones que sobrecarguen la infraestructura del Servicio.": "Using scrapers, bots or automation that overload the Service's infrastructure.",
+  "Cargar datos personales de terceros sin contar con la base legal adecuada para su tratamiento.": "Uploading third parties' personal data without an adequate lawful basis for processing it.",
+  "El incumplimiento de esta política puede resultar en la suspensión inmediata del acceso sin derecho a reembolso, y en la interposición de acciones legales cuando corresponda.": "Breach of this policy may result in immediate suspension of access with no right to a refund, and in legal action where appropriate.",
+  "Propiedad Intelectual": "Intellectual Property",
+  "Toda la propiedad intelectual asociada al Servicio, incluyendo pero no limitándose a el software, código fuente, algoritmos, diseño de interfaz, marca, logotipos, documentación y contenido propio, es propiedad exclusiva de Clèrigo y se encuentra protegida por las leyes de propiedad intelectual aplicables.": "All intellectual property associated with the Service, including but not limited to the software, source code, algorithms, interface design, brand, logos, documentation and proprietary content, is the exclusive property of Clèrigo and is protected by the applicable intellectual property laws.",
+  "Clèrigo te otorga una licencia limitada, no exclusiva, no transferible y revocable para acceder y utilizar el Servicio durante el período de suscripción vigente, exclusivamente para los fines comerciales internos del Cliente.": "Clèrigo grants you a limited, non-exclusive, non-transferable and revocable licence to access and use the Service during the current subscription period, solely for the Client's internal business purposes.",
+  "El Cliente conserva todos los derechos sobre sus propios datos, documentos y contenido cargado en la plataforma («Datos del Cliente»). El Cliente otorga a Clèrigo una licencia limitada para procesar dichos datos exclusivamente con el fin de prestar el Servicio.": "The Client retains all rights over its own data, documents and content uploaded to the platform (\"Client Data\"). The Client grants Clèrigo a limited licence to process that data solely for the purpose of providing the Service.",
+  "Datos del Cliente y Seguridad": "Client Data and Security",
+  "Clèrigo trata los Datos del Cliente como información confidencial y solo los procesa según las instrucciones del Cliente y lo establecido en nuestra Política de Privacidad. En particular:": "Clèrigo treats Client Data as confidential information and processes it only on the Client's instructions and as set out in our Privacy Policy. In particular:",
+  "Aplicación de controles de cifrado estándar de la industria para la protección de datos en reposo y en tránsito.": "Industry-standard encryption controls are applied to protect data at rest and in transit.",
+  "Clèrigo no vende ni comercializa los Datos del Cliente con terceros.": "Clèrigo does not sell or trade Client Data with third parties.",
+  "Los datos se alojan en centros de datos ubicados en la región acordada con el Cliente.": "Data is hosted in data centres located in the region agreed with the Client.",
+  "En caso de incidente de seguridad que afecte los Datos del Cliente, Clèrigo notificará al Cliente dentro de las 72 horas siguientes al descubrimiento, conforme a la normativa aplicable.": "In the event of a security incident affecting Client Data, Clèrigo will notify the Client within 72 hours of discovery, in accordance with the applicable regulations.",
+  "El Cliente es responsable de la legalidad de los datos que carga en la plataforma y de obtener los consentimientos necesarios cuando corresponda.": "The Client is responsible for the lawfulness of the data it uploads to the platform and for obtaining the necessary consents where applicable.",
+  "Confidencialidad": "Confidentiality",
+  "Ambas partes acuerdan mantener la confidencialidad de toda información no pública que reciban en el marco de este acuerdo («Información Confidencial»), incluyendo datos comerciales, técnicos, financieros o de cualquier otra naturaleza.": "Both parties agree to keep confidential all non-public information they receive under this agreement (\"Confidential Information\"), including commercial, technical, financial or any other kind of data.",
+  "Esta obligación no aplica a información que: (a) sea de dominio público sin incumplimiento de este acuerdo; (b) ya fuera conocida por la parte receptora antes de su divulgación; (c) sea recibida legítimamente de un tercero; o (d) deba ser divulgada por mandato legal o judicial.": "This obligation does not apply to information that: (a) is in the public domain without breach of this agreement; (b) was already known to the receiving party before disclosure; (c) is lawfully received from a third party; or (d) must be disclosed by legal or judicial mandate.",
+  "La obligación de confidencialidad permanece vigente durante 3 años después de la terminación del contrato de servicio.": "The confidentiality obligation remains in force for 3 years after termination of the service agreement.",
+  "Facturación, Pagos y Renovaciones": "Billing, Payments and Renewals",
+  "El Servicio se factura según el plan seleccionado al momento del registro. Los precios vigentes son los recogidos en el contrato de licencia del Cliente y pueden actualizarse con 30 días de aviso previo.": "The Service is billed according to the plan selected at registration. The prices in force are those set out in the Client's licence agreement and may be updated with 30 days' prior notice.",
+  "Planes anuales:": "Annual plans:",
+  "se facturan por adelantado al inicio de cada período anual.": "billed in advance at the start of each annual period.",
+  "Planes mensuales:": "Monthly plans:",
+  "se facturan cada mes en la fecha de suscripción, con un recargo del 20 % respecto al precio anual equivalente.": "billed each month on the subscription date, with a 20 % surcharge over the equivalent annual price.",
+  "Usuarios adicionales:": "Additional users:",
+  "se facturan a $20 USD por usuario por mes, prorrateados según la fecha de activación.": "billed at USD 20 per user per month, pro-rated from the activation date.",
+  "Renovación automática:": "Automatic renewal:",
+  "los planes se renuevan automáticamente al vencer, salvo que el Cliente notifique la cancelación con al menos 15 días de anticipación.": "plans renew automatically on expiry unless the Client gives notice of cancellation at least 15 days in advance.",
+  "Los pagos vencidos pueden resultar en la suspensión del Servicio tras un período de gracia de 10 días. Clèrigo no se responsabiliza por pérdidas derivadas de suspensiones por falta de pago.": "Overdue payments may result in suspension of the Service after a 10-day grace period. Clèrigo accepts no responsibility for losses arising from suspensions due to non-payment.",
+  "Todos los planes incluyen un período de prueba gratuita de 14 días sin requerir tarjeta de crédito. Al finalizar la prueba, el Servicio se suspende automáticamente hasta que el Cliente active un plan de pago.": "All plans include a 14-day free trial with no credit card required. When the trial ends, the Service is suspended automatically until the Client activates a paid plan.",
+  "Suspensión y Terminación": "Suspension and Termination",
+  "Cualquiera de las partes puede terminar el contrato de servicio con 30 días de aviso escrito. Clèrigo puede suspender o terminar el acceso de forma inmediata y sin previo aviso cuando:": "Either party may terminate the service agreement on 30 days' written notice. Clèrigo may suspend or terminate access immediately and without prior notice where:",
+  "El Cliente incumpla estos Términos de forma material.": "The Client is in material breach of these Terms.",
+  "Se detecte uso fraudulento, actividad ilegal o amenaza activa de seguridad.": "Fraudulent use, unlawful activity or an active security threat is detected.",
+  "Un pago permanezca impago más de 30 días después de la fecha de vencimiento.": "A payment remains outstanding more than 30 days after its due date.",
+  "Sea requerido por autoridad competente mediante resolución judicial o administrativa.": "It is required by a competent authority through a judicial or administrative decision.",
+  "Tras la terminación, el Cliente tendrá acceso de solo lectura a sus datos por un período de 30 días para facilitar la exportación. Transcurrido este plazo, los datos podrán ser eliminados de forma permanente. El Cliente puede solicitar la eliminación anticipada en cualquier momento.": "After termination, the Client will have read-only access to its data for 30 days to facilitate export. Once that period has passed, the data may be permanently deleted. The Client may request early deletion at any time.",
+  "Garantías y Exclusiones": "Warranties and Exclusions",
+  "Clèrigo garantiza que el Servicio funcionará de manera sustancialmente conforme a la documentación publicada y mantendrá un nivel de disponibilidad del 99.5 % mensual (SLA), excluyendo mantenimientos programados notificados con 48 horas de anticipación.": "Clèrigo warrants that the Service will operate substantially in accordance with the published documentation and will maintain 99.5 % monthly availability (SLA), excluding scheduled maintenance notified 48 hours in advance.",
+  "Salvo lo expresamente establecido en este acuerdo, el Servicio se proporciona «tal cual» y «según disponibilidad». Clèrigo no garantiza que el Servicio sea ininterrumpido, libre de errores ni que satisfaga todos los requisitos específicos del Cliente.": "Except as expressly set out in this agreement, the Service is provided \"as is\" and \"as available\". Clèrigo does not warrant that the Service will be uninterrupted or error-free, nor that it will meet all of the Client's specific requirements.",
+  "En particular, Clèrigo no garantiza resultados específicos de cumplimiento regulatorio, aprobaciones de auditoría o ausencia de sanciones derivadas del uso o no uso de la plataforma. El Servicio es una herramienta de apoyo y no reemplaza el asesoramiento jurídico o regulatorio profesional.": "In particular, Clèrigo does not warrant any specific regulatory compliance outcome, audit approval or absence of penalties arising from use or non-use of the platform. The Service is a support tool and does not replace professional legal or regulatory advice.",
+  "Limitación de Responsabilidad": "Limitation of Liability",
+  "En la máxima medida permitida por la ley aplicable, la responsabilidad total de Clèrigo por cualquier reclamación derivada de este acuerdo no excederá el importe pagado por el Cliente en los 12 meses previos al evento que da origen a la reclamación.": "To the fullest extent permitted by applicable law, Clèrigo's total liability for any claim arising out of this agreement shall not exceed the amount paid by the Client in the 12 months preceding the event giving rise to the claim.",
+  "Clèrigo no será responsable en ningún caso por: (a) pérdida de beneficios o ingresos; (b) pérdida de datos cuando el Cliente no haya realizado copias de seguridad; (c) daños indirectos, incidentales, especiales o consecuentes; o (d) daños derivados del incumplimiento regulatorio del Cliente.": "Clèrigo shall in no event be liable for: (a) loss of profits or revenue; (b) loss of data where the Client has not made backups; (c) indirect, incidental, special or consequential damages; or (d) damages arising from the Client's own regulatory non-compliance.",
+  "Ninguna cláusula de este acuerdo excluye la responsabilidad por dolo, fraude, muerte o daños personales causados por negligencia grave, en la medida en que la ley lo prohíba.": "Nothing in this agreement excludes liability for wilful misconduct, fraud, death or personal injury caused by gross negligence, to the extent the law prohibits such exclusion.",
+  "Ley Aplicable y Resolución de Disputas": "Governing Law and Dispute Resolution",
+  "Estos Términos se rigen por las leyes del Estado de Delaware, Estados Unidos, sin perjuicio de las disposiciones de derecho internacional privado que pudieran resultar aplicables.": "These Terms are governed by the laws of the State of Delaware, United States, without prejudice to any applicable rules of private international law.",
+  "Cualquier disputa que surja de o en relación con estos Términos será sometida en primer lugar a un proceso de mediación amigable de 30 días. De no resolverse, las partes se someten a la jurisdicción exclusiva de los tribunales estatales o federales ubicados en el Estado de Delaware, Estados Unidos.": "Any dispute arising out of or in connection with these Terms shall first be submitted to a 30-day amicable mediation process. If unresolved, the parties submit to the exclusive jurisdiction of the state or federal courts located in the State of Delaware, United States.",
+  "Para Clientes ubicados en la Unión Europea, los derechos bajo el RGPD se mantienen íntegros y prevalecen sobre cualquier disposición contraria de este acuerdo.": "For Clients located in the European Union, rights under the GDPR remain intact and prevail over any contrary provision of this agreement.",
+  "Contacto Legal": "Legal Contact",
+  "Para notificaciones legales, reclamaciones o consultas relacionadas con estos Términos, contacta a nuestro equipo legal:": "For legal notices, claims or queries relating to these Terms, contact our legal team:",
+  "Departamento Legal:": "Legal department:",
+  "Clèrigo": "Clèrigo",
+  "Email:": "Email:",
+  "legal@clerigo.io": "legal@clerigo.io",
+  "security@clerigo.io": "security@clerigo.io",
+  "Dirección:": "Address:",
+  "Estados Unidos": "United States",
+  "Tiempo de respuesta:": "Response time:",
+  "hasta 5 días hábiles para consultas generales; 72 horas para notificaciones de incidentes de seguridad.": "up to 5 business days for general queries; 72 hours for security incident notifications.",
+  "Política de Privacidad": "Privacy Policy",
+  "Privacidad": "Privacy",
+  "Cómo tratamos tus datos personales con responsabilidad.": "How we handle your personal data responsibly.",
+  "Esta política describe qué datos recopilamos, con qué finalidad los tratamos, cuánto tiempo los conservamos y cuáles son tus derechos. Cumplimos con la Ley 172-13 (RD), el RGPD (UE) y el CCPA (California, EE. UU.) según aplique. Los cambios materiales te serán notificados por email con al menos 30 días de anticipación.": "This policy sets out what data we collect, why we process it, how long we keep it and what your rights are. We comply with Law 172-13 (Dominican Republic), the GDPR (EU) and the CCPA (California, USA) as applicable. Material changes will be notified to you by email at least 30 days in advance.",
+  "21 de agosto de 2026": "21 August 2026",
+  "Responsable del Tratamiento": "Data Controller",
+  "El responsable del tratamiento de tus datos personales es Clèrigo, con domicilio en Estados Unidos. Puedes contactar a nuestro Delegado de Protección de Datos (DPO) en privacy@clerigo.io.": "The controller of your personal data is Clèrigo, domiciled in United States. You can contact our Data Protection Officer (DPO) at privacy@clerigo.io.",
+  "Cuando el Servicio es utilizado por una organización cliente, dicha organización actúa como responsable del tratamiento de los datos de sus empleados y usuarios finales, y Clèrigo actúa como encargado del tratamiento bajo las instrucciones del cliente.": "Where the Service is used by a client organisation, that organisation acts as controller of its employees' and end users' data, and Clèrigo acts as processor on the client's instructions.",
+  "Qué Datos Recopilamos": "What Data We Collect",
+  "Dependiendo de cómo interactúes con el Servicio, podemos recopilar las siguientes categorías de datos:": "Depending on how you interact with the Service, we may collect the following categories of data:",
+  "Categoría": "Category",
+  "Ejemplos": "Examples",
+  "Origen": "Source",
+  "Datos de identidad": "Identity data",
+  "Nombre, apellido, cargo, empresa": "First name, surname, job title, company",
+  "Proporcionados por el usuario al registrarse": "Provided by the user on registration",
+  "Datos de contacto": "Contact data",
+  "Email corporativo, teléfono, país": "Work email, phone, country",
+  "Proporcionados por el usuario": "Provided by the user",
+  "Datos de autenticación": "Authentication data",
+  "Hash de contraseña, tokens de autenticación en dos factores, sesiones": "Password hash, two-factor authentication tokens, sessions",
+  "Generados automáticamente al crear la cuenta": "Generated automatically when the account is created",
+  "Datos de uso": "Usage data",
+  "Módulos accedidos, acciones realizadas, frecuencia de uso": "Modules accessed, actions taken, frequency of use",
+  "Recopilados automáticamente": "Collected automatically",
+  "Datos técnicos": "Technical data",
+  "IP, navegador, sistema operativo, identificadores de dispositivo": "IP, browser, operating system, device identifiers",
+  "Datos de pago": "Payment data",
+  "Últimos 4 dígitos de tarjeta, método de pago (sin número completo)": "Last 4 digits of the card, payment method (no full number)",
+  "Procesados por pasarela de pago certificada PCI-DSS": "Processed by a PCI-DSS certified payment gateway",
+  "Datos del Cliente": "Client Data",
+  "Documentos, riesgos, hallazgos, datos GRC cargados por el Cliente": "Documents, risks, findings and GRC data uploaded by the Client",
+  "Cargados por el Cliente — tratados como datos confidenciales": "Uploaded by the Client — treated as confidential data",
+  "No recopilamos datos de categorías especiales (salud, origen racial, creencias religiosas, orientación sexual) para la operación del Servicio, salvo que el propio Cliente los cargue como parte de sus Datos del Cliente.": "We do not collect special category data (health, racial origin, religious beliefs, sexual orientation) to operate the Service, unless the Client itself uploads it as part of its Client Data.",
+  "Finalidades del Tratamiento": "Purposes of Processing",
+  "Utilizamos tus datos para las siguientes finalidades:": "We use your data for the following purposes:",
+  "Prestación del Servicio:": "Providing the Service:",
+  "autenticación, gestión de cuentas y provisión de funcionalidades contratadas.": "authentication, account management and delivery of the features contracted.",
+  "Comunicaciones de servicio:": "Service communications:",
+  "notificaciones de sistema, alertas de seguridad, cambios en los Términos y actualizaciones de facturación.": "system notifications, security alerts, changes to the Terms and billing updates.",
+  "Soporte técnico:": "Technical support:",
+  "diagnóstico de incidencias y asistencia al usuario.": "diagnosing issues and assisting users.",
+  "Mejora del Servicio:": "Improving the Service:",
+  "análisis agregado y anonimizado de patrones de uso para el desarrollo de nuevas funcionalidades.": "aggregated, anonymised analysis of usage patterns to develop new features.",
+  "Seguridad:": "Security:",
+  "detección de accesos no autorizados, prevención de fraude y auditoría de seguridad interna.": "detecting unauthorised access, preventing fraud and internal security auditing.",
+  "Cumplimiento legal:": "Legal compliance:",
+  "respuesta a requerimientos de autoridades competentes y cumplimiento de obligaciones fiscales.": "responding to requests from competent authorities and meeting tax obligations.",
+  "Marketing (con consentimiento):": "Marketing (with consent):",
+  "envío de contenido informativo, webinars y actualizaciones del producto. Puedes retirar este consentimiento en cualquier momento.": "sending informational content, webinars and product updates. You can withdraw this consent at any time.",
+  "Base Legal del Tratamiento": "Lawful Basis for Processing",
+  "Para cada finalidad, el tratamiento se basa en alguna de las siguientes bases legales:": "For each purpose, processing rests on one of the following lawful bases:",
+  "Ejecución contractual:": "Performance of a contract:",
+  "datos necesarios para la prestación del Servicio contratado.": "data needed to provide the Service contracted.",
+  "Interés legítimo:": "Legitimate interest:",
+  "seguridad del sistema, prevención de fraude y mejora del servicio (con evaluación de impacto realizada).": "system security, fraud prevention and service improvement (with an impact assessment carried out).",
+  "Obligación legal:": "Legal obligation:",
+  "conservación de registros fiscales y respuesta a requerimientos de autoridades.": "keeping tax records and responding to requests from authorities.",
+  "Consentimiento explícito:": "Explicit consent:",
+  "comunicaciones de marketing. Las cookies de la plataforma son todas estrictamente necesarias y no se apoyan en el consentimiento; si alguna vez incorporáramos una que no lo fuera, se pediría antes de activarla.": "marketing communications. The platform's cookies are all strictly necessary and do not rest on consent; were we ever to add one that was not, consent would be sought before enabling it.",
+  "Retención de Datos": "Data Retention",
+  "Tipo de datos": "Type of data",
+  "Período de retención": "Retention period",
+  "Datos de cuenta activa": "Active account data",
+  "Durante la vigencia del contrato + 30 días de acceso post-terminación": "For the term of the contract + 30 days' access after termination",
+  "Registros de auditoría y logs": "Audit trails and logs",
+  "2 años desde su generación": "2 years from creation",
+  "Datos de facturación": "Billing data",
+  "7 años (obligación fiscal)": "7 years (tax obligation)",
+  "Datos de soporte técnico": "Technical support data",
+  "1 año desde el cierre del ticket": "1 year from closure of the ticket",
+  "Comunicaciones de marketing": "Marketing communications",
+  "Hasta que retires el consentimiento": "Until you withdraw consent",
+  "Datos anonimizados de uso": "Anonymised usage data",
+  "Indefinidamente (no son datos personales una vez anonimizados)": "Indefinitely (once anonymised they are not personal data)",
+  "Transferencias Internacionales de Datos": "International Data Transfers",
+  "Los datos pueden ser procesados por proveedores de infraestructura y servicios ubicados en diversas jurisdicciones. Cuando esto ocurre, nos aseguramos de que existan garantías adecuadas:": "Data may be processed by infrastructure and service providers located in various jurisdictions. Where that happens, we make sure appropriate safeguards are in place:",
+  "Contratos de procesamiento de datos con cláusulas de protección equivalentes al estándar GDPR.": "Data processing agreements with protection clauses equivalent to the GDPR standard.",
+  "Proveedores certificados bajo marcos de privacidad reconocidos (ISO 27701, SOC 2 Type II).": "Providers certified under recognised privacy frameworks (ISO 27701, SOC 2 Type II).",
+  "Evaluaciones de impacto en transferencias (TIA) cuando los datos se transfieren a jurisdicciones con menor nivel de protección.": "Transfer impact assessments (TIA) where data is transferred to jurisdictions with a lower level of protection.",
+  "Entre nuestros subprocesadores principales se incluyen proveedores de infraestructura cloud, pasarelas de pago y herramientas de análisis, todos debidamente auditados. La lista actualizada de subprocesadores está disponible bajo solicitud en privacy@clerigo.io.": "Our main sub-processors include cloud infrastructure providers, payment gateways and analytics tools, all duly audited. An up-to-date list of sub-processors is available on request at privacy@clerigo.io.",
+  "Tus Derechos como Titular de Datos": "Your Rights as a Data Subject",
+  "Tienes los siguientes derechos sobre tus datos personales, ejercibles en cualquier momento:": "You have the following rights over your personal data, exercisable at any time:",
+  "Acceso:": "Access:",
+  "solicitar confirmación y copia de los datos que tratamos sobre ti.": "request confirmation of, and a copy of, the data we process about you.",
+  "Rectificación:": "Rectification:",
+  "corregir datos inexactos o incompletos.": "correct inaccurate or incomplete data.",
+  "Cancelación / Supresión:": "Cancellation / erasure:",
+  "solicitar la eliminación de tus datos cuando ya no sean necesarios o retires el consentimiento.": "request deletion of your data when it is no longer needed or you withdraw consent.",
+  "Oposición:": "Objection:",
+  "oponerte al tratamiento basado en interés legítimo o con fines de marketing.": "object to processing based on legitimate interest or for marketing purposes.",
+  "Portabilidad:": "Portability:",
+  "recibir tus datos en formato estructurado y legible por máquina (JSON o CSV).": "receive your data in a structured, machine-readable format (JSON or CSV).",
+  "Limitación:": "Restriction:",
+  "solicitar la restricción del tratamiento mientras se resuelve una reclamación.": "request that processing be restricted while a claim is being resolved.",
+  "No ser objeto de decisiones automatizadas:": "Not to be subject to automated decisions:",
+  "solicitar revisión humana de decisiones tomadas exclusivamente de forma automatizada con efectos significativos.": "request human review of decisions taken solely by automated means with significant effects.",
+  "Atendemos las solicitudes de ejercicio de derechos dentro de los 30 días hábiles siguientes a su recepción, con posibilidad de extensión a 60 días en casos complejos notificando al interesado. Puedes enviar tu solicitud a privacy@clerigo.io.": "We answer requests to exercise rights within 30 business days of receipt, extendable to 60 days in complex cases with notice to the data subject. You can send your request to privacy@clerigo.io.",
+  "Medidas de Seguridad": "Security Measures",
+  "Implementamos medidas técnicas y organizativas apropiadas para proteger tus datos, incluyendo:": "We put appropriate technical and organisational measures in place to protect your data, including:",
+  "Controles de cifrado robustos para datos en reposo y en tránsito.": "Strong encryption controls for data at rest and in transit.",
+  "Autenticación en dos factores obligatoria para cuentas de administrador.": "Mandatory two-factor authentication for administrator accounts.",
+  "Control de acceso basado en roles (RBAC) con principio de mínimo privilegio.": "Role-based access control (RBAC) on the principle of least privilege.",
+  "Auditorías de seguridad independientes y pruebas de penetración periódicas.": "Independent security audits and regular penetration testing.",
+  "Monitoreo continuo de amenazas con herramientas de correlación de eventos y respuesta a incidentes 24/7.": "Continuous threat monitoring with event correlation tools and 24/7 incident response.",
+  "Plan de recuperación ante desastres con RTO de 4 horas y RPO de 1 hora.": "Disaster recovery plan with a 4-hour RTO and a 1-hour RPO.",
+  "Capacitación periódica en privacidad y seguridad para todo el personal de Clèrigo.": "Regular privacy and security training for all Clèrigo staff.",
+  "Menores de Edad": "Minors",
+  "El Servicio está dirigido exclusivamente a organizaciones y profesionales mayores de 18 años. No recopilamos conscientemente datos personales de menores de edad. Si detectamos que hemos recopilado datos de un menor sin consentimiento parental, procederemos a su eliminación inmediata.": "The Service is aimed solely at organisations and professionals over 18. We do not knowingly collect personal data from minors. If we find that we have collected a minor's data without parental consent, we will delete it immediately.",
+  "Si eres padre, madre o tutor y crees que un menor ha proporcionado datos a través de nuestro Servicio, contáctanos en privacy@clerigo.io.": "If you are a parent or guardian and believe a minor has provided data through our Service, contact us at privacy@clerigo.io.",
+  "Cambios a Esta Política": "Changes to This Policy",
+  "Nos reservamos el derecho de actualizar esta Política de Privacidad para reflejar cambios en nuestras prácticas, en la legislación aplicable o en el Servicio. Cuando los cambios sean materiales, te notificaremos por email y/o mediante un aviso prominente en la plataforma con al menos 30 días de anticipación.": "We reserve the right to update this Privacy Policy to reflect changes in our practices, in the applicable law or in the Service. Where changes are material, we will notify you by email and/or through a prominent notice on the platform at least 30 days in advance.",
+  "Te recomendamos revisar esta política periódicamente. La fecha de «última actualización» al inicio de este documento indica cuándo se realizaron los últimos cambios.": "We recommend reviewing this policy from time to time. The \"last updated\" date at the top of this document shows when the latest changes were made.",
+  "Contacto con el DPO": "Contacting the DPO",
+  "Para ejercer tus derechos, plantear preguntas o presentar una queja relacionada con el tratamiento de tus datos personales:": "To exercise your rights, ask questions or make a complaint about the processing of your personal data:",
+  "Delegado de Protección de Datos (DPO):": "Data Protection Officer (DPO):",
+  "privacy@clerigo.io": "privacy@clerigo.io",
+  "máximo 30 días hábiles.": "30 business days at most.",
+  "También puedes presentar una reclamación ante la autoridad de protección de datos competente en tu jurisdicción.": "You may also lodge a complaint with the data protection authority competent in your jurisdiction.",
+  "Política de Cookies": "Cookie Policy",
+  "Cookies": "Cookies",
+  "Solo cookies técnicas: sesión, autenticación y seguridad.": "Technical cookies only: session, authentication and security.",
+  "Clèrigo XGRC utiliza únicamente cookies técnicas: las imprescindibles para iniciar sesión, mantenerla y protegerla. No usamos cookies de publicidad ni de analítica, no incrustamos rastreadores de terceros y no vendemos ni compartimos tus datos con nadie. Esta política te explica exactamente qué se guarda en tu navegador y por qué.": "Clèrigo XGRC uses technical cookies only: the ones essential to sign in, stay signed in and keep the session safe. We do not use advertising or analytics cookies, we embed no third-party trackers, and we neither sell nor share your data with anyone. This policy tells you exactly what is stored in your browser and why.",
+  "¿Qué son las Cookies?": "What Are Cookies?",
+  "Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas un sitio web. Junto con las cookies, también utilizamos tecnologías similares —almacenamiento local (localStorage) y de sesión (sessionStorage)— para recordar preferencias de la interfaz.": "Cookies are small text files stored on your device when you visit a website. Alongside cookies we also use similar technologies — local storage (localStorage) and session storage (sessionStorage) — to remember interface preferences.",
+  "Las cookies pueden ser:": "Cookies can be:",
+  "De sesión:": "Session:",
+  "se eliminan automáticamente al cerrar el navegador.": "deleted automatically when the browser is closed.",
+  "Persistentes:": "Persistent:",
+  "permanecen en tu dispositivo durante un período definido o hasta que las elimines manualmente.": "remain on your device for a set period or until you delete them yourself.",
+  "Propias:": "First-party:",
+  "establecidas directamente por la plataforma desde su propio dominio. Todas las que usamos son de este tipo.": "set directly by the platform from its own domain. Every cookie we use is of this kind.",
+  "De terceros:": "Third-party:",
+  "establecidas por proveedores externos. La plataforma no establece ninguna.": "set by external providers. The platform sets none.",
+  "La diferencia práctica entre una cookie y el almacenamiento local es a dónde va el dato: la cookie viaja al servidor en cada petición; el almacenamiento local se queda en tu navegador y nunca se envía. Por eso las preferencias de interfaz no son cookies.": "The practical difference between a cookie and local storage is where the data goes: a cookie travels to the server on every request; local storage stays in your browser and is never sent. That is why interface preferences are not cookies.",
+  "Cookies que Utilizamos": "Cookies We Use",
+  "Todas las cookies de la plataforma son estrictamente necesarias: sirven para autenticarte, mantener tu sesión y protegerla. Sin ellas no es posible iniciar sesión ni usar el Servicio, y por eso no están sujetas a consentimiento ni pueden desactivarse desde la plataforma.": "Every cookie on the platform is strictly necessary: it serves to authenticate you, keep your session and protect it. Without them it is not possible to sign in or use the Service, which is why they are not subject to consent and cannot be switched off from within the platform.",
+  "Nombre": "Name",
+  "Tipo": "Type",
+  "Duración": "Duration",
+  "Finalidad": "Purpose",
+  "authjs.session-token": "authjs.session-token",
+  "Esencial": "Essential",
+  "Sesión de trabajo": "Working session",
+  "Mantiene la sesión autenticada. En HTTPS se emite como __Secure-authjs.session-token": "Keeps the session authenticated. Over HTTPS it is issued as __Secure-authjs.session-token",
+  "authjs.csrf-token": "authjs.csrf-token",
+  "Protección contra falsificación de peticiones entre sitios (CSRF)": "Protection against cross-site request forgery (CSRF)",
+  "authjs.callback-url": "authjs.callback-url",
+  "Recuerda a qué pantalla volver después de autenticarte": "Remembers which screen to return to after you sign in",
+  "Cuando tu organización activa la vigencia de dispositivo confiable, la plataforma recuerda ese dispositivo para no volver a pedir el segundo factor durante el plazo que fije su política de seguridad. Es también una función de seguridad y se trata como esencial.": "When your organisation enables trusted device validity, the platform remembers that device so as not to ask for the second factor again during the period its security policy sets. This is also a security function and is treated as essential.",
+  "Además, guardamos en tu propio navegador —sin enviarlo al servidor— las siguientes preferencias, que puedes borrar en cualquier momento desde la configuración de tu navegador:": "We also keep the following preferences in your own browser — without sending them to the server — and you can delete them at any time from your browser settings:",
+  "Dato": "Data",
+  "Dónde": "Where",
+  "auth_theme": "auth_theme",
+  "Almacenamiento local": "Local storage",
+  "Si prefieres la pantalla de acceso en claro u oscuro": "Whether you prefer the sign-in screen light or dark",
+  "auth_cuentas_recordadas": "auth_cuentas_recordadas",
+  "Correo y nombre de las cuentas que marcaron «recordar este dispositivo». Nunca la contraseña, y caduca sola a los 90 días sin usarse": "Email and name of the accounts that ticked \"remember this device\". Never the password, and it expires on its own after 90 days unused",
+  "Preferencias de módulo": "Module preferences",
+  "Pestaña activa, filtros y columnas visibles de cada módulo, para que la vista sea la misma al volver": "The active tab, filters and visible columns of each module, so the view is the same when you come back",
+  "ucrisk_tab": "ucrisk_tab",
+  "Almacenamiento de sesión": "Session storage",
+  "Pestaña abierta dentro de la sesión de trabajo en curso": "The tab open within the current working session",
+  "Lo que NO Hacemos": "What We Do NOT Do",
+  "Para que quede por escrito y no haya que deducirlo de una ausencia:": "So that it is on the record and does not have to be inferred from an absence:",
+  "Sin publicidad:": "No advertising:",
+  "no mostramos anuncios ni utilizamos cookies publicitarias de ningún tipo.": "we show no ads and use no advertising cookies of any kind.",
+  "Sin rastreadores de terceros:": "No third-party trackers:",
+  "no incrustamos píxeles ni etiquetas de redes sociales, plataformas publicitarias o proveedores de analítica.": "we embed no pixels or tags from social networks, advertising platforms or analytics providers.",
+  "Sin analítica de comportamiento:": "No behavioural analytics:",
+  "no usamos cookies para medir tu navegación ni para elaborar perfiles de uso individual.": "we use no cookies to measure your browsing or to build individual usage profiles.",
+  "Sin venta ni cesión:": "No selling or sharing:",
+  "no vendemos, alquilamos ni compartimos con terceros los datos asociados a tu navegación.": "we do not sell, rent or share with third parties the data associated with your browsing.",
+  "Sin decisiones automatizadas basadas en cookies:": "No automated decisions based on cookies:",
+  "ninguna cookie alimenta perfiles, puntuaciones ni decisiones sobre ti.": "no cookie feeds profiles, scores or decisions about you.",
+  "Por eso la plataforma no muestra un banner de consentimiento de cookies: no hay categorías opcionales que aceptar o rechazar. Si en el futuro incorporáramos cualquier cookie no esencial, actualizaríamos esta política y pediríamos tu consentimiento previo antes de activarla.": "That is why the platform shows no cookie consent banner: there are no optional categories to accept or reject. If we were to add any non-essential cookie in future, we would update this policy and ask for your prior consent before enabling it.",
+  "Gestión de tus Preferencias": "Managing Your Preferences",
+  "Solo las cookies no esenciales pueden desactivarse, y en esta plataforma no hay ninguna. Aun así, mantienes el control completo sobre lo que se guarda en tu navegador:": "Only non-essential cookies can be switched off, and this platform has none. Even so, you keep full control over what is stored in your browser:",
+  "Configuración de tu navegador:": "Your browser settings:",
+  "puedes bloquear o eliminar cookies y almacenamiento local desde los ajustes de privacidad de cualquier navegador, en cualquier momento.": "you can block or delete cookies and local storage from any browser's privacy settings, at any time.",
+  "Cuentas recordadas:": "Remembered accounts:",
+  "se quitan desde la propia pantalla de acceso, con «Gestionar», sin tocar la configuración del navegador.": "removed from the sign-in screen itself, using \"Manage\", without touching the browser settings.",
+  "Cierre de sesión:": "Signing out:",
+  "al cerrar sesión se invalidan las cookies de autenticación.": "signing out invalidates the authentication cookies.",
+  "Bloquear las cookies esenciales impide iniciar sesión: sin ellas el servidor no puede reconocer que ya te has autenticado. Borrar el almacenamiento local no impide usar la plataforma; solo hace que se olviden tus preferencias de vista y las cuentas recordadas.": "Blocking the essential cookies prevents signing in: without them the server cannot tell that you have already authenticated. Clearing local storage does not stop you using the platform; it only makes it forget your view preferences and remembered accounts.",
+  "Señales Do Not Track (DNT) y Derechos CCPA": "Do Not Track (DNT) Signals and CCPA Rights",
+  "Algunos navegadores envían señales «Do Not Track» (DNT) para indicar que el usuario no desea ser rastreado. La plataforma no realiza ningún seguimiento de tu comportamiento, por lo que no hay nada que estas señales deban desactivar: el resultado es el mismo las envíes o no.": "Some browsers send \"Do Not Track\" (DNT) signals to indicate that the user does not wish to be tracked. The platform does not track your behaviour at all, so there is nothing for these signals to switch off: the result is the same whether you send them or not.",
+  "Por la misma razón, el derecho a «No vender ni compartir mi información personal» previsto en el CCPA se cumple de partida: no vendemos ni compartimos información personal con terceros. Cualquier consulta sobre este punto puede dirigirse al Delegado de Protección de Datos indicado en la Política de Privacidad.": "For the same reason, the CCPA right to \"Do not sell or share my personal information\" is met from the outset: we do not sell or share personal information with third parties. Any query on this point can be addressed to the Data Protection Officer named in the Privacy Policy.",
+  "Actualizaciones de Esta Política": "Updates to This Policy",
+  "Actualizamos esta Política de Cookies cuando cambian las cookies que utilizamos o los requisitos legales aplicables. La versión vigente está siempre publicada en esta misma dirección, con su fecha de última actualización al inicio.": "We update this Cookie Policy when the cookies we use or the applicable legal requirements change. The version in force is always published at this same address, with its last updated date at the top.",
+  "Si alguna vez incorporamos cookies no esenciales, este documento se actualizará y se solicitará tu consentimiento antes de activarlas, no después. Para preguntas sobre el uso de cookies, escríbenos a privacy@clerigo.io. Respondemos dentro de los 5 días hábiles siguientes a tu consulta.": "If we ever add non-essential cookies, this document will be updated and your consent will be sought before enabling them, not after. For questions about our use of cookies, write to us at privacy@clerigo.io. We reply within 5 business days of your query."
+ }
+}
