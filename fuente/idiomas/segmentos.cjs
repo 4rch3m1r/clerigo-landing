@@ -197,7 +197,7 @@ const SOLO_SIGLAS = (t) => !/[a-zà-ÿ]/.test(t.replace(/\bv\d[\d.]*/gi, " "));
    licencias de gestor…»— dejaba de ser texto traducible y se quedó en
    castellano dentro de la página inglesa. La cazó la guarda en crudo del
    validador, que mira sin heurísticas; por eso está. */
-const PARECE_ESTILO = /(?:^|[\s;])[-a-z]+\s*:\s*[^;]*\d(?:px|%|rem|em|vh|vw|deg|fr|s)\b|var\(--|rgba?\(|linear-gradient\(|#[0-9a-fA-F]{3,8}\b|\(prefers-[a-z-]+\s*:/;
+const PARECE_ESTILO = /(?:^|[\s;])[-a-z]+\s*:\s*[^;]*\d(?:px|%|rem|em|vh|vw|deg|fr|s)\b|var\(--|rgba?\(|linear-gradient\(|#[0-9a-fA-F]{3,8}\b|\(prefers-[a-z-]+\s*:|cubic-bezier\(|\bsteps\(\d|\d\.\d+s\b/;
 
 /**
  * Dos palabras de tres letras o más, con lo que sea en medio.
