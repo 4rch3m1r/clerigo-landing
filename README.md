@@ -145,7 +145,7 @@ página. La tarjeta salía sin foto en todas partes y en WhatsApp muchas veces n
 salía tarjeta.
 
 Ahora hay seis, una por página, de 1200 × 630 y menos de 80 KB, dibujadas por
-`fuente/hacer-og.ps1`. Y las etiquetas están completas: medidas y tipo
+`fuente/og/hacer.cjs`. Y las etiquetas están completas: medidas y tipo
 declarados —sin ellos WhatsApp descarta la imagen—, texto alternativo, tarjeta
 grande de X, `theme-color` y una ficha de datos estructurados para Google y
 LinkedIn. Todo dentro del primer kilobyte, que es lo que llega a leer el
@@ -272,7 +272,7 @@ node fuente/idiomas/mutar.cjs         # 8 sobre el bilingüe
 node fuente/seo/mutar.cjs             # 16 sobre el posicionamiento
 
 # las tarjetas de vista previa (Windows: usa System.Drawing)
-powershell -ExecutionPolicy Bypass -File fuente/hacer-og.ps1
+node fuente/og/hacer.cjs               # las once tarjetas de vista previa
 ```
 
 **El idioma se elige solo.** Quien llega con el navegador en castellano va a
@@ -307,7 +307,7 @@ y `oscuro.html`— están en el repositorio y no dependen de él.
 | `tema.cjs` | lo que comparten el aplicador y el validador |
 | `validar.cjs` | las comprobaciones |
 | `mutar.cjs` | rompe el validador a propósito, para ver si de verdad mira |
-| `hacer-og.ps1` | dibuja las seis tarjetas de vista previa |
+| `og/hacer.cjs` | dibuja las once tarjetas de vista previa |
 | `paginas-originales/` | los cinco originales de Archemir. **No versionados** |
 | `paginas/plantilla.html` | la línea gráfica común de las cinco |
 | `paginas/marca.json` | qué palabra de marca cambia por cuál, y por qué |

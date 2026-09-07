@@ -83,11 +83,50 @@ function despieza(html) {
   };
 }
 
+/* ── NO PISAR UNA PÁGINA QUE NO SALIÓ DE AQUÍ ──────────────────────────────
+ *
+ * Este guion estampa la plantilla sobre las seis interiores. Eso vale mientras
+ * las seis SALGAN de la plantilla. Si alguien las reescribe por fuera —a mano,
+ * con otro guion, con otra herramienta— y luego se corre esto, se le borra el
+ * trabajo entero y no se entera nadie hasta que la página está publicada.
+ *
+ * No es una hipótesis: pasó. Las páginas se rehicieron fuera de esta tubería
+ * —rutas nuevas, títulos nuevos, microdatos— y correr esto las devolvió a la
+ * plantilla, con 5.000 líneas de diferencia. Y ahora que el despliegue es
+ * automático, eso sale publicado solo.
+ *
+ * El criterio es el mismo que usa `paginas/validar.cjs` para decir si una
+ * página viene de la plantilla: que lleve dentro, letra a letra, el trozo
+ * compartido —la barra y el pie—. Quitando antes el selector de idioma, que lo
+ * añade el paso bilingüe después y cambia de una página a otra a propósito.
+ *
+ * Si no lo lleva, la página es de otro: se salta y se dice en voz alta.
+ */
+const sinSelector = (h) => h
+  .replace(/\n?<script>\n\/\* El idioma del navegador decide[\s\S]*?<\/script>\n/, "")
+  .replace(/<div class="idiomas">[\s\S]*?<\/div>\n?[ \t]*/, "")
+  .replace(/\/\* ── EL SELECTOR DE IDIOMA ──[\s\S]*?── FIN DEL SELECTOR DE IDIOMA ── \*\/\n/, "");
+
+function saleDeLaPlantilla(html, chrome) {
+  const limpio = sinSelector(html);
+  return limpio.includes(chrome ? CIERRE : CIERRE_SIN_BARRA)
+    && limpio.includes(chrome ? PIE : PIE_SIN_PIE);
+}
+
+const FORZAR = process.argv.includes("--forzar");
 let tocadas = 0;
+let ajenas = 0;
 for (const { slug, chrome } of PAGINAS) {
   const f = path.join(CASTELLANO, slug + ".html");
   if (!fs.existsSync(f)) { console.log(`  ·  ${slug}.html todavía no existe`); continue; }
   const antes = lee(f);
+
+  if (!saleDeLaPlantilla(antes, chrome) && !FORZAR) {
+    ajenas++;
+    console.log(`  SALTADA  ${slug}.html — no sale de esta plantilla, y estamparla encima`);
+    console.log(`           borraría lo que tenga. Si de verdad quieres pisarla: --forzar`);
+    continue;
+  }
 
   const titulo = (antes.match(/<title>([^<]*)<\/title>/) || [])[1] || "";
   const desc = (antes.match(/<meta name="description" content="([^"]*)"/) || [])[1] || "";
@@ -141,3 +180,7 @@ for (const { slug, chrome } of PAGINAS) {
   console.log(`  hecha  ${slug}.html  ·  ${canonica}`);
 }
 console.log(`\n${tocadas} de ${PAGINAS.length} páginas rehechas desde la plantilla.`);
+if (ajenas) {
+  console.log(`${ajenas} saltadas por no salir de ella. Eso NO es un fallo: es la`);
+  console.log(`protección que impide publicar por encima del trabajo de otro.`);
+}

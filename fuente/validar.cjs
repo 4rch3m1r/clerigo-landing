@@ -166,11 +166,17 @@ comprueba("y en el original el rótulo decía «Nuestras Certificaciones»",
 /* Las seis tarjetas: la de la portada y una por página interior. Se miran los
    BYTES del fichero, no la etiqueta que dice que existe. */
 {
-  const cartas = ["og.png", "og-legal.png", "og-precios.png", "og-marcos.png",
-    "og-contacto.png", "og-partners.png"];
+  /* La lista SALE DEL MAPA, no se escribe aquí.
+     Escrita aquí a mano ya se desvió una vez: el mapa decía `og-marcos.png` y
+     las páginas servían `marcos-og.png`, dos esquemas de nombres a la vez para
+     la misma cosa. Con el despliegue automático eso significa que correr el
+     generador publicaba las tarjetas viejas sin que nadie lo pidiera.
+     Y se miran donde las páginas dicen que están —`public/og/`—, no donde
+     estaban hace tres versiones. */
+  const cartas = Object.values(SITIO.paginas).map((p) => p.imagen);
   const malas = [];
   for (const c of cartas) {
-    const f = require("node:path").join(RAIZ, c);
+    const f = require("node:path").join(RAIZ, "public", "og", c);
     if (!fs.existsSync(f)) { malas.push(c + " no está"); continue; }
     const cab = Buffer.alloc(24);
     const fd = fs.openSync(f, "r");

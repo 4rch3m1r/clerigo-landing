@@ -50,7 +50,10 @@ function cuandoSeTocó(f) {
 const entradas = [];
 for (const p of PAGINAS) {
   if (NO_INDEXAR.includes(p.slug)) continue;
-  const nombre = p.slug === "index" ? "index.html" : p.fichero;
+  /* La ruta pública va sin extensión —Cloudflare sirve /marcos y redirige
+     desde /marcos.html—, pero para leer la FECHA hay que abrir el fichero de
+     verdad, que sí la tiene. Son dos cosas distintas y por eso van separadas. */
+  const nombre = p.slug === "index" ? "index.html" : (p.enDisco || p.fichero);
   const enIngles = BASE + "/" + p.fichero;
   const enCastellano = BASE + "/es/" + p.fichero;
   const alternativas = [

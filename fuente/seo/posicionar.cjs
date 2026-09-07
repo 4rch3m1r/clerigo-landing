@@ -55,12 +55,12 @@ const BASE = SITIO.base.replace(/\/$/, "");
    MISMO que se ve en la barra, o Google lo trata como dato que no cuadra. */
 const PAGINAS = [
   { slug: "index", fichero: "", es: "Inicio", en: "Home", prioridad: "1.0", nav: false },
-  { slug: "marcos", fichero: "marcos.html", es: "Marcos", en: "Frameworks", prioridad: "0.9", nav: true },
-  { slug: "confianza", fichero: "confianza.html", es: "Centro de Confianza", en: "Trust Center", prioridad: "0.9", nav: true },
-  { slug: "precios", fichero: "precios.html", es: "Planes", en: "Plans", prioridad: "0.9", nav: true },
-  { slug: "contacto", fichero: "contacto.html", es: "Contacto", en: "Contact", prioridad: "0.8", nav: true },
-  { slug: "partners", fichero: "partners.html", es: "Partner Portal", en: "Partner Portal", prioridad: "0.5", nav: false },
-  { slug: "legal", fichero: "legal.html", es: "Legal", en: "Legal", prioridad: "0.3", nav: false },
+  { slug: "marcos", fichero: "marcos", enDisco: "marcos.html", es: "Marcos", en: "Frameworks", prioridad: "0.9", nav: true },
+  { slug: "confianza", fichero: "confianza", enDisco: "confianza.html", es: "Centro de Confianza", en: "Trust Center", prioridad: "0.9", nav: true },
+  { slug: "precios", fichero: "precios", enDisco: "precios.html", es: "Planes", en: "Plans", prioridad: "0.9", nav: true },
+  { slug: "contacto", fichero: "contacto", enDisco: "contacto.html", es: "Contacto", en: "Contact", prioridad: "0.8", nav: true },
+  { slug: "partners", fichero: "partners", enDisco: "partners.html", es: "Partner Portal", en: "Partner Portal", prioridad: "0.5", nav: false },
+  { slug: "legal", fichero: "legal", enDisco: "legal.html", es: "Legal", en: "Legal", prioridad: "0.3", nav: false },
 ];
 /* `oscuro.html` no entra: es la MISMA portada con otra piel. Meterla en el
    sitemap sería pedirle al buscador que indexe dos veces el mismo texto, que
@@ -78,7 +78,11 @@ function organizacion(idioma) {
     alternateName: "Clèrigo XGRC",
     url: BASE + "/",
     logo: { "@type": "ImageObject", url: BASE + "/favicon.png", width: 160, height: 160 },
-    image: BASE + "/og.png",
+    /* La tarjeta buena, la misma que declara la portada. Apuntaba a `/og.png`,
+       que es una copia suelta en la raíz del repositorio que nadie mantiene:
+       la ficha de la organización enseñaba la tarjeta vieja mientras la
+       portada enseñaba la nueva. */
+    image: BASE + "/public/og/clerigo-og.png",
     email: "hello@clerigo.io",
     description: idioma === "es"
       ? "Plataforma de Gobernanza, Riesgo y Cumplimiento que unifica riesgos, cumplimiento normativo, auditoría interna, control interno, ciberseguridad y privacidad."
@@ -116,7 +120,7 @@ function aplicacion(idioma) {
       "@type": "Offer",
       price: "20",
       priceCurrency: "USD",
-      url: BASE + "/precios.html",
+      url: BASE + "/precios",
       availability: "https://schema.org/InStock",
       priceSpecification: {
         "@type": "UnitPriceSpecification",
@@ -225,8 +229,8 @@ for (const carpeta of [CASTELLANO, INGLES]) {
   const esIngles = carpeta === INGLES;
   const idioma = esIngles ? "en" : "es";
 
-  for (const p of [...PAGINAS, { slug: "oscuro", fichero: "oscuro.html", es: "", en: "", nav: false }]) {
-    const nombre = p.slug === "index" ? "index.html" : p.fichero;
+  for (const p of [...PAGINAS, { slug: "oscuro", fichero: "oscuro", enDisco: "oscuro.html", es: "", en: "", nav: false }]) {
+    const nombre = p.slug === "index" ? "index.html" : (p.enDisco || p.fichero);
     const f = path.join(carpeta, nombre);
     if (!fs.existsSync(f)) { console.log(`  ·  ${idioma}/${nombre} no existe`); continue; }
     const antes = lee(f);

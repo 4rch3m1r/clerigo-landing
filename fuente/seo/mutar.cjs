@@ -81,8 +81,14 @@ const MUTANTES = [
       "  <url>\n    <loc>https://4rch3m1r.github.io/clerigo-landing/oscuro.html</loc>\n  </url>\n</urlset>")],
   ["quitarle a una entrada sus idiomas", MAPA,
     (s) => s.replace(/[ \t]*<xhtml:link rel="alternate" hreflang="es"[^\n]*\n/, "")],
+  /* El anclaje va sobre la ÚLTIMA entrada del mapa, sea cual sea su forma.
+     Antes buscaba «legal.html», y el día que las rutas pasaron a ir sin
+     extensión dejó de encontrar nada: la mutación no cambiaba el fichero, no
+     había nada que cazar, y salía «SE LE ESCAPA» por una guarda que estaba
+     perfectamente. Eso es peor que un rojo de verdad, porque manda a arreglar
+     lo que no está roto. */
   ["prometer una página que no existe", MAPA,
-    (s) => s.replace(/<loc>([^<]*)legal\.html<\/loc>/, "<loc>$1inexistente.html</loc>")],
+    (s) => s.replace(/<loc>([^<]*)<\/loc>(?![\s\S]*<loc>)/, "<loc>$1/pagina-que-no-existe</loc>")],
 
   /* ── La carta a los rastreadores ──────────────────────────────────────── */
   ["cerrarle el sitio entero al buscador", ROBOTS,

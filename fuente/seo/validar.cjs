@@ -54,8 +54,15 @@ comprueba("todas las direcciones salen de la base de sitio.json",
 const noEstan = direcciones.filter((u) => {
   const resto = u.slice(BASE.length + 1);
   const enEspanol = resto.startsWith("es/");
-  const nombre = (enEspanol ? resto.slice(3) : resto) || "index.html";
-  return !fs.existsSync(path.join(enEspanol ? CASTELLANO : INGLES, nombre));
+  const ruta = (enEspanol ? resto.slice(3) : resto);
+  /* La ruta pública va SIN extensión —Cloudflare sirve /marcos y redirige
+     desde /marcos.html—, pero en el disco el fichero sí la tiene. Se prueban
+     las dos formas: lo que se comprueba es que la dirección lleve a algo, no
+     cómo se llame el fichero. */
+  const nombre = ruta || "index.html";
+  const carpeta = enEspanol ? CASTELLANO : INGLES;
+  return !fs.existsSync(path.join(carpeta, nombre))
+    && !fs.existsSync(path.join(carpeta, nombre + ".html"));
 });
 comprueba("cada dirección lleva a un fichero que existe", noEstan.length === 0,
   noEstan.slice(0, 3).join(" "));

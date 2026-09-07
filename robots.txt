@@ -1,4 +1,4 @@
-# Clèrigo — https://4rch3m1r.github.io/clerigo-landing
+# Clèrigo — https://clerigo.io
 #
 # La portada oscura no se prohíbe aquí a propósito: lleva «noindex» dentro,
 # y para leerlo hay que dejar entrar. Prohibir el paso haría que no llegara
@@ -7,4 +7,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://4rch3m1r.github.io/clerigo-landing/sitemap.xml
+Sitemap: https://clerigo.io/sitemap.xml
