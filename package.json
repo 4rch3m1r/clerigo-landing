@@ -1,6 +1,7 @@
 {
   "name": "clerigo-landing",
   "version": "1.0.0",
+  "type": "module",
   "private": true,
   "description": "Clérigo Landing Page - Enterprise GRC Platform",
   "scripts": {
