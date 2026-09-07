@@ -151,23 +151,26 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
    * palabra. Bajarle el listón a la guarda sería no tener guarda.
    *
    * Cada entrada lleva escrito su porqué: dentro de un año nadie se acuerda de
-   * cuál de estas frases fue una decisión y cuál un despiste. */
+   * cuál de estas frases fue una decisión y cuál un despiste.
+   *
+   * OJO: aquí sólo se declara CASTELLANO. Esta guarda lee `fSalida` de
+   * `CASTELLANO`, así que nunca ve la inglesa; hubo aquí un par de entradas en
+   * inglés que no podían dispararse jamás y parecían cobertura. La inglesa la
+   * vigila `fuente/idiomas/validar.cjs`, que es otra cosa. */
   const DECLARADAS = [
     /* El modelo de licencias cambió: ya no es «1 usuario por módulo», sino un
-       paquete con 2 administradores y 5 licencias de gestor —riesgos,
-       cumplimiento, ciberseguridad y auditoría interna— para la cuenta entera.
-       Lo decidió el cliente el 2026-09-07. */
-    ["incluye <strong>2 administradores y 5 licencias de gestor</strong> (riesgos, cumplimiento, ciberseguridad y auditoría interna). Usuarios adicionales",
+       paquete de cuenta con 2 administradores, 5 licencias de gestor —riesgos,
+       cumplimiento, ciberseguridad y auditoría interna— y 5 de Colaborador
+       para WorkSpace. Decisión del cliente, 2026-09-07. */
+    ["incluye <strong>2 administradores, 5 licencias de gestor</strong> (riesgos, cumplimiento, ciberseguridad y auditoría interna) <strong>y 5 licencias de Colaborador</strong> para WorkSpace. Usuarios adicionales",
      "1 usuario incluido. Usuarios adicionales"],
-    ["includes <strong>2 administrators and 5 manager licences</strong> (risk, compliance, cybersecurity and internal audit). Additional users",
-     "1 user included. Additional users"],
     /* La misma decisión, en la respuesta de las dudas. La pregunta cambió con
        ella: ya no se pregunta cuánto cuesta añadir, sino cuántos vienen. */
-    ["{q:'¿Cuántos usuarios vienen incluidos?',a:'El precio incluye 2 administradores y 5 licencias de gestor —riesgos, cumplimiento, ciberseguridad y auditoría interna—, para toda la cuenta y actives los módulos que actives. Los usuarios adicionales se facturan aparte, con periodicidad anual. Para más de 200 usuarios o necesidades especiales hay plan Enterprise.'}",
+    ["{q:'¿Cuántos usuarios vienen incluidos?',a:'El precio incluye, para toda la cuenta y actives los módulos que actives: 2 administradores, 5 licencias de gestor —riesgos, cumplimiento, ciberseguridad y auditoría interna— y 5 licencias de Colaborador para WorkSpace. Los usuarios adicionales se facturan aparte, con periodicidad anual. Para más de 200 usuarios o necesidades especiales hay plan Enterprise.'}",
      "{q:'¿Cuánto cuesta agregar usuarios?',a:'Cada módulo incluye 1 usuario. Los usuarios adicionales tienen un costo de $20 USD/usuario/mes, facturados anualmente. Para más de 200 usuarios o necesidades especiales, contáctanos para un plan Enterprise.'}"],
     /* Y la misma decisión, en la calculadora. El deslizador estaba en CADA
        tarjeta de módulo; ahora hay uno solo, en el panel de resumen, porque las
-       siete licencias son de la cuenta y no del módulo: sumar un deslizador por
+       doce licencias son de la cuenta y no del módulo: sumar un deslizador por
        módulo contaba tres veces a quien usa tres módulos. Aquí se deshace el
        traslado —se quita el control nuevo y se devuelve el rótulo viejo a la
        tarjeta— para que el resto de las 1.326 palabras se sigan comparando. */
@@ -180,7 +183,6 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
     /* Y el rótulo del contador dice lo mismo que decía —lo que trae el
        paquete— con el número nuevo. */
     ["`${usuariosCuenta} usuarios incluidos`", "`1 usuario incluido`"],
-    ["`${usuariosCuenta} users included`", "`1 user included`"],
   ];
   let normalizada = sal;
   for (const [ahora, antes] of DECLARADAS) {

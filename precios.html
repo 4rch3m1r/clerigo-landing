@@ -811,7 +811,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
   <div class="stripe"></div><div class="stripe2"></div>
   <div class="label-chip fade-up">Flexible per-module plans</div>
   <h1 class="fade-up fade-up-1">Choose only what<br>your company <em>needs.</em></h1>
-  <p class="hero-desc fade-up fade-up-2">12 specialised modules. Activate only the ones you need. <strong>All modules = $5,000 USD / year</strong> — includes <strong>2 administrators and 5 manager licences</strong> (risk, compliance, cybersecurity and internal audit). Additional users at <strong>$20 USD / user / month</strong>.</p>
+  <p class="hero-desc fade-up fade-up-2">12 specialised modules. Activate only the ones you need. <strong>All modules = $5,000 USD / year</strong> — includes <strong>2 administrators, 5 manager licences</strong> (risk, compliance, cybersecurity and internal audit) <strong>and 5 Team member licences</strong> for WorkSpace. Additional users at <strong>$20 USD / user / month</strong>.</p>
   <div class="billing-toggle fade-up fade-up-3" id="billingToggle">
     <button class="bill-btn active" onclick="setBilling('annual')">Annual</button>
     <button class="bill-btn" onclick="setBilling('monthly')">Monthly <span class="save-badge">+20%</span></button>
@@ -870,7 +870,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
           <div class="users-label"><span>Account users</span><span class="users-val" id="usuariosVal">&nbsp;</span></div>
           <input type="range" max="200" step="1" id="usuariosRango" oninput="setUsuarios(this.value)"
             aria-label="Account users">
-          <div class="cuenta-users-note">Includes 2 administrators and 5 manager licences: risk, compliance, cybersecurity and internal audit. Beyond that, $20 USD per user per month.</div>
+          <div class="cuenta-users-note">Includes 2 administrators, 5 manager licences —risk, compliance, cybersecurity and internal audit— and 5 Team member licences for WorkSpace. Beyond that, $20 USD per user per month.</div>
         </div>
         <div class="sum-divider"></div>
         <div class="summary-items" id="summaryItems"></div>
@@ -1092,7 +1092,10 @@ const PER_MODULE = 5000; // USD/año, todos los módulos
    auditoría interna—. Son de la CUENTA, no de cada módulo. */
 const ADMINS_INCLUIDOS = 2;
 const GESTORES_INCLUIDOS = 5;
-const USUARIOS_INCLUIDOS = ADMINS_INCLUIDOS + GESTORES_INCLUIDOS;
+/* Colaborador es el rol de WorkSpace: el portal donde esa gente ve su
+   formación y sus tareas y no ve el resto del producto. */
+const COLABORADORES_INCLUIDOS = 5;
+const USUARIOS_INCLUIDOS = ADMINS_INCLUIDOS + GESTORES_INCLUIDOS + COLABORADORES_INCLUIDOS;
 const PER_USER_MONTHLY = 20; // USD/usuario adicional/mes
 
 // Los iconos de estado, dibujados: ni un pictograma en toda la página.
@@ -1190,7 +1193,7 @@ const modules = [
 const faqs = [
   {q:'¿Puedo activar módulos después?',a:'Sí. Puedes añadir o quitar módulos desde tu panel de administración en cualquier momento. El cambio aplica en el siguiente ciclo de facturación.'},
   {q:'¿Hay un período de prueba gratuito?',a:'Todos los planes incluyen 14 días de prueba gratuita con acceso completo a los módulos seleccionados. No se requiere tarjeta de crédito para comenzar.'},
-  {q:'¿Cuántos usuarios vienen incluidos?',a:'El precio incluye 2 administradores y 5 licencias de gestor —riesgos, cumplimiento, ciberseguridad y auditoría interna—, para toda la cuenta y actives los módulos que actives. Los usuarios adicionales se facturan aparte, con periodicidad anual. Para más de 200 usuarios o necesidades especiales hay plan Enterprise.'},
+  {q:'¿Cuántos usuarios vienen incluidos?',a:'El precio incluye, para toda la cuenta y actives los módulos que actives: 2 administradores, 5 licencias de gestor —riesgos, cumplimiento, ciberseguridad y auditoría interna— y 5 licencias de Colaborador para WorkSpace. Los usuarios adicionales se facturan aparte, con periodicidad anual. Para más de 200 usuarios o necesidades especiales hay plan Enterprise.'},
   {q:'¿Puedo integrar Clèrigo con otros sistemas?',a:'Sí. La plataforma incluye una API REST documentada para integrarse con tu ecosistema digital. También tiene conectores nativos con SharePoint, Teams y Power Apps.'},
   {q:'¿Cómo funciona la firma digital?',a:'Integramos con proveedores de firma digital certificados. Los documentos siguen un flujo de aprobación configurable antes de ser firmados y archivados automáticamente en SharePoint.'},
   {q:'¿Qué marcos regulatorios están preconfigurados?',a:'ISO 27001, ISO 22301, NIST CSF, PCI-DSS, SWIFT, BCR (Banco Central RD), SIMV, NORTIC A5/A6/A7, Ley 172-13 y más. Nuevos marcos se añaden regularmente.'},
@@ -1203,10 +1206,11 @@ const faqs = [
 // ════════════════════════════════
 let billing = 'annual';
 let selected = {};
-/* Los usuarios son de la CUENTA, no de cada modulo: el paquete trae siete
-   licencias —2 administradores y 5 gestores— y a partir de ahi se paga por
-   persona. Por eso hay UN contador y no uno por modulo: sumar un deslizador
-   por modulo contaba tres veces a quien usa tres modulos. */
+/* Los usuarios son de la CUENTA, no de cada modulo: el paquete trae doce
+   licencias —2 administradores, 5 gestores y 5 Colaboradores de WorkSpace—
+   y a partir de ahi se paga por persona. Por eso hay UN contador y no uno
+   por modulo: sumar un deslizador por modulo contaba tres veces a quien usa
+   tres modulos. */
 let usuariosCuenta = USUARIOS_INCLUIDOS;
 let discount = 0;
 let currentStep = 0;
@@ -1321,7 +1325,7 @@ function lineaUsuariosResumen() {
         <div class="sum-dot" style="background:var(--text-3)"></div>
         <div>
           <div>Users</div>
-          <div style="font-size:9px;color:var(--text-3);margin-top:1px">${ADMINS_INCLUIDOS} administrators and ${GESTORES_INCLUIDOS} managers included${extra ? ' · ' + extra + ' additional' : ''}</div>
+          <div style="font-size:9px;color:var(--text-3);margin-top:1px">${ADMINS_INCLUIDOS} administrators, ${GESTORES_INCLUIDOS} managers and ${COLABORADORES_INCLUIDOS} team members included${extra ? ' · ' + extra + ' additional' : ''}</div>
         </div>
       </div>
       <div class="sum-item-price">${coste === 0
@@ -1349,7 +1353,7 @@ function toggleModule(id) {
 }
 
 /* El contador de la cuenta. No baja de las licencias incluidas: por debajo de
-   siete no hay plan que vender. */
+   las incluidas no hay plan que vender. */
 function setUsuarios(val) {
   usuariosCuenta = Math.max(parseInt(val, 10) || USUARIOS_INCLUIDOS, USUARIOS_INCLUIDOS);
   const input = document.getElementById('usuariosRango');
@@ -1532,7 +1536,7 @@ function prevStep() {
 function renderOrderBox() {
   const active = modules.filter(m => selected[m.id] || isAutoIncluded(m));
   /* Los usuarios adicionales se cuentan sobre TODA la cuenta y se cobran una
-     sola vez: las siete licencias incluidas —2 administradores y 5 gestores—
+     sola vez: las licencias incluidas —2 administradores, 5 gestores y 5
      no son por modulo. */
   const usuariosExtra = Math.max(usuariosCuenta - USUARIOS_INCLUIDOS, 0);
   const costeUsuarios = active.length ? costeUsuariosExtra() : 0;
@@ -1562,7 +1566,7 @@ function renderOrderBox() {
     ${active.length ? `<div class="order-line">
       <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
         <div class="order-dot" style="background:var(--text-3)"></div>
-        ${ADMINS_INCLUIDOS} administrators and ${GESTORES_INCLUIDOS} manager licences
+        ${ADMINS_INCLUIDOS} administrators, ${GESTORES_INCLUIDOS} manager licences and ${COLABORADORES_INCLUIDOS} Team member licences
       </div>
       <div><span style="color:var(--success);font-size:11px;font-weight:700">Included</span></div>
     </div>` : ''}

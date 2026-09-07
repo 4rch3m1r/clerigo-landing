@@ -19,7 +19,7 @@
  */
 const fs = require("node:fs");
 const path = require("node:path");
-const { segmentos, ZONAS_DE_CODIGO, COMENTARIOS } = require("./segmentos.cjs");
+const { segmentos, ZONAS_DE_CODIGO, COMENTARIOS, LITERAL_DE_GUION } = require("./segmentos.cjs");
 const { TODAS } = require("./a-ingles.cjs");
 const { CASTELLANO } = require("../donde.cjs");
 const { diccionario } = require("./a-ingles.cjs");
@@ -192,6 +192,38 @@ for (const p of TODAS) {
   }
   comprueba(`${p}: la inglesa no lleva castellano suelto`, sospechosos.length === 0,
     sospechosos.length ? `${sospechosos.length}, p.ej. «${sospechosos[0]}»` : "");
+
+  /* Y LO MISMO DENTRO DEL <script>, QUE ES DONDE ESTA GUARDA ERA CIEGA.
+   *
+   * Aquí arriba se dice que ésta no hereda la ceguera del extractor. Heredaba
+   * una: `enCrudo` empieza tapando `ZONAS_DE_CODIGO`, así que las DOS
+   * comprobaciones —la de los trozos y ésta, la que iba a ser la segunda
+   * opinión— dejaban de mirar en el mismo sitio exacto.
+   *
+   * Y ahí había mucho. La calculadora de planes pinta sus doce módulos
+   * —nombre, descripción y cinco prestaciones cada uno— desde un array de
+   * JavaScript. La página inglesa se sirvió con el catálogo entero en
+   * castellano, con `og:locale="en_US"` en la cabecera, y las dos guardas
+   * dando OK.
+   *
+   * Esto NO le pregunta a `textosDeLosGuiones`, a propósito: si le preguntara,
+   * volvería a ser la misma opinión escrita dos veces. Coge todos los
+   * literales en crudo y les pasa las dos señales de castellano de arriba. */
+  const enElGuion = [];
+  for (const zona of en.match(ZONAS_DE_CODIGO) || []) {
+    if (!/^<script/i.test(zona)) continue;
+    const cuerpo = zona.slice(zona.indexOf(">") + 1, zona.lastIndexOf("</"))
+      .replace(/\/\*[\s\S]*?\*\//g, " ")
+      .replace(/^[ \t]*\/\/.*$/gm, " ");
+    for (const m of cuerpo.matchAll(new RegExp(LITERAL_DE_GUION.source, "g"))) {
+      let t = (m[1] ?? m[2] ?? m[3] ?? "").replace(/&[a-z]+;|&#\d+;/gi, " ").replace(/\s+/g, " ").trim();
+      if (t.length < 3) continue;
+      for (const n of NOMBRES_PROPIOS) t = t.split(n).join(" ");
+      if (CON_TILDE.test(t) || SOLO_CASTELLANO.test(t)) enElGuion.push(t.slice(0, 70));
+    }
+  }
+  comprueba(`${p}: la inglesa no lleva castellano dentro del guion`, enElGuion.length === 0,
+    enElGuion.length ? `${enElGuion.length}, p.ej. «${enElGuion[0]}»` : "");
 
   /* Y la detección de idioma, en las DOS.
      Quitarla no rompe nada que se vea —la página carga igual de bien— y a quien
