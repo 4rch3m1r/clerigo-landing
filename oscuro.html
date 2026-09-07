@@ -22,6 +22,7 @@
 <meta property="og:image:alt" content="Clèrigo | GRC Software for Governance, Risk and Compliance">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="es_ES">
+
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Clèrigo | GRC Software for Governance, Risk and Compliance">
 <meta name="twitter:description" content="GRC software that unifies risk, regulatory compliance, internal audit, internal control, cybersecurity and privacy in a single platform.">
@@ -1702,21 +1703,6 @@ footer .social-icon { background: rgba(255,255,255,0.05); border-color: rgba(255
 footer .social-icon:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.24); }
 /* ── FIN DE LA BARRA Y EL PIE EN OSCURO ────────────────────────────────── */
 
-/* ── EL SELECTOR DE IDIOMA ─────────────────────────────────────────────
-   Cuál está activo lo dice el `lang` del documento y no una clase escrita a
-   mano: así el marcado es el mismo en las dos versiones y lo único que
-   cambia entre ellas son los dos enlaces. */
-.idiomas { display: flex; align-items: center; gap: 2px; margin-right: 4px; }
-.idiomas .idioma {
-  font-size: 11px; font-weight: 700; letter-spacing: .6px;
-  color: var(--text-3); padding: 5px 7px; border-radius: 5px;
-  transition: color .2s, background .2s;
-}
-.idiomas .idioma:hover { color: var(--text-2); }
-html[lang="en"] .idioma[data-idioma="en"],
-html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(--dark-3); }
-@media (max-width: 768px) { .idiomas { display: none; } }
-/* ── FIN DEL SELECTOR DE IDIOMA ── */
 /* ══ ESTILO DE AGENTE Y ARQUITECTURA ══ */
 /* ── EL AGENTE ── */
 .ag-cuerpo { max-width: 860px; margin: 0 auto; text-align: center; }
@@ -1819,7 +1805,26 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
 }
 /* ══ FIN DEL ESTILO DE AGENTE Y ARQUITECTURA ══ */
 
+/* ── EL SELECTOR DE IDIOMA ─────────────────────────────────────────────
+   Cuál está activo lo dice el `lang` del documento y no una clase escrita a
+   mano: así el marcado es el mismo en las dos versiones y lo único que
+   cambia entre ellas son los dos enlaces. */
+.idiomas { display: flex; align-items: center; gap: 2px; margin-right: 4px; }
+.idiomas .idioma {
+  font-size: 11px; font-weight: 700; letter-spacing: .6px;
+  color: var(--text-3); padding: 5px 7px; border-radius: 5px;
+  transition: color .2s, background .2s;
+}
+.idiomas .idioma:hover { color: var(--text-2); }
+html[lang="en"] .idioma[data-idioma="en"],
+html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(--dark-3); }
+@media (max-width: 768px) { .idiomas { display: none; } }
+/* ── FIN DEL SELECTOR DE IDIOMA ── */
 </style>
+<meta name="keywords" content="GRC software, GRC platform, GRC, governance risk and compliance, compliance software, risk management software, audit management software, GRC tool, integrated management system, ISMS, ISO management systems, compliance automation, cloud GRC, multi-tenant GRC software, risk management, regulatory compliance, compliance management, internal audit, internal control, corporate governance, cybersecurity, privacy and data protection, business continuity, document management, digital signature, third party risk management, vendor risk management, action plans, ISO 27001, ISO 27701, ISO 9001, ISO 22301, ISO 31000, ISO 37301, ISO 37001, ISO 42001, ISO 30301, NIST CSF, NIST 800-53, NIST Privacy Framework, Dominican Republic, Latin America, SIMV, Dominican banking regulator, NORTIC">
+
+<meta name="robots" content="noindex, follow">
+
 
 <script>
 /* El idioma del navegador decide; la eleccion de la persona manda. Ver
@@ -1861,8 +1866,6 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
   location.replace(destino + location.search + location.hash);
 })();
 </script>
-<meta name="keywords" content="GRC software, GRC platform, GRC, governance risk and compliance, compliance software, risk management software, audit management software, GRC tool, integrated management system, ISMS, ISO management systems, compliance automation, cloud GRC, multi-tenant GRC software, risk management, regulatory compliance, compliance management, internal audit, internal control, corporate governance, cybersecurity, privacy and data protection, business continuity, document management, digital signature, third party risk management, vendor risk management, action plans, ISO 27001, ISO 27701, ISO 9001, ISO 22301, ISO 31000, ISO 37301, ISO 37001, ISO 42001, ISO 30301, NIST CSF, NIST 800-53, NIST Privacy Framework, Dominican Republic, Latin America, SIMV, Dominican banking regulator, NORTIC">
-<meta name="robots" content="noindex, follow">
 </head>
 <body>
 
@@ -2500,7 +2503,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
       <div class="dominio reveal">
         <div class="dominio-nombre">GRC</div>
         <div class="dominio-partes">
-          <span class="dominio-parte">Risk</span>
+          <span class="dominio-parte">Risks</span>
           <span class="dominio-parte">Controls</span>
           <span class="dominio-parte">Audit</span>
           <span class="dominio-parte">Compliance</span>
@@ -2515,7 +2518,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
           <span class="dominio-parte">Assets</span>
           <span class="dominio-parte">Vulnerabilities</span>
           <span class="dominio-parte">Technology</span>
-          <span class="dominio-parte">Continuity</span>
+          <span class="dominio-parte">Business Continuity</span>
           <span class="dominio-parte">SLA</span>
         </div>
       </div>
