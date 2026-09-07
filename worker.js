@@ -10,6 +10,9 @@ export default {
     if (url.pathname === '/contacto' || url.pathname === '/contacto.html') {
       return Response.redirect(new URL('/contact', request.url), 301);
     }
+    if (url.pathname === '/precios' || url.pathname === '/precios.html') {
+      return Response.redirect(new URL('/pricing', request.url), 301);
+    }
     if (url.pathname === '/login' || url.pathname === '/login.html' || url.pathname === '/es/login' || url.pathname === '/es/login.html') {
       return Response.redirect('https://app.clerigo.io', 302);
     }

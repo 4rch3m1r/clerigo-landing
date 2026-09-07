@@ -11,7 +11,7 @@ const files = [
   'es/index.html',
   'frameworks.html',
   'es/marcos.html',
-  'precios.html',
+  'pricing.html',
   'es/precios.html',
   'trustcenter.html',
   'es/confianza.html',
