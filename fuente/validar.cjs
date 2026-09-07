@@ -298,6 +298,18 @@ const esqueleto = (s) => pelado(
      que se le añade a la página por ser bilingüe, y se recorta aquí para que
      el resto siga comparándose contra el original línea por línea. */
   .replace(/<div class="idiomas">.*?<\/div>\n?[ \t]*/s, "")
+  /* EL AVISO DE COOKIES, QUE AHORA LO MANDA LA POLÍTICA Y NO EL ORIGINAL.
+     El original pedía consentimiento —«Aceptar todo» y «Solo esenciales»— y
+     empezaba con «Usamos cookies para mejorar tu experiencia», que además es
+     falso: el sitio no escribe ni una cookie. La política que el sitio publica
+     dice, con estas palabras, que «no hay categorías opcionales que aceptar o
+     rechazar», así que el aviso informa y ya no pregunta.
+     Se recorta de los DOS lados —el original lo tiene y nosotros también— para
+     que el resto de la página se siga comparando. Y no se queda sin vigilar:
+     `fuente/legal/validar.cjs` comprueba que el aviso diga lo que dice la
+     política, que es la guarda que de verdad corresponde. */
+  .replace(/[ \t]*<!-- ══════════ COOKIE BANNER ══════════ -->\n[\s\S]*?\n<\/div>\n/, "")
+  .replace(/<script>\n\/\/ ── Cookie banner ──[\s\S]*?<\/script>\n/, "")
   .replace(/\/[*] ── EL SELECTOR DE IDIOMA ──[\s\S]*?── FIN DEL SELECTOR DE IDIOMA ── [*]\/\n/, "")
   .replace(/[ \t]*<link rel="alternate" hreflang="[a-z-]+" href="[^"]*">\n/g, "")
   /* Las capturas del sistema y el icono viven en la RAÍZ y son los MISMOS en

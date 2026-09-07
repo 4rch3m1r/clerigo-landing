@@ -160,6 +160,61 @@ comprueba("la jurisdicción de la cabecera es la que dice el apartado de ley apl
   "la cabecera dice «" + (enCabecera("Jurisdicción") || "").trim() + "» y el contrato " +
   (textoLey.includes(JURISDICCION.enElTexto) ? "sí" : "NO") + " dice «" + JURISDICCION.enElTexto + "»");
 
+/* ── Y EL AVISO DE COOKIES DICE LO QUE DICE LA POLÍTICA ─────────────────
+ *
+ * La política publica esta frase: «la plataforma no muestra un banner de
+ * consentimiento de cookies: no hay categorías opcionales que aceptar o
+ * rechazar». Y el aviso del sitio ofrecía «Aceptar todo» y «Solo esenciales».
+ * Una página pidiendo un permiso que su propia política dice que no hace falta.
+ *
+ * Peor aún: empezaba con «Usamos cookies para mejorar tu experiencia». El sitio
+ * no escribe una sola cookie —ninguna página, y la respuesta en vivo no trae un
+ * `Set-Cookie` ni de Cloudflare—; lo único que guarda son dos claves de
+ * `localStorage`.
+ *
+ * Esto lo vigila. Si alguien vuelve a poner un botón de consentimiento, o el
+ * día que el sitio empiece a usar cookies de verdad y nadie toque el texto,
+ * salta aquí. */
+console.log("\n── El aviso de cookies dice lo que dice la política ────────────");
+
+const CONSENTIMIENTO = /cookie-accept|cookie-dismiss|Aceptar todo|Accept all|Solo esenciales|Essentials only|Only essential/i;
+const LA_POLITICA_DICE_QUE_NO_HAY_BANNER = "no hay categorías opcionales que aceptar o rechazar";
+
+const politicaDeCookies = copia.documentos.find((d) => d.id === "cookies");
+const textoDeLaPolitica = politicaDeCookies.secciones.map(textoDeLaCopia).join(" ");
+comprueba("la política sigue diciendo que no hay categorías que aceptar o rechazar",
+  textoDeLaPolitica.includes(LA_POLITICA_DICE_QUE_NO_HAY_BANNER),
+  "si esto cambia en la aplicación, el aviso del sitio hay que repensarlo entero");
+
+for (const p of ["es/index.html", "es/oscuro.html", "index.html", "oscuro.html"]) {
+  const f = path.join(RAIZ, p);
+  if (!fs.existsSync(f)) { comprueba(p + ": existe", false); continue; }
+  const h = fs.readFileSync(f, "utf8");
+  const i = h.indexOf('id="cookie-banner"');
+  if (i < 0) { comprueba(p + ": tiene el aviso de cookies", false, "no está"); continue; }
+  const aviso = h.slice(i, h.indexOf("</script>", i));
+
+  const pide = aviso.match(CONSENTIMIENTO);
+  comprueba(p + ": el aviso no pide un consentimiento que la política dice que no hace falta",
+    !pide, pide ? "encontrado «" + pide[0] + "»" : "");
+
+  /* Y que no diga que usa cookies, porque no usa ninguna. */
+  const dice = /Usamos cookies|We use cookies/i.exec(aviso);
+  comprueba(p + ": el aviso no dice que el sitio use cookies", !dice,
+    dice ? "dice «" + dice[0] + "» y el sitio no escribe ninguna" : "");
+}
+
+/* Y la otra mitad: que el sitio siga sin escribir cookies. Si algún día se
+   añade una, el aviso y la política dejan de ser ciertos a la vez. */
+const conCookies = [];
+for (const p of fs.readdirSync(RAIZ).filter((x) => x.endsWith(".html"))
+  .concat(fs.readdirSync(path.join(RAIZ, "es")).filter((x) => x.endsWith(".html")).map((x) => "es/" + x))) {
+  const h = fs.readFileSync(path.join(RAIZ, p), "utf8");
+  if (/document\.cookie\s*=/.test(h)) conCookies.push(p);
+}
+comprueba("ninguna página del sitio escribe cookies", conCookies.length === 0,
+  "las escriben: " + conCookies.join(", "));
+
 console.log("\n── La copia está al día respecto a la aplicación ───────────────");
 let importar;
 try { importar = require("./traer-de-la-app.cjs"); } catch { importar = null; }

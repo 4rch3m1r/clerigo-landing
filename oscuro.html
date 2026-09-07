@@ -3319,33 +3319,32 @@ document.querySelectorAll('.platform-frame, .preview-body').forEach(el => barObs
   </div>
 
   <p class="cookie-body">
-    We use cookies to improve your experience. Your information is yours — <strong style="color:rgba(240,240,240,0.8)">we do not share it with third parties</strong> and we do not use it for purposes other than those of this platform. <a href="legal.html" target="_blank">More information <svg width="12" height="5" viewBox="0 0 12 5" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:0.5px" aria-hidden="true"><path d="M0.6 2.5h9.5M8.1 0.9 10.9 2.5 8.1 4.1"/></svg></a>
+    This site does not use cookies. All your browser keeps is the language you choose and the fact that you have seen this notice. No advertising, no analytics and no third-party trackers. <a href="legal.html" target="_blank">Cookie policy <svg width="12" height="5" viewBox="0 0 12 5" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:0.5px" aria-hidden="true"><path d="M0.6 2.5h9.5M8.1 0.9 10.9 2.5 8.1 4.1"/></svg></a>
   </p>
 
   <div class="cookie-trust">
     <span class="cookie-trust-pill">
-      <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M5 1L9 2.5V5.5C9 7.8 7 9.5 5 10C3 9.5 1 7.8 1 5.5V2.5L5 1Z" stroke="#12805C" stroke-width="1.2"/></svg>
-      Your information is yours
+      <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M5 1L9 2.5V5.5C9 7.8 7 9.5 5 10C3 9.5 1 7.8 1 5.5V2.5L5 1Z" stroke="#0F6B4E" stroke-width="1.2"/></svg>
+      No advertising
     </span>
     <span class="cookie-trust-pill">
-      <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="#4a9be8" stroke-width="1.2"/><path d="M3 5l1.5 1.5L7 3.5" stroke="#4a9be8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      No third parties
+      <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="#0257BF" stroke-width="1.2"/><path d="M3 5l1.5 1.5L7 3.5" stroke="#0257BF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      No trackers
     </span>
     <span class="cookie-trust-pill">
-      <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="#7B2FBE" stroke-width="1.2"/><path d="M3 5l1.5 1.5L7 3.5" stroke="#7B2FBE" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      You decide
+      <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="#6B27A8" stroke-width="1.2"/><path d="M3 5l1.5 1.5L7 3.5" stroke="#6B27A8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      No analytics
     </span>
   </div>
 
   <div class="cookie-divider"></div>
 
   <div class="cookie-actions">
-    <button class="cookie-btn-dismiss" id="cookie-dismiss">Essential only</button>
-    <button class="cookie-btn-accept" id="cookie-accept">
+    <button class="cookie-btn-accept" id="cookie-ok">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
         <path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      Accept all
+      Got it
     </button>
   </div>
 
@@ -3355,18 +3354,25 @@ document.querySelectorAll('.platform-frame, .preview-body').forEach(el => barObs
 // ── Cookie banner ──
 (function() {
   const COOKIE_KEY = 'grc_cookie_consent';
-  if (localStorage.getItem(COOKIE_KEY)) return;
+  /* Leer y escribir el almacenamiento puede LANZAR —almacenamiento bloqueado,
+     modo privado, un iframe sin permisos—, y una excepción aquí aborta el
+     bloque entero: el aviso no saldría nunca. Se protege, y si no se puede
+     guardar, el aviso se enseña otra vez la próxima visita, que es el fallo
+     menos malo de los dos. */
+  const recuerda = (v) => { try { localStorage.setItem(COOKIE_KEY, v); } catch (e) { /* sin almacén */ } };
+  try { if (localStorage.getItem(COOKIE_KEY)) return; } catch (e) { /* sin almacén: se enseña */ }
   const banner = document.getElementById('cookie-banner');
   const hide = (val) => {
     banner.style.transform = 'translateY(140px)';
     banner.style.opacity = '0';
     setTimeout(() => banner.remove(), 450);
-    localStorage.setItem(COOKIE_KEY, val);
+    recuerda(val);
   };
   setTimeout(() => banner.classList.add('visible'), 1200);
-  document.getElementById('cookie-accept').addEventListener('click', () => hide('all'));
-  document.getElementById('cookie-dismiss').addEventListener('click', () => hide('essential'));
-  document.getElementById('cookie-close').addEventListener('click', () => hide('dismissed'));
+  /* Un solo botón: el aviso informa, no pide permiso. Lo que se guarda es
+     que ya se ha visto, no una preferencia — no hay ninguna que elegir. */
+  document.getElementById('cookie-ok').addEventListener('click', () => hide('visto'));
+  document.getElementById('cookie-close').addEventListener('click', () => hide('visto'));
 })();
 </script>
 
