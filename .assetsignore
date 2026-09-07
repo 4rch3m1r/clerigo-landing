@@ -1,0 +1,11 @@
+.git
+.claude
+.gemini
+fuente/
+scripts/
+package.json
+package-lock.json
+wrangler.jsonc
+wrangler.toml
+README.md
+SEO_SOCIAL_PREVIEW_GUIDE.md
