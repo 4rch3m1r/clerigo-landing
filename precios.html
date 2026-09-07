@@ -768,8 +768,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
   try { sessionStorage.setItem('clerigo-idioma-mirado', '1'); } catch (e) {}
 
   var elegido = guardado();
-  var quiere = elegido || ((navigator.language || navigator.userLanguage || 'en')
-    .toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
+  var quiere = elegido || 'en';
   if (quiere === mio) return;
 
   var destino = quiere === 'es'
@@ -1090,102 +1089,102 @@ const ICO_OK = '<svg width="12" height="12" fill="none" viewBox="0 0 24 24" styl
 const ICO_NO = '<svg width="12" height="12" fill="none" viewBox="0 0 24 24" style="vertical-align:-2px;flex-shrink:0"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg> ';
 
 const modules = [
-  { id:'cumplimiento', name:'Cumplimiento Regulatorio', shortName:'Cumplimiento',
-    desc:'Gestión de marcos normativos, políticas, circulares y debida diligencia automatizada.',
+  { id:'cumplimiento', name:'Regulatory Compliance', shortName:'Compliance',
+    desc:'Management of regulatory frameworks, policies, circulars, and automated due diligence.',
     color:'#EB1000', colorVar:'--m1', basePrice:1200,
-    features:['Gestión de políticas y procedimientos','Debida diligencia automatizada','Seguimiento ISO 27001, SIMV, BCR','Módulo de contratos y hechos relevantes','Asistente IA de cumplimiento'],
+    features:['Policy & procedure management','Automated due diligence','ISO 27001, SIMV, BCR tracking','Contracts & material events module','AI compliance assistant'],
     icon:`<svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`
   },
-  { id:'ciberseguridad', name:'Ciberseguridad', shortName:'Ciberseguridad',
-    desc:'Evaluación de riesgos, controles ISO 27001, gestión de vulnerabilidades y privacidad de datos.',
+  { id:'ciberseguridad', name:'Cybersecurity', shortName:'Cybersecurity',
+    desc:'Risk assessment, ISO 27001 controls, vulnerability management, and data privacy.',
     color:'#0257BF', colorVar:'--m2', basePrice:1000,
-    features:['Evaluación de riesgos de proveedor','Recertificación de accesos','Gestión de vulnerabilidades','Privacidad y protección de datos (Ley 172-13)','OSINT automatizado'],
+    features:['Vendor risk assessment','Access recertification','Vulnerability management','Privacy & data protection','Automated OSINT'],
     icon:`<svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`
   },
-  { id:'gobierno', name:'Gobierno Corporativo', shortName:'Gobierno Corp.',
-    desc:'Gestión de comités, actas, declaraciones juradas y estructura de gobernanza institucional.',
+  { id:'gobierno', name:'Corporate Governance', shortName:'Corp. Governance',
+    desc:'Committee management, minutes, sworn declarations, and institutional governance structure.',
     color:'#B45309', colorVar:'--m3', basePrice:800,
-    features:['Gestión de comités y actas','Flujos de aprobación por consejo','Declaraciones juradas digitales','Organigrama y estructura','Gestión documental con firma digital'],
+    features:['Committee & minutes management','Board approval workflows','Digital sworn declarations','Org chart & structure','Document management with digital signature'],
     icon:`<svg width="20" height="20" fill="none" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" stroke="currentColor" stroke-width="1.8"/></svg>`
   },
-  { id:'riesgos', name:'Gestión de Riesgos', shortName:'Riesgos',
-    desc:'BIA, matrices de riesgo, ERM, registro de eventos de pérdida y simulador de escenarios.',
+  { id:'riesgos', name:'Risk Management', shortName:'Risk Mgmt.',
+    desc:'BIA, risk matrices, ERM, loss event registry, and scenario simulator.',
     color:'#0F6B4E', colorVar:'--m4', basePrice:900,
-    features:['BIA y matrices de riesgo','ERM operativo, legal, tecnológico','Registro de eventos de pérdida','Simulador de escenarios','Planes de continuidad'],
+    features:['BIA & risk matrices','Operational, legal & tech ERM','Loss event registry','Scenario simulator','Business continuity plans'],
     icon:`<svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9v4M12 17h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`
   },
-  { id:'auditoria', name:'Auditoría', shortName:'Auditoría',
-    desc:'Gestión de auditorías internas y externas, solicitud de evidencias y requerimientos de aclaración.',
+  { id:'auditoria', name:'Audit', shortName:'Audit',
+    desc:'Internal and external audit management, evidence requests, and clarification requirements.',
     color:'#6B27A8', colorVar:'--m5', basePrice:700,
-    features:['Auditorías internas y externas','Solicitud y carga de evidencias','Requerimientos de aclaración','Seguimiento de hallazgos','Informes de auditoría automáticos'],
+    features:['Internal & external audits','Evidence request & upload','Clarification requirements','Finding tracking','Automated audit reports'],
     icon:`<svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`
   },
-  { id:'control', name:'Control Interno', shortName:'Control Interno',
-    desc:'Ambiente de control, actividades, monitoreo continuo y alineación con COSO.',
+  { id:'control', name:'Internal Control', shortName:'Internal Control',
+    desc:'Control environment, activities, continuous monitoring, and COSO alignment.',
     color:'#0A7373', colorVar:'--m6', basePrice:400,
-    features:['Ambiente de control COSO','Evaluación de riesgos internos','Actividades de control','Información y comunicación','Monitoreo y seguimiento'],
+    features:['COSO control environment','Internal risk assessment','Control activities','Information & communication','Monitoring & tracking'],
     icon:`<svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`
   },
-  { id:'continuidad', name:'Continuidad del Negocio', shortName:'Continuidad',
-    desc:'Planes de continuidad, BCP, DRP, pruebas de resiliencia y gestión de crisis. Se incluye sin costo adicional al activar Riesgos.',
+  { id:'continuidad', name:'Business Continuity', shortName:'Continuity',
+    desc:'Continuity plans, BCP, DRP, resilience testing, and crisis management. Included at no extra cost when activating Risk Management.',
     color:'#C2410C', colorVar:'--m7', basePrice:1000,
     addonOf:'riesgos',
-    addonLabel:'Incluido con Riesgos',
-    features:['Planes de continuidad (BCP)','Plan de recuperación ante desastres (DRP)','Análisis de impacto al negocio (BIA)','Pruebas y ejercicios de continuidad','Gestión de crisis y comunicación','ISO 22301 alineado'],
+    addonLabel:'Included with Risk Management',
+    features:['Business continuity plans (BCP)','Disaster recovery plan (DRP)','Business impact analysis (BIA)','Continuity tests & drills','Crisis management & communications','ISO 22301 aligned'],
     icon:`<svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 3v5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`
   },
-  { id:'privacidad', name:'Privacidad y Protección de Datos', shortName:'Privacidad',
-    desc:'Gestión del ciclo de vida de datos personales, Ley 172-13 y GDPR. Se incluye sin costo adicional al activar Ciberseguridad.',
+  { id:'privacidad', name:'Privacy & Data Protection', shortName:'Privacy',
+    desc:'Personal data lifecycle management, Law 172-13, and GDPR. Included at no extra cost when activating Cybersecurity.',
     color:'#BE185D', colorVar:'--m8', basePrice:1000,
     addonOf:'ciberseguridad',
-    addonLabel:'Incluido con Ciberseguridad',
-    features:['Registro de tratamientos de datos','Consentimiento y derechos ARCO','Evaluaciones de impacto (DPIA)','Ley 172-13 y GDPR alineado','Gestión de brechas de privacidad','DPO y roles de privacidad'],
+    addonLabel:'Included with Cybersecurity',
+    features:['Data processing activities register','Consent & ARCO rights','Data protection impact assessments (DPIA)','Law 172-13 & GDPR aligned','Privacy breach management','DPO & privacy roles'],
     icon:`<svg width="20" height="20" fill="none" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`
   },
-  { id:'riesgos_terceros', name:'Riesgos de Terceros', shortName:'Riesgos Terceros',
-    desc:'Evaluación y monitoreo continuo del riesgo en proveedores y terceras partes. Siempre gratuito al activar Ciberseguridad.',
+  { id:'riesgos_terceros', name:'Third-Party Risk', shortName:'Third-Party Risk',
+    desc:'Vendor and third-party risk assessment and continuous monitoring. Always included with Cybersecurity.',
     color:'#0E7490', colorVar:'--m9', basePrice:0,
     addonOf:'ciberseguridad',
-    addonLabel:'Incluido con Ciberseguridad',
+    addonLabel:'Included with Cybersecurity',
     alwaysFree: true,
-    features:['Inventario y clasificación de proveedores','Evaluación de riesgo de ciberseguridad','Due diligence automatizado de terceros','Cuestionarios de seguridad a proveedores','Monitoreo continuo de riesgo terceros','Alertas de cambios en el perfil de riesgo'],
+    features:['Vendor inventory & classification','Cybersecurity risk assessment','Automated third-party due diligence','Vendor security questionnaires','Continuous third-party risk monitoring','Risk profile change alerts'],
     icon:`<svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="17" cy="21" r="3" stroke="currentColor" stroke-width="1.8"/><circle cx="7" cy="21" r="3" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="8" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M7 18v-2a5 5 0 0 1 10 0v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`
   },
-  { id:'gestor_documental', name:'Gestor Documental', shortName:'Gestor Doc.',
-    desc:'Repositorio centralizado de documentos, políticas, procedimientos y evidencias con control de versiones y firma digital. Incluido en todos los planes.',
+  { id:'gestor_documental', name:'Document Management', shortName:'Doc. Manager',
+    desc:'Centralised repository for documents, policies, procedures, and evidence with version control and digital signature. Included in all plans.',
     color:'#6D28D9', colorVar:'--m10', basePrice:0,
     includedInAll: true,
-    addonLabel:'Incluido en el plan',
-    features:['Repositorio centralizado de documentos','Control de versiones automático','Firma digital integrada','Flujos de aprobación documental','Vinculación con marcos regulatorios','Búsqueda avanzada por etiquetas y metadatos'],
+    addonLabel:'Included in plan',
+    features:['Centralised document repository','Automatic version control','Integrated digital signature','Document approval workflows','Regulatory frameworks linkage','Advanced search with tags & metadata'],
     icon:`<svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 11v6M9 14h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`
   },
-  { id:'asistente_ia', name:'Asistente de IA', shortName:'Asistente IA',
-    desc:'Asistente inteligente con acceso al contexto regulatorio de tu organización. Responde preguntas, sugiere controles y automatiza tareas de cumplimiento. Incluido en todos los planes.',
+  { id:'asistente_ia', name:'AI Assistant', shortName:'AI Assistant',
+    desc:'Intelligent assistant with regulatory context for your organisation. Answers questions, suggests controls, and automates compliance tasks. Included in all plans.',
     color:'#A16207', colorVar:'--m11', basePrice:0,
     includedInAll: true,
-    addonLabel:'Incluido en el plan',
-    features:['Consultas en lenguaje natural sobre marcos regulatorios','Sugerencias de controles basadas en riesgos detectados','Redacción asistida de políticas y procedimientos','Análisis de brechas automatizado','Alertas predictivas de incumplimiento','Integración con todos los módulos activos'],
+    addonLabel:'Included in plan',
+    features:['Natural language queries on regulatory frameworks','Control suggestions based on detected risks','Assisted policy & procedure drafting','Automated gap analysis','Predictive non-compliance alerts','Integration with all active modules'],
     icon:`<svg width="20" height="20" fill="none" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M8 8V6a4 4 0 0 1 8 0v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="14" r="1.5" fill="currentColor"/><circle cx="15" cy="14" r="1.5" fill="currentColor"/><path d="M9 18h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 2v2M7 3.5l1 1.7M17 3.5l-1 1.7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>`
   },
-  { id:'api_acceso', name:'API de Acceso', shortName:'API',
-    desc:'Acceso completo a la API REST de Clèrigo para integrar datos de cumplimiento, riesgos y auditoría con herramientas de BI, ERP, SIEM o sistemas internos. Incluido en todos los planes.',
+  { id:'api_acceso', name:'API Access', shortName:'API',
+    desc:'Full access to Clèrigo REST API to integrate compliance, risk, and audit data with BI, ERP, SIEM or internal systems. Included in all plans.',
     color:'#047857', colorVar:'--m12', basePrice:0,
     includedInAll: true,
-    addonLabel:'Incluido en el plan',
-    features:['API REST documentada con OpenAPI 3.0','Autenticación OAuth 2.0 y API Keys','Endpoints para todos los módulos activos','Webhooks y notificaciones en tiempo real','Rate limiting configurable por entorno','SDKs para Python, Node.js y .NET','Compatible con Power BI, Tableau, Looker y más'],
+    addonLabel:'Included in plan',
+    features:['REST API documented with OpenAPI 3.0','OAuth 2.0 & API Keys authentication','Endpoints for all active modules','Webhooks & real-time notifications','Configurable rate limiting by environment','SDKs for Python, Node.js & .NET','Compatible with Power BI, Tableau, Looker & more'],
     icon:`<svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m10 0h3a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 9l2 2-2 2M13 9l2 2-2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`
   }
 ];
 
 const faqs = [
-  {q:'¿Puedo activar módulos después?',a:'Sí. Puedes añadir o quitar módulos desde tu panel de administración en cualquier momento. El cambio aplica en el siguiente ciclo de facturación.'},
-  {q:'¿Hay un período de prueba gratuito?',a:'Todos los planes incluyen 14 días de prueba gratuita con acceso completo a los módulos seleccionados. No se requiere tarjeta de crédito para comenzar.'},
-  {q:'¿Cuánto cuesta agregar usuarios?',a:'Cada módulo incluye 1 usuario. Los usuarios adicionales tienen un costo de $20 USD/usuario/mes, facturados anualmente. Para más de 200 usuarios o necesidades especiales, contáctanos para un plan Enterprise.'},
-  {q:'¿Puedo integrar Clèrigo con otros sistemas?',a:'Sí. La plataforma incluye una API REST documentada para integrarse con tu ecosistema digital. También tiene conectores nativos con SharePoint, Teams y Power Apps.'},
-  {q:'¿Cómo funciona la firma digital?',a:'Integramos con proveedores de firma digital certificados. Los documentos siguen un flujo de aprobación configurable antes de ser firmados y archivados automáticamente en SharePoint.'},
-  {q:'¿Qué marcos regulatorios están preconfigurados?',a:'ISO 27001, ISO 22301, NIST CSF, PCI-DSS, SWIFT, BCR (Banco Central RD), SIMV, NORTIC A5/A6/A7, Ley 172-13 y más. Nuevos marcos se añaden regularmente.'},
-  {q:'¿Los datos están seguros?',a:'Clèrigo opera bajo infraestructura cloud con cifrado AES-256 en reposo y TLS 1.3 en tránsito. Cumplimos con ISO 27001 y realizamos auditorías de seguridad periódicas.'},
-  {q:'¿Qué soporte está incluido?',a:'Todos los planes incluyen soporte por email y chat en español. Los planes anuales incluyen onboarding guiado, sesión de configuración inicial y acceso al help center 24/7.'}
+  {q:'Can I activate modules later?',a:'Yes. You can add or remove modules from your administration panel at any time. Changes apply to the next billing cycle.'},
+  {q:'Is there a free trial period?',a:'All plans include a 14-day free trial with full access to selected modules. No credit card required to start.'},
+  {q:'How much does it cost to add users?',a:'Each module includes 1 user. Additional users cost $20 USD/user/month, billed annually. For more than 200 users or custom needs, contact us for an Enterprise plan.'},
+  {q:'Can I integrate Clèrigo with other systems?',a:'Yes. The platform includes a documented REST API to integrate with your digital ecosystem. It also features native connectors with SharePoint, Teams, and Power Apps.'},
+  {q:'How does digital signature work?',a:'We integrate with certified digital signature providers. Documents follow a configurable approval workflow before being signed and automatically archived in SharePoint.'},
+  {q:'Which regulatory frameworks are pre-configured?',a:'ISO 27001, ISO 22301, NIST CSF, PCI-DSS, SWIFT, BCR (Central Bank RD), SIMV, NORTIC A5/A6/A7, Law 172-13 and more. New frameworks are added regularly.'},
+  {q:'Is my data secure?',a:'Clèrigo operates on cloud infrastructure with AES-256 encryption at rest and TLS 1.3 in transit. We comply with ISO 27001 and undergo regular security audits.'},
+  {q:'What support is included?',a:'All plans include email and chat support. Annual plans include guided onboarding, initial setup sessions, and 24/7 help centre access.'}
 ];
 
 // ════════════════════════════════
@@ -1224,12 +1223,11 @@ function renderModules() {
   const grid = document.getElementById('modulesGrid');
   grid.innerHTML = modules.map(m => {
     const isOn = selected[m.id];
-    const auto = isAutoIncluded(m);           // gratis con el padre
-    const standalone = isStandalone(m);       // contratado aparte (cuesta)
+    const auto = isAutoIncluded(m);           // free with parent
+    const standalone = isStandalone(m);       // standalone add-on
     const price = calcModulePrice(m);
     const extraU = Math.max(userCount[m.id] - 1, 0);
 
-    // el canto de color de los complementos
     const addonStyle = m.addonOf
       ? `border-left: 3px solid ${m.color}55;`
       : '';
@@ -1245,7 +1243,7 @@ function renderModules() {
           border:1px solid ${auto ? `${m.color}35` : 'rgba(14,14,14,0.10)'};">
           ${auto
             ? `<svg width="9" height="9" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg> ${m.addonLabel}`
-            : `<svg width="9" height="9" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> ${m.alwaysFree ? 'Gratis solo con Ciberseguridad' : 'Complemento independiente · $1,000/año'}`}
+            : `<svg width="9" height="9" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> ${m.alwaysFree ? 'Free only with Cybersecurity' : 'Standalone add-on · $1,000/yr'}`}
         </span>
       </div>` : ''}
       <div class="mod-accent-bar" style="background:${cardSelected ? m.color : 'transparent'}"></div>
@@ -1269,7 +1267,7 @@ function renderModules() {
           </div>`).join('')}
       </div>
       <div class="users-row">
-        <div class="users-label"><span>Usuarios</span><span class="users-val">${userCount[m.id]} usuario${userCount[m.id] === 1 ? '' : 's'}</span></div>
+        <div class="users-label"><span>Users</span><span class="users-val">${userCount[m.id]} user${userCount[m.id] === 1 ? '' : 's'}</span></div>
         <input type="range" min="1" max="200" step="1" value="${userCount[m.id]}"
           style="background:linear-gradient(to right,${m.color} ${(userCount[m.id]-1)/199*100}%,rgba(14,14,14,0.12) ${(userCount[m.id]-1)/199*100}%)"
           oninput="updateUsers('${m.id}', this.value)"
@@ -1277,11 +1275,11 @@ function renderModules() {
         <style>#card-${m.id} input[type=range]::-webkit-slider-thumb{background:${m.color};}</style>
       </div>
       <div class="mod-bottom">
-        <div><div class="mod-price-label">Precio</div></div>
+        <div><div class="mod-price-label">Price</div></div>
         <div class="mod-price-val" id="price-${m.id}">
           ${auto && calcModulePrice(m) === 0
-            ? `<span style="color:${m.color};font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:4px">Incluido <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></span>`
-            : `$${calcModulePrice(m).toLocaleString()}<span> ${billing === 'annual' ? '/año' : '/mes'}</span>`}
+            ? `<span style="color:${m.color};font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:4px">Included <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></span>`
+            : `$${calcModulePrice(m).toLocaleString()}<span> ${billing === 'annual' ? '/yr' : '/mo'}</span>`}
         </div>
       </div>
     </div>`;
@@ -1289,9 +1287,6 @@ function renderModules() {
 }
 
 function calcModulePrice(m) {
-  // basePrice = costo anual del módulo (1 usuario incluido)
-  // Módulos incluidos (addonOf): base = 0, pero usuarios adicionales = $240/año c/u
-  // alwaysFree (Riesgos Terceros): igual, base = 0, pero adicionales cobran
   const base = (isAutoIncluded(m) || m.alwaysFree) ? 0 : m.basePrice;
   const extraUsers = Math.max(userCount[m.id] - 1, 0);
   if (billing === 'annual') return base + (extraUsers * 240);
@@ -1300,7 +1295,6 @@ function calcModulePrice(m) {
 
 function toggleModule(id) {
   selected[id] = !selected[id];
-  // Todos los complementos de este padre
   const addons = modules.filter(m => m.addonOf === id);
   addons.forEach(addon => {
     if (!selected[id]) {
@@ -1309,7 +1303,6 @@ function toggleModule(id) {
       selected[addon.id] = true;
     }
   });
-  // Los módulos de plan siguen a los troncales: si hay uno activo, entran
   const anyCoreOn = modules.some(x => !x.addonOf && !x.includedInAll && selected[x.id]);
   modules.filter(m => m.includedInAll).forEach(m => { selected[m.id] = anyCoreOn; });
   renderModules();
@@ -1318,16 +1311,14 @@ function toggleModule(id) {
 
 function updateUsers(id, val) {
   userCount[id] = parseInt(val);
-  // el relleno de la barra
   const card = document.getElementById(`card-${id}`);
   const input = card.querySelector('input[type=range]');
   const m = modules.find(x=>x.id===id);
   const pct = (val-1)/199*100;
   input.style.background = `linear-gradient(to right,${m.color} ${pct}%,rgba(14,14,14,0.12) ${pct}%)`;
-  // el rótulo
-  card.querySelector('.users-val').textContent = val == 1 ? `1 usuario incluido` : `${val} usuarios (${val-1} adicionales)`;
+  card.querySelector('.users-val').textContent = val == 1 ? `1 user included` : `${val} users (${val-1} additional)`;
   const price = calcModulePrice(m);
-  document.getElementById(`price-${id}`).innerHTML = `$${price.toLocaleString()}<span> ${billing === 'annual' ? '/año' : '/mes'}</span>`;
+  document.getElementById(`price-${id}`).innerHTML = `$${price.toLocaleString()}<span> ${billing === 'annual' ? '/yr' : '/mo'}</span>`;
   updateSummary();
 }
 
@@ -1361,17 +1352,17 @@ function updateSummary() {
       <div class="sum-item-name">
         <div class="sum-dot" style="background:${m.color}"></div>
         <div>
-          <div>${m.shortName}${auto ? ` <span style="font-size:9px;font-weight:800;color:${m.color};margin-left:4px">INCLUIDO</span>` : ''}</div>
+          <div>${m.shortName}${auto ? ` <span style="font-size:9px;font-weight:800;color:${m.color};margin-left:4px">INCLUDED</span>` : ''}</div>
           <div style="font-size:9px;color:var(--text-3);margin-top:1px">${
-            auto || m.alwaysFree ? 'Incluido' :
-            extraU === 0 ? '1 usuario incluido' :
-            '+' + extraU + ' usuario' + (extraU > 1 ? 's' : '') + ' adicional' + (extraU > 1 ? 'es' : '')
+            auto || m.alwaysFree ? 'Included' :
+            extraU === 0 ? '1 user included' :
+            '+' + extraU + ' additional user' + (extraU > 1 ? 's' : '')
           }</div>
         </div>
       </div>
       <div class="sum-item-price">${
         price === 0
-          ? '<span style="color:var(--success);font-size:11px;font-weight:700">Gratis</span>'
+          ? '<span style="color:var(--success);font-size:11px;font-weight:700">Free</span>'
           : '$' + price.toLocaleString()
       }</div>
     </div>`;
@@ -1380,11 +1371,11 @@ function updateSummary() {
   total = Math.round(total * (1 - discount));
   totalEl.textContent = total.toLocaleString();
   checkBtn.disabled = activeModules.length === 0;
-  document.getElementById('sumPeriod').textContent = billing === 'annual' ? 'USD / año' : 'USD / mes';
+  document.getElementById('sumPeriod').textContent = billing === 'annual' ? 'USD / year' : 'USD / month';
 
   if (billing === 'annual' && activeModules.length > 0) {
     savingsEl.style.display = 'flex';
-    savingsText.textContent = 'Plan anual activo · Ahorra vs facturación mensual';
+    savingsText.textContent = 'Annual plan active · Save vs monthly billing';
   } else {
     savingsEl.style.display = 'none';
   }
@@ -1499,7 +1490,7 @@ function renderOrderBox() {
   const discAmt = Math.round(subtotal * discount);
   const final = subtotal - discAmt;
   document.getElementById('orderBox').innerHTML = `
-    <div class="order-box-title">Resumen del pedido · Ciclo ${billing === 'annual' ? 'anual' : 'mensual'}</div>
+    <div class="order-box-title">Order summary · ${billing === 'annual' ? 'Annual' : 'Monthly'} cycle</div>
     ${active.map(m => {
       const auto = isAutoIncluded(m);
       const extraU = Math.max(userCount[m.id] - 1, 0);
@@ -1507,22 +1498,22 @@ function renderOrderBox() {
       if ((auto || m.alwaysFree) && price === 0) return `<div class="order-line">
         <div style="display:flex;align-items:center;gap:8px">
           <div class="order-dot" style="background:${m.color}"></div>
-          ${m.shortName} <span style="color:${m.color};font-size:9px;font-weight:800">INCLUIDO</span>
+          ${m.shortName} <span style="color:${m.color};font-size:9px;font-weight:800">INCLUDED</span>
         </div>
-        <div><span style="color:var(--success);font-size:11px;font-weight:700">Gratis</span></div>
+        <div><span style="color:var(--success);font-size:11px;font-weight:700">Free</span></div>
       </div>`;
       return `<div class="order-line">
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
           <div class="order-dot" style="background:${m.color}"></div>
           ${m.shortName}
-          <span style="color:var(--text-3);font-size:10px">(${extraU === 0 ? '1 usuario' : '+' + extraU + ' adicional' + (extraU>1?'es':'')})</span>
+          <span style="color:var(--text-3);font-size:10px">(${extraU === 0 ? '1 user' : '+' + extraU + ' additional' + (extraU>1?'s':'')})</span>
         </div>
         <div>$${price.toLocaleString()}</div>
       </div>`;
     }).join('')}
-    ${discount > 0 ? `<div class="order-line" style="color:var(--success)"><div>Descuento (${(discount*100).toFixed(0)}%)</div><div>−$${discAmt.toLocaleString()}</div></div>` : ''}
-    <div class="order-line total"><div>Total</div><div>$${final.toLocaleString()} USD${billing === 'annual' ? '/año' : '/mes'}</div></div>
-    ${active.length === 0 ? '<div style="text-align:center;color:var(--text-3);font-size:12px;padding:12px 0">No hay módulos seleccionados</div>' : ''}`;
+    ${discount > 0 ? `<div class="order-line" style="color:var(--success)"><div>Discount (${(discount*100).toFixed(0)}%)</div><div>−$${discAmt.toLocaleString()}</div></div>` : ''}
+    <div class="order-line total"><div>Total</div><div>$${final.toLocaleString()} USD${billing === 'annual' ? '/yr' : '/mo'}</div></div>
+    ${active.length === 0 ? '<div style="text-align:center;color:var(--text-3);font-size:12px;padding:12px 0">No modules selected</div>' : ''}`;
 }
 
 function shake() {
@@ -1545,15 +1536,15 @@ function applyCoupon() {
   if(code === 'CLERIGO20') {
     discount = 0.20;
     msg.style.color = 'var(--success)';
-    msg.innerHTML = ICO_OK + 'Código válido · 20% de descuento aplicado';
+    msg.innerHTML = ICO_OK + 'Valid code · 20% discount applied';
   } else if(code === 'LAUNCH10') {
     discount = 0.10;
     msg.style.color = 'var(--success)';
-    msg.innerHTML = ICO_OK + 'Código de lanzamiento · 10% de descuento aplicado';
+    msg.innerHTML = ICO_OK + 'Launch code · 10% discount applied';
   } else {
     discount = 0;
     msg.style.color = 'var(--danger)';
-    msg.innerHTML = ICO_NO + 'Código no válido o expirado';
+    msg.innerHTML = ICO_NO + 'Invalid or expired code';
   }
   renderOrderBox();
 }
@@ -1568,17 +1559,17 @@ function selPay(el, method) {
   if(method === 'card') {
     cardFields.style.display = 'block';
     altMsg.style.display = 'none';
-    payBtn.innerHTML = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M1 10h22" stroke="currentColor" stroke-width="1.8"/></svg> Pagar y activar cuenta`;
+    payBtn.innerHTML = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M1 10h22" stroke="currentColor" stroke-width="1.8"/></svg> Pay and activate account`;
   } else {
     cardFields.style.display = 'none';
     altMsg.style.display = 'block';
     const msgs = {
-      paypal: 'Al hacer clic en continuar serás redirigido a PayPal para completar tu pago de forma segura. Regresarás automáticamente a Clèrigo una vez confirmado.',
-      google: 'Google Pay detectado en tu dispositivo. Al hacer clic en continuar se abrirá el selector de Google Pay para completar el pago.',
-      apple: 'Apple Pay detectado en tu dispositivo. Al hacer clic en continuar se abrirá Face ID / Touch ID para confirmar el pago.'
+      paypal: 'Clicking continue will redirect you to PayPal to complete your payment securely. You will return automatically to Clèrigo once confirmed.',
+      google: 'Google Pay detected on your device. Clicking continue will open the Google Pay selector to complete payment.',
+      apple: 'Apple Pay detected on your device. Clicking continue will prompt Face ID / Touch ID to confirm payment.'
     };
     altMsg.innerHTML = `<div style="color:var(--text-2)">${msgs[method]}</div>`;
-    payBtn.innerHTML = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Continuar con ${method.charAt(0).toUpperCase()+method.slice(1)}`;
+    payBtn.innerHTML = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Continue with ${method.charAt(0).toUpperCase()+method.slice(1)}`;
   }
 }
 
@@ -1595,7 +1586,7 @@ function formatExp(el) {
 function processPayment() {
   const btn = document.getElementById('payBtn');
   btn.disabled = true;
-  btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="animation:spin 1s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Procesando...`;
+  btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="animation:spin 1s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Processing...`;
   setTimeout(() => {
     btn.disabled = false;
     currentStep = 4;
