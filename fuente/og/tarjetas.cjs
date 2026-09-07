@@ -77,7 +77,7 @@ module.exports = [
     rotuloVentana: "Clèrigo XGRC — Regulatory Compliance",
     antetitulo: "Compliance frameworks",
     titular: ["Every framework,", "@cross-mapped@"],
-    bajada: "ISO 27001, SOC 2, HIPAA, GDPR, NIST CSF, PCI-DSS and financial regulators — 23+ standards, one control set.",
+    bajada: "66 standards, laws and frameworks from 16 issuing bodies — ISO, NIST, COSO, PCI SSC, SWIFT, SIMV, JM/SB, BCRD, OGTIC — one control set.",
     tira: NORMAS,
   },
   {
@@ -86,7 +86,7 @@ module.exports = [
     rotuloVentana: "Clèrigo XGRC — Cumplimiento Regulatorio",
     antetitulo: "Marcos normativos",
     titular: ["Cada marco,", "@mapeado@ con los demás"],
-    bajada: "ISO 27001, SOC 2, HIPAA, GDPR, NIST CSF, PCI-DSS, SIMV y Superintendencia de Bancos — 23+ marcos, un solo juego de controles.",
+    bajada: "66 marcos, normas y leyes de 16 organismos — ISO, NIST, COSO, PCI SSC, SWIFT, SIMV, JM/SB, BCRD, OGTIC — y un solo juego de controles.",
     tira: ["ISO 27001", "NIST CSF", "SOC 2", "SIMV", "LEY 155-17"],
   },
 
