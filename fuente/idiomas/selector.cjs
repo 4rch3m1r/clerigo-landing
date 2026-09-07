@@ -20,10 +20,19 @@
  */
 
 /** El bloque, con los enlaces que correspondan. */
-function bloque(idioma, ficheroDePagina) {
-  /* `ficheroDePagina` es "" para la portada y "algo.html" para las demás. */
-  const aIngles = idioma === "en" ? ficheroDePagina || "index.html" : "../" + (ficheroDePagina || "index.html");
-  const aCastellano = idioma === "en" ? "es/" + (ficheroDePagina || "index.html") : ficheroDePagina || "index.html";
+function bloque(idioma, ficheroEn, ficheroEs) {
+  /* DOS NOMBRES, UNO POR IDIOMA, y no uno solo para los dos.
+     Tres páginas no se llaman igual en cada idioma: `marcos.html` es
+     `frameworks.html`, `confianza.html` es `trustcenter.html` y
+     `contacto.html` es `contact.html`. Con un solo nombre, el enlace «EN» de
+     la página castellana apuntaba a `../marcos.html`, que es una redirección
+     301 a `/frameworks`: funcionaba de milagro y sólo porque esa redirección
+     existe. Y el día que se quitara, dejaba de funcionar sin que nadie lo
+     tocara. */
+  const en = ficheroEn || "index.html";
+  const es = ficheroEs || ficheroEn || "index.html";
+  const aIngles = idioma === "en" ? en : "../" + en;
+  const aCastellano = idioma === "en" ? "es/" + es : es;
   return '<div class="idiomas">'
     + '<a href="' + aIngles + '" class="idioma" data-idioma="en" hreflang="en">EN</a>'
     + '<a href="' + aCastellano + '" class="idioma" data-idioma="es" hreflang="es">ES</a>'
@@ -99,7 +108,7 @@ function conEstilo(html) {
   return limpio.slice(0, j) + ESTILO + "\n" + limpio.slice(j);
 }
 
-function ponSelector(html, idioma, ficheroDePagina) {
+function ponSelector(html, idioma, ficheroEn, ficheroEs) {
   /* Si el marcado ya está puesto, se CAMBIA; no se añade otro.
      Este guion lee y escribe la misma carpeta del castellano, así que se corre
      más de una vez sobre el mismo fichero. Sin esto, cada pasada colgaba otro
@@ -111,7 +120,7 @@ function ponSelector(html, idioma, ficheroDePagina) {
      generada. Se sigue hasta abajo, que es donde se resuelven los dos. */
   const YA_PUESTO = /<div class="idiomas">.*?<\/div>/s;
   if (YA_PUESTO.test(html)) {
-    return conEstilo(html.replace(YA_PUESTO, bloque(idioma, ficheroDePagina)));
+    return conEstilo(html.replace(YA_PUESTO, bloque(idioma, ficheroEn, ficheroEs)));
   }
 
   /* Dos anclajes, y hacen falta los dos.
@@ -137,8 +146,8 @@ function ponSelector(html, idioma, ficheroDePagina) {
     ? (html.slice(0, punto).match(/\n([ \t]*)$/) || [null, "    "])[1]
     : "  ";
   const conSelector = anclaje.antes
-    ? html.slice(0, punto) + bloque(idioma, ficheroDePagina) + "\n" + sangria + html.slice(punto)
-    : html.slice(0, punto) + "\n" + sangria + bloque(idioma, ficheroDePagina) + html.slice(punto);
+    ? html.slice(0, punto) + bloque(idioma, ficheroEn, ficheroEs) + "\n" + sangria + html.slice(punto)
+    : html.slice(0, punto) + "\n" + sangria + bloque(idioma, ficheroEn, ficheroEs) + html.slice(punto);
 
   return conEstilo(conSelector);
 }

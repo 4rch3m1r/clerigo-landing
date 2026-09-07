@@ -26,6 +26,28 @@ const DIR_ES = path.join(RAIZ, "es");
 const TODAS = [...PAGINAS, "oscuro"];
 
 /**
+ * CÓMO SE LLAMA CADA PÁGINA EN CADA IDIOMA.
+ *
+ * Tres no se llaman igual: `marcos` se sirve como `frameworks.html`,
+ * `confianza` como `trustcenter.html` y `contacto` como `contact.html`.
+ *
+ * El mapa NO se escribe aquí: se lee de `seo/posicionar.cjs`, que es donde ya
+ * estaba y de donde salen también el sitemap y las canónicas. Tenerlo dos
+ * veces es tenerlo mal una de las dos, y de eso va justamente el fallo que
+ * arregla: este guion escribía el inglés en `marcos.html` mientras la página
+ * servida era `frameworks.html`, así que la traducción caía en un fichero
+ * redirigido y la de verdad se mantenía a mano.
+ *
+ * `oscuro` no está en esa lista —no se indexa, es la portada con otra piel— y
+ * por eso se cae al nombre de siempre.
+ */
+function ficheroDe(slug, idioma) {
+  const { PAGINAS: DEL_SEO } = require("../seo/posicionar.cjs");
+  const p = DEL_SEO.find((x) => x.slug === slug);
+  return (p && p.disco && p.disco[idioma]) || slug + ".html";
+}
+
+/**
  * La marca con la que se tapan las zonas que no se traducen.
  *
  * Lleva arrobas y una palabra a propósito. La primera versión usaba «espacio,
@@ -225,7 +247,19 @@ if (require.main === module) {
 
     /* Para el SELECTOR, cada página necesita su propio nombre de fichero: desde
        `oscuro.html` se salta a `oscuro.html` del otro idioma, no a `index`. */
-    const fichero = p === "index" ? "index.html" : p + ".html";
+    /* CADA IDIOMA TIENE SU NOMBRE DE FICHERO, Y NO SIEMPRE ES EL MISMO.
+       Tres páginas cambian de nombre al pasar a inglés: `marcos` se sirve como
+       `frameworks.html`, `confianza` como `trustcenter.html` y `contacto` como
+       `contact.html`. Eso lo sabía `posicionar.cjs` —de ahí sale el mapa— y lo
+       sabía el validador bilingüe; el único que no lo sabía era este guion.
+
+       Escribía el inglés en `marcos.html`, que está redirigido a `/frameworks`
+       con un 301: la traducción caía en un fichero que no sirve nadie, y la
+       página que sí se sirve se mantenía A MANO, fuera de la cadena. Por eso
+       las dos se separaron, y por eso el validador llevaba meses diciendo que
+       la estructura de `marcos` no cuadraba. */
+    const ficheroEn = ficheroDe(p, "en");
+    const ficheroEs = ficheroDe(p, "es");
 
     /* Para la CANÓNICA es al revés. `oscuro.html` no es una página distinta:
        es la misma portada con el tema oscuro, y declararla como dirección
@@ -236,7 +270,7 @@ if (require.main === module) {
     /* El castellano se vuelve a escribir con su selector y su canónica: el
        selector es lo único que se le añade, y tiene que estar en los dos. */
     let es = ponIdioma(partida, "es");
-    es = ponSelector(es, "es", fichero);
+    es = ponSelector(es, "es", ficheroEn, ficheroEs);
     es = ponAlternativas(es, "es", canonica, SITIO.base);
     es = ponDeteccion(es);
     /* Las capturas y el icono viven en la raiz y la castellana esta un nivel
@@ -246,7 +280,7 @@ if (require.main === module) {
 
     /* Y el inglés, en la raíz. */
     let en = ponIdioma(partida, "en");
-    en = ponSelector(en, "en", fichero);
+    en = ponSelector(en, "en", ficheroEn, ficheroEs);
     en = ponAlternativas(en, "en", canonica, SITIO.base);
     en = ponDeteccion(en);
     /* La inglesa vive en la RAÍZ, al lado de las capturas: sin prefijo.
@@ -255,7 +289,7 @@ if (require.main === module) {
        con las quince capturas rotas a partir de la segunda pasada. */
     en = bajaUnNivelLosRecursos(en);
     const traducida = traduce(en, dic);
-    fs.writeFileSync(path.join(INGLES, p + ".html"), traducida.html);
+    fs.writeFileSync(path.join(INGLES, ficheroEn), traducida.html);
     quedan += traducida.sinTraducir.length;
     console.log("  " + p.padEnd(12)
       + (traducida.sinTraducir.length

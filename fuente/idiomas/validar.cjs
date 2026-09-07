@@ -87,14 +87,17 @@ function esqueleto(html) {
 /* ── TRES PÁGINAS CAMBIARON DE NOMBRE AL PASAR A INGLÉS ───────────────────
  *
  * `marcos` → `frameworks`, `confianza` → `trustcenter`, `contacto` → `contact`.
- * En la raíz, con el nombre castellano, ya no hay una página: hay una PUERTA de
- * redirección de 900 bytes que manda a `/es/marcos` o a `/frameworks` según el
- * idioma de quien llega. Eso existe porque el castellano vive en `/es/`, y
- * tener la misma página en `/marcos` y en `/es/marcos` era contenido duplicado.
+ * En la raíz, con el nombre castellano, YA NO HAY NADA: esas rutas las resuelve
+ * `_redirects` con un 301 a la inglesa. Eso existe porque el castellano vive en
+ * `/es/`, y tener la misma página en `/marcos` y en `/es/marcos` era contenido
+ * duplicado.
  *
- * Una puerta no es la traducción de nada, así que compararla contra la
- * castellana daba seis fallos que no describían ningún problema. Se comparan
- * contra su verdadera pareja inglesa.
+ * Hasta el 2026-09-07 sí había ficheros ahí, y ése era el problema: el
+ * generador escribía la traducción en `marcos.html` —redirigido, que no lo ve
+ * nadie— mientras la página que se sirve, `frameworks.html`, se mantenía a
+ * mano y fuera de la cadena. Las dos se separaron y esta comprobación lo
+ * cantaba sin que nadie entendiera por qué. Ahora el generador escribe en la
+ * pareja de abajo, que es la misma que usa esta comprobación.
  */
 const PAREJA_INGLESA = { marcos: "frameworks", confianza: "trustcenter", contacto: "contact" };
 
@@ -161,7 +164,18 @@ for (const p of TODAS) {
      frase —«…the Tribunales de Primera Instancia del Distrito Nacional of
      Santo Domingo»— y con la comparación entera esa frase quedaba marcada
      para siempre, que es como una guarda se vuelve ruido y acaba apagada. */
+  /* EL ORDEN IMPORTA, y no es un detalle de estilo: los nombres se van
+     quitando del texto UNO A UNO, así que el largo tiene que salir antes que
+     el corto. Con «Banco Central» delante, de «Banco Central de la República
+     Dominicana» quedaba « de la República Dominicana»; y quitando después
+     «República Dominicana», quedaba « de la », que son dos palabras de enlace
+     del castellano y vuelven a encender la alarma. El nombre completo primero
+     y no queda residuo. */
   const NOMBRES_PROPIOS = [
+    "Banco Central de la República Dominicana",
+    "Instituto de Desarrollo y Crédito Cooperativo",
+    "Superintendencia de Pensiones",
+    "Oficina Presidencial de TIC",
     "Instituto Dominicano de las Telecomunicaciones",
     "Tribunales de Primera Instancia del Distrito Nacional",
     "Superintendencia del Mercado de Valores", "Superintendencia de Valores",
@@ -170,6 +184,11 @@ for (const p of TODAS) {
     "Laura González", "Carlos Ramos", "Alejandro Mora", "María García",
     "Grace Anderson", "Joseph Walker", "Michael Collins",
     "García", "González", "Santo Domingo",
+    /* Y el país suelto, para lo que lo nombre sin ir dentro de un organismo.
+       Son nombres propios de instituciones del Estado dominicano y no tienen
+       traducción oficial: en la página inglesa se quedan en castellano a
+       propósito, igual que «Bundesbank» en cualquier página inglesa. */
+    "República Dominicana",
     /* Un logotipo parte el nombre en dos líneas y cada mitad es su propio
        nodo de texto: dentro del SVG del sello, «Bolsa» va en una y
        «de Valores» en la siguiente. */
@@ -262,11 +281,19 @@ for (const p of TODAS) {
       citados.length === 0 ? "no cita ninguna" : `${rotos.length} de ${citados.length}: ${rotos.slice(0, 2).join(" ")}`);
   }
 
-  /* Y el selector lleva al mismo sitio desde las dos. */
-  const fichero = p === "index" ? "index.html" : p + ".html";
+  /* Y el selector lleva al mismo sitio desde las dos.
+     CADA IDIOMA CON SU NOMBRE DE FICHERO: `marcos` se sirve como
+     `frameworks.html`, `confianza` como `trustcenter.html` y `contacto` como
+     `contact.html`. Antes se usaba un solo nombre para los dos enlaces, así que
+     el «EN» de la castellana apuntaba a `../marcos.html` —una redirección 301—
+     y esta comprobación lo daba por bueno. Funcionaba de rebote y sólo mientras
+     esa redirección existiera. */
+  const ficheroEs = p === "index" ? "index.html" : p + ".html";
+  const ficheroEn = p === "index" ? "index.html" : (PAREJA_INGLESA[p] || p) + ".html";
   comprueba(`${p}: el selector de idioma lleva al otro lado`,
-    en.includes(`<a href="es/${fichero}" class="idioma" data-idioma="es"`)
-    && es.includes(`<a href="../${fichero}" class="idioma" data-idioma="en"`));
+    en.includes(`<a href="es/${ficheroEs}" class="idioma" data-idioma="es"`)
+    && es.includes(`<a href="../${ficheroEn}" class="idioma" data-idioma="en"`),
+    `la inglesa debe apuntar a es/${ficheroEs} y la castellana a ../${ficheroEn}`);
 }
 
 console.log("\n────────────────────────────────────────────────────────────────");
