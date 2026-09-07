@@ -80,6 +80,16 @@ const PAGINAS = [
     es: "Partner Portal", en: "Partner Portal", prioridad: "0.5", nav: false },
   { slug: "legal", ruta: { en: "legal", es: "legal" }, disco: { en: "legal.html", es: "legal.html" },
     es: "Legal", en: "Legal", prioridad: "0.3", nav: false },
+  /* `login` ENTRA AQUÍ, Y NO A MANO EN CADA FICHERO.
+     Las dos páginas se escribieron a mano el 2026-09-07 y con ellas se
+     añadieron a mano las entradas del sitemap y el enlace de navegación de la
+     ficha de datos. Tres sitios y ninguna fuente: la primera vez que se corrió
+     el generador se llevó el enlace por delante, y el validador del sitemap
+     cantó «16 direcciones, esperaba 14», que es exactamente lo que tenía que
+     hacer. Declarado aquí, las tres cosas salen del mismo sitio y ya no pueden
+     discrepar. Los rótulos y la prioridad son los que se pusieron entonces. */
+  { slug: "login", ruta: { en: "login", es: "login" }, disco: { en: "login.html", es: "login.html" },
+    es: "Iniciar Sesión", en: "Login", prioridad: "0.8", nav: true },
 ];
 /* `oscuro.html` no entra: es la MISMA portada con otra piel. Meterla en el
    sitemap sería pedirle al buscador que indexe dos veces el mismo texto, que
