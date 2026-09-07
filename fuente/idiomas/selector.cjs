@@ -46,6 +46,7 @@ const ESTILO = [
   ".idiomas .idioma:hover { color: var(--text-2); }",
   'html[lang="en"] .idioma[data-idioma="en"],',
   'html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(--dark-3); }',
+  "@media (max-width: 768px) { .idiomas { display: none; } }",
   /* Cierra con un rótulo propio y no con su última regla. El validador aplana
      cada bloque `{ … }` a una línea antes de comparar, así que anclar el final
      en «background: var(--dark-3); }» no casaba —quedaba «…;}», sin el
