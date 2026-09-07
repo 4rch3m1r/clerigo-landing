@@ -91,11 +91,11 @@ nav {
   height: 60px;
   display: flex; align-items: center;
   padding: 0 48px;
-  background: rgba(255,255,255,0.88);
+  background: rgba(14,14,14,0.85);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
   gap: 40px;
-  transition: all 0.3s ease;
+  transition: background 0.3s;
 }
 .nav-logo {
   display: flex; align-items: center; gap: 10px; text-decoration: none;
@@ -123,7 +123,7 @@ nav {
   padding: 7px 16px; border: 1px solid var(--border);
   border-radius: 4px; transition: all 0.15s; cursor: pointer; background: none;
 }
-.btn-ghost:hover { color: var(--text); border-color: var(--border-light); background: rgba(14,14,14,0.04); }
+.btn-ghost:hover { color: var(--text); border-color: var(--border-light); background: rgba(255,255,255,0.06); }
 .btn-primary {
   color: white; font-size: 13px; font-weight: 700; text-decoration: none;
   padding: 8px 20px; background: var(--red);
@@ -491,7 +491,7 @@ nav {
 footer {
   border-top: 1px solid var(--border);
   padding: 48px 0 32px;
-  background: var(--dark);
+  background: #0E0E0E;
 }
 .footer-inner {
   display: grid; grid-template-columns: 220px 1fr; gap: 60px;
@@ -517,28 +517,65 @@ footer {
 /* ── SOCIAL ICONS ── */
 .social-links { display: flex; gap: 10px; align-items: center; margin-top: 16px; }
 .social-icon {
-  width: 32px; height: 32px; border-radius: 8px;
-  background: var(--dark-2); border: 1px solid var(--border);
+  width: 34px; height: 34px; border-radius: 8px;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
   display: flex; align-items: center; justify-content: center;
   color: var(--text-2); text-decoration: none; transition: all 0.2s;
 }
 .social-icon:hover {
-  background: var(--dark-3); border-color: var(--border-light);
+  background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.24);
   color: var(--text); transform: translateY(-2px);
 }
 
-/* ── LANGUAGE SWITCHER ── */
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .page-wrap { padding: 80px 16px 60px; }
+  .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+  .footer-links { grid-template-columns: repeat(2,1fr); }
+  .footer-bottom { flex-wrap: wrap; row-gap: 10px; padding-left: 20px; padding-right: 20px; }
+  .footer-bottom > div { flex-wrap: wrap; }
+}
+@media (max-width: 480px) {
+  .nav-cta .btn-ghost + .btn-ghost { display: none; }
+}
+@media (max-width: 340px) {
+  .nav-cta { gap: 6px; }
+  .btn-ghost, .btn-primary { padding: 7px 10px; }
+  .nav-logo-text small { display: none; }
+}
+
+/* ── BARRA Y PIE SIEMPRE EN OSCURO ─────────────────────────────────────── */
+nav, footer {
+  --dark: #0E0E0E;
+  --dark-2: #141414;
+  --dark-3: #1B1B1B;
+  --dark-4: #222222;
+  --border: rgba(255,255,255,0.08);
+  --border-light: rgba(255,255,255,0.12);
+  --text: #F0F0F0;
+  --text-2: rgba(240,240,240,0.65);
+  --text-3: rgba(240,240,240,0.35);
+}
+nav { background: rgba(14,14,14,0.85); }
+footer { background: #0E0E0E; }
+footer .social-icon { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
+footer .social-icon:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.24); }
+/* ── FIN DE LA BARRA Y EL PIE EN OSCURO ────────────────────────────────── */
+
+/* ── EL SELECTOR DE IDIOMA ───────────────────────────────────────────── */
 .idiomas { display: flex; align-items: center; gap: 2px; margin-right: 4px; }
 .idiomas .idioma {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 26px; height: 26px; border-radius: 4px;
-  font-size: 11px; font-weight: 700; color: var(--text-3);
-  text-decoration: none; transition: all 0.12s;
+  font-size: 11px; font-weight: 700; letter-spacing: .6px;
+  color: var(--text-3); padding: 5px 7px; border-radius: 5px;
+  text-decoration: none; transition: color .2s, background .2s;
 }
 .idiomas .idioma:hover { color: var(--text-2); }
 html[lang="en"] .idioma[data-idioma="en"],
 html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(--dark-3); font-weight: 800; }
 @media (max-width: 768px) { .idiomas { display: none; } }
+/* ── FIN DEL SELECTOR DE IDIOMA ── */
 </style>
 
 <script>
@@ -1185,7 +1222,7 @@ renderGrid();
 window.addEventListener('scroll', () => {
   const nav = document.querySelector('nav');
   if (nav) {
-    nav.style.background = window.scrollY > 30 ? 'rgba(255,255,255,0.98)' : 'rgba(255,255,255,0.88)';
+    nav.style.background = window.scrollY > 50 ? 'rgba(14,14,14,0.97)' : 'rgba(14,14,14,0.85)';
   }
 });
 </script>
