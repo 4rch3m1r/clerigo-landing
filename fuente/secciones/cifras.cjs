@@ -75,17 +75,17 @@
 
 module.exports = {
   es: {
-    modulos: { valor: "32", sufijo: "", rotulo: "Módulos integrados",
+    modulos: { valor: "32", sufijo: "+", rotulo: "Módulos integrados",
       desc: "Un solo entorno para toda tu operación GRC" },
-    marcos: { valor: "66", sufijo: "", rotulo: "Marcos, normas y leyes",
+    marcos: { valor: "66", sufijo: "+", rotulo: "Marcos, normas y leyes",
       desc: "De 16 organismos: ISO, NIST, COSO, ISACA, PCI SSC, SWIFT, AICPA, AXELOS, UE, y los dominicanos SIMV, JM/SB, BCRD, OGTIC, INDOTEL, UAF e IDECOOP" },
     manual: { valor: "78", sufijo: "%", rotulo: "Reducción de trabajo manual",
       desc: "Automatización de tareas repetitivas de cumplimiento" },
   },
   en: {
-    modulos: { valor: "32", sufijo: "", rotulo: "Integrated modules",
+    modulos: { valor: "32", sufijo: "+", rotulo: "Integrated modules",
       desc: "One environment for your entire GRC operation" },
-    marcos: { valor: "66", sufijo: "", rotulo: "Frameworks, standards and laws",
+    marcos: { valor: "66", sufijo: "+", rotulo: "Frameworks, standards and laws",
       desc: "From 16 issuing bodies: ISO, NIST, COSO, ISACA, PCI SSC, SWIFT, AICPA, AXELOS, EU, and the Dominican SIMV, JM/SB, BCRD, OGTIC, INDOTEL, UAF and IDECOOP" },
     manual: { valor: "78", sufijo: "%", rotulo: "Reduction in manual work",
       desc: "Automation of repetitive compliance tasks" },

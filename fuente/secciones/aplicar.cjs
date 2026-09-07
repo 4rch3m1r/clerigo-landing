@@ -117,17 +117,26 @@ for (const { f, t } of PAGINAS) {
         salir de ningún sitio. Se sustituye la tarjeta ENTERA —valor, rótulo y
         descripción— buscando por su rótulo viejo, que es lo único estable:
         el valor cambia y la descripción también. */
+  /* Se busca por CUALQUIERA de los rótulos que esa tarjeta haya tenido: el
+     viejo del original y el que se le puso. Anclado sólo al viejo, la segunda
+     pasada no encontraba la tarjeta —porque el rótulo ya lo había cambiado la
+     primera— y dejaba de actualizarse en silencio. Pasó con la de marcos: se
+     le cambió el sufijo y no se movió. */
   const c = t === ES ? CIFRAS.es : CIFRAS.en;
-  for (const [rotuloViejo, dato] of [
-    [t === ES ? "Módulos integrados" : "Integrated modules", c.modulos],
-    [t === ES ? "Marcos regulatorios" : "Regulatory frameworks", c.marcos],
-    [t === ES ? "Reducción de trabajo manual" : "Reduction in manual work", c.manual],
+  const escapa = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  for (const [rotulos, dato] of [
+    [["Módulos integrados", "Integrated modules"], c.modulos],
+    [["Marcos regulatorios", "Regulatory frameworks", "Marcos, normas y leyes", "Frameworks, standards and laws"], c.marcos],
+    [["Reducción de trabajo manual", "Reduction in manual work"], c.manual],
   ]) {
     const re = new RegExp(
       `(<div class="number-val">)[^<]*(<span>)[^<]*(</span></div>\\s*<div class="number-label">)`
-      + rotuloViejo.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+      + `(?:${rotulos.map(escapa).join("|")})`
       + `(</div>\\s*<div class="number-desc">)[^<]*(</div>)`);
-    if (!re.test(h)) continue;
+    if (!re.test(h)) {
+      console.log(`  ${f.padEnd(16)} OJO: no encuentro la tarjeta de «${rotulos[0]}»`);
+      continue;
+    }
     h = h.replace(re, (_, a, b, d, e, g) =>
       `${a}${dato.valor}${b}${dato.sufijo}${d}${dato.rotulo}${e}${dato.desc}${g}`);
   }
