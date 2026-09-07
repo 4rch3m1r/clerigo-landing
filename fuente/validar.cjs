@@ -62,18 +62,36 @@ for (const [n, tConSelector] of [["oscuro", osc], ["claro", cla]]) {
   /* La castellana vive en /es/, así que su canónica y su og:url apuntan ahí y
      no a la raíz: si las dos versiones se declararan la misma dirección, la
      castellana estaría pidiendo que no la indexen. */
+  /* LA TARJETA NO SE ESCRIBE AQUÍ, SE LEE DE LA PÁGINA.
+     Esto pedía `${SITIO.base}/og.png` tres veces, y llevaba meses en rojo sin
+     que nadie lo mirara: la tarjeta se mudó a `/public/og/clerigo-og.png`
+     —porque `og.png` en la raíz era una copia suelta que nadie mantenía— y
+     esta línea se quedó con el nombre viejo. Un número o una ruta copiados a
+     mano en la guarda envejecen igual que el código que vigilan.
+     Ahora no se copia nada: se lee lo que la página DICE, se exige que las
+     tres etiquetas digan lo mismo, que sea una dirección absoluta del sitio, y
+     —esto es lo que de verdad importa— que ese fichero EXISTA en el disco. Así
+     no puede quedarse vieja, y sigue cazando lo que cazaba: una tarjeta que
+     promete una imagen que el servidor no tiene.
+     Y ya no se pide «clerigo.io/academia»: ese enlace era del pie, devolvía un
+     404 y se quitó. Ver el bloque del relleno del pie, más abajo. */
+  const tarjetas = [...t.matchAll(/(?:og:image|og:image:secure_url|twitter:image)" content="([^"]+)"/g)].map((m) => m[1]);
+  const laTarjeta = tarjetas[0] || "";
   comprueba(`las direcciones absolutas son las de sitio.json en el ${n}`,
     t.includes(`<link rel="canonical" href="${SITIO.base}/es/"`)
-    /* og:image, og:image:secure_url y twitter:image */
-    && cuenta(t, new RegExp(`content="${SITIO.base.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/og\\.png"`, "g")) === 3
-    && t.includes('href="https://app.clerigo.io"')
-    && t.includes('href="https://clerigo.io/academia"'));
+    && tarjetas.length === 3 && tarjetas.every((u) => u === laTarjeta)
+    && laTarjeta.startsWith(SITIO.base + "/")
+    && fs.existsSync(require("node:path").join(RAIZ, laTarjeta.slice(SITIO.base.length + 1)))
+    && t.includes('href="https://app.clerigo.io"'),
+    tarjetas.length + " etiquetas de tarjeta · «" + laTarjeta + "»");
   comprueba(`los enlaces del sitio van a las páginas de al lado en el ${n}`,
     cuenta(t, /href="marcos\.html"/g) === 6
     && cuenta(t, /href="legal\.html"/g) === 5
     && cuenta(t, /href="precios\.html"/g) === 3
     && cuenta(t, /href="contacto\.html"/g) === 3
-    && cuenta(t, /href="partners\.html"/g) === 1
+    /* Dos: el botón «Portal de Socios» de la sección, y el «Socios» del pie,
+       que hasta ahora era un `#` y no llevaba a ninguna parte. */
+    && cuenta(t, /href="partners\.html"/g) === 2
     && cuenta(t, /href="index\.html"/g) === 2,
     "marcos " + cuenta(t, /href="marcos\.html"/g)
     + ", legal " + cuenta(t, /href="legal\.html"/g)
@@ -409,11 +427,42 @@ const esqueleto = (s) => pelado(
      ella. Las dos llevan ahora al mismo fichero, así que la barra final se
      iguala en los tres para poder compararlos. */
   .replace(/href="https:\/\/DOM\/prospectos\/"/g, 'href="https://DOM/prospectos"')
+  /* UNA FALTA DE ORTOGRAFÍA HEREDADA. El original decía «Portal de Pathner» en
+     el botón que hay encima del pie —con hache y sin ese—, y así se copió. Se
+     corrige en la nuestra y se iguala aquí, que es lo que hay que hacer con un
+     fallo del original: arreglarlo y dejarlo escrito, no dejarlo por miedo a
+     que la comparación se queje. */
+  .replace(/Portal de Pathner/g, "Portal de Partners")
   /* El sufijo del rótulo de la barra: «Platform» pasó a «XGRC», mismo hueco. */
   .replace(/<small>(Platform|XGRC)<\/small>/g, "<small>SUF</small>")
   /* El enlace del pie venía sin protocolo —un fallo del original— y ahora lo
      lleva. Se iguala para que el resto de la línea sí se compare. */
   .replace(/href="(https:\/\/)?DOM"/g, 'href="DOM"')
+  /* EL RELLENO DEL PIE DEL ORIGINAL, QUE AQUÍ NO SE PUBLICA.
+     Archemir dejaba en el pie diez enlaces que no llevaban a ninguna parte:
+     nueve con `href="#"` —al pulsarlos la página salta arriba y se queda uno
+     igual— y «Academia», que es peor que los nueve porque promete una página
+     y devuelve un 404. Se quitaron los diez, y con ellos la columna
+     «Recursos», que se quedó sin nada dentro y desapareció entera: el pie pasó
+     de cuatro columnas a tres.
+     SE QUITAN TAMBIÉN DEL ORIGINAL, no sólo de la nuestra. Si se quitaran de
+     un lado nada más, el resto del pie se desalinearía línea a línea y esta
+     comparación dejaría de decir nada del pie entero. Quitándolos de los dos,
+     lo que viene detrás se sigue comparando: si mañana se cae una columna que
+     sí lleva a algún sitio, sale aquí igual que antes.
+     Y TRES QUE NO SE QUITARON SINO QUE SE ARREGLARON. El original los tenía en
+     `#` y ahora llevan a donde dicen: Plataforma al ancla de la portada,
+     Entrenamiento a la suya, y Socios a la página de socios. Aquí se igualan a
+     un rótulo para poder comparar el texto —que es lo que esta comparación
+     mira—; el destino de cada uno lo comprueba, con su cifra, «los enlaces del
+     sitio van a las páginas de al lado». */
+  .replace(/[ \t]*<a href="#">(?:Integraciones|Changelog|Blog GRC|Webinars|Casos de éxito|API Developers|Sobre nosotros|Prensa|Carreras)<\/a>\n/g, "")
+  .replace(/[ \t]*<a href="https:\/\/DOM\/academia">Academia<\/a>\n/g, "")
+  .replace(/<a href="(?:#|index\.html#platform)">Plataforma<\/a>/g, '<a href="PIE">Plataforma</a>')
+  .replace(/<a href="(?:#|#solution|index\.html#solution)">Entrenamiento<\/a>/g, '<a href="PIE">Entrenamiento</a>')
+  .replace(/<a href="(?:#|DOM)">Socios<\/a>/g, '<a href="PIE">Socios</a>')
+  /* Y la columna que, quitados los suyos, se queda con el rótulo y nada más. */
+  .replace(/[ \t]*<div class="footer-col">\n[ \t]*<div class="footer-col-title">[^<]*<\/div>\n[ \t]*<\/div>\n/g, "")
   /* El logotipo trae su propia esquina cortada y su color, así que al ponerlo
      desaparecen el recorte y la regla del texto «GRC» que había dentro. */
   .replace(/clip-path: ?polygon\(0 0, ?100% 0, ?100% 72%, ?72% 100%, ?0 100%\);?/g, "")
@@ -531,9 +580,13 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
            debajo del resultado, y desde el pie no llega casi nunca;
        +2  el selector de idioma, que son dos enlaces —EN y ES— y va en las
            dos versiones para poder saltar de una a la otra.
+     Y DIEZ MENOS, que es el relleno del pie: nueve `href="#"` que no llevaban
+     a ninguna parte y «Academia», que devolvía un 404. Están enumerados uno a
+     uno en el bloque del relleno del pie, arriba, en la cadena que iguala las
+     dos páginas.
      Los demás ya estaban y sólo cambiaron de destino. */
   comprueba(`mismo número de enlaces en el ${n}`,
-    cuenta(t, /<a /g) === cuenta(org, /<a /g) + 2 + 2,
+    cuenta(t, /<a /g) === cuenta(org, /<a /g) + 2 + 2 - 10,
     `${cuenta(t, /<a /g)} vs ${cuenta(org, /<a /g)}`);
   /* Las del original más SEIS, y se escribe de dónde sale cada una en vez de
      poner un número suelto:
