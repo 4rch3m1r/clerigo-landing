@@ -206,7 +206,7 @@ const ROUTES = {
     lang: "es",
     locale: "es_ES",
     alternateLocale: "en_US",
-    alternateEn: "https://clerigo.io/contacto.html",
+    alternateEn: "https://clerigo.io/contact.html",
     alternateEs: "https://clerigo.io/es/contacto.html",
     title: "Solicita una Demo o Contacta a Nuestros Expertos | Clérigo GRC",
     description: "Agenda una sesión personalizada de 20 minutos con nuestros especialistas y descubre cómo modernizar tu gestión de riesgos y auditoría.",
@@ -219,12 +219,12 @@ const ROUTES = {
   },
 
   // ── CONTACTO Y DEMO (EN) ──
-  "contacto.html": {
-    canonicalPath: "contacto.html",
+  "contact.html": {
+    canonicalPath: "contact.html",
     lang: "en",
     locale: "en_US",
     alternateLocale: "es_ES",
-    alternateEn: "https://clerigo.io/contacto.html",
+    alternateEn: "https://clerigo.io/contact.html",
     alternateEs: "https://clerigo.io/es/contacto.html",
     title: "Request a Demo & Contact GRC Specialists | Clérigo",
     description: "Schedule a personalized 20-minute product tour with our compliance experts and see how Clérigo streamlines risk and audit workflows.",

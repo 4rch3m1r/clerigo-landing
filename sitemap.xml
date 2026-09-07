@@ -74,22 +74,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/precios.html"/>
   </url>
   <url>
-    <loc>https://clerigo.io/contacto.html</loc>
+    <loc>https://clerigo.io/contact.html</loc>
     <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/contacto.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/contact.html"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://clerigo.io/es/contacto.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/contacto.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/contact.html"/>
   </url>
   <url>
     <loc>https://clerigo.io/es/contacto.html</loc>
     <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/contacto.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/contact.html"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://clerigo.io/es/contacto.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/contacto.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/contact.html"/>
   </url>
   <url>
     <loc>https://clerigo.io/partners.html</loc>

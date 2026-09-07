@@ -15,7 +15,7 @@ const files = [
   'es/precios.html',
   'trustcenter.html',
   'es/confianza.html',
-  'contacto.html',
+  'contact.html',
   'es/contacto.html',
   'partners.html',
   'es/partners.html',

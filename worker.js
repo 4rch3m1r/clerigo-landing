@@ -7,6 +7,9 @@ export default {
     if (url.pathname === '/confianza' || url.pathname === '/confianza.html') {
       return Response.redirect(new URL('/trustcenter', request.url), 301);
     }
+    if (url.pathname === '/contacto' || url.pathname === '/contacto.html') {
+      return Response.redirect(new URL('/contact', request.url), 301);
+    }
     return env.ASSETS.fetch(request);
   }
 };
