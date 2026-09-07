@@ -204,4 +204,28 @@ function subeUnNivelLosRecursos(html) {
   );
 }
 
-module.exports = { ponSelector, ponAlternativas, bloque, ESTILO, subeUnNivelLosRecursos };
+/**
+ * Y lo contrario, para la página de la raíz.
+ *
+ * ESTO NO ES SIMETRÍA POR GUSTO: ES EL ARREGLO DE UN FALLO QUE SE VEÍA.
+ *
+ * El paso al inglés lee de `es/`, escribe el inglés en la raíz y además vuelve
+ * a escribir el castellano en su sitio —con su selector, su canónica y el
+ * `../` de las imágenes—. La segunda vez que se corre, lo que lee de `es/` ya
+ * trae el `../` puesto, y de ahí sale la página inglesa: quince capturas
+ * apuntando a `/../sistema/…`, que no existe. La primera pasada salía bien y
+ * la segunda rompía el carrusel entero de la portada, en silencio.
+ *
+ * Se arregla NORMALIZANDO en vez de suponer: la inglesa quita el prefijo lo
+ * lleve o no, la castellana lo pone lo lleve o no. Así da igual en qué estado
+ * esté la fuente y da igual cuántas veces se corra.
+ */
+function bajaUnNivelLosRecursos(html) {
+  return html.replace(
+    /(\s(?:src|href)=")\.\.\/((?!\.\.\/)[^"]*\.(?:png|jpg|jpeg|svg|webp|ico|css|js))"/g,
+    (todo, antes, ruta) => antes + ruta + '"',
+  );
+}
+
+module.exports = { ponSelector, ponAlternativas, bloque, ESTILO,
+  subeUnNivelLosRecursos, bajaUnNivelLosRecursos };

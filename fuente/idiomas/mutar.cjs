@@ -46,6 +46,39 @@ const MUTANTES = [
         página está a medias: es el fallo que NO se ve comparando esqueletos. */
   ["dejar un trozo en castellano", (s) => s.replace(/(<div class="number-label">)[^<]+(<)/, "$1Módulos integrados$2")],
 
+  /* 2b. EL MISMO FALLO, DONDE LA PRIMERA GUARDA NO PUEDE MIRAR.
+   *
+   *  La comprobación de arriba trabaja con los trozos que el extractor saca de
+   *  la CASTELLANA y busca cuáles siguen igual en la inglesa. De ahí sale su
+   *  límite: sólo ve castellano que también esté en la página castellana. Un
+   *  texto en castellano que no salga de allí —escrito a mano, heredado de una
+   *  versión anterior, pegado de otro sitio— le es invisible.
+   *
+   *  Esto es lo que pasó de verdad, por el otro lado del mismo agujero: el
+   *  extractor no consideraba «lenguaje» una palabra suelta en minúscula y sin
+   *  tilde, así que «complicada» no era un trozo, no estaba en la lista, y el
+   *  titular de la portada en inglés dijo «Managing GRC doesn't have to be
+   *  complicada» mientras el validador daba TODO PASA.
+   *
+   *  La frase de aquí abajo NO existe en la castellana. La primera guarda no
+   *  puede verla; la segunda sí, porque lee la página inglesa en crudo y busca
+   *  tildes y palabras de enlace. Si alguien quitara la segunda, aquí saldría
+   *  SE LE ESCAPA. */
+  ["colar castellano que no sale de la pagina castellana",
+    (s) => s.replace(/(<span class="word-simple">)[^<]+(<)/, "$1está sin traducir$2")],
+
+  /* 2c. Las imágenes, con el prefijo de la OTRA página.
+   *
+   *  Éste no es un fallo inventado: es el que hubo. El paso al inglés lee de
+   *  `es/` y de camino reescribe el castellano con el `../` puesto, así que a
+   *  partir de la segunda pasada la inglesa lo heredaba y las quince capturas
+   *  del carrusel apuntaban a `/../sistema/…`. La portada salía con el hueco
+   *  blanco y el texto alternativo encima, y ni la comparación de esqueletos
+   *  ni la de textos lo veían: las etiquetas eran las mismas y las palabras
+   *  también. Sólo cambiaba una ruta. */
+  ["poner a la inglesa las rutas de la castellana",
+    (s) => s.replace(/(\s(?:src|href)=")(sistema\/|favicon\.png)/g, "$1../$2")],
+
   /* 3. El idioma declarado. Con el `lang` mal, el navegador ofrece traducir
         una página que ya está en su idioma, y el buscador la clasifica mal. */
   ["decir que la inglesa esta en castellano", (s) => s.replace('<html lang="en"', '<html lang="es"')],

@@ -237,8 +237,15 @@ clerigo.io/        inglés      <- lo que se sirve por omisión
 clerigo.io/es/     castellano  <- la fuente
 ```
 
-El orden importa: primero se genera y se comprueba el castellano, y sólo
-después se traduce.
+El orden importa: primero se genera y se comprueba el castellano, sólo después
+se traduce, y el posicionamiento va el último de todos. **Un solo comando lo
+corre entero y en orden**, que es la forma de no equivocarse:
+
+```bash
+node fuente/hacer.cjs --mutar    # genera, comprueba y rompe a propósito
+```
+
+Y por si hace falta ir paso a paso:
 
 ```bash
 # 1. el castellano, que es la fuente
@@ -253,10 +260,16 @@ node fuente/idiomas/reunir.cjs        # qué falta por traducir, y qué ya está
 node fuente/idiomas/a-ingles.cjs      # es/  ->  la raíz, traducida
 node fuente/idiomas/validar.cjs       # quitando el texto, son la MISMA página
 
-# 3. y romperlo todo a propósito, que es lo único que prueba una guarda
+# 3. el posicionamiento, que va el ÚLTIMO y sobre las dieciséis páginas
+node fuente/seo/posicionar.cjs        # palabras clave, ficha de datos, idioma de la tarjeta
+node fuente/seo/mapa.cjs              # sitemap.xml + robots.txt
+node fuente/seo/validar.cjs           # 204 comprobaciones, y que no se invente nada
+
+# 4. y romperlo todo a propósito, que es lo único que prueba una guarda
 node fuente/mutar.cjs                 # 22 mutaciones sobre la portada
 node fuente/paginas/mutar.cjs marcos  # 15 sobre una interior
-node fuente/idiomas/mutar.cjs         # 7 sobre el bilingüe
+node fuente/idiomas/mutar.cjs         # 8 sobre el bilingüe
+node fuente/seo/mutar.cjs             # 16 sobre el posicionamiento
 
 # las tarjetas de vista previa (Windows: usa System.Drawing)
 powershell -ExecutionPolicy Bypass -File fuente/hacer-og.ps1

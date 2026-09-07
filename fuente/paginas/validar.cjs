@@ -22,6 +22,7 @@ const RAIZ = path.join(__dirname, "..", "..");
 /* El castellano es la FUENTE y vive en su carpeta; el ingles ocupa la raiz.
    Ver `fuente/donde.cjs`, que es donde esta escrito el porque. */
 const { CASTELLANO } = require("../donde.cjs");
+const { sinPosicionamiento } = require("../seo/marcas.cjs");
 const AQUI = __dirname;
 
 const { palabras, aplicaMarca, comportamiento, PICTOGRAMAS } = require("./palabras.cjs");
@@ -218,11 +219,20 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
   /* Y el `../` del icono: la castellana está un nivel más adentro que la raíz,
      donde vive el fichero, y la plantilla lo cita sin prefijo porque no sabe en
      qué idioma se va a usar. */
-  const salSinAlternativas = sal
+  /* Y lo que pone el paso de posicionamiento, que corre DESPUÉS de que la
+     plantilla se estampe: palabras clave, orden al buscador, idioma de la
+     tarjeta y la ficha de datos entera. La plantilla no las trae, así que
+     compararlas contra ella sería comparar contra algo que no existe. */
+  const salSinAlternativas = sinPosicionamiento(sal)
     .replace(/[ \t]*<link rel="alternate" hreflang="[a-z-]+" href="[^"]*">\n/g, "")
     .replace(/(\s(?:src|href)=")\.\.\/((?:sistema\/[a-z0-9-]+|favicon)\.png)"/g, '$1$2"');
+  /* La plantilla se normaliza IGUAL que la página. `sinPosicionamiento` no
+     borra el `og:locale`, lo pone a un valor fijo —cambia entre idiomas y
+     tiene que dejar de contar, pero la etiqueta debe seguir estando—, así que
+     aplicarlo sólo a un lado dejaba «·» contra «es_ES» y ninguna página
+     empezaba por su plantilla. */
   comprueba(`${slug}: la cabecera, los tokens y la hoja compartida salen de la plantilla`,
-    salSinAlternativas.startsWith(cabeceraEsperada));
+    salSinAlternativas.startsWith(sinPosicionamiento(cabeceraEsperada)));
   comprueba(`${slug}: la canónica y la tarjeta son las que dice sitio.json`,
     sal.includes(`<link rel="canonical" href="${canonica}">`)
     && sal.includes(`<meta property="og:image" content="${imagen}">`),
@@ -276,7 +286,10 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
      llevan a la MISMA pagina en el otro idioma, asi que cambian de una a otra.
      Eso es lo correcto —desde legal.html se salta a legal.html— y por eso se
      recorta antes de comparar, en vez de exigir que sean iguales. */
-  const salSinSelector = sinSelector(sal);
+  /* También sin lo del posicionamiento: `keywords` y `robots` se ponen justo
+     antes de `</head>`, y ese cierre cae DENTRO del tramo compartido que se
+     compara aquí. */
+  const salSinSelector = sinPosicionamiento(sinSelector(sal));
   comprueba(`${slug}: ${chrome ? "la barra y el pie son" : "el cierre de la hoja es"} el de la plantilla`,
     salSinSelector.includes(chrome ? CIERRE : CIERRE_SIN_BARRA)
     && salSinSelector.includes(chrome ? PIE : PIE_SIN_PIE));
@@ -344,8 +357,10 @@ if (!soloUna) {
   console.log("\n── La línea gráfica es UNA ─────────────────────────────────────");
   const conChrome = PAGINAS.filter((p) => p.chrome).map((p) => path.join(CASTELLANO, p.slug + ".html"))
     .filter((f) => fs.existsSync(f)).map(lee)
-    /* Sin el selector, por lo mismo de arriba. */
-    .map(sinSelector);
+    /* Sin el selector ni lo del posicionamiento, por lo mismo de arriba: las
+       palabras clave son distintas en cada página a propósito —para eso están—
+       y si se comparan, las cinco dejan de parecerse. */
+    .map((h) => sinPosicionamiento(sinSelector(h)));
   comprueba("las páginas con barra y pie llevan EL MISMO trozo compartido",
     conChrome.length > 1 && conChrome.every((h) => h.includes(CIERRE) && h.includes(PIE)),
     conChrome.length + " páginas encontradas");

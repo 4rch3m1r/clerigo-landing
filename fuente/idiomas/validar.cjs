@@ -23,6 +23,7 @@ const { segmentos, ZONAS_DE_CODIGO, COMENTARIOS } = require("./segmentos.cjs");
 const { TODAS } = require("./a-ingles.cjs");
 const { CASTELLANO } = require("../donde.cjs");
 const { diccionario } = require("./a-ingles.cjs");
+const { sinPosicionamiento } = require("../seo/marcas.cjs");
 
 /* El diccionario, para saber qué textos se escriben igual en los dos idiomas. */
 const DIC = diccionario();
@@ -45,7 +46,11 @@ function comprueba(punto, condicion, detalle) {
  */
 function esqueleto(html) {
   const tapado = [];
-  let s = html
+  /* Lo del posicionamiento, fuera: las palabras clave están TRADUCIDAS —para
+     eso son palabras— y el idioma de la tarjeta es, por definición, distinto
+     en cada versión. Comparar eso sería exigir que la inglesa lleve las
+     palabras castellanas. */
+  let s = sinPosicionamiento(html)
     .replace(ZONAS_DE_CODIGO, (m) => { tapado.push(m); return "@@Z" + (tapado.length - 1) + "@@"; })
     .replace(COMENTARIOS, (m) => { tapado.push(m); return "@@Z" + (tapado.length - 1) + "@@"; });
 
@@ -119,6 +124,60 @@ for (const p of TODAS) {
   comprueba(`${p}: no queda castellano en la inglesa`, restos.length === 0,
     restos.length ? `${restos.length} trozos, p.ej. «${restos[0].slice(0, 60)}»` : "");
 
+  /* LA MISMA PREGUNTA, POR OTRO CAMINO, Y POR UN MOTIVO.
+   *
+   * La comprobación de arriba mira los trozos que el extractor SACA de la
+   * castellana. Todo lo que el extractor no ve, ella tampoco: si un texto no
+   * llega a ser un «segmento», no está en la lista, no se compara y no falta.
+   * Una guarda que hereda la ceguera de la pieza que le da los datos no es una
+   * segunda opinión, es la misma opinión escrita dos veces.
+   *
+   * Y pasó. `PARECE_LENGUAJE` no aceptaba una palabra suelta en minúscula sin
+   * tilde, así que «complicada» no era un segmento. El titular de la portada
+   * en inglés decía «Managing GRC doesn't have to be complicada», y esta línea
+   * de aquí arriba daba OK. Un mes así.
+   *
+   * Ésta no pregunta a nadie: lee la página inglesa en crudo, le quita las
+   * etiquetas y busca castellano en lo que queda. Las señales son dos —una
+   * letra con tilde o eñe, o una palabra de las que sólo existen en
+   * castellano— y las excepciones van escritas una a una aquí abajo, que son
+   * nombres propios y por tanto una lista corta y estable. */
+  /* Se quitan del texto ANTES de juzgarlo, en vez de exigir que el trozo entero
+     sea uno de ellos. Un nombre propio casi nunca va solo: va dentro de una
+     frase —«…the Tribunales de Primera Instancia del Distrito Nacional of
+     Santo Domingo»— y con la comparación entera esa frase quedaba marcada
+     para siempre, que es como una guarda se vuelve ruido y acaba apagada. */
+  const NOMBRES_PROPIOS = [
+    "Instituto Dominicano de las Telecomunicaciones",
+    "Tribunales de Primera Instancia del Distrito Nacional",
+    "Superintendencia del Mercado de Valores", "Superintendencia de Valores",
+    "Superintendencia de Bancos", "Bolsa de Valores", "Mercado de Valores",
+    "Banco Central", "Banco del Norte", "Grupo Financiero Andino",
+    "Laura González", "Carlos Ramos", "Alejandro Mora", "María García",
+    "García", "González", "Santo Domingo",
+    /* Un logotipo parte el nombre en dos líneas y cada mitad es su propio
+       nodo de texto: dentro del SVG del sello, «Bolsa» va en una y
+       «de Valores» en la siguiente. */
+    "de Valores",
+  ];
+  /* Palabras que en inglés no existen. Se piden ENTERAS: sin eso, «no» dentro
+     de «not» y «de» dentro de «under» encendían la alarma en cada frase. */
+  const SOLO_CASTELLANO = /(^|[\s>(¿¡"'—·])(de|del|la|el|los|las|un|una|unos|unas|con|para|por|que|se|su|sus|y|en|al|más|sin|sobre|entre|desde|hasta|cada|todo|toda|todos|todas|nuestro|nuestra|nuestros|nuestras|son|está|están|este|esta|estos|estas|ni|pero|ya|hay|ser|tiene|puede|debe|hace|cuando|donde|quién|porque|así|aquí|también|sólo|solo)([\s<.,;:)!?"'—·]|$)/;
+  const CON_TILDE = /[áéíóúñ¿¡]/;
+
+  const enCrudo = en
+    .replace(ZONAS_DE_CODIGO, " ")
+    .replace(COMENTARIOS, " ");
+  const sospechosos = [];
+  for (const m of enCrudo.matchAll(/>([^<>]+)</g)) {
+    let t = m[1].replace(/&[a-z]+;|&#\d+;/gi, " ").replace(/\s+/g, " ").trim();
+    if (!t || t.length < 3) continue;
+    for (const n of NOMBRES_PROPIOS) t = t.split(n).join(" ");
+    if (CON_TILDE.test(t) || SOLO_CASTELLANO.test(t)) sospechosos.push(m[1].replace(/\s+/g, " ").trim().slice(0, 70));
+  }
+  comprueba(`${p}: la inglesa no lleva castellano suelto`, sospechosos.length === 0,
+    sospechosos.length ? `${sospechosos.length}, p.ej. «${sospechosos[0]}»` : "");
+
   /* Y la detección de idioma, en las DOS.
      Quitarla no rompe nada que se vea —la página carga igual de bien— y a quien
      llega con el navegador en castellano se le queda el inglés delante sin
@@ -130,6 +189,30 @@ for (const p of TODAS) {
     const i = h.indexOf("/* El idioma del navegador decide");
     comprueba(`${p}: la ${cual} mira el idioma del navegador`, i > 0 && i < h.indexOf("</head>"),
       i < 0 ? "no está" : "está fuera de la cabecera");
+  }
+
+  /* ── Y QUE LAS IMÁGENES ESTÉN DONDE LA PÁGINA DICE ────────────────────
+   *
+   * Las capturas y el icono viven en la raíz y son los mismos para los dos
+   * idiomas. La castellana está un nivel más adentro, así que los cita con
+   * `../`; la inglesa, sin prefijo. Dos rutas distintas para el mismo fichero.
+   *
+   * Esto está aquí porque falló. El paso al inglés lee de `es/` y de camino
+   * vuelve a escribir el castellano CON el `../` puesto; la segunda vez que se
+   * corría, la inglesa heredaba ese prefijo y salía con las quince capturas
+   * apuntando a `/../sistema/…`. El carrusel entero de la portada, en blanco,
+   * y ninguna comprobación lo veía: la estructura cuadraba —las dos páginas
+   * tienen las mismas etiquetas— y el texto también.
+   *
+   * No se compara el prefijo: se RESUELVE la ruta desde donde vive la página y
+   * se mira si el fichero está. Es la única forma que no se puede engañar. */
+  for (const [cual, h, base] of [["inglesa", en, RAIZ], ["castellana", es, CASTELLANO]]) {
+    const citados = [...h.matchAll(/\s(?:src|href)="((?!https?:|\/\/|#|mailto:|data:)[^"]*\.(?:png|jpg|jpeg|svg|webp|ico))"/g)]
+      .map((m) => m[1]);
+    const rotos = [...new Set(citados)].filter((r) => !fs.existsSync(path.resolve(base, r)));
+    comprueba(`${p}: las imágenes que cita la ${cual} existen desde donde ella vive`,
+      citados.length > 0 && rotos.length === 0,
+      citados.length === 0 ? "no cita ninguna" : `${rotos.length} de ${citados.length}: ${rotos.slice(0, 2).join(" ")}`);
   }
 
   /* Y el selector lleva al mismo sitio desde las dos. */

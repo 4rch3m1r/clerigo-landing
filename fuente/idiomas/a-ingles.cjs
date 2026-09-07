@@ -142,7 +142,7 @@ function ponIdioma(html, idioma) {
 }
 
 if (require.main === module) {
-  const { ponSelector, ponAlternativas, subeUnNivelLosRecursos } = require("./selector.cjs");
+  const { ponSelector, ponAlternativas, subeUnNivelLosRecursos, bajaUnNivelLosRecursos } = require("./selector.cjs");
   const { ponDeteccion } = require("./deteccion.cjs");
   const { CASTELLANO, INGLES } = require("../donde.cjs");
   const SITIO = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "sitio.json"), "utf8"));
@@ -186,6 +186,11 @@ if (require.main === module) {
     en = ponSelector(en, "en", fichero);
     en = ponAlternativas(en, "en", canonica, SITIO.base);
     en = ponDeteccion(en);
+    /* La inglesa vive en la RAÍZ, al lado de las capturas: sin prefijo.
+       Se quita lo lleve o no. Lo que se lee de `es/` puede traerlo puesto
+       —esta misma vuelta lo escribe ahí— y entonces la portada inglesa salía
+       con las quince capturas rotas a partir de la segunda pasada. */
+    en = bajaUnNivelLosRecursos(en);
     const traducida = traduce(en, dic);
     fs.writeFileSync(path.join(INGLES, p + ".html"), traducida.html);
     quedan += traducida.sinTraducir.length;

@@ -68,14 +68,14 @@ function cambia(antes, despues, veces) {
 
 cambia(
   "<title>GRC Intelligence — Gobernanza, Riesgo y Cumplimiento sin complicaciones</title>",
-  "<title>Clèrigo — Gobernanza, Riesgo y Cumplimiento sin complicaciones</title>\n"
-  + '<meta name="description" content="Clèrigo unifica Gestión de Riesgos, Cumplimiento Legal y Regulatorio, Privacidad, Ciberseguridad, Control Interno y Auditoría en un solo entorno.">\n'
+  "<title>Clèrigo | Software GRC de Gobernanza, Riesgo y Cumplimiento</title>\n"
+  + '<meta name="description" content="Software GRC que unifica riesgos, cumplimiento normativo, auditoría interna, control interno, ciberseguridad y privacidad en una sola plataforma.">\n'
   + '<link rel="canonical" href="https://clerigo.io/">\n'
   + '<meta property="og:type" content="website">\n'
   + '<meta property="og:site_name" content="Clèrigo">\n'
   + '<meta property="og:url" content="https://clerigo.io/">\n'
-  + '<meta property="og:title" content="Clèrigo — Gobernanza, Riesgo y Cumplimiento sin complicaciones">\n'
-  + '<meta property="og:description" content="Clèrigo unifica Gestión de Riesgos, Cumplimiento Legal y Regulatorio, Privacidad, Ciberseguridad, Control Interno y Auditoría en un solo entorno.">\n'
+  + '<meta property="og:title" content="Clèrigo | Software GRC de Gobernanza, Riesgo y Cumplimiento">\n'
+  + '<meta property="og:description" content="Software GRC que unifica riesgos, cumplimiento normativo, auditoría interna, control interno, ciberseguridad y privacidad en una sola plataforma.">\n'
   /* La tarjeta que sale al pegar el enlace en WhatsApp, LinkedIn, Slack, X o
      iMessage. Las medidas y el tipo NO son adorno: WhatsApp descarta la imagen
      si tiene que descargarla entera para averiguar cuánto mide, y con
@@ -86,20 +86,20 @@ cambia(
   + '<meta property="og:image:type" content="image/png">\n'
   + '<meta property="og:image:width" content="1200">\n'
   + '<meta property="og:image:height" content="630">\n'
-  + '<meta property="og:image:alt" content="Clèrigo — Gobernanza, Riesgo y Cumplimiento sin complicaciones">\n'
+  + '<meta property="og:image:alt" content="Clèrigo | Software GRC de Gobernanza, Riesgo y Cumplimiento">\n'
   + '<meta property="og:locale" content="es_ES">\n'
   + '<meta name="twitter:card" content="summary_large_image">\n'
-  + '<meta name="twitter:title" content="Clèrigo — Gobernanza, Riesgo y Cumplimiento sin complicaciones">\n'
-  + '<meta name="twitter:description" content="Clèrigo unifica Gestión de Riesgos, Cumplimiento Legal y Regulatorio, Privacidad, Ciberseguridad, Control Interno y Auditoría en un solo entorno.">\n'
+  + '<meta name="twitter:title" content="Clèrigo | Software GRC de Gobernanza, Riesgo y Cumplimiento">\n'
+  + '<meta name="twitter:description" content="Software GRC que unifica riesgos, cumplimiento normativo, auditoría interna, control interno, ciberseguridad y privacidad en una sola plataforma.">\n'
   + '<meta name="twitter:image" content="https://clerigo.io/og.png">\n'
-  + '<meta name="twitter:image:alt" content="Clèrigo — Gobernanza, Riesgo y Cumplimiento sin complicaciones">\n'
+  + '<meta name="twitter:image:alt" content="Clèrigo | Software GRC de Gobernanza, Riesgo y Cumplimiento">\n'
   + '<meta name="theme-color" content="#0E0E0E">\n'
   + '<link rel="image_src" href="https://clerigo.io/og.png">\n'
   /* Para Google y LinkedIn, que leen datos estructurados además de las
      etiquetas de Open Graph. */
   + '<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite",'
   + '"name":"Clèrigo","url":"https://clerigo.io/","inLanguage":"es",'
-  + '"description":"Clèrigo unifica Gestión de Riesgos, Cumplimiento Legal y Regulatorio, Privacidad, Ciberseguridad, Control Interno y Auditoría en un solo entorno.",'
+  + '"description":"Software GRC que unifica riesgos, cumplimiento normativo, auditoría interna, control interno, ciberseguridad y privacidad en una sola plataforma.",'
   + '"publisher":{"@type":"Organization","name":"Clèrigo","url":"https://clerigo.io/",'
   + '"logo":"https://clerigo.io/favicon.png"}}</script>',
   1,
@@ -553,16 +553,34 @@ cambia('href="https://clerigo.io"', 'href="index.html"', 2);
 
 /* ── 4b-bis. El Centro de Confianza ─────────────────────────────────────── */
 
-/* El ÚNICO enlace que se le añade a la página. Todos los demás ya estaban y
- * sólo cambiaron de destino.
+/* Los DOS enlaces que se le añaden a la página, y los dos al mismo sitio.
+ * Todos los demás ya estaban y sólo cambiaron de destino.
  *
- * Va en la fila legal del pie, al lado de Términos y Privacidad, porque es ahí
- * donde lo busca quien tiene que aprobar la compra: el comité de seguridad del
- * cliente. Es la página que dice dónde viven sus datos y quién responde. */
+ * El del pie va en la fila legal, al lado de Términos y Privacidad, porque es
+ * ahí donde lo busca quien tiene que aprobar la compra: el comité de seguridad
+ * del cliente. Es la página que dice dónde viven sus datos y quién responde. */
 cambia(
   '      <a href="legal.html">Términos de uso</a>',
   '      <a href="confianza.html">Centro de Confianza</a>\n'
   + '      <a href="legal.html">Términos de uso</a>',
+  1,
+);
+
+/* Y el de la barra de arriba, que es el que hace el trabajo en el buscador.
+ *
+ * Google no deja declarar los enlaces que salen debajo del resultado —los que
+ * en Microsoft son «Trust Center», «Products and services»—: los elige él,
+ * mirando qué páginas del sitio se enlazan desde arriba, con qué palabras y
+ * cuánto se visitan. Un enlace escondido en la fila legal del pie no entra en
+ * esa foto casi nunca.
+ *
+ * Se pone entre «Marcos» y «Clientes» a propósito: es la pregunta que viene
+ * justo después de «¿esto cubre mi norma?» y justo antes de «¿quién más lo
+ * usa?». */
+cambia(
+  '    <a href="#testimonials">Clientes</a>',
+  '    <a href="confianza.html">Centro de Confianza</a>\n'
+  + '    <a href="#testimonials">Clientes</a>',
   1,
 );
 

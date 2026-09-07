@@ -40,17 +40,58 @@ const META_QUE_SE_LEE = /<meta[^>]*\b(?:name|property)="(description|og:title|og
 /**
  * ¿Esto es lenguaje, o es un código, una medida o una referencia?
  *
- * Se pide UNA de tres señales: una letra con tilde o eñe, dos palabras
- * seguidas, o una palabra de cuatro letras o más que empiece por mayúscula.
+ * Se pide UNA de cuatro señales: una letra con tilde o eñe, dos palabras
+ * seguidas, una palabra de cuatro letras o más que empiece por mayúscula, o
+ * —la cuarta— una palabra de cuatro letras o más que lleve alguna minúscula.
  * Con menos que eso entraban «5.1», «px», «ISO 27001» y «—», que no son texto
  * que traducir y ensucian la lista hasta hacerla inservible.
+ *
+ * LA CUARTA SEÑAL SE AÑADIÓ PORQUE FALTABA, Y SE NOTÓ EN EL PEOR SITIO.
+ *
+ * Con sólo las tres primeras, una palabra suelta en minúscula y sin tilde no
+ * era «lenguaje» para esto, y por tanto no se traducía nunca. Lo que quedó en
+ * inglés por ese hueco:
+ *
+ *     <h1>Managing GRC doesn't have to be <span>complicada</span></h1>
+ *     <p>A single <strong>inteligente y automatizado</strong> environment…</p>
+ *
+ * El titular de la portada y su bajada, que son las dos líneas que más pesan
+ * de todo el sitio, con una palabra en castellano dentro. Y nada avisó: el
+ * aviso de «esto se quedó sin traducir» sólo mira los trozos que ENTRARON en
+ * la lista, así que un trozo que nunca entra tampoco se echa de menos.
+ *
+ * («inteligente y automatizado» falla también la segunda señal, que pide dos
+ * palabras seguidas de dos letras o más: entre medias hay una «y».)
+ *
+ * Se pide alguna MINÚSCULA a propósito. Sin ese detalle entraban de golpe las
+ * siglas —GDPR, HIPAA, COBIT, SIPEN, IDECOOP— que no se traducen y habría que
+ * ir listando una por una según fueran apareciendo, que es una lista que
+ * envejece sola. Una sigla va toda en mayúsculas; una palabra, no.
  */
-const PARECE_LENGUAJE = /[áéíóúñüÁÉÍÓÚÑÜ]|[A-Za-zÀ-ÿ]{2,}\s+[A-Za-zÀ-ÿ]{2,}|^[A-ZÁÉÍÓÚÑ][a-zà-ÿ]{3,}/;
+const PARECE_LENGUAJE = new RegExp([
+  /* 1. una letra con tilde o eñe */
+  "[áéíóúñüÁÉÍÓÚÑÜ]",
+  /* 2. dos palabras seguidas de dos letras o más */
+  "[A-Za-zÀ-ÿ]{2,}\\s+[A-Za-zÀ-ÿ]{2,}",
+  /* 3. una palabra de cuatro letras o más que empiece por mayúscula */
+  "^[A-ZÁÉÍÓÚÑ][a-zà-ÿ]{3,}",
+  /* 4. una palabra de cuatro letras o más con alguna minúscula */
+  "(?<![A-Za-zÀ-ÿ])(?=[A-Za-zÀ-ÿ]{4})[A-Za-zÀ-ÿ]*[a-zà-ÿ]",
+  /* 5. una palabra de enlace del castellano, entera y suelta */
+  "(^|\\s)(y|o|u|e|con|sin|de|del|la|el|los|las|un|una|en|al|para|por|que|se|su|sus|más)(\\s|$)",
+].join("|"));
 
 /* Cosas que parecen lenguaje y no lo son: no se traducen nunca. */
 const NO_SE_TRADUCE = [
   /^[\s\d.,%+·—–-]*$/,                    /* sólo números y signos */
-  /^(?:ISO|NIST|SOC|PCI|GDPR|NORTIC|BCRD|SIMV|COBIT|COSO|ITIL|SWIFT|CIS)\b/,
+  /* La sigla SOLA, con su número de versión o su año si lo lleva. NO lo que
+     empiece por ella.
+     Con `^ISO\b` se caía por el desagüe una frase entera —«ISO, SWIFT,
+     REGLAMENTOS CIBERSEGURIDAD SIMV, BCRD, NORTIC, PCI-DSS, SOC 2, NIST,
+     HIPAA, GDPR y más»— sólo por empezar nombrando una norma: no llegaba a
+     ser un trozo traducible y se quedó en castellano dentro de la portada en
+     inglés, con «REGLAMENTOS CIBERSEGURIDAD» y «y más» a la vista. */
+  /^(?:ISO|NIST|SOC|PCI|GDPR|NORTIC|BCRD|SIMV|COBIT|COSO|ITIL|SWIFT|CIS)[\s\d.,:/&-]*$/,
   /^https?:\/\//,
   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+$/i,        /* direcciones de correo */
   /* La marca SOLA, no lo que empiece por ella.
@@ -65,7 +106,11 @@ const NO_SE_TRADUCE = [
 
 function esTraducible(s) {
   const t = s.trim();
-  if (t.length < 2) return false;
+  /* Vacío no, pero UNA letra sí: «y» entre dos etiquetas es una palabra que
+     hay que traducir —«BCP y DRP» se quedaba así en la página inglesa— y con
+     el corte en dos no llegaba nunca. Lo que no es lenguaje ya lo descarta
+     `PARECE_LENGUAJE`: una letra suelta sólo pasa si es palabra de enlace. */
+  if (t.length < 1) return false;
   if (!PARECE_LENGUAJE.test(t)) return false;
   return !NO_SE_TRADUCE.some((re) => re.test(t));
 }

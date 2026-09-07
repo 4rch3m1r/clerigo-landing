@@ -92,7 +92,13 @@ for (const [n, tConSelector] of [["oscuro", osc], ["claro", cla]]) {
       .map((f) => f + ".html") + " no está");
   comprueba(`la marca es «Clèrigo» en el ${n}`, cuenta(t, /Clèrigo/g) >= 18,
     cuenta(t, /Clèrigo/g) + " apariciones");
-  comprueba(`el título es de Clèrigo en el ${n}`, /<title>Clèrigo — /.test(t));
+  /* El título empieza por la marca y sigue por una barra vertical. Es el
+     patrón que usan Microsoft, AWS y Atlassian —«Microsoft Trust Center |
+     Data Security, Privacy, and Compliance»— y no es estética: en el
+     resultado de búsqueda esa línea es lo único que se lee antes de decidir
+     si se entra, y lo que va detrás de la barra es donde caben las palabras
+     por las que a uno lo buscan. */
+  comprueba(`el título es de Clèrigo en el ${n}`, /<title>Clèrigo \| /.test(t));
   comprueba(`hay canonical, Open Graph y Twitter en el ${n}`,
     t.includes(`rel="canonical" href="${SITIO.base}/es/"`)
     && t.includes(`og:url" content="${SITIO.base}/es/"`)
@@ -252,7 +258,12 @@ const esqueleto = (s) => pelado(
   sinLaTiraDeIntegraciones(sinLasMaquetas(s))
   /* Estas dos van ANTES de pelar, porque `pelado` aplana cada bloque `{ … }` a
      una línea y después un `^--logo:` ya no existe como principio de línea. */
-    .replace(/^.*(og:|twitter:|rel="canonical"|name="description"|name="theme-color"|rel="image_src"|application\/ld\+json).*$/gm, "")
+    /* Las dos últimas —`keywords` y `robots`— las pone el paso de
+       posicionamiento, que corre después de todo esto. La de robots cambia
+       entre la clara y la oscura a propósito: la oscura lleva `noindex` por
+       ser la misma portada con otra piel, y dos copias del mismo texto en el
+       índice del buscador se pagan. */
+    .replace(/^.*(og:|twitter:|rel="canonical"|name="description"|name="theme-color"|rel="image_src"|application\/ld\+json|name="keywords"|name="robots").*$/gm, "")
     .replace(/^\s*--logo:.*$/gm, "")
     /* El bloque de ajustes de teléfono es el ÚNICO añadido de verdad, y se
        quita aquí a propósito para que el resto de la página siga comparándose
@@ -291,8 +302,12 @@ const esqueleto = (s) => pelado(
   .replace(/(\s(?:src|href)=")\.\.\/((?:sistema\/[a-z0-9-]+|favicon)\.png)"/g, '$1$2"')
   /* El guion que mira el idioma del navegador. */
   .replace(/\n?<script>\n\/\* El idioma del navegador decide[\s\S]*?<\/script>\n/, "")
-  /* Y el enlace al Centro de Confianza, que es lo único añadido a la página. */
-  .replace(/[ \t]*<a href="confianza\.html">[^<]*<\/a>\n/, "")
+  /* Y los DOS enlaces al Centro de Confianza —el de la barra y el del pie—,
+     que es lo único añadido a la página.
+     La bandera `g` no es un adorno: sin ella se quitaba sólo el primero, y el
+     segundo aparecía como una diferencia con el original, arrastrando detrás
+     todas las líneas del pie por el desplazamiento. */
+  .replace(/[ \t]*<a href="confianza\.html">[^<]*<\/a>\n/g, "")
   /* El rótulo del panel del hero. Es lo ÚNICO que se le cambia de TEXTO al
      original: decía «Nuestras Certificaciones» encima de cuatro sellos que no
      son certificados de Clèrigo, y ahora dice lo que son. Se deshace aquí —y
@@ -311,6 +326,22 @@ const esqueleto = (s) => pelado(
   .replace(/href="partners\.html"/g, 'href="https://portal.clerigo.io"')
   .replace(/href="index\.html"/g, 'href="https://clerigo.io"')
   .replace(/GRC Intelligence Platform|GRC Intelligence|Axioma GRC|Clèrigo XGRC|Clèrigo/g, "MARCA")
+  /* El título de la pestaña y las tres etiquetas que lo repiten —og:title,
+     twitter:title, og:image:alt—. El original decía «— Gobernanza, Riesgo y
+     Cumplimiento sin complicaciones»: buena frase, mala línea de resultado,
+     porque no lleva ni «GRC» ni «software», que son las dos palabras que la
+     gente teclea. Ahora dice «| Software GRC de Gobernanza, Riesgo y
+     Cumplimiento», con el patrón de las grandes: marca, barra vertical, y
+     detrás lo que es.
+     VA DESPUÉS DE NORMALIZAR LA MARCA, no antes. Puesto antes no sustituía
+     nada —el texto todavía decía «Clèrigo», no «MARCA»— y la diferencia
+     seguía saliendo igual, que es la clase de arreglo que parece hecho. */
+  .replace(/MARCA \| Software GRC de Gobernanza, Riesgo y Cumplimiento/g,
+    "MARCA — Gobernanza, Riesgo y Cumplimiento sin complicaciones")
+  /* Y la descripción, por lo mismo: la vieja empezaba nombrándose a sí misma
+     —«MARCA unifica…»— y la nueva empieza por lo que se busca. */
+  .replace(/Software GRC que unifica riesgos, cumplimiento normativo, auditoría interna, control interno, ciberseguridad y privacidad en una sola plataforma\./g,
+    "MARCA unifica Gestión de Riesgos, Cumplimiento Legal y Regulatorio, Privacidad, Ciberseguridad, Control Interno y Auditoría en un solo entorno.")
   .replace(/grc-intelligence\.app|portal\.archemir\.com|portal\.clerigo\.io|truestoneadvisory\.com\/login|app\.clerigo\.io|archemir\.com|clerigo\.io/g, "DOM")
   /* El original escribía la misma ruta de dos maneras, con barra final y sin
      ella. Las dos llevan ahora al mismo fichero, así que la barra final se
@@ -422,13 +453,17 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
   comprueba(`mismas secciones en el ${n}`,
     cuenta(t, /<section/g) === cuenta(org, /<section/g),
     `${cuenta(t, /<section/g)} vs ${cuenta(org, /<section/g)}`);
-  /* Los del original más TRES, y se escribe de donde sale cada uno:
-       +1  el Centro de Confianza, en la fila legal del pie;
+  /* Los del original más CUATRO, y se escribe de donde sale cada uno:
+       +1  el Centro de Confianza en la fila legal del pie, donde lo busca el
+           comité de seguridad del cliente;
+       +1  el Centro de Confianza otra vez, en la barra de arriba: es el sitio
+           desde el que un buscador puede llegar a sacarlo como enlace propio
+           debajo del resultado, y desde el pie no llega casi nunca;
        +2  el selector de idioma, que son dos enlaces —EN y ES— y va en las
            dos versiones para poder saltar de una a la otra.
      Los demás ya estaban y sólo cambiaron de destino. */
   comprueba(`mismo número de enlaces en el ${n}`,
-    cuenta(t, /<a /g) === cuenta(org, /<a /g) + 1 + 2,
+    cuenta(t, /<a /g) === cuenta(org, /<a /g) + 2 + 2,
     `${cuenta(t, /<a /g)} vs ${cuenta(org, /<a /g)}`);
   /* Las del original más SEIS, y se escribe de dónde sale cada una en vez de
      poner un número suelto:
