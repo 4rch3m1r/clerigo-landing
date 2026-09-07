@@ -320,6 +320,37 @@ const esqueleto = (s) => pelado(
      sólo aquí— para que el resto de la página siga comparándose línea por
      línea. Que el texto nuevo esté, y el viejo no, se comprueba aparte. */
   .replace(RÓTULO_NUEVO, '<div class="cert-panel-label">Nuestras Certificaciones</div>')
+  /* ── LO QUE AÑADE EL AGENTE, Y POR QUÉ SE RECORTA AQUÍ ─────────────────
+     Dos secciones nuevas —#agente y #modos—, su hoja de estilo, y los cinco
+     dominios que sustituyeron a la rejilla de quince tarjetas de módulo.
+     Nada de eso sale del original de Archemir: es contenido escrito para
+     Clèrigo, y por eso se recorta antes de comparar en vez de intentar
+     casarlo con algo que no existe.
+     Lo que queda dentro de la comparación sigue siendo todo lo demás, que es
+     de lo que esta guarda responde. */
+  .replace(/\/\* ══ ESTILO DE AGENTE Y ARQUITECTURA ══ \*\/[\s\S]*?\/\* ══ FIN DEL ESTILO DE AGENTE Y ARQUITECTURA ══ \*\/\n?/, "")
+  .replace(/<!-- ══ AGENTE Y MODOS ══ -->[\s\S]*?<!-- ══ FIN DE AGENTE Y MODOS ══ -->\n*/, "")
+  /* La cabecera de esa sección, ENTERA y en los dos lados.
+     Ahora encabeza cinco dominios en vez de quince tarjetas: cambian el
+     rótulo, el titular y la bajada. Normalizar frase a frase dejaba la
+     comparación descuadrada por una línea —la bajada nueva ocupa un renglón
+     distinto— y esta comparación va línea por línea, así que un renglón de
+     diferencia desplaza todo lo que viene detrás y llena la salida de ruido.
+     Se recorta el bloque completo. Lo que queda comparándose es el resto de la
+     página, que es de lo que esta guarda responde; que el texto nuevo esté, y
+     el viejo no, se comprueba aparte. */
+  .replace(/[ \t]*<div class="solution-header">[\s\S]*?<\/div>\n(?=\s*(?:<div class="modules-grid">|<!-- ══ DOMINIOS))/, "")
+  /* Y AHORA sí los cinco dominios. El orden importa: el recorte de la cabecera
+     se ancla en lo que viene justo detrás, y si los dominios ya no están, no
+     encuentra dónde terminar. */
+  .replace(/[ \t]*<!-- ══ DOMINIOS ══ -->[\s\S]*?<!-- ══ FIN DE DOMINIOS ══ -->\n?/, "")
+  /* Y la rejilla de quince tarjetas de módulo, que es lo que los cinco
+     dominios sustituyeron. Esta línea sólo muerde en el ORIGINAL —la nuestra
+     ya no la tiene—, y así los dos lados quedan sin ella y se puede seguir
+     comparando lo que viene detrás.
+     Se ancla a la INDENTACIÓN del bloque y no al «siguiente </div>»: dentro
+     hay quince tarjetas anidadas y el primer cierre cae dentro de la primera. */
+  .replace(/^ {4}<div class="modules-grid">\n[\s\S]*?^ {4}<\/div>\n/m, "")
   /* Y la regla de estilo de esa segunda línea, que el original no tenía. */
   .replace(/[ \t]*\.cert-panel-sub \{[^}]*\}\n/, "")
   /* Y el sello de la ISO 42001, la norma de gestión de inteligencia artificial:
@@ -421,8 +452,11 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
   /* Las del original, más 3 del teléfono y 2 de la galería de fotos. Se cuentan
      en vez de darlas por buenas: si alguien añade una regla de medios sin
      pensarlo, esto lo dice. */
-  comprueba(`las consultas de medios del original + las 3 del teléfono + las 2 de la galería, en el ${n}`,
-    cuenta(t, /@media/g) === cuenta(org, /@media/g) + 5
+  /* Y una sexta: la que apila en una columna las tres tarjetas de modo y los
+     cinco dominios por debajo de 900 px. En tres columnas, en un teléfono, no
+     se lee nada. */
+  comprueba(`las consultas de medios del original + las 3 del teléfono + las 2 de la galería + la del agente, en el ${n}`,
+    cuenta(t, /@media/g) === cuenta(org, /@media/g) + 6
     && /@media \(max-width: 480px\)/.test(t)
     && /\.nav-cta \.btn-ghost \+ \.btn-ghost \{ display: none; \}/.test(t)
     && /\.preview-sidebar \{ display: none; \}/.test(t)
@@ -456,9 +490,14 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
     && cuenta(t, /clerigo-idioma/g) >= 1
     && t.includes("carrusel-pista"),
     `${cuenta(t, /<script/g)} vs ${cuenta(org, /<script/g)} + 2`);
-  comprueba(`mismas secciones en el ${n}`,
-    cuenta(t, /<section/g) === cuenta(org, /<section/g),
-    `${cuenta(t, /<section/g)} vs ${cuenta(org, /<section/g)}`);
+  /* Las del original más DOS, y se dice cuáles: `#agente` y `#modos`. No salen
+     de Archemir —son la propuesta de valor de Clèrigo, escrita de cero— y por
+     eso se cuentan aquí en vez de darlas por buenas. Si mañana aparece una
+     tercera sección sin que nadie la declare, esto lo dice. */
+  comprueba(`las secciones del original más las 2 del agente, en el ${n}`,
+    cuenta(t, /<section/g) === cuenta(org, /<section/g) + 2
+    && /<section id="agente">/.test(t) && /<section id="modos">/.test(t),
+    `${cuenta(t, /<section/g)} vs ${cuenta(org, /<section/g)} + 2`);
   /* Los del original más CUATRO, y se escribe de donde sale cada uno:
        +1  el Centro de Confianza en la fila legal del pie, donde lo busca el
            comité de seguridad del cliente;
