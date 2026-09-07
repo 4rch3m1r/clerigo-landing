@@ -218,71 +218,218 @@ function sinInterpolar(s) {
  *
  * Los comentarios del guion se quitan antes: ahí hay prosa que no lee nadie.
  */
-/** Lo que hay dentro de cada `${…}` de una plantilla, con sus llaves anidadas. */
-function interpolaciones(s) {
+/**
+ * UN RECORRIDO DE VERDAD POR EL CÓDIGO, EN VEZ DE UNA EXPRESIÓN REGULAR.
+ *
+ * Con una expresión regular no se puede, y no es una cuestión de afinarla: una
+ * plantilla puede llevar otra dentro, y la comilla invertida de la de dentro
+ * cierra la de fuera antes de tiempo. En esta misma página:
+ *
+ *     `<div class="mod-card ${sel ? `border-color:${m.color}40` : ''}">`
+ *
+ * la expresión regular cortaba en la segunda comilla invertida, se quedaba con
+ * medio literal y al reescribirlo devolvía basura. Con el diccionario VACÍO ya
+ * dejaba la página sin guion: `${cardSelected ?}` en vez de `${cardSelected ?`.
+ *
+ * `escanea` devuelve los trozos del PRIMER nivel con sus posiciones exactas, y
+ * de cada plantilla, dónde empieza y acaba cada `${…}` para poder entrar. Los
+ * comentarios salen marcados para poder saltárselos: un apóstrofo suelto en un
+ * comentario —«l'année»— emparejaría con la comilla siguiente, que ya es
+ * código.
+ *
+ * LO QUE NO MIRA. Las expresiones regulares del propio código: `/['"]/ ` lleva
+ * comillas dentro y aquí se leerían como el principio de una cadena.
+ * Distinguir una división de una expresión regular pide un analizador entero.
+ * A cambio, `comprueba` de más abajo lo detecta y avisa, y quien llame a esto
+ * tiene que parsear el resultado antes de escribirlo.
+ */
+function escanea(js) {
   const fuera = [];
-  for (let i = 0; i < s.length; i++) {
-    if (s[i] !== "$" || s[i + 1] !== "{") continue;
-    let prof = 1, j = i + 2;
-    while (j < s.length && prof > 0) {
-      if (s[j] === "{") prof++; else if (s[j] === "}") prof--;
-      j++;
+  let i = 0;
+  while (i < js.length) {
+    const c = js[i];
+    if (c === "/" && js[i + 1] === "/") {
+      const j = js.indexOf("\n", i);
+      const fin = j < 0 ? js.length : j;
+      fuera.push({ tipo: "comentario", ini: i, fin });
+      i = fin; continue;
     }
-    fuera.push(s.slice(i + 2, j - 1));
-    i = j - 1;
+    if (c === "/" && js[i + 1] === "*") {
+      const j = js.indexOf("*/", i + 2);
+      const fin = j < 0 ? js.length : j + 2;
+      fuera.push({ tipo: "comentario", ini: i, fin });
+      i = fin; continue;
+    }
+    if (c === "'" || c === '"') {
+      const fin = finDeCadena(js, i, c);
+      fuera.push({ tipo: "cadena", comilla: c, ini: i, fin });
+      i = fin; continue;
+    }
+    if (c === "`") {
+      const p = finDePlantilla(js, i);
+      fuera.push({ tipo: "plantilla", comilla: "`", ini: i, fin: p.fin, expresiones: p.expresiones });
+      i = p.fin; continue;
+    }
+    i++;
   }
   return fuera;
+}
+
+/** Dónde acaba una cadena de comillas rectas, contando los escapes. */
+function finDeCadena(js, i, comilla) {
+  let j = i + 1;
+  while (j < js.length) {
+    if (js[j] === "\\") { j += 2; continue; }
+    if (js[j] === comilla) return j + 1;
+    if (js[j] === "\n") return j;      /* sin cerrar: no se pasa de línea */
+    j++;
+  }
+  return js.length;
+}
+
+/** Dónde acaba una plantilla, y dónde está cada `${…}` de dentro. */
+function finDePlantilla(js, i) {
+  const expresiones = [];
+  let j = i + 1;
+  while (j < js.length) {
+    const c = js[j];
+    if (c === "\\") { j += 2; continue; }
+    if (c === "`") return { fin: j + 1, expresiones };
+    if (c === "$" && js[j + 1] === "{") {
+      const ini = j + 2;
+      let prof = 1, k = ini;
+      while (k < js.length && prof > 0) {
+        const d = js[k];
+        /* Dentro de la expresión puede haber cadenas y MÁS plantillas, y sus
+           llaves no cuentan. Ésta es la parte que la expresión regular no
+           podía hacer. */
+        if (d === "'" || d === '"') { k = finDeCadena(js, k, d); continue; }
+        if (d === "`") { k = finDePlantilla(js, k).fin; continue; }
+        if (d === "{") prof++;
+        else if (d === "}") prof--;
+        k++;
+      }
+      expresiones.push({ ini, fin: k - 1 });
+      j = k; continue;
+    }
+    j++;
+  }
+  return { fin: js.length, expresiones };
 }
 
 /**
- * Los literales de un trozo de código, ENTRANDO en las interpolaciones.
+ * LOS TROZOS TRADUCIBLES DE UN GUION, CON SU SITIO EXACTO.
  *
- * La recursión no es un adorno. Un literal de plantilla se come las comillas
- * que lleva dentro, así que `'Incluido'` de aquí:
+ * Devuelve `{texto, ini, fin, comilla}` con posiciones ABSOLUTAS dentro del
+ * html que se le pasa. Que lleven posición no es un adorno: el sustituidor de
+ * `a-ingles.cjs` reemplaza JUSTO en ese hueco, así que lo que se ofrece para
+ * traducir y lo que se sustituye no son dos recorridos parecidos que hay que
+ * mantener a mano — son el mismo. Cuando eran dos, había trozos que salían en
+ * la lista de pendientes y no se sustituían nunca, y el aviso de «quedan N sin
+ * traducir» no bajaba de N hiciera uno lo que hiciera.
  *
- *     `<div>${auto ? 'Incluido' : 'Facturación anual'}</div>`
- *
- * no lo veía el barrido de literales —se lo había tragado la plantilla— y
- * tampoco el de texto entre etiquetas, porque entre `>` y `<` lo que hay es la
- * expresión entera, que es código. Dos rótulos que se enseñan en pantalla y
- * ninguna de las dos vías los alcanzaba.
+ * De cada literal:
+ *   · si lleva marcado dentro, el texto entre etiquetas, con sus `${…}`
+ *     incluidos: «${val} usuarios» se traduce entero a «${val} users», y así
+ *     el inglés puede cambiar el orden de las palabras. Se JUZGA sin ellos,
+ *     porque dentro hay código;
+ *   · si no, el literal entero, con la regla estricta y tres letras como
+ *     mínimo. Con dos entraba «en», que es el código de idioma del selector.
+ * Y en las dos, se entra en las interpolaciones: `${auto ? 'Incluido' : …}` es
+ * un rótulo que se enseña y que ninguna de las dos vías alcanza.
  */
-function literalesDe(js, fuera) {
-  for (const m of js.matchAll(LITERAL_DE_GUION)) {
-    const dentro = m[1] ?? m[2] ?? m[3] ?? "";
-    if (/<[a-zA-Z/]/.test(dentro)) {
-      for (const t of dentro.matchAll(/>([^<>]*)</g)) {
-        /* Se JUZGA sin lo interpolado y se DEVUELVE con ello: dentro de un
-           `${…}` hay código, y colarlo en el juicio hace que un trozo pase por
-           texto cuando no lo es. */
-        if (esTraducible(sinInterpolar(t[1]).trim())) fuera.push(t[1].trim());
-      }
-    } else {
-      const t = dentro.trim();
-      if (t.length >= 3 && PARECE_CASTELLANO.test(t) && esTraducible(t)
-        && !NOMBRE_DEL_CODIGO.test(t) && !SOLO_SIGLAS(t) && !PALABRAS_DEL_NAVEGADOR.has(t)) fuera.push(t);
+/**
+ * El contenido de una plantilla con las CADENAS de sus `${…}` tapadas.
+ *
+ * Tapadas con espacios, del mismo largo, para que las posiciones sigan
+ * valiendo: lo que se busca encima es texto entre etiquetas, y luego se lee del
+ * original. Lo que hay fuera de las expresiones no se toca, y por eso
+ * «${val} usuarios» —que cruza una expresión— se sigue viendo entero.
+ */
+function tapaLasCadenasDeLasExpresiones(dentro, expresiones, desplazamiento) {
+  let sale = dentro;
+  for (const e of expresiones || []) {
+    const ini = e.ini - desplazamiento;
+    const fin = e.fin - desplazamiento;
+    if (ini < 0 || fin > dentro.length) continue;
+    const trozo = dentro.slice(ini, fin);
+    let tapado = trozo;
+    for (const t of escanea(trozo)) {
+      if (t.tipo === "comentario") continue;
+      tapado = tapado.slice(0, t.ini) + " ".repeat(t.fin - t.ini) + tapado.slice(t.fin);
     }
-    for (const trozo of interpolaciones(dentro)) literalesDe(trozo, fuera);
+    sale = sale.slice(0, ini) + tapado + sale.slice(fin);
   }
+  return sale;
 }
 
-function textosDeLosGuiones(html) {
+function trozosDeLosGuiones(html) {
   const fuera = [];
-  for (const zona of html.match(ZONAS_DE_CODIGO) || []) {
+
+  const deCodigo = (js, base) => {
+    for (const t of escanea(js)) {
+      if (t.tipo === "comentario") continue;
+      const dentro = js.slice(t.ini + 1, Math.max(t.fin - 1, t.ini + 1));
+      const desdeDentro = base + t.ini + 1;
+
+      if (/<[a-zA-Z/]/.test(dentro)) {
+        /* EN UNA PLANTILLA, LAS CADENAS DE DENTRO DE UN ${…} SE TAPAN ANTES.
+           Si no, un `>Gratis<` que vive en una cadena anidada sale DOS veces
+           —una por este barrido, que ve el contenido entero, y otra al entrar
+           en la expresión— con dos huecos que se solapan. Al sustituir de atrás
+           hacia delante, la segunda pisaba a la primera y dejaba
+           «It's freefree» en la página.
+           Se tapa con espacios para que las posiciones no se muevan, y el texto
+           se lee del original, no de la máscara. */
+        const donde = t.tipo === "plantilla"
+          ? tapaLasCadenasDeLasExpresiones(dentro, t.expresiones, t.ini + 1)
+          : dentro;
+        for (const m of donde.matchAll(/>([^<>]*)</g)) {
+          const crudo = dentro.slice(m.index + 1, m.index + 1 + m[1].length);
+          /* Si el trozo CRUZA una zona tapada, no vale. El texto se lee del
+             original, así que un trozo que empieza fuera y acaba pasada la
+             máscara se trae de vuelta lo tapado: el `>` de `discount > 0` y el
+             `<` del siguiente `<div` se emparejaban a través de la plantilla
+             anidada y devolvían el código entero como si fuera texto. */
+          if (crudo !== m[1]) continue;
+          const texto = crudo.trim();
+          if (!texto || !esTraducible(sinInterpolar(crudo).trim())) continue;
+          const ini = desdeDentro + m.index + 1 + crudo.indexOf(texto);
+          fuera.push({ texto, ini, fin: ini + texto.length, comilla: t.comilla });
+        }
+      } else if (t.tipo === "cadena" || !t.expresiones.length) {
+        const texto = dentro.trim();
+        if (texto.length >= 3 && PARECE_CASTELLANO.test(texto) && esTraducible(texto)
+          && !NOMBRE_DEL_CODIGO.test(texto) && !SOLO_SIGLAS(texto)
+          && !PALABRAS_DEL_NAVEGADOR.has(texto)) {
+          const ini = desdeDentro + dentro.indexOf(texto);
+          fuera.push({ texto, ini, fin: ini + texto.length, comilla: t.comilla });
+        }
+      }
+
+      for (const e of t.expresiones || []) {
+        deCodigo(js.slice(e.ini, e.fin), base + e.ini);
+      }
+    }
+  };
+
+  for (const m of html.matchAll(new RegExp(ZONAS_DE_CODIGO.source, "gi"))) {
+    const zona = m[0];
     if (!/^<script/i.test(zona)) continue;
-    const cierreEtiqueta = zona.indexOf(">");
-    const atributos = zona.slice(0, cierreEtiqueta);
+    const cierre = zona.indexOf(">");
+    const attrs = zona.slice(0, cierre);
     /* La ficha de datos va en un <script> y es JSON, no guion. */
-    if (/type\s*=\s*["'](?!text\/javascript|module)/i.test(atributos)) continue;
-    if (/\bsrc=/i.test(atributos)) continue;
-
-    const cuerpo = zona.slice(cierreEtiqueta + 1, zona.lastIndexOf("</"))
-      .replace(/\/\*[\s\S]*?\*\//g, " ")
-      .replace(/^[ \t]*\/\/.*$/gm, " ");
-
-    literalesDe(cuerpo, fuera);
+    if (/type\s*=\s*["'](?!text\/javascript|module)/i.test(attrs)) continue;
+    if (/\bsrc=/i.test(attrs)) continue;
+    const fin = zona.lastIndexOf("</");
+    deCodigo(zona.slice(cierre + 1, fin), m.index + cierre + 1);
   }
   return fuera;
+}
+
+/** Sólo los textos, para quien no necesite saber dónde estaban. */
+function textosDeLosGuiones(html) {
+  return trozosDeLosGuiones(html).map((t) => t.texto);
 }
 
 function esTraducible(s) {
@@ -351,6 +498,7 @@ function segmentos(html) {
 }
 
 module.exports = {
+  trozosDeLosGuiones, escanea,
   segmentos, esTraducible, textosDeLosGuiones, sinInterpolar,
   ZONAS_DE_CODIGO, COMENTARIOS, ATRIBUTOS_LEIBLES, META_QUE_SE_LEE,
   PARECE_CASTELLANO, LITERAL_DE_GUION,

@@ -16,7 +16,7 @@
  */
 const fs = require("node:fs");
 const path = require("node:path");
-const { segmentos, ZONAS_DE_CODIGO, COMENTARIOS, LITERAL_DE_GUION } = require("./segmentos.cjs");
+const { segmentos, ZONAS_DE_CODIGO, COMENTARIOS, trozosDeLosGuiones } = require("./segmentos.cjs");
 const { PAGINAS } = require("./reunir.cjs");
 
 const RAIZ = path.join(__dirname, "..", "..");
@@ -36,11 +36,6 @@ const TODAS = [...PAGINAS, "oscuro"];
 const MARCA = (i) => "@@ZONA" + i + "@@";
 const MARCA_PUESTA = /@@ZONA(\d+)@@/g;
 
-/* Un comentario O un literal, en ese orden: el comentario tiene que ganar para
-   que sus comillas no se confundan con las del código. */
-const COMENTARIO_O_LITERAL = new RegExp(
-  "/\\*[\\s\\S]*?\\*/|//[^\\n]*|" + LITERAL_DE_GUION.source, "g");
-
 function diccionario() {
   const base = JSON.parse(fs.readFileSync(path.join(__dirname, "base.json"), "utf8"));
   const hechas = fs.existsSync(path.join(__dirname, "en.json"))
@@ -54,68 +49,40 @@ function diccionario() {
 /**
  * EL TEXTO QUE VIVE DENTRO DE UN <script>, TRADUCIDO.
  *
- * Espejo exacto de `textosDeLosGuiones` de `segmentos.cjs`: lo que aquél SACA,
- * éste lo PONE. Si los dos no recorren el guion igual, hay trozos que se
- * ofrecen para traducir y luego no se sustituyen nunca, y el aviso de «quedan
- * N sin traducir» no baja de N hagas lo que hagas.
+ * No recorre el guion por su cuenta: le pide las posiciones a
+ * `trozosDeLosGuiones`, que es la misma pieza que decide qué se ofrece para
+ * traducir. Lo que aquélla SACA, ésta lo PONE, en el mismo hueco exacto.
  *
- * Sólo cambia lo que tiene entrada EXACTA en el diccionario. Ésa es toda la
- * seguridad que hace falta aquí: `annual` —lo que compara
- * `billing === 'annual'`— no está en el diccionario y por tanto no se toca.
+ * ESO NO ES UN DETALLE DE ESTILO. La primera versión recorría el guion aquí
+ * con su propia expresión regular, «igual» que el extractor. No era igual: una
+ * plantilla puede llevar otra dentro, la comilla invertida de la de dentro
+ * cerraba la de fuera antes de tiempo, y al reescribirla dejaba
+ * `${cardSelected ?}` donde había `${cardSelected ? \`…\`}`. Con el
+ * diccionario VACÍO ya rompía la página. Dos recorridos parecidos que hay que
+ * mantener a mano acaban siendo dos recorridos distintos.
  *
- * LA COMILLA SE ESCAPA. Media traducción inglesa lleva apóstrofo dentro
- * («Doesn't», «Manager's») y el literal de origen suele ir entre comillas
- * simples. Meterla a pelo cierra el literal donde no toca y deja la página sin
- * guion, que es un fallo que no se ve hasta que alguien pulsa algo.
+ * Se sustituye de ATRÁS HACIA DELANTE para que las posiciones de los trozos
+ * que quedan sigan valiendo.
+ *
+ * Y SE ESCAPA. Media traducción inglesa lleva apóstrofo dentro («Doesn't»,
+ * «Manager's») y el literal de origen suele ir entre comillas simples. Meterla
+ * a pelo cierra el literal donde no toca y deja la página sin guion, que es un
+ * fallo que no se ve hasta que alguien pulsa algo.
  */
-function traduceCodigo(js, dic) {
-  return js.replace(COMENTARIO_O_LITERAL, (todo, a, b, c) => {
-    /* Los comentarios se saltan enteros. El extractor los quita antes de mirar;
-       aquí no se pueden quitar, hay que devolverlos tal cual. Y hay que
-       RECONOCERLOS: un apóstrofo suelto en un comentario —«l'année», «d'un»—
-       emparejaría con la comilla siguiente, que ya es código, y lo de en medio
-       pasaría por literal. */
-    if (todo[0] === "/") return todo;
-    const comilla = todo[0];
-    const escapa = (t) => t.split("\\").join("\\\\").split(comilla).join("\\" + comilla);
-    let dentro = a ?? b ?? c ?? "";
-
-    if (/<[a-zA-Z/]/.test(dentro)) {
-      /* Lleva marcado: se le traduce el texto entre etiquetas, igual que a la
-         página, conservando los espacios de los extremos —ahí sí separan
-         palabras que van en etiquetas distintas—. */
-      dentro = dentro.replace(/>([^<>]*)</g, (t, x) => {
-        const en = dic[x.trim()];
-        if (en === undefined) return t;
-        return ">" + x.match(/^\s*/)[0] + escapa(en) + x.match(/\s*$/)[0] + "<";
-      });
-    } else {
-      const en = dic[dentro.trim()];
-      if (en !== undefined) dentro = escapa(en);
-    }
-
-    /* Y dentro de sus interpolaciones hay más literales: `${auto ? 'Incluido'
-       : …}` es un rótulo que se enseña y que ninguna de las dos vías de arriba
-       alcanza. */
-    dentro = conLasInterpolaciones(dentro, (trozo) => traduceCodigo(trozo, dic));
-    return comilla + dentro + comilla;
-  });
-}
-
-/** Reescribe cada `${…}` de una plantilla pasándolo por `hacer`. */
-function conLasInterpolaciones(s, hacer) {
-  let sale = "";
-  for (let i = 0; i < s.length; i++) {
-    if (s[i] !== "$" || s[i + 1] !== "{") { sale += s[i]; continue; }
-    let prof = 1, j = i + 2;
-    while (j < s.length && prof > 0) {
-      if (s[j] === "{") prof++; else if (s[j] === "}") prof--;
-      j++;
-    }
-    sale += "${" + hacer(s.slice(i + 2, j - 1)) + "}";
-    i = j - 1;
+function traduceLosGuiones(html, dic) {
+  const trozos = trozosDeLosGuiones(html);
+  let salida = html;
+  for (let k = trozos.length - 1; k >= 0; k--) {
+    const t = trozos[k];
+    const en = dic[t.texto];
+    if (en === undefined || en === t.texto) continue;
+    let puesto = en.split("\\").join("\\\\").split(t.comilla).join("\\" + t.comilla);
+    /* Dentro de una plantilla, un `${` de la traducción abriría un hueco que
+       no existe. No pasa nunca, y por eso mismo si pasara no lo vería nadie. */
+    if (t.comilla === "`") puesto = puesto.split("${").join("\\${");
+    salida = salida.slice(0, t.ini) + puesto + salida.slice(t.fin);
   }
-  return sale;
+  return salida;
 }
 
 /**
@@ -193,15 +160,7 @@ function traduce(html, dic) {
      módulos desde un array de JavaScript: nombre, descripción y cinco
      prestaciones cada uno. Eso no lo veía el traductor y por eso la página
      inglesa servía el catálogo entero en castellano. */
-  salida = salida.replace(ZONAS_DE_CODIGO, (zona) => {
-    if (!/^<script/i.test(zona)) return zona;
-    const cierre = zona.indexOf(">");
-    const attrs = zona.slice(0, cierre);
-    if (/type\s*=\s*["'](?!text\/javascript|module)/i.test(attrs)) return zona;
-    if (/\bsrc=/i.test(attrs)) return zona;
-    const fin = zona.lastIndexOf("</");
-    return zona.slice(0, cierre + 1) + traduceCodigo(zona.slice(cierre + 1, fin), dic) + zona.slice(fin);
-  });
+  salida = traduceLosGuiones(salida, dic);
 
   /* QUÉ SE QUEDÓ SIN TRADUCIR.
      No vale mirar los trozos de la salida y ya: el extractor no sabe distinguir
