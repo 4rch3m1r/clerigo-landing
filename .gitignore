@@ -1,17 +1,8 @@
-# El original de Archemir NO entra aquí.
-#
-# `fuente/archemir-original.html` es el landing de Archemir con su marca, su
-# dominio y sus textos. Este repositorio es público, así que ese fichero se
-# queda fuera y vive sólo en el disco de quien tenga que regenerar la página.
-#
-# Los guiones avisan si falta: sin él no se puede REHACER la página, pero los
-# ficheros ya generados —index.html y oscuro.html— están en el repositorio y
-# no dependen de nada.
+﻿# El original de Archemir NO entra aquí.
 fuente/archemir-original.html
-
-# Y por lo mismo, los originales de las cinco páginas interiores: llevan la
-# marca de Archemir, sus correos y sus textos sin vestir. Se quedan fuera.
-# Sin ellos no se puede COMPROBAR que las páginas dicen lo mismo que decían
-# —`fuente/paginas/validar.cjs` avisa si faltan—, pero las cinco páginas ya
-# escritas están en el repositorio y no dependen de ellos.
 fuente/paginas-originales/
+
+# IDE y herramientas locales
+.claude/
+.vscode/
+*.log

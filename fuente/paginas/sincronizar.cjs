@@ -62,9 +62,23 @@ function despieza(html) {
     ["el <main>", iMain], ["el cierre de <main>", iFinMain], ["el guion", iGuionPropio]]) {
     if (donde < 0) throw new Error(`no encuentro ${que}: la página no sale de esta plantilla`);
   }
+  /* ── SE QUITAN LOS SALTOS DE LAS PUNTAS, Y NO ES COSMÉTICA ──────────────
+   *
+   * Cada trozo se recorta HASTA la marca siguiente, así que se lleva dentro
+   * los saltos de línea que la plantilla pone entre el hueco y esa marca. Al
+   * volver a montar, la plantilla los pone otra vez. Resultado: cada pasada
+   * añadía cuatro líneas en blanco a cada página —dos antes del bloque
+   * oscuro, una al abrir `<main>` y otra al cerrarlo—, sin tope.
+   *
+   * No se ve al abrir la página, y ése es el problema: lo que sí se veía era
+   * que regenerar el sitio dejaba SIEMPRE las seis interiores modificadas. Con
+   * eso, «el árbol está limpio» deja de significar nada, que es justo la señal
+   * que uno mira antes de subir.
+   *
+   * Los saltos los pone la plantilla; los trozos traen sólo lo suyo. */
   return {
-    estilo: html.slice(finCabecera, iOscuro),
-    cuerpo: html.slice(iMain + M_MAIN.length, iFinMain),
+    estilo: html.slice(finCabecera, iOscuro).replace(/\n+$/, ""),
+    cuerpo: html.slice(iMain + M_MAIN.length, iFinMain).replace(/^\n+/, "").replace(/\n+$/, ""),
     guion: html.slice(iGuionPropio + M_FIN_REVELADO.length),
   };
 }
@@ -98,6 +112,28 @@ for (const { slug, chrome } of PAGINAS) {
     + cuerpo
     + (chrome ? PIE : PIE_SIN_PIE)
     + guion;
+
+  /* ── Y QUE PASARLO OTRA VEZ NO CAMBIE NADA ─────────────────────────────
+   *
+   * Se despieza lo que se acaba de montar y se vuelve a montar. Si no sale
+   * idéntico, este guion no es estable, y la próxima pasada moverá el fichero
+   * sin que nadie haya tocado nada. Son cuatro líneas que habrían ahorrado el
+   * defecto de arriba, que llevaba puesto desde el principio y sólo se vio
+   * contando a mano las líneas en blanco de un `git diff`. */
+  const otraVez = (() => {
+    const d = despieza(despues);
+    return CABECERA
+      .split("{{TITULO}}").join(titulo).split("{{DESCRIPCION}}").join(desc)
+      .split("{{CANONICA}}").join(canonica).split("{{IMAGEN}}").join(imagen)
+      .split("{{BASE}}").join(SITIO.base)
+      + d.estilo + (chrome ? CIERRE : CIERRE_SIN_BARRA)
+      + d.cuerpo + (chrome ? PIE : PIE_SIN_PIE) + d.guion;
+  })();
+  if (otraVez !== despues) {
+    throw new Error(`${slug}.html: pasarlo dos veces da dos resultados `
+      + `(${otraVez.length - despues.length} caracteres de diferencia). Algún trozo se `
+      + `está llevando lo que la plantilla vuelve a poner.`);
+  }
 
   if (despues === antes) { console.log(`  ·  ${slug}.html ya estaba al día`); continue; }
   fs.writeFileSync(f, despues);

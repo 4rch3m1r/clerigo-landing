@@ -1,0 +1,554 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador y Validador de Link Preview | Clérigo.io</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="favicon.png" sizes="160x160">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300;1,400&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #EB1000;
+  --red-dim: rgba(235,16,0,0.12);
+  --bg: #0E0E0E;
+  --card-bg: #16181C;
+  --card-border: rgba(255,255,255,0.08);
+  --text: #F3F4F6;
+  --text-muted: #9CA3AF;
+  --text-sub: #6B7280;
+  --font-sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'Source Code Pro', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  padding: 32px 20px;
+}
+.container { max-width: 1280px; margin: 0 auto; }
+header {
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 24px;
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand img { width: 36px; height: 36px; border-radius: 8px; }
+.brand h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+.brand-badge {
+  background: var(--red-dim);
+  color: var(--red);
+  border: 1px solid rgba(235,16,0,0.3);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.controls {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 32px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  align-items: end;
+}
+.control-group { display: flex; flex-direction: column; gap: 6px; }
+.control-group label { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+select, input {
+  background: #000;
+  color: #fff;
+  border: 1px solid var(--card-border);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+select:focus, input:focus { border-color: var(--red); }
+
+/* Tabs Navigation */
+.tabs { display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; overflow-x: auto; }
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tab-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
+.tab-btn.active { color: #fff; background: var(--red); }
+
+/* Grid of Previews */
+.previews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 28px;
+}
+.preview-card-wrapper {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.preview-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 12px;
+}
+.platform-title { font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.platform-pill { font-size: 11px; padding: 2px 8px; border-radius: 4px; background: rgba(255,255,255,0.08); color: var(--text-muted); }
+
+/* Realistic Platform Cards */
+
+/* 1. WHATSAPP */
+.wa-container { background: #0b141a; padding: 16px; border-radius: 12px; }
+.wa-bubble {
+  background: #005c4b;
+  border-radius: 8px;
+  max-width: 320px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  font-size: 13px;
+}
+.wa-url-text { padding: 8px 12px; color: #53bdeb; text-decoration: none; word-break: break-all; display: block; }
+.wa-card { background: #025144; border-radius: 6px; margin: 0 6px 6px; overflow: hidden; }
+.wa-img { width: 100%; aspect-ratio: 1200/630; object-fit: cover; display: block; }
+.wa-info { padding: 8px 10px; }
+.wa-site { font-size: 11px; color: #8696a0; text-transform: lowercase; }
+.wa-title { font-size: 13.5px; font-weight: 600; color: #e9edef; line-height: 1.3; margin: 2px 0 4px; }
+.wa-desc { font-size: 12px; color: #8696a0; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* 2. LINKEDIN */
+.li-container { background: #1b1f23; padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
+.li-author { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; }
+.li-avatar { width: 40px; height: 40px; border-radius: 50%; background: #374151; }
+.li-name { font-size: 13px; font-weight: 600; }
+.li-role { font-size: 11px; color: var(--text-muted); }
+.li-text { font-size: 13px; margin-bottom: 10px; color: #e5e7eb; }
+.li-card { border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; overflow: hidden; background: #16181C; }
+.li-img { width: 100%; aspect-ratio: 1200/630; object-fit: cover; display: block; }
+.li-info { padding: 10px 12px; }
+.li-title { font-size: 14px; font-weight: 700; color: #fff; line-height: 1.3; }
+.li-domain { font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-top: 4px; }
+
+/* 3. X / TWITTER */
+.tw-container { background: #000; padding: 16px; border-radius: 12px; border: 1px solid #2f3336; }
+.tw-author { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+.tw-avatar { width: 38px; height: 38px; border-radius: 50%; background: #374151; }
+.tw-user { font-size: 13px; font-weight: 700; }
+.tw-handle { font-size: 13px; color: #71767b; font-weight: 400; }
+.tw-card { border: 1px solid #2f3336; border-radius: 16px; overflow: hidden; position: relative; }
+.tw-img { width: 100%; aspect-ratio: 1200/630; object-fit: cover; display: block; }
+.tw-overlay {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(4px);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #fff;
+  font-weight: 500;
+}
+.tw-info { padding: 12px; background: #000; border-top: 1px solid #2f3336; }
+.tw-domain { font-size: 12px; color: #71767b; }
+.tw-title { font-size: 14px; font-weight: 600; color: #e7e9ea; line-height: 1.3; margin: 2px 0; }
+.tw-desc { font-size: 13px; color: #71767b; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* 4. SLACK */
+.sl-container { background: #1a1d21; padding: 16px; border-radius: 12px; border: 1px solid #35373b; }
+.sl-unfurl { border-left: 4px solid var(--red); padding-left: 12px; }
+.sl-site { font-size: 13px; font-weight: 700; color: #d1d2d3; display: flex; align-items: center; gap: 6px; }
+.sl-title { font-size: 14px; font-weight: 700; color: #1d9bd1; margin: 4px 0; }
+.sl-desc { font-size: 13px; color: #d1d2d3; line-height: 1.4; margin-bottom: 8px; }
+.sl-img { max-width: 100%; border-radius: 6px; aspect-ratio: 1200/630; object-fit: cover; }
+
+/* 5. MICROSOFT TEAMS */
+.ms-container { background: #201f1f; padding: 16px; border-radius: 12px; border: 1px solid #333; }
+.ms-card { background: #292929; border-radius: 8px; overflow: hidden; border: 1px solid #3b3a39; }
+.ms-img { width: 100%; aspect-ratio: 1200/630; object-fit: cover; display: block; }
+.ms-body { padding: 12px; }
+.ms-tag { font-size: 11px; color: var(--red); font-weight: 700; text-transform: uppercase; }
+.ms-title { font-size: 14px; font-weight: 700; color: #fff; margin: 2px 0 4px; }
+.ms-desc { font-size: 12px; color: #b3b0ad; line-height: 1.4; }
+
+/* Inspector Section */
+.inspector {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 32px;
+}
+.inspector h2 { font-size: 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+.code-block {
+  background: #000;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: #34d399;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.btn-copy {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.btn-copy:hover { background: var(--red); }
+.debuggers {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.debugger-btn {
+  background: #111;
+  border: 1px solid var(--card-border);
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+.debugger-btn:hover { color: #fff; border-color: var(--red); background: var(--red-dim); }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="brand">
+      <img src="favicon.png" alt="Clérigo Logo">
+      <h1>Clérigo.io · Link Preview & Open Graph Tester</h1>
+      <span class="brand-badge">Enterprise GRC</span>
+    </div>
+    <div style="font-size: 13px; color: var(--text-muted);">
+      Pruebas en vivo de Open Graph, Twitter Cards y Schema.org
+    </div>
+  </header>
+
+  <!-- Interactive Controls -->
+  <div class="controls">
+    <div class="control-group">
+      <label for="routeSelect">Seleccionar Página / Ruta</label>
+      <select id="routeSelect">
+        <option value="es/index.html">🇪🇸 Inicio / Portada (ES) — https://clerigo.io/es/</option>
+        <option value="index.html">🇺🇸 Home Page (EN) — https://clerigo.io/</option>
+        <option value="es/marcos.html">🇪🇸 Marcos Regulatorios (ES) — https://clerigo.io/es/marcos.html</option>
+        <option value="marcos.html">🇺🇸 Compliance Frameworks (EN) — https://clerigo.io/marcos.html</option>
+        <option value="es/precios.html">🇪🇸 Planes y Precios (ES) — https://clerigo.io/es/precios.html</option>
+        <option value="precios.html">🇺🇸 Plans & Pricing (EN) — https://clerigo.io/precios.html</option>
+        <option value="es/confianza.html">🇪🇸 Centro de Confianza (ES) — https://clerigo.io/es/confianza.html</option>
+        <option value="confianza.html">🇺🇸 Trust Center (EN) — https://clerigo.io/confianza.html</option>
+        <option value="es/contacto.html">🇪🇸 Contacto y Demo (ES) — https://clerigo.io/es/contacto.html</option>
+        <option value="contacto.html">🇺🇸 Contact & Demo (EN) — https://clerigo.io/contacto.html</option>
+        <option value="es/partners.html">🇪🇸 Programa de Partners (ES) — https://clerigo.io/es/partners.html</option>
+        <option value="partners.html">🇺🇸 Partners Program (EN) — https://clerigo.io/partners.html</option>
+        <option value="es/legal.html">🇪🇸 Legal y Privacidad (ES) — https://clerigo.io/es/legal.html</option>
+        <option value="legal.html">🇺🇸 Legal & Terms (EN) — https://clerigo.io/legal.html</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label for="customUrl">URL Canónica Simulada</label>
+      <input type="text" id="customUrl" readonly>
+    </div>
+  </div>
+
+  <!-- Cards Grid Simulator -->
+  <div class="previews-grid">
+    
+    <!-- 1. WHATSAPP -->
+    <div class="preview-card-wrapper">
+      <div class="preview-card-header">
+        <span class="platform-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.587 1.771.867 2.796.867 3.18 0 5.767-2.587 5.767-5.766.001-3.187-2.575-5.754-5.767-5.754zm4.27 8.087c-.18.504-.91.92-1.397 1.026-.33.072-.765.132-2.22-.472-1.862-.772-3.053-2.67-3.146-2.793-.09-.124-.761-1.012-.761-1.929 0-.917.48-1.368.65-1.556.17-.188.371-.235.495-.235.124 0 .248 0 .356.008.114.008.267-.043.418.32.155.372.53 1.295.577 1.389.047.094.078.204.016.328-.062.124-.093.204-.186.312-.093.11-.196.244-.28.33-.093.093-.19.195-.082.381.109.186.483.797 1.037 1.289.714.634 1.314.831 1.501.924.186.093.295.078.403-.047.11-.124.467-.544.591-.73.124-.187.248-.155.418-.093.17.062 1.084.511 1.27.604.186.093.31.14.356.217.046.078.046.45-.134.954z"/></svg>
+          WhatsApp Preview
+        </span>
+        <span class="platform-pill">Chat Link Unfurl</span>
+      </div>
+      <div class="wa-container">
+        <div class="wa-bubble">
+          <span class="wa-url-text" id="waUrlText">https://clerigo.io/es/</span>
+          <div class="wa-card">
+            <img class="wa-img" id="waImg" src="public/og/clerigo-og.png" alt="OG Preview">
+            <div class="wa-info">
+              <div class="wa-site">clerigo.io</div>
+              <div class="wa-title" id="waTitle">Clérigo | Software GRC</div>
+              <div class="wa-desc" id="waDesc">Software GRC que unifica riesgos y cumplimiento normativo.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. LINKEDIN -->
+    <div class="preview-card-wrapper">
+      <div class="preview-card-header">
+        <span class="platform-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#0A66C2"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9h2.79v8.37H6.46v-8.37M7.86 6.81a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24z"/></svg>
+          LinkedIn Feed Post
+        </span>
+        <span class="platform-pill">1200x630 Card</span>
+      </div>
+      <div class="li-container">
+        <div class="li-author">
+          <div class="li-avatar"></div>
+          <div>
+            <div class="li-name">Clérigo Enterprise GRC</div>
+            <div class="li-role">Promoted · Global Compliance</div>
+          </div>
+        </div>
+        <div class="li-text">Gobernanza, Riesgos y Cumplimiento unificados en una sola plataforma de alta tecnología. 👇</div>
+        <div class="li-card">
+          <img class="li-img" id="liImg" src="public/og/clerigo-og.png" alt="OG Preview">
+          <div class="li-info">
+            <div class="li-title" id="liTitle">Clérigo | Software GRC de Gobernanza, Riesgo y Cumplimiento</div>
+            <div class="li-domain">clerigo.io</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. X / TWITTER -->
+    <div class="preview-card-wrapper">
+      <div class="preview-card-header">
+        <span class="platform-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          X / Twitter Card
+        </span>
+        <span class="platform-pill">summary_large_image</span>
+      </div>
+      <div class="tw-container">
+        <div class="tw-author">
+          <div class="tw-avatar"></div>
+          <div>
+            <div class="tw-user">Clérigo <span class="tw-handle">@clerigo_io</span></div>
+          </div>
+        </div>
+        <div class="tw-card">
+          <img class="tw-img" id="twImg" src="public/og/clerigo-og.png" alt="OG Preview">
+          <div class="tw-overlay">clerigo.io</div>
+        </div>
+        <div class="tw-info">
+          <div class="tw-domain">From clerigo.io</div>
+          <div class="tw-title" id="twTitle">Clérigo | Software GRC</div>
+          <div class="tw-desc" id="twDesc">Software GRC que unifica riesgos y cumplimiento normativo.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. SLACK -->
+    <div class="preview-card-wrapper">
+      <div class="preview-card-header">
+        <span class="platform-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#E01E5A"><path d="M6 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3h3v6H6zm1 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3v-3h3zm8-9a3 3 0 0 1 3 3 3 3 0 0 1-3 3h-3V6h3zm-1 0a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3v3h-3zm-8 8a3 3 0 0 1 3-3 3 3 0 0 1 3 3v3H6a3 3 0 0 1-3-3zm0-1a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3v3H6zm12-2a3 3 0 0 1-3 3 3 3 0 0 1-3-3V9h6a3 3 0 0 1 3 3zm0 1a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3v-3h3z"/></svg>
+          Slack Message Unfurl
+        </span>
+        <span class="platform-pill">Rich Attachment</span>
+      </div>
+      <div class="sl-container">
+        <div class="sl-unfurl">
+          <div class="sl-site">
+            <img src="favicon.png" width="16" height="16" alt="favicon">
+            Clérigo
+          </div>
+          <div class="sl-title" id="slTitle">Clérigo | Software GRC</div>
+          <div class="sl-desc" id="slDesc">Software GRC que unifica riesgos y cumplimiento normativo.</div>
+          <img class="sl-img" id="slImg" src="public/og/clerigo-og.png" alt="OG Preview">
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. MICROSOFT TEAMS -->
+    <div class="preview-card-wrapper">
+      <div class="preview-card-header">
+        <span class="platform-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#6264A7"><path d="M19.5 7.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm-11 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm0 1.5c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4zm11 0c-.29 0-.62.02-.97.06 1.16.84 1.97 1.97 1.97 3.44v2h5v-2c0-2.22-3.8-3.5-6-3.5z"/></svg>
+          Microsoft Teams Card
+        </span>
+        <span class="platform-pill">Adaptive Card</span>
+      </div>
+      <div class="ms-container">
+        <div class="ms-card">
+          <img class="ms-img" id="msImg" src="public/og/clerigo-og.png" alt="OG Preview">
+          <div class="ms-body">
+            <div class="ms-tag">clerigo.io · GRC Enterprise</div>
+            <div class="ms-title" id="msTitle">Clérigo | Software GRC</div>
+            <div class="ms-desc" id="msDesc">Software GRC que unifica riesgos y cumplimiento normativo.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Inspector Section -->
+  <div class="inspector">
+    <h2>
+      <span>Inspector de Etiquetas & Schema.org JSON-LD</span>
+      <button class="btn-copy" id="btnCopyMeta">Copiar Etiquetas &lt;head&gt;</button>
+    </h2>
+    <div class="code-block" id="metaCodeBlock">Cargando metadatos...</div>
+
+    <h2 style="margin-top: 24px;">
+      <span>Depuradores Oficiales de Redes Sociales</span>
+    </h2>
+    <div class="debuggers">
+      <a class="debugger-btn" href="https://developers.facebook.com/tools/debug/" target="_blank" rel="noopener">
+        Facebook Sharing Debugger ↗
+      </a>
+      <a class="debugger-btn" href="https://www.linkedin.com/post-inspector/" target="_blank" rel="noopener">
+        LinkedIn Post Inspector ↗
+      </a>
+      <a class="debugger-btn" href="https://cards-dev.twitter.com/validator" target="_blank" rel="noopener">
+        Twitter Card Validator ↗
+      </a>
+      <a class="debugger-btn" href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">
+        Google Rich Results Test ↗
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let SEO_CONFIG = null;
+
+async function loadConfig() {
+  try {
+    const res = await fetch('seo.config.json');
+    SEO_CONFIG = await res.json();
+    updateView();
+  } catch (err) {
+    console.error('Error cargando seo.config.json:', err);
+  }
+}
+
+function updateView() {
+  if (!SEO_CONFIG) return;
+  const select = document.getElementById('routeSelect');
+  const routeKey = select.value;
+  const route = SEO_CONFIG.routes[routeKey] || {};
+  const siteConfig = SEO_CONFIG.siteConfig;
+
+  const siteUrl = siteConfig.siteUrl;
+  const canonicalUrl = `${siteUrl}/${route.canonicalPath || ""}`;
+  const title = route.title || siteConfig.defaultTitle;
+  const desc = route.description || siteConfig.defaultDescription;
+  const img = route.ogImage || siteConfig.defaultImage;
+
+  // Actualizar input URL
+  document.getElementById('customUrl').value = canonicalUrl;
+
+  // Actualizar WhatsApp
+  document.getElementById('waUrlText').textContent = canonicalUrl;
+  document.getElementById('waTitle').textContent = title;
+  document.getElementById('waDesc').textContent = desc;
+  document.getElementById('waImg').src = img;
+
+  // Actualizar LinkedIn
+  document.getElementById('liTitle').textContent = title;
+  document.getElementById('liImg').src = img;
+
+  // Actualizar Twitter
+  document.getElementById('twTitle').textContent = title;
+  document.getElementById('twDesc').textContent = desc;
+  document.getElementById('twImg').src = img;
+
+  // Actualizar Slack
+  document.getElementById('slTitle').textContent = title;
+  document.getElementById('slDesc').textContent = desc;
+  document.getElementById('slImg').src = img;
+
+  // Actualizar Teams
+  document.getElementById('msTitle').textContent = title;
+  document.getElementById('msDesc').textContent = desc;
+  document.getElementById('msImg').src = img;
+
+  // Generar bloque de código
+  const code = `<!-- Open Graph / WhatsApp / Facebook / LinkedIn -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="${siteConfig.siteName}">
+<meta property="og:url" content="${canonicalUrl}">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${desc}">
+<meta property="og:image" content="${img}">
+<meta property="og:image:secure_url" content="${img}">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="${route.locale || 'es_ES'}">
+
+<!-- Twitter / X Cards -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="${siteConfig.twitter.site}">
+<meta name="twitter:url" content="${canonicalUrl}">
+<meta name="twitter:title" content="${title}">
+<meta name="twitter:description" content="${desc}">
+<meta name="twitter:image" content="${img}">
+
+<!-- Canonical & Alternates -->
+<link rel="canonical" href="${canonicalUrl}">
+<link rel="alternate" hreflang="en" href="${route.alternateEn || 'https://clerigo.io/'}">
+<link rel="alternate" hreflang="es" href="${route.alternateEs || 'https://clerigo.io/es/'}">`;
+
+  document.getElementById('metaCodeBlock').textContent = code;
+}
+
+document.getElementById('routeSelect').addEventListener('change', updateView);
+
+document.getElementById('btnCopyMeta').addEventListener('click', () => {
+  const code = document.getElementById('metaCodeBlock').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = document.getElementById('btnCopyMeta');
+    btn.textContent = '¡Copiado!';
+    setTimeout(() => { btn.textContent = 'Copiar Etiquetas <head>'; }, 2000);
+  });
+});
+
+loadConfig();
+</script>
+</body>
+</html>
