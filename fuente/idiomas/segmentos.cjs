@@ -437,10 +437,26 @@ function trozosDeLosGuiones(html) {
         const donde = t.tipo === "plantilla"
           ? tapaLasCadenasDeLasExpresiones(dentro, t.expresiones, t.ini + 1)
           : dentro;
-        /* El cierre puede ser el `<` siguiente O EL FINAL DEL LITERAL. Sin el
-           `|$`, el texto que va detrás de la última etiqueta se perdía:
-           «`<svg …></svg> Continuar con ${…}`» es el rótulo de un botón y se
-           quedaba en castellano en la página inglesa. */
+        /* EL TEXTO PUEDE EMPEZAR ANTES DE LA PRIMERA ETIQUETA Y ACABAR DESPUÉS
+           DE LA ÚLTIMA, y los dos bordes hacían falta:
+
+             `<svg …></svg> Continuar con ${…}`   ← cola, detrás del cierre
+             `Contraseña muy segura <svg …>`      ← cabeza, delante de la apertura
+
+           Sin el `|$` se perdía la cola —el rótulo de un botón—; sin esta
+           primera pasada se perdía la cabeza, y el cuarto aviso del medidor de
+           contraseña de partners se quedaba en castellano en la inglesa.
+           El barrido de abajo pide un `>` delante, así que la cabeza no la ve
+           nunca: hay que sacarla aparte. */
+        const cabeza = donde.match(/^([^<>]+)(?=<)/);
+        if (cabeza && esTraducible(sinInterpolar(cabeza[1]).trim())) {
+          const crudo = dentro.slice(0, cabeza[1].length);
+          const texto = crudo.trim();
+          if (texto && !/<[a-zA-Z/!]/.test(crudo)) {
+            const ini = desdeDentro + crudo.indexOf(texto);
+            fuera.push({ texto, ini, fin: ini + texto.length, comilla: t.comilla });
+          }
+        }
         for (const m of donde.matchAll(/>([^<>]*)(?=<|$)/g)) {
           const crudo = dentro.slice(m.index + 1, m.index + 1 + m[1].length);
           /* SI EL TROZO CRUDO TRAE MARCADO DENTRO, NO ES TEXTO.
