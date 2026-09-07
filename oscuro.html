@@ -1358,21 +1358,46 @@ footer {
 }
 .award-tooltip {
   position: absolute;
-  top: 0; left: 120px;
-  width: 220px;
+  top: 50%;
+  right: calc(100% + 14px);
+  left: auto;
+  width: 240px;
   background: #0E0E0E;
   border: 1px solid rgba(200,164,0,0.4);
   border-radius: 8px;
   padding: 14px 16px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.7);
-  opacity: 0; pointer-events: none;
-  transform: translateX(-6px);
-  transition: opacity 0.2s, transform 0.2s;
-  z-index: 200;
+  opacity: 0;
   pointer-events: none;
+  transform: translateY(-50%) translateX(8px);
+  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 200;
+  text-align: left;
 }
-.hero-award:hover .award-tooltip {
-  opacity: 1; transform: translateX(0);
+.award-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  margin-top: -5px;
+  width: 10px;
+  height: 10px;
+  background: #0E0E0E;
+  border-right: 1px solid rgba(200,164,0,0.4);
+  border-top: 1px solid rgba(200,164,0,0.4);
+  transform: rotate(45deg);
+}
+.award-disc-wrap:hover > .award-tooltip,
+.hero-award .award-disc-wrap:hover .award-tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+.award-tooltip-ipexpert {
+  border: 1px solid rgba(106, 159, 216, 0.45);
+}
+.award-tooltip-ipexpert::after {
+  border-right: 1px solid rgba(106, 159, 216, 0.45);
+  border-top: 1px solid rgba(106, 159, 216, 0.45);
 }
 .award-tt-header {
   display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
@@ -1866,11 +1891,11 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
           <span style="font-size:6px;font-weight:700;letter-spacing:0.8px;color:rgba(255,255,255,0.6);display:block;margin-top:1px;">IPEXPERT · 2025</span>
         </div>
         <!-- disc -->
-        <div style="position:relative;width:110px;height:110px;flex-shrink:0;">
+        <div class="award-disc-wrap" style="position:relative;width:110px;height:110px;flex-shrink:0;">
           <div style="width:110px;height:110px;border-radius:50%;background:conic-gradient(#c0c0c0 0deg,#e8e8e8 40deg,#f5f5f5 80deg,#d0d0d0 120deg,#e8e8e8 160deg,#f0f0f0 200deg,#c8c8c8 240deg,#e5e5e5 280deg,#f2f2f2 320deg,#b8b8b8 360deg);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 0 3px #888,0 0 0 5px rgba(220,220,220,0.25),0 8px 28px rgba(0,0,0,0.6),inset 0 2px 4px rgba(255,255,255,0.4),inset 0 -2px 4px rgba(0,0,0,0.15);position:relative;z-index:1;">
             <div style="width:80px;height:80px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f5f5f5,#d0d0d0 60%,#a0a0a0);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 2px 6px rgba(0,0,0,0.2),0 0 0 1px rgba(255,255,255,0.15);">
               <!-- star icon -->
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin-bottom:2px">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="margin-bottom:2px" aria-hidden="true">
                 <path d="M14 3l2.8 5.6 6.2.9-4.5 4.4 1.1 6.1L14 17l-5.6 3 1.1-6.1L5 9.5l6.2-.9L14 3z" fill="#1a3a6b" stroke="#1a3a6b" stroke-width="0.5" stroke-linejoin="round"/>
               </svg>
               <span style="font-size:7px;font-weight:900;color:#1a3a6b;letter-spacing:0.8px;text-transform:uppercase;line-height:1.2;text-align:center;">Award</span>
@@ -1879,6 +1904,22 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
           <!-- sash overlay -->
           <div style="position:absolute;top:0;left:0;width:110px;height:110px;border-radius:50%;overflow:hidden;pointer-events:none;z-index:10;">
             <div style="position:absolute;top:22px;left:-28px;width:160px;background:linear-gradient(180deg,#2d5fc4 0%,#1a3a6b 50%,#2d5fc4 100%);color:#fff;font-size:7px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;text-align:center;padding:5px 0;transform:rotate(-35deg);box-shadow:0 2px 8px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.2);border-top:1px solid rgba(255,255,255,0.25);border-bottom:1px solid rgba(0,0,0,0.3);">SOFTWARE</div>
+          </div>
+          <!-- Tooltip IPEXPERT -->
+          <div class="award-tooltip award-tooltip-ipexpert">
+            <div class="award-tt-header">
+              <div class="award-tt-star">
+                <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6.2 2.8h7.6v4.4a3.8 3.8 0 0 1-7.6 0V2.8Z" fill="#6A9FD8"/><path d="M6.2 4.2H4.1c-.6 0-1.1.5-1.1 1.1 0 1.7 1.3 3.1 3 3.3" fill="none" stroke="#6A9FD8" stroke-width="1.2" stroke-linecap="round"/><path d="M13.8 4.2h2.1c.6 0 1.1.5 1.1 1.1 0 1.7-1.3 3.1-3 3.3" fill="none" stroke="#6A9FD8" stroke-width="1.2" stroke-linecap="round"/><path d="M10 11v2.2" stroke="#6A9FD8" stroke-width="1.4" stroke-linecap="round"/><path d="M6.6 17.2h6.8l-.7-3.4H7.3l-.7 3.4Z" fill="#6A9FD8"/></svg>
+              </div>
+              <div>
+                <div class="award-tt-firm" style="color:#6a9fd8">IPEXPERT</div>
+                <div class="award-tt-year" style="color:rgba(106,159,216,0.7)">Innovation Award 2025</div>
+              </div>
+            </div>
+            <div class="award-tt-title">Software Innovation Award 2025</div>
+            <div class="award-tt-desc" style="border-top:1px solid rgba(106,159,216,0.25)">
+              Awarded by <strong style="color:#6a9fd8">IPEXPERT</strong> to Clérigo for outstanding innovation and comprehensive software architecture in automated risk management and regulatory compliance.
+            </div>
           </div>
         </div>
         <!-- tails -->
