@@ -201,12 +201,23 @@ const fichaPrecios = JSON.parse(
 const producto = (fichaPrecios["@graph"] || []).find((x) => x["@type"] === "SoftwareApplication");
 comprueba("la página de planes trae la ficha del producto", !!producto);
 if (producto) {
-  const enLaFicha = producto.offers?.price;
-  /* Lo que la página publica, en letra que se ve. */
-  const enLaPagina = (precios.match(/\$(\d+)\s*USD\s*\/\s*usuario/) || [])[1];
-  comprueba("el precio de la ficha es el que la página publica",
-    enLaFicha === enLaPagina,
-    `ficha «${enLaFicha}» vs página «${enLaPagina}»`);
+  /* ── LA FICHA NO DECLARA PRECIO, Y ESO ES LO QUE SE VIGILA ─────────────
+   *
+   * Esta comprobación decía antes lo contrario: que el precio de la ficha
+   * fuera el mismo que el de la página. Hoy el precio NO ESTÁ DECIDIDO, así
+   * que la ficha no declara ninguno, y lo que hay que impedir es que alguien
+   * vuelva a ponerlo sin pensarlo.
+   *
+   * Un precio en la ficha no es como un precio en una página: Google lo lee
+   * como precio en firme y puede enseñarlo debajo del enlace, sin ninguno de
+   * los matices. A partir de ahí, toda conversación de venta empieza anclada
+   * en esa cifra.
+   *
+   * Cuando el precio esté decidido, esta comprobación se da la vuelta otra
+   * vez: se exigirá que exista Y que case con el de la página de planes. */
+  comprueba("la ficha del producto no declara precio mientras no esté decidido",
+    producto.offers === undefined,
+    producto.offers ? `declara «${JSON.stringify(producto.offers).slice(0, 60)}»` : "");
 }
 
 console.log("\n────────────────────────────────────────────────────────────────");

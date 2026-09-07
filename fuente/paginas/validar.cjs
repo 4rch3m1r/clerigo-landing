@@ -125,7 +125,18 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
      propia— se colaban en la lista de palabras. El original no los tiene, así
      que la comparación cantaba una diferencia en la palabra 4 de 366. No es
      texto de la página: es un mando. */
-  const dePagina = sinLetrasDeLogotipo(palabras(sinSelector(sal), { abre: `<main class="pagina">`, cierra: "</main>" }) || []);
+  /* ── EL PRECIO SALE DE LA RESPUESTA DE LAS DUDAS, Y SE DECLARA AQUÍ ────
+   *
+   * El original decía «los usuarios adicionales tienen un costo de $20
+   * USD/usuario/mes». Ese precio TODAVÍA NO ESTÁ DECIDIDO, así que la página
+   * dice cómo funciona sin decir cuánto cuesta.
+   *
+   * Se normaliza a la frase del original para poder seguir comparando el resto
+   * de la página palabra por palabra, que es de lo que esta guarda responde. */
+  const sinPrecio = sal.replace(
+    /Cada módulo incluye 1 usuario\. Los usuarios adicionales se facturan aparte, con periodicidad anual\. Escríbenos y te pasamos la propuesta para tu caso; para más de 200 usuarios o necesidades especiales hay plan Enterprise\./,
+    "Cada módulo incluye 1 usuario. Los usuarios adicionales tienen un costo de $20 USD/usuario/mes, facturados anualmente. Para más de 200 usuarios o necesidades especiales, contáctanos para un plan Enterprise.");
+  const dePagina = sinLetrasDeLogotipo(palabras(sinSelector(sinPrecio), { abre: `<main class="pagina">`, cierra: "</main>" }) || []);
   const deOrigen = sinOriginal ? null : sinLetrasDeLogotipo(palabras(aplicaMarca(soloElCuerpo(org), MARCA)));
 
   if (sinOriginal) {

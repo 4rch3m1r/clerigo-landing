@@ -132,21 +132,20 @@ function aplicacion(idioma) {
       ? "Software GRC que unifica riesgos, cumplimiento normativo, auditoría interna, control interno, ciberseguridad y privacidad en una sola plataforma."
       : "GRC software that unifies risk, regulatory compliance, internal audit, internal control, cybersecurity and privacy in a single platform.",
     featureList: idioma === "es" ? MODULOS_ES : MODULOS_EN,
-    /* El precio que la propia página de planes publica. Si algún día cambia
-       ahí, cambia aquí: un precio en la ficha que no case con el de la página
-       es motivo de aviso en Search Console. */
-    offers: {
-      "@type": "Offer",
-      price: "20",
-      priceCurrency: "USD",
-      url: BASE + "/precios",
-      availability: "https://schema.org/InStock",
-      priceSpecification: {
-        "@type": "UnitPriceSpecification",
-        price: "20", priceCurrency: "USD",
-        unitText: idioma === "es" ? "usuario / mes" : "user / month",
-      },
-    },
+    /* ── AQUÍ NO VA PRECIO, Y ES A PROPÓSITO ──────────────────────────────
+     *
+     * Había un `offers` con «price: 20 USD». El precio TODAVÍA NO ESTÁ
+     * DECIDIDO, y declararlo en la ficha de datos no es lo mismo que ponerlo
+     * en una página: Google lo lee como un precio en firme y puede enseñarlo
+     * en el resultado de búsqueda, debajo del enlace, sin que nadie entre a
+     * leer los matices. A partir de ahí, toda conversación de venta empieza
+     * anclada en esa cifra.
+     *
+     * Una ficha sin precio no dice nada malo: dice que el precio se habla.
+     * Cuando esté definido se vuelve a poner, y entonces tiene que casar con
+     * lo que diga la página de planes o Search Console avisa.
+     */
+    offers: undefined,
   };
 }
 

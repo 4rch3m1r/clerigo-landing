@@ -126,10 +126,15 @@ module.exports = [
   /* ── Planes. El precio va porque está publicado en su página, y porque es
         lo que se viene a saber. ──────────────────────────────────────── */
   {
+    /* SIN PRECIO. La tarjeta decía «Desde $20 por usuario al mes» y el precio
+       todavía no está decidido. Una tarjeta se pega en un chat y se queda ahí:
+       quien la vea empieza a negociar desde esa cifra, esté decidida o no.
+       Lo que sí está decidido es el MODELO —se paga por módulo, no por la
+       plataforma entera—, y eso es además lo que diferencia. */
     fichero: "precios-og.png", idioma: "es", variante: "tipografica",
     antetitulo: "Planes y precios",
-    titular: ["Desde @$20@ por usuario", "al mes"],
-    bajada: "Activa sólo los módulos y los marcos que tu empresa necesita. Sin cargos ocultos y sin tarjeta para empezar.",
+    titular: ["Paga por lo que usas,", "no por la @plataforma entera@"],
+    bajada: "Activa sólo los módulos y los marcos que tu empresa necesita. Sin cargos ocultos y sin tarjeta de crédito para empezar.",
     tira: NORMAS,
   },
 
