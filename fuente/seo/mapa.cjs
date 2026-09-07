@@ -53,20 +53,21 @@ for (const p of PAGINAS) {
   /* La ruta pública va sin extensión —Cloudflare sirve /marcos y redirige
      desde /marcos.html—, pero para leer la FECHA hay que abrir el fichero de
      verdad, que sí la tiene. Son dos cosas distintas y por eso van separadas. */
-  const nombre = p.slug === "index" ? "index.html" : (p.enDisco || p.fichero);
-  const enIngles = BASE + "/" + p.fichero;
-  const enCastellano = BASE + "/es/" + p.fichero;
+  /* Dos nombres, uno por idioma: tres páginas cambiaron de nombre al pasar a
+     inglés y aquí se usaba el castellano para las dos. */
+  const enIngles = BASE + "/" + p.ruta.en;
+  const enCastellano = BASE + "/es/" + p.ruta.es;
   const alternativas = [
     `    <xhtml:link rel="alternate" hreflang="en" href="${enIngles}"/>`,
     `    <xhtml:link rel="alternate" hreflang="es" href="${enCastellano}"/>`,
     `    <xhtml:link rel="alternate" hreflang="x-default" href="${enIngles}"/>`,
   ].join("\n");
 
-  for (const [url, carpeta] of [[enIngles, INGLES], [enCastellano, CASTELLANO]]) {
+  for (const [url, carpeta, idi] of [[enIngles, INGLES, "en"], [enCastellano, CASTELLANO, "es"]]) {
     entradas.push([
       "  <url>",
       `    <loc>${url}</loc>`,
-      `    <lastmod>${cuandoSeTocó(path.join(carpeta, nombre))}</lastmod>`,
+      `    <lastmod>${cuandoSeTocó(path.join(carpeta, p.disco[idi]))}</lastmod>`,
       `    <changefreq>${p.slug === "index" ? "weekly" : "monthly"}</changefreq>`,
       `    <priority>${p.prioridad}</priority>`,
       alternativas,

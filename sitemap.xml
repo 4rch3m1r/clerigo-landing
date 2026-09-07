@@ -20,40 +20,40 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/"/>
   </url>
   <url>
-    <loc>https://clerigo.io/marcos</loc>
+    <loc>https://clerigo.io/frameworks</loc>
     <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/marcos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/frameworks"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://clerigo.io/es/marcos"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/marcos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/frameworks"/>
   </url>
   <url>
     <loc>https://clerigo.io/es/marcos</loc>
     <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/marcos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/frameworks"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://clerigo.io/es/marcos"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/marcos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/frameworks"/>
   </url>
   <url>
-    <loc>https://clerigo.io/confianza</loc>
+    <loc>https://clerigo.io/trustcenter</loc>
     <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/confianza"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/trustcenter"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://clerigo.io/es/confianza"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/confianza"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/trustcenter"/>
   </url>
   <url>
     <loc>https://clerigo.io/es/confianza</loc>
     <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/confianza"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/trustcenter"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://clerigo.io/es/confianza"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/confianza"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/trustcenter"/>
   </url>
   <url>
     <loc>https://clerigo.io/precios</loc>
@@ -74,22 +74,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/precios"/>
   </url>
   <url>
-    <loc>https://clerigo.io/contacto</loc>
+    <loc>https://clerigo.io/contact</loc>
     <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/contacto"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/contact"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://clerigo.io/es/contacto"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/contacto"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/contact"/>
   </url>
   <url>
     <loc>https://clerigo.io/es/contacto</loc>
     <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/contacto"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/contact"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://clerigo.io/es/contacto"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/contacto"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://clerigo.io/contact"/>
   </url>
   <url>
     <loc>https://clerigo.io/partners</loc>

@@ -53,14 +53,33 @@ const BASE = SITIO.base.replace(/\/$/, "");
 /* Las páginas, con su fichero y el nombre que se les da en cada idioma. Ese
    nombre es el de la miga y el del elemento de navegación: tiene que ser el
    MISMO que se ve en la barra, o Google lo trata como dato que no cuadra. */
+/* ── LA INGLESA Y LA CASTELLANA NO SE LLAMAN IGUAL ────────────────────────
+ *
+ * Y durante un tiempo aquí se dio por hecho que sí. Tres páginas cambiaron de
+ * nombre al pasar a inglés —marcos→frameworks, confianza→trustcenter,
+ * contacto→contact— y esta lista seguía usando el nombre castellano para las
+ * dos. Consecuencia medida sobre el sitio publicado: el mapa del sitio listaba
+ * `/marcos` —que es una puerta de redirección— y NO listaba `/frameworks`, que
+ * es la página que hay que indexar.
+ *
+ * Por eso cada entrada lleva ahora los dos nombres. `ruta` es la dirección
+ * pública, sin extensión; `disco` es el fichero que hay que abrir.
+ */
 const PAGINAS = [
-  { slug: "index", fichero: "", es: "Inicio", en: "Home", prioridad: "1.0", nav: false },
-  { slug: "marcos", fichero: "marcos", enDisco: "marcos.html", es: "Marcos", en: "Frameworks", prioridad: "0.9", nav: true },
-  { slug: "confianza", fichero: "confianza", enDisco: "confianza.html", es: "Centro de Confianza", en: "Trust Center", prioridad: "0.9", nav: true },
-  { slug: "precios", fichero: "precios", enDisco: "precios.html", es: "Planes", en: "Plans", prioridad: "0.9", nav: true },
-  { slug: "contacto", fichero: "contacto", enDisco: "contacto.html", es: "Contacto", en: "Contact", prioridad: "0.8", nav: true },
-  { slug: "partners", fichero: "partners", enDisco: "partners.html", es: "Partner Portal", en: "Partner Portal", prioridad: "0.5", nav: false },
-  { slug: "legal", fichero: "legal", enDisco: "legal.html", es: "Legal", en: "Legal", prioridad: "0.3", nav: false },
+  { slug: "index", ruta: { en: "", es: "" }, disco: { en: "index.html", es: "index.html" },
+    es: "Inicio", en: "Home", prioridad: "1.0", nav: false },
+  { slug: "marcos", ruta: { en: "frameworks", es: "marcos" }, disco: { en: "frameworks.html", es: "marcos.html" },
+    es: "Marcos", en: "Frameworks", prioridad: "0.9", nav: true },
+  { slug: "confianza", ruta: { en: "trustcenter", es: "confianza" }, disco: { en: "trustcenter.html", es: "confianza.html" },
+    es: "Centro de Confianza", en: "Trust Center", prioridad: "0.9", nav: true },
+  { slug: "precios", ruta: { en: "precios", es: "precios" }, disco: { en: "precios.html", es: "precios.html" },
+    es: "Planes", en: "Plans", prioridad: "0.9", nav: true },
+  { slug: "contacto", ruta: { en: "contact", es: "contacto" }, disco: { en: "contact.html", es: "contacto.html" },
+    es: "Contacto", en: "Contact", prioridad: "0.8", nav: true },
+  { slug: "partners", ruta: { en: "partners", es: "partners" }, disco: { en: "partners.html", es: "partners.html" },
+    es: "Partner Portal", en: "Partner Portal", prioridad: "0.5", nav: false },
+  { slug: "legal", ruta: { en: "legal", es: "legal" }, disco: { en: "legal.html", es: "legal.html" },
+    es: "Legal", en: "Legal", prioridad: "0.3", nav: false },
 ];
 /* `oscuro.html` no entra: es la MISMA portada con otra piel. Meterla en el
    sitemap sería pedirle al buscador que indexe dos veces el mismo texto, que
@@ -136,7 +155,7 @@ function navegacion(idioma, esIngles) {
   return PAGINAS.filter((p) => p.nav).map((p) => ({
     "@type": "SiteNavigationElement",
     name: idioma === "es" ? p.es : p.en,
-    url: (esIngles ? BASE + "/" : BASE + "/es/") + p.fichero,
+    url: (esIngles ? BASE + "/" : BASE + "/es/") + p.ruta[idioma],
   }));
 }
 
@@ -149,7 +168,7 @@ function ficha(pagina, idioma, esIngles, titulo, descripcion, imagen, canonica) 
      propia dirección dentro, la ficha estaba diciendo «este contenido es de
      oscuro.html» justo mientras la canónica decía lo contrario. Dos señales
      que se contradicen valen menos que ninguna: el buscador elige él. */
-  const url = canonica || raiz + pagina.fichero;
+  const url = canonica || raiz + (pagina.ruta ? pagina.ruta[idioma] : "");
   const grafo = [
     organizacion(idioma),
     {
@@ -229,8 +248,8 @@ for (const carpeta of [CASTELLANO, INGLES]) {
   const esIngles = carpeta === INGLES;
   const idioma = esIngles ? "en" : "es";
 
-  for (const p of [...PAGINAS, { slug: "oscuro", fichero: "oscuro", enDisco: "oscuro.html", es: "", en: "", nav: false }]) {
-    const nombre = p.slug === "index" ? "index.html" : (p.enDisco || p.fichero);
+  for (const p of [...PAGINAS, { slug: "oscuro", ruta: { en: "oscuro", es: "oscuro" }, disco: { en: "oscuro.html", es: "oscuro.html" }, es: "", en: "", nav: false }]) {
+    const nombre = p.disco[idioma];
     const f = path.join(carpeta, nombre);
     if (!fs.existsSync(f)) { console.log(`  ·  ${idioma}/${nombre} no existe`); continue; }
     const antes = lee(f);

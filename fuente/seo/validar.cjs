@@ -98,16 +98,23 @@ comprueba("no prohíbe la portada oscura, que lleva su «noindex» dentro",
   !/Disallow:.*oscuro/.test(robots));
 
 /* ── 3. Cada página ─────────────────────────────────────────────────────── */
-const TODAS = [...PAGINAS.map((p) => p.slug), "oscuro"];
+/* Las páginas, con su fichero POR IDIOMA. Tres cambiaron de nombre al pasar a
+   inglés —marcos→frameworks, confianza→trustcenter, contacto→contact— y aquí
+   se armaba el nombre del fichero a partir del slug, así que para el inglés se
+   abría `marcos.html`. Eso hoy es una puerta de redirección, no una página: el
+   validador leía «Redirecting…» y daba seis fallos por página que no existían. */
+const TODAS = [
+  ...PAGINAS.map((p) => ({ slug: p.slug, disco: p.disco })),
+  { slug: "oscuro", disco: { en: "oscuro.html", es: "oscuro.html" } },
+];
 
 for (const carpeta of [CASTELLANO, INGLES]) {
   const esIngles = carpeta === INGLES;
   const idioma = esIngles ? "en" : "es";
   console.log(`\n── Las páginas en ${esIngles ? "inglés" : "castellano"} ────────────────────────────────`);
 
-  for (const slug of TODAS) {
-    const nombre = slug === "index" ? "index.html" : slug + ".html";
-    const f = path.join(carpeta, nombre);
+  for (const { slug, disco } of TODAS) {
+    const f = path.join(carpeta, disco[idioma]);
     if (!fs.existsSync(f)) continue;
     const h = lee(f);
     const p = `${idioma}/${slug}`;

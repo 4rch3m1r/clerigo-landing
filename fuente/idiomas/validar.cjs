@@ -84,9 +84,23 @@ function esqueleto(html) {
 /* El script del carrusel lleva un rótulo dentro del propio guion, así que se
    compara también: dos versiones no pueden tener guiones distintos. */
 
+/* ── TRES PÁGINAS CAMBIARON DE NOMBRE AL PASAR A INGLÉS ───────────────────
+ *
+ * `marcos` → `frameworks`, `confianza` → `trustcenter`, `contacto` → `contact`.
+ * En la raíz, con el nombre castellano, ya no hay una página: hay una PUERTA de
+ * redirección de 900 bytes que manda a `/es/marcos` o a `/frameworks` según el
+ * idioma de quien llega. Eso existe porque el castellano vive en `/es/`, y
+ * tener la misma página en `/marcos` y en `/es/marcos` era contenido duplicado.
+ *
+ * Una puerta no es la traducción de nada, así que compararla contra la
+ * castellana daba seis fallos que no describían ningún problema. Se comparan
+ * contra su verdadera pareja inglesa.
+ */
+const PAREJA_INGLESA = { marcos: "frameworks", confianza: "trustcenter", contacto: "contact" };
+
 console.log("── Las dos versiones son la misma página ──────────────────────");
 for (const p of TODAS) {
-  const rEn = path.join(RAIZ, p + ".html");
+  const rEn = path.join(RAIZ, (PAREJA_INGLESA[p] || p) + ".html");
   const rEs = path.join(CASTELLANO, p + ".html");
   if (!fs.existsSync(rEn) || !fs.existsSync(rEs)) {
     comprueba(`${p}: existen las dos versiones`, false,
