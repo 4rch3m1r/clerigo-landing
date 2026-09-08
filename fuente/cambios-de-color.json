@@ -624,8 +624,8 @@
  },
  {
   "linea": 1481,
-  "antes": "          <span style=\"font-size:9px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#6a9fd8;display:block;\">IPEXPERT</span>",
-  "despues": "          <span style=\"font-size:9px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#2d5fc4;display:block;\">IPEXPERT</span>",
+  "antes": "          <span style=\"font-size:9px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:#6a9fd8;display:block;\">ARCHEMIR GROUP</span>",
+  "despues": "          <span style=\"font-size:9px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:#2d5fc4;display:block;\">ARCHEMIR GROUP</span>",
   "rol": "texto",
   "motivo": "Texto sobre el fondo de la pagina, no sobre la medalla. #6a9fd8 es el azul aclarado para leerse en negro; en blanco se pierde. Paso al azul de la propia cinta #2d5fc4, que ya esta en este mismo bloque."
  },
@@ -876,8 +876,8 @@
  },
  {
   "linea": 1435,
-  "antes": "          <div class=\"award-tt-desc\">Otorgado por <strong style=\"color:#F5D020\">WE2SEC</strong>, firma de referencia en ciberseguridad y cumplimiento regulatorio, a Clèrigo como la solución más innovadora del año en Latinoamérica.</div>",
-  "despues": "          <div class=\"award-tt-desc\">Otorgado por <strong style=\"color:#8A6D00\">WE2SEC</strong>, firma de referencia en ciberseguridad y cumplimiento regulatorio, a Clèrigo como la solución más innovadora del año en Latinoamérica.</div>",
+  "antes": "          <div class=\"award-tt-desc\">Otorgado por <strong style=\"color:#F5D020\">Ortvent Inc</strong>, firma de referencia en ciberseguridad y cumplimiento regulatorio, a Clèrigo como la solución más innovadora del año en Latinoamérica.</div>",
+  "despues": "          <div class=\"award-tt-desc\">Otorgado por <strong style=\"color:#8A6D00\">Ortvent Inc</strong>, firma de referencia en ciberseguridad y cumplimiento regulatorio, a Clèrigo como la solución más innovadora del año en Latinoamérica.</div>",
   "motivo": "Lo dejo apuntado como olvidado, no como descuido: el agente lo vio y decidio no tocarlo por la regla 10. Pero aqui el dorado no es la medalla, es TEXTO de 11px dentro del globo de ayuda, y el fondo de ese globo es #0E0E0E crudo en el CSS (.award-tooltip, linea 1312), que por la regla 1 pasa a claro. Dorado #F5D020 sobre blanco da 1.6:1: ilegible. #8A6D00 guarda el dorado y da 4.9:1. CONDICION: este cambio solo vale si el que convierte el CSS pasa a claro el fondo del globo; si lo deja negro, esta linea se queda como esta. Los tres hermanos del mismo dorado viven en el CSS (1298 .award-firm-name, 1302 .award-firm-desc, 1331 .award-tt-firm, 1332 .award-tt-year) y hay que decidirlos a la vez que este.",
   "rol": "olvidado"
  },

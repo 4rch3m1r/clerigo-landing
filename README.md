@@ -89,7 +89,7 @@ firmar, así que una frase de más ahí no es un adorno.
 
 Lo que dice sale de dos sitios y de ninguno más:
 
-- **Lo que confirmó el dueño:** informe SOC 2 Tipo II de We2Sec (enero–diciembre
+- **Lo que confirmó el dueño:** informe SOC 2 Tipo II de Ortvent Inc (enero–diciembre
   2025, bajo NDA), ISO 27001 **en proceso**, Azure East US, WAF de Cloudflare
   delante del sitio y de la aplicación, y respaldo inmutable.
 - **Lo que se verificó en el código de la plataforma:** una revisión de seis
@@ -179,7 +179,7 @@ comprobado contra el producto:**
 
 - «90% de reducción de trabajo manual», «48 horas de implementación»,
   «15+ marcos», «12 módulos».
-- Los dos premios: WE2SEC 2026 e IPEXPERT 2025.
+- Los dos premios: Ortvent Inc 2026 y Archemir Group 2025.
 - Los tres testimonios, con nombre, cargo y empresa.
 - La maqueta del «Centro de Comando» está dibujada con CSS: no es el sistema.
 

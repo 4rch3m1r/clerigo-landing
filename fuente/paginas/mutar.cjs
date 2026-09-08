@@ -131,7 +131,7 @@ const MUTANTES = [
   ["decir que la ISO ya está obtenida", (s) => s.replace("certificación está en curso", "certificación está obtenida")],
   ["prometer cifrado en reposo", (s) =>
     s.replace('<main class="pagina">', '<main class="pagina">\n<p>Cifrado en reposo.</p>')],
-  ["borrar el nombre del auditor", (s) => s.replace("We2Sec", "un tercero")],
+  ["borrar el nombre del auditor", (s) => s.replace("Ortvent Inc", "un tercero")],
   ["llamar certificación al informe SOC 2", (s) => s.replace("informe SOC 2 Tipo II se entrega", "certificación SOC 2 se entrega")],
   ["sacar el cuerpo de su sitio", (s) =>
     s.replace('<main class="pagina">', '<div class="pagina">').replace(/<\/main>(?![\s\S]*<\/main>)/, "</div>")],

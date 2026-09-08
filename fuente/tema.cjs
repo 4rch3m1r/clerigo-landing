@@ -89,8 +89,8 @@ const TRAMO_OSCURO_QUERIDO = {
  */
 const EXCEPCIONES = [
   {
-    marca: "IPEXPERT · 2025",
-    porque: "el subtítulo «IPEXPERT · 2025» va sobre la cinta azul de la medalla "
+    marca: "ARCHEMIR GROUP · 2025",
+    porque: "el subtítulo «ARCHEMIR GROUP · 2025» va sobre la cinta azul de la medalla "
       + "(degradado #1a3a6b/#2d5fc4 tres líneas más arriba); su hermano de la línea "
       + "de al lado lleva color:#fff sobre esa misma cinta",
   },
