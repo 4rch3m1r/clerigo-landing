@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 110" width="100%" height="100%">
+  <defs>
+    <linearGradient id="hipaaBadgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F4C81"/>
+      <stop offset="100%" stop-color="#082845"/>
+    </linearGradient>
+    <linearGradient id="hipaaShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284C7"/>
+      <stop offset="100%" stop-color="#0369A1"/>
+    </linearGradient>
+    <filter id="hipaaDrop" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer Badge Container -->
+  <rect x="2" y="2" width="236" height="106" rx="8" fill="url(#hipaaBadgeGrad)" filter="url(#hipaaDrop)" stroke="#1E5E99" stroke-width="1.2"/>
+  
+  <!-- Medical Shield Emblem on the left -->
+  <g transform="translate(16, 16)">
+    <!-- Outer Shield -->
+    <path d="M 36 2 L 68 14 C 68 46 52 66 36 74 C 20 66 4 46 4 14 Z" fill="url(#hipaaShieldGrad)" stroke="#38BDF8" stroke-width="1.2"/>
+    <!-- Inner Shield Inset -->
+    <path d="M 36 7 L 63 17.5 C 63 44 49 61 36 68 C 23 61 9 44 9 17.5 Z" fill="#FFFFFF" opacity="0.15"/>
+    <!-- Medical Cross -->
+    <path d="M 31 22 L 41 22 L 41 32 L 51 32 L 51 40 L 41 40 L 41 50 L 31 50 L 31 40 L 21 40 L 21 32 L 31 32 Z" fill="#FFFFFF"/>
+    <!-- Checkmark Accent -->
+    <path d="M 28 57 L 34 62 L 46 50" fill="none" stroke="#FDE047" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  
+  <!-- Typography on the right -->
+  <g transform="translate(94, 24)">
+    <text x="0" y="28" font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="30" fill="#FFFFFF" letter-spacing="2">HIPAA</text>
+    <!-- Subtitle Badge -->
+    <rect x="0" y="36" width="128" height="15" rx="3" fill="#0D9488"/>
+    <text x="64" y="47" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="800" font-size="7.5" fill="#FFFFFF" letter-spacing="0.8">COMPLIANCE STANDARD</text>
+    <!-- HHS Subtitle -->
+    <text x="0" y="62" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="7" fill="rgba(255,255,255,0.85)" letter-spacing="0.2">Health Insurance Portability</text>
+    <text x="0" y="70" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="7" fill="rgba(255,255,255,0.85)" letter-spacing="0.2">&amp; Accountability Act · HHS</text>
+  </g>
+</svg>

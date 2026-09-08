@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 110" width="100%" height="100%">
+  <defs>
+    <linearGradient id="itilBadgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B0764"/>
+      <stop offset="100%" stop-color="#240240"/>
+    </linearGradient>
+    <linearGradient id="itilAccentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E879F9"/>
+      <stop offset="100%" stop-color="#C026D3"/>
+    </linearGradient>
+    <filter id="itilDrop" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer Badge Container -->
+  <rect x="2" y="2" width="236" height="106" rx="8" fill="url(#itilBadgeGrad)" filter="url(#itilDrop)" stroke="#581C87" stroke-width="1.2"/>
+  
+  <!-- ITIL 4-Facet Diamond Emblem on left -->
+  <g transform="translate(20, 22)">
+    <!-- Quadrant 1 (Top) -->
+    <polygon points="32,4 56,28 32,28" fill="#C084FC"/>
+    <!-- Quadrant 2 (Right) -->
+    <polygon points="56,28 32,28 32,52" fill="#9333EA"/>
+    <!-- Quadrant 3 (Bottom) -->
+    <polygon points="32,52 8,28 32,28" fill="#C026D3"/>
+    <!-- Quadrant 4 (Left) -->
+    <polygon points="8,28 32,4 32,28" fill="#E879F9"/>
+    
+    <!-- Central intersection lines -->
+    <line x1="32" y1="4" x2="32" y2="52" stroke="#FFFFFF" stroke-width="1.5"/>
+    <line x1="8" y1="28" x2="56" y2="28" stroke="#FFFFFF" stroke-width="1.5"/>
+    
+    <circle cx="32" cy="28" r="4" fill="#FFFFFF"/>
+  </g>
+  
+  <!-- Typography on right -->
+  <g transform="translate(88, 24)">
+    <text x="0" y="28" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="32" fill="#FFFFFF" letter-spacing="2">ITIL</text>
+    <!-- "4" Badge -->
+    <rect x="70" y="6" width="24" height="24" rx="4" fill="url(#itilAccentGrad)"/>
+    <text x="82" y="23.5" text-anchor="middle" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-size="16" fill="#FFFFFF">4</text>
+    
+    <!-- AXELOS Accreditation Badge -->
+    <rect x="0" y="36" width="134" height="15" rx="3" fill="#7E22CE"/>
+    <text x="67" y="47" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="800" font-size="7.5" fill="#FFFFFF" letter-spacing="1">AXELOS · PEOPLECERT</text>
+    
+    <!-- Subtitle -->
+    <text x="0" y="62" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="7" fill="rgba(255,255,255,0.85)" letter-spacing="0.3">IT Service Management (ITSM)</text>
+    <text x="0" y="70" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="6.5" fill="rgba(255,255,255,0.65)" letter-spacing="0.2">Best Practice Framework</text>
+  </g>
+</svg>
