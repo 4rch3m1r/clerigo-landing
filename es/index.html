@@ -1339,20 +1339,26 @@ footer {
 }
 .award-tooltip {
   position: absolute;
-  top: 0; left: 120px;
-  width: 220px;
+  top: 0;
+  right: calc(100% + 14px);
+  left: auto;
+  width: 230px;
   background: #FFFFFF;
   border: 1px solid rgba(122,88,0,0.45);
   border-radius: 8px;
   padding: 14px 16px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.24);
   opacity: 0; pointer-events: none;
-  transform: translateX(-6px);
+  transform: translateX(8px);
   transition: opacity 0.2s, transform 0.2s;
   z-index: 200;
-  pointer-events: none;
+  text-align: left;
 }
-.hero-award:hover .award-tooltip {
+.award-tooltip-blue {
+  border-color: rgba(45,95,196,0.35);
+}
+.award-disc-wrap:hover .award-tooltip,
+.award-ipexpert:hover .award-tooltip {
   opacity: 1; transform: translateX(0);
 }
 .award-tt-header {
@@ -1394,7 +1400,7 @@ footer {
   .hero-subtitle { text-align: center; }
   .hero-actions { justify-content: center; }
   .hero-trust { justify-content: center; }
-  .award-tooltip { left: 50%; top: 120%; transform: translateX(-50%); }
+  .award-tooltip { left: 50%; right: auto; top: 120%; transform: translateX(-50%); }
 }
 
 /* ── AJUSTES DE TELÉFONO — esto NO venía en el original ──────────────────
@@ -1973,6 +1979,18 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
           <!-- sash overlay -->
           <div style="position:absolute;top:0;left:0;width:110px;height:110px;border-radius:50%;overflow:hidden;pointer-events:none;z-index:10;">
             <div style="position:absolute;top:22px;left:-28px;width:160px;background:linear-gradient(180deg,#2d5fc4 0%,#1a3a6b 50%,#2d5fc4 100%);color:#fff;font-size:7px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;text-align:center;padding:5px 0;transform:rotate(-35deg);box-shadow:0 2px 8px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.2);border-top:1px solid rgba(255,255,255,0.25);border-bottom:1px solid rgba(0,0,0,0.3);">SOFTWARE</div>
+          </div>
+          <!-- Tooltip Archemir Group -->
+          <div class="award-tooltip award-tooltip-blue">
+            <div class="award-tt-header">
+              <div class="award-tt-star"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2l2.4 4.8 5.3.8-3.8 3.7.9 5.3L10 14.1l-4.8 2.5.9-5.3L2.3 7.6l5.3-.8L10 2z" fill="#2d5fc4"/></svg></div>
+              <div>
+                <div class="award-tt-firm" style="color:#2d5fc4">Archemir Group</div>
+                <div class="award-tt-year" style="color:rgba(45,95,196,0.8)">Premiación Anual 2025</div>
+              </div>
+            </div>
+            <div class="award-tt-title">Premio a la Innovación de Software 2025</div>
+            <div class="award-tt-desc" style="border-top:1px solid rgba(45,95,196,0.2)">Otorgado por <strong style="color:#2d5fc4">Archemir Group</strong> a Clèrigo en reconocimiento a la excelencia e innovación en software GRC y arquitectura tecnológica.</div>
           </div>
         </div>
         <!-- tails -->
