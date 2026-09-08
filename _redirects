@@ -6,7 +6,7 @@
 /contacto.html /contact 301
 /precios /pricing 301
 /precios.html /pricing 301
-/login https://app.clerigo.io 302
-/login.html https://app.clerigo.io 302
-/es/login https://app.clerigo.io 302
-/es/login.html https://app.clerigo.io 302
+/login https://app.clerigo.io/login 301
+/login.html https://app.clerigo.io/login 301
+/es/login https://app.clerigo.io/login 301
+/es/login.html https://app.clerigo.io/login 301

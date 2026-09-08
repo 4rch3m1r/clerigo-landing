@@ -1,4 +1,4 @@
-﻿/**
+/**
  * =============================================================================
  * CLÉRIGO.IO - GENERADOR Y SINCRONIZADOR DE METADATOS HTML
  * =============================================================================
@@ -6,23 +6,26 @@
  * Schema.org (JSON-LD) en todas las páginas estáticas del proyecto.
  */
 
-const fs = require('fs');
-const path = require('path');
-const { SITE_CONFIG, ROUTES, generateHeadMetaTags, generateJsonLdGraph } = require('../seo.config.js');
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { SITE_CONFIG, ROUTES, generateHeadMetaTags, generateJsonLdGraph } from '../seo.config.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 
 // Lista de archivos objetivo
 const TARGET_FILES = [
   'index.html',
   'es/index.html',
-  'marcos.html',
+  'frameworks.html',
   'es/marcos.html',
-  'precios.html',
+  'pricing.html',
   'es/precios.html',
-  'confianza.html',
+  'trustcenter.html',
   'es/confianza.html',
-  'contacto.html',
+  'contact.html',
   'es/contacto.html',
   'partners.html',
   'es/partners.html',
@@ -75,6 +78,8 @@ function processHtmlFile(relativeFilePath) {
 
   // Preconnects recomendados para rendimiento
   const preconnects = [
+    `<link rel="preconnect" href="https://app.clerigo.io" crossorigin>`,
+    `<link rel="dns-prefetch" href="https://app.clerigo.io">`,
     `<link rel="preconnect" href="https://fonts.googleapis.com">`,
     `<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>`,
     `<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300;1,400&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">`

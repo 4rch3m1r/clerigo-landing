@@ -1,4 +1,4 @@
-﻿/**
+/**
  * =============================================================================
  * CLÉRIGO.IO - CONFIGURACIÓN CENTRALIZADA DE METADATOS SEO Y SOCIAL PREVIEWS
  * =============================================================================
@@ -9,7 +9,7 @@
 const SITE_CONFIG = {
   siteName: "Clérigo",
   siteUrl: "https://clerigo.io",
-  appUrl: "https://app.clerigo.io",
+  appUrl: "https://app.clerigo.io/login",
   defaultLocale: "es_ES",
   locales: {
     es: { code: "es_ES", lang: "es", label: "Español" },
@@ -134,7 +134,7 @@ const ROUTES = {
     lang: "es",
     locale: "es_ES",
     alternateLocale: "en_US",
-    alternateEn: "https://clerigo.io/precios.html",
+    alternateEn: "https://clerigo.io/pricing.html",
     alternateEs: "https://clerigo.io/es/precios.html",
     title: "Planes y Precios Transparentes | Clérigo GRC",
     description: "Inversión flexible desde $20/usuario/mes. Elige y activa únicamente los módulos y marcos que tu empresa necesita sin cargos ocultos.",
@@ -147,12 +147,12 @@ const ROUTES = {
   },
 
   // ── PRECIOS Y PLANES (EN) ──
-  "precios.html": {
-    canonicalPath: "precios.html",
+  "pricing.html": {
+    canonicalPath: "pricing.html",
     lang: "en",
     locale: "en_US",
     alternateLocale: "es_ES",
-    alternateEn: "https://clerigo.io/precios.html",
+    alternateEn: "https://clerigo.io/pricing.html",
     alternateEs: "https://clerigo.io/es/precios.html",
     title: "Transparent Plans & Pricing | Clérigo GRC",
     description: "Flexible GRC pricing from $20/user/month. Activate only the modules and frameworks your team needs with no hidden fees.",
@@ -566,7 +566,7 @@ function generateJsonLdGraph(fileKey, overrides = {}) {
   return JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
 }
 
-module.exports = {
+export {
   SITE_CONFIG,
   ROUTES,
   generateHeadMetaTags,

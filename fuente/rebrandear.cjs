@@ -554,7 +554,7 @@ for (const [ini, nombre, iniNueva, nombreNuevo, color] of [
 
 /* El botón «login» apuntaba a truestoneadvisory.com, que no es Archemir pero
    tampoco es Clèrigo. Va a la aplicación. */
-cambia('href="https://truestoneadvisory.com/login"', 'href="https://app.clerigo.io"', 1);
+cambia('href="https://truestoneadvisory.com/login"', 'href="https://app.clerigo.io/login"', 1);
 
 cambia("https://portal.archemir.com", "https://portal.clerigo.io", 1);
 cambia('href="archemir.com"', 'href="https://clerigo.io"', 1);

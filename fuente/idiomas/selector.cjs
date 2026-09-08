@@ -131,6 +131,7 @@ function ponSelector(html, idioma, ficheroEn, ficheroEs) {
      se quedaba sin selector y la página en inglés no tenía forma de volver al
      castellano. */
   const ANCLAJES = [
+    { marca: '<a href="https://app.clerigo.io/login" class="btn-ghost">', antes: true },
     { marca: '<a href="https://app.clerigo.io" class="btn-ghost">', antes: true },
     { marca: '    <span class="lsub">Clèrigo.</span>\n  </a>\n', antes: false },
   ];
