@@ -283,6 +283,110 @@ const itilSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 110" w
   </g>
 </svg>`;
 
+// 7. FINRA: Official Financial Industry Regulatory Authority Logo
+const finraSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 110" width="100%" height="100%">
+  <defs>
+    <linearGradient id="finraBadgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#003B6B"/>
+      <stop offset="100%" stop-color="#002244"/>
+    </linearGradient>
+    <filter id="finraDrop" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer Badge Container -->
+  <rect x="2" y="2" width="236" height="106" rx="8" fill="url(#finraBadgeGrad)" filter="url(#finraDrop)" stroke="#0A5B9C" stroke-width="1.2"/>
+  
+  <!-- Official FINRA Vector Paths (Scaled & Centered) -->
+  <g transform="translate(20, 20) scale(1.65)">
+    <g fill="#FFFFFF">
+      <!-- I -->
+      <rect x="21.01" y="0.22" width="4.19" height="23.83"/>
+      <!-- A -->
+      <path d="M76.43,19.98a2.22,2.22,0,0,1-2.44-2.27c0-1.15.73-2.08,2.45-2.55l8.98-2.47v7.29Zm13.25-13.64c0-3.04-1.93-6.12-6.63-6.12h-8.85c-1.44,0-1.94.59-2.07,1.82-.05.5-.24,2.25-.24,2.25h10.45c2.21,0,3.08,1.04,3.08,2.71v1.39l-8.83,2.4c-4.72,1.3-7,3.35-7,6.94a6.26,6.26,0,0,0,6.58,6.32h13.51Z"/>
+      <!-- R -->
+      <path d="M58.88,7c0-1.67.86-2.71,3.08-2.71h7.07s-.19-1.75-.24-2.25c-.13-1.22-.63-1.82-2.07-1.82h-5.48c-4.7,0-6.62,3.09-6.62,6.12v17.71h4.26Z"/>
+      <!-- N -->
+      <path d="M42.45,4.29c2.21,0,3.08,1.04,3.08,2.71v17.05h4.26V6.35c0-3.04-1.93-6.12-6.62-6.12h-13v23.83h4.2V4.29Z"/>
+      <!-- F -->
+      <path d="M15.27,11.52c-.13-1.23-.63-1.82-2.07-1.82h-8.37v-2.7c0-1.67.86-2.71,3.08-2.71h10.07s-.19-1.75-.24-2.25c-.13-1.22-.63-1.82-2.07-1.82h-8.48c-4.7,0-6.63,3.08-6.63,6.12v17.71h4.26v-10.28h10.68s-.19-1.75-.24-2.25"/>
+      <!-- Registered mark -->
+      <circle cx="94.2" cy="22.2" r="1.8" fill="none" stroke="#FFFFFF" stroke-width="0.3"/>
+      <text x="94.2" y="23.2" text-anchor="middle" font-size="2" font-family="sans-serif" font-weight="700" fill="#FFFFFF">R</text>
+    </g>
+  </g>
+  
+  <!-- Subtitle and Badge -->
+  <g transform="translate(18, 66)">
+    <rect x="0" y="0" width="204" height="17" rx="3" fill="#0077CC"/>
+    <text x="102" y="12" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="8.5" fill="#FFFFFF" letter-spacing="1.2">FINANCIAL INDUSTRY REGULATORY AUTHORITY</text>
+    <text x="102" y="27" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="6.5" fill="rgba(255,255,255,0.75)" letter-spacing="0.3">Broker-Dealer &amp; Securities Market Oversight</text>
+  </g>
+</svg>`;
+
+// 8. SEC: Official U.S. Securities and Exchange Commission Logo
+const secSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 110" width="100%" height="100%">
+  <defs>
+    <linearGradient id="secBadgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#002B49"/>
+      <stop offset="100%" stop-color="#001626"/>
+    </linearGradient>
+    <linearGradient id="secGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F9B624"/>
+      <stop offset="100%" stop-color="#D99000"/>
+    </linearGradient>
+    <filter id="secDrop" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer Badge Container -->
+  <rect x="2" y="2" width="236" height="106" rx="8" fill="url(#secBadgeGrad)" filter="url(#secDrop)" stroke="#0A4672" stroke-width="1.2"/>
+  
+  <!-- Official SEC Seal Graphic on the left -->
+  <g transform="translate(16, 16)">
+    <!-- Outer Gold Ring -->
+    <circle cx="38" cy="38" r="36" fill="url(#secGoldGrad)"/>
+    <circle cx="38" cy="38" r="34" fill="none" stroke="#002B49" stroke-width="1"/>
+    <!-- Navy Inner Circle -->
+    <circle cx="38" cy="38" r="28" fill="#002B49"/>
+    
+    <!-- Eagle & Shield Silhouette inside Seal -->
+    <!-- Shield -->
+    <path d="M 38 26 L 49 32 C 49 46 43 53 38 56 C 33 53 27 46 27 32 Z" fill="#F9B624"/>
+    <path d="M 38 28 L 47 33 C 47 44 42 50 38 53 C 34 50 29 44 29 33 Z" fill="#002B49"/>
+    
+    <!-- Eagle Wings -->
+    <path d="M 38 23 C 33 16 20 22 16 32 C 23 30 30 33 34 38 Z" fill="#F9B624"/>
+    <path d="M 38 23 C 43 16 56 22 60 32 C 53 30 46 33 42 38 Z" fill="#F9B624"/>
+    <!-- Eagle Head -->
+    <path d="M 38 18 L 41 22 L 35 22 Z" fill="#F9B624"/>
+    <circle cx="38" cy="20" r="3.5" fill="#F9B624"/>
+    <!-- Olive Branch & Arrows -->
+    <line x1="26" y1="50" x2="20" y2="54" stroke="#F9B624" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="50" y1="50" x2="56" y2="54" stroke="#F9B624" stroke-width="1.5" stroke-linecap="round"/>
+    
+    <!-- Star Accents -->
+    <circle cx="38" cy="7" r="1.5" fill="#002B49"/>
+    <circle cx="38" cy="69" r="1.5" fill="#002B49"/>
+    <circle cx="7" cy="38" r="1.5" fill="#002B49"/>
+    <circle cx="69" cy="38" r="1.5" fill="#002B49"/>
+  </g>
+  
+  <!-- Typography on the right -->
+  <g transform="translate(98, 24)">
+    <!-- "SEC" Bold Header -->
+    <text x="0" y="28" font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="32" fill="#FFFFFF" letter-spacing="2">SEC</text>
+    <!-- Subtitle Badge -->
+    <rect x="0" y="36" width="126" height="15" rx="3" fill="url(#secGoldGrad)"/>
+    <text x="63" y="47" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="7" fill="#001626" letter-spacing="0.8">U.S. SECURITIES &amp; EXCHANGE</text>
+    <!-- Federal Subtitle -->
+    <text x="0" y="62" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="7" fill="rgba(255,255,255,0.85)" letter-spacing="0.2">Securities Exchange Act of 1934</text>
+    <text x="0" y="70" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="6.5" fill="rgba(255,255,255,0.65)" letter-spacing="0.2">Public Companies &amp; Capital Markets</text>
+  </g>
+</svg>`;
+
 // Write all SVGs to public/
 const pubDir = path.join(__dirname, '../public');
 fs.writeFileSync(path.join(pubDir, 'pci-dss.svg'), pciDssSvg, 'utf8');
@@ -291,5 +395,7 @@ fs.writeFileSync(path.join(pubDir, 'swift.svg'), swiftSvg, 'utf8');
 fs.writeFileSync(path.join(pubDir, 'cobit.svg'), cobitSvg, 'utf8');
 fs.writeFileSync(path.join(pubDir, 'coso.svg'), cosoSvg, 'utf8');
 fs.writeFileSync(path.join(pubDir, 'itil.svg'), itilSvg, 'utf8');
+fs.writeFileSync(path.join(pubDir, 'finra.svg'), finraSvg, 'utf8');
+fs.writeFileSync(path.join(pubDir, 'sec.svg'), secSvg, 'utf8');
 
-console.log('Successfully regenerated all 6 SVGs with premium badge containers!');
+console.log('Successfully generated all 8 SVGs in public/ directory!');
