@@ -387,6 +387,89 @@ const secSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 110" wi
   </g>
 </svg>`;
 
+// 9. OFAC: Official Office of Foreign Assets Control Logo
+const ofacSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 110" width="100%" height="100%">
+  <defs>
+    <linearGradient id="ofacBadgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#004838"/>
+      <stop offset="100%" stop-color="#00241C"/>
+    </linearGradient>
+    <linearGradient id="ofacGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5C542"/>
+      <stop offset="100%" stop-color="#C99318"/>
+    </linearGradient>
+    <filter id="ofacDrop" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer Badge Container -->
+  <rect x="2" y="2" width="236" height="106" rx="8" fill="url(#ofacBadgeGrad)" filter="url(#ofacDrop)" stroke="#167A60" stroke-width="1.2"/>
+  
+  <!-- Official U.S. Department of the Treasury Seal Graphic on the left -->
+  <g transform="translate(16, 16)">
+    <!-- Outer Gold Ring with border -->
+    <circle cx="38" cy="38" r="36" fill="url(#ofacGoldGrad)"/>
+    <circle cx="38" cy="38" r="33.5" fill="none" stroke="#004838" stroke-width="1.2"/>
+    <!-- Green Inner Circle -->
+    <circle cx="38" cy="38" r="28" fill="#00382B"/>
+    
+    <!-- Shield Container -->
+    <path d="M 38 18 L 52 23 C 52 38 46 47 38 52 C 30 47 24 38 24 23 Z" fill="url(#ofacGoldGrad)"/>
+    <path d="M 38 20 L 50 24.5 C 50 36.5 45 44.5 38 49 C 31 44.5 26 36.5 26 24.5 Z" fill="#00382B"/>
+    
+    <!-- Scales of Justice (Top Section of Shield) -->
+    <!-- Balance Beam -->
+    <line x1="30" y1="26" x2="46" y2="26" stroke="#F5C542" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="38" cy="26" r="1.5" fill="#F5C542"/>
+    <line x1="38" y1="23" x2="38" y2="26" stroke="#F5C542" stroke-width="1.5"/>
+    <!-- Left Pan -->
+    <line x1="30" y1="26" x2="28" y2="30" stroke="#F5C542" stroke-width="0.8"/>
+    <line x1="30" y1="26" x2="32" y2="30" stroke="#F5C542" stroke-width="0.8"/>
+    <path d="M 27 30 Q 30 32 33 30 Z" fill="#F5C542"/>
+    <!-- Right Pan -->
+    <line x1="46" y1="26" x2="44" y2="30" stroke="#F5C542" stroke-width="0.8"/>
+    <line x1="46" y1="26" x2="48" y2="30" stroke="#F5C542" stroke-width="0.8"/>
+    <path d="M 43 30 Q 46 32 49 30 Z" fill="#F5C542"/>
+    
+    <!-- Chevron with 13 Stars (Middle Section of Shield) -->
+    <path d="M 26 33 L 38 37 L 50 33 L 50 37 L 38 41 L 26 37 Z" fill="url(#ofacGoldGrad)"/>
+    <!-- Small star points in chevron -->
+    <circle cx="31" cy="35.5" r="0.7" fill="#00382B"/>
+    <circle cx="34.5" cy="36.7" r="0.7" fill="#00382B"/>
+    <circle cx="38" cy="38" r="0.8" fill="#00382B"/>
+    <circle cx="41.5" cy="36.7" r="0.7" fill="#00382B"/>
+    <circle cx="45" cy="35.5" r="0.7" fill="#00382B"/>
+    
+    <!-- Official Key of Authority (Bottom Section of Shield) -->
+    <!-- Key Shank -->
+    <line x1="32" y1="44" x2="44" y2="44" stroke="#F5C542" stroke-width="1.4" stroke-linecap="round"/>
+    <!-- Key Bow (Handle) on left -->
+    <circle cx="31" cy="44" r="2.2" fill="none" stroke="#F5C542" stroke-width="1.2"/>
+    <!-- Key Bit (Teeth) on right -->
+    <line x1="42" y1="44" x2="42" y2="47" stroke="#F5C542" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="44" y1="44" x2="44" y2="46.5" stroke="#F5C542" stroke-width="1.2" stroke-linecap="round"/>
+    
+    <!-- Star accents in ring -->
+    <circle cx="38" cy="7" r="1.5" fill="#00382B"/>
+    <circle cx="38" cy="69" r="1.5" fill="#00382B"/>
+    <circle cx="7" cy="38" r="1.5" fill="#00382B"/>
+    <circle cx="69" cy="38" r="1.5" fill="#00382B"/>
+  </g>
+  
+  <!-- Typography on the right -->
+  <g transform="translate(98, 24)">
+    <!-- "OFAC" Bold Header -->
+    <text x="0" y="28" font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="32" fill="#FFFFFF" letter-spacing="2">OFAC</text>
+    <!-- Subtitle Badge -->
+    <rect x="0" y="36" width="126" height="15" rx="3" fill="url(#ofacGoldGrad)"/>
+    <text x="63" y="47" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="7" fill="#00241C" letter-spacing="0.8">U.S. TREASURY · SANCTIONS</text>
+    <!-- Federal Subtitle -->
+    <text x="0" y="62" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="7" fill="rgba(255,255,255,0.9)" letter-spacing="0.2">Office of Foreign Assets Control</text>
+    <text x="0" y="70" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="6.5" fill="rgba(255,255,255,0.7)" letter-spacing="0.2">SDN List &amp; Economic Sanctions</text>
+  </g>
+</svg>`;
+
 // Write all SVGs to public/
 const pubDir = path.join(__dirname, '../public');
 fs.writeFileSync(path.join(pubDir, 'pci-dss.svg'), pciDssSvg, 'utf8');
@@ -397,5 +480,6 @@ fs.writeFileSync(path.join(pubDir, 'coso.svg'), cosoSvg, 'utf8');
 fs.writeFileSync(path.join(pubDir, 'itil.svg'), itilSvg, 'utf8');
 fs.writeFileSync(path.join(pubDir, 'finra.svg'), finraSvg, 'utf8');
 fs.writeFileSync(path.join(pubDir, 'sec.svg'), secSvg, 'utf8');
+fs.writeFileSync(path.join(pubDir, 'ofac.svg'), ofacSvg, 'utf8');
 
-console.log('Successfully generated all 8 SVGs in public/ directory!');
+console.log('Successfully generated all 9 SVGs in public/ directory!');
