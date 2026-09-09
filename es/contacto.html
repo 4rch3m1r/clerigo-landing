@@ -490,6 +490,144 @@ textarea.fc { height: 84px; padding: 11px 13px; resize: none; }
 .toast.show { transform: translateY(0); opacity: 1; }
 .toast svg { flex-shrink: 0; }
 
+
+/* ── VENTANA MODAL DE AGENDAR REUNIÓN VIRTUAL (UX/UI PROFESIONAL) ── */
+.booking-modal-overlay {
+  position: fixed; inset: 0; background: rgba(14, 14, 14, 0.72); z-index: 9999;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+}
+.booking-modal-overlay.open { opacity: 1; pointer-events: all; }
+.booking-modal {
+  background: var(--dark-2); border: 1px solid var(--border-light); border-radius: 12px;
+  width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; padding: 28px;
+  position: relative; box-shadow: 0 24px 64px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.06);
+  transform: translateY(16px) scale(0.98); transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.booking-modal-overlay.open .booking-modal { transform: translateY(0) scale(1); }
+.booking-modal-close {
+  position: absolute; top: 16px; right: 16px; width: 32px; height: 32px;
+  border: 1px solid var(--border); border-radius: 6px; background: var(--dark);
+  cursor: pointer; color: var(--text-3); display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; z-index: 2;
+}
+.booking-modal-close:hover { border-color: var(--border-light); color: var(--text); background: var(--dark-3); }
+
+.booking-header { margin-bottom: 20px; }
+.booking-badge {
+  display: inline-flex; align-items: center; gap: 8px; padding: 5px 11px;
+  background: rgba(0, 120, 212, 0.09); border: 1px solid rgba(0, 120, 212, 0.25);
+  border-radius: 9999px; font-size: 11px; font-weight: 700; color: #0078D4;
+  margin-bottom: 12px; letter-spacing: 0.3px;
+}
+.booking-status-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: #107C41;
+  box-shadow: 0 0 8px rgba(16, 124, 65, 0.7);
+  display: inline-block;
+}
+.booking-status-text { color: var(--text-3); font-weight: 600; font-size: 10px; }
+.booking-title {
+  font-size: 22px; font-weight: 900; letter-spacing: -0.6px; line-height: 1.2;
+  color: var(--text); margin-bottom: 6px;
+}
+.booking-subtitle { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+
+.booking-perks {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px;
+  background: var(--dark-3); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px;
+}
+.booking-perk {
+  display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-2);
+}
+.booking-perk svg { color: var(--red); flex-shrink: 0; }
+
+.booking-field-group { margin-bottom: 16px; }
+.booking-label {
+  display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.8px;
+  text-transform: uppercase; color: var(--text-3); margin-bottom: 8px;
+}
+.booking-days-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+}
+.booking-day-btn {
+  background: var(--dark); border: 1px solid var(--border); border-radius: 6px;
+  padding: 8px 4px; text-align: center; cursor: pointer; transition: all 0.15s;
+  color: var(--text); display: flex; flex-direction: column; align-items: center; gap: 2px;
+  font-family: inherit;
+}
+.booking-day-btn:hover { border-color: var(--border-light); background: var(--dark-3); }
+.booking-day-btn.active {
+  border-color: var(--red); background: var(--red-dim); color: var(--red);
+  box-shadow: 0 0 0 1px var(--red);
+}
+.booking-day-name { font-size: 9px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-3); }
+.booking-day-btn.active .booking-day-name { color: var(--red); }
+.booking-day-num { font-size: 14px; font-weight: 800; }
+.booking-day-sub { font-size: 9px; color: var(--text-3); }
+.booking-day-btn.active .booking-day-sub { color: var(--red); opacity: 0.85; }
+
+.booking-slots-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;
+}
+.booking-slot-btn {
+  background: var(--dark); border: 1px solid var(--border); border-radius: 6px;
+  padding: 8px 0; text-align: center; font-size: 11px; font-weight: 700;
+  color: var(--text); cursor: pointer; transition: all 0.15s; font-family: inherit;
+}
+.booking-slot-btn:hover { border-color: var(--border-light); background: var(--dark-3); }
+.booking-slot-btn.active {
+  border-color: var(--red); background: var(--red); color: white;
+}
+
+.booking-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.booking-actions { margin-top: 20px; }
+.booking-submit-btn {
+  width: 100%; height: 44px; display: flex; align-items: center; justify-content: center;
+  gap: 8px; font-size: 13px; font-weight: 700; border-radius: 6px; cursor: pointer;
+}
+.booking-security-note {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  font-size: 11px; color: var(--text-3); margin-top: 10px; text-align: center;
+}
+
+/* Estado de Éxito */
+.booking-success-content { text-align: center; padding: 12px 6px; }
+.booking-success-icon {
+  width: 54px; height: 54px; border-radius: 50%; background: rgba(15, 107, 78, 0.12);
+  color: var(--success); display: inline-flex; align-items: center; justify-content: center;
+  margin-bottom: 16px; border: 2px solid rgba(15, 107, 78, 0.25);
+}
+.booking-success-title { font-size: 20px; font-weight: 900; color: var(--text); margin-bottom: 6px; }
+.booking-success-desc { font-size: 13px; color: var(--text-2); line-height: 1.5; margin-bottom: 20px; }
+.booking-summary-card {
+  background: var(--dark-3); border: 1px solid var(--border); border-radius: 8px;
+  padding: 14px 16px; text-align: left; margin-bottom: 20px;
+}
+.bsc-row {
+  display: flex; justify-content: space-between; align-items: center; padding: 6px 0;
+  font-size: 12px; border-bottom: 1px solid var(--border);
+}
+.bsc-row:last-child { border-bottom: none; }
+.bsc-lbl { color: var(--text-3); font-weight: 600; }
+.bsc-val { color: var(--text); font-weight: 700; }
+.booking-success-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.bsc-btn {
+  height: 40px; display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px; font-size: 12px; font-weight: 700; text-decoration: none; border-radius: 6px;
+}
+
+@media (max-width: 600px) {
+  .booking-modal { padding: 22px 16px; }
+  .booking-perks { grid-template-columns: 1fr; gap: 6px; }
+  .booking-days-grid { grid-template-columns: repeat(3, 1fr); }
+  .booking-slots-grid { grid-template-columns: repeat(3, 1fr); }
+  .booking-row { grid-template-columns: 1fr; gap: 8px; }
+  .booking-success-actions { grid-template-columns: 1fr; }
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 960px) {
   .contact-wrap { grid-template-columns: minmax(0, 1fr); gap: 40px; }
@@ -686,7 +824,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
           <svg class="ch-arr" width="15" height="15" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
 
-        <a class="ch" href="#" onclick="alert('Te redirigimos a nuestro calendario para agendar una demo de 30 min.');return false;">
+        <a class="ch" href="#" onclick="openBookingModal();return false;" role="button" aria-haspopup="dialog" aria-label="Agendar reunión virtual">
           <div class="ch-ico ms">
             <svg width="20" height="20" viewBox="0 0 21 21" fill="none"><rect x="1" y="1" width="9" height="9" fill="#F25022"/><rect x="11" y="1" width="9" height="9" fill="#7FBA00"/><rect x="1" y="11" width="9" height="9" fill="#00A4EF"/><rect x="11" y="11" width="9" height="9" fill="#FFB900"/></svg>
           </div>
@@ -883,6 +1021,138 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
   <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="22,4 12,14.01 9,11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
   ¡Recibimos tu solicitud! Te contactamos en menos de 24 h.
 </div>
+
+<!-- MODAL DE AGENDAR REUNIÓN VIRTUAL (UX/UI PROFESIONAL) -->
+<div class="booking-modal-overlay" id="bookingModalOverlay" onclick="closeBookingModalOutside(event)" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">
+  <div class="booking-modal" id="bookingModal">
+    <button class="booking-modal-close" onclick="closeBookingModal()" aria-label="Cerrar" title="Cerrar [Esc]">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+
+    <!-- VISTA PRINCIPAL DE AGENDAR -->
+    <div id="bookingFormView">
+      <div class="booking-header">
+        <div class="booking-badge">
+          <svg width="16" height="16" viewBox="0 0 21 21" fill="none"><rect x="1" y="1" width="9" height="9" fill="#F25022"/><rect x="11" y="1" width="9" height="9" fill="#7FBA00"/><rect x="1" y="11" width="9" height="9" fill="#00A4EF"/><rect x="11" y="11" width="9" height="9" fill="#FFB900"/></svg>
+          <span>Microsoft Teams · 30 min</span>
+          <span class="booking-status-dot"></span>
+          <span class="booking-status-text">Disponible</span>
+        </div>
+        <h2 class="booking-title" id="bookingModalTitle">Agendar Demostración Virtual</h2>
+        <p class="booking-subtitle">Elige un horario para una demostración personalizada 1 a 1 con un especialista senior en GRC.</p>
+      </div>
+
+      <!-- HIGHLIGHTS / BENEFICIOS -->
+      <div class="booking-perks">
+        <div class="booking-perk">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span><strong>30 min</strong> enfocados</span>
+        </div>
+        <div class="booking-perk">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span><strong>Sin compromiso</strong> ni presiones</span>
+        </div>
+        <div class="booking-perk">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <span><strong>En vivo</strong> con tus retos</span>
+        </div>
+      </div>
+
+      <div class="booking-body">
+        <!-- 1. SELECT DAY -->
+        <div class="booking-field-group">
+          <label class="booking-label">1. Selecciona el día de tu preferencia</label>
+          <div class="booking-days-grid" id="bookingDaysContainer"></div>
+        </div>
+
+        <!-- 2. SELECT TIME SLOT -->
+        <div class="booking-field-group">
+          <label class="booking-label">2. Selecciona la hora (CST / Hora local)</label>
+          <div class="booking-slots-grid" id="bookingSlotsContainer">
+            <button type="button" class="booking-slot-btn active" data-time="09:30 AM" onclick="selectBookingSlot(this)">09:30 AM</button>
+            <button type="button" class="booking-slot-btn" data-time="11:00 AM" onclick="selectBookingSlot(this)">11:00 AM</button>
+            <button type="button" class="booking-slot-btn" data-time="02:30 PM" onclick="selectBookingSlot(this)">02:30 PM</button>
+            <button type="button" class="booking-slot-btn" data-time="04:00 PM" onclick="selectBookingSlot(this)">04:00 PM</button>
+            <button type="button" class="booking-slot-btn" data-time="05:30 PM" onclick="selectBookingSlot(this)">05:30 PM</button>
+          </div>
+        </div>
+
+        <!-- 3. CONTACT INFO -->
+        <div class="booking-field-group">
+          <label class="booking-label">3. Tus datos de contacto</label>
+          <div class="booking-row">
+            <input type="text" class="fc" id="bmName" placeholder="Nombre y apellido *" required>
+            <input type="email" class="fc" id="bmEmail" placeholder="Correo corporativo *" required>
+          </div>
+          <div class="booking-row" style="margin-top: 10px;">
+            <input type="text" class="fc" id="bmCompany" placeholder="Empresa">
+            <select class="fc" id="bmTopic">
+              <option value="Gestión de Riesgos y Control">Gestión de Riesgos y Control Interno</option>
+              <option value="ISO 27001 y Ciberseguridad">ISO 27001 y Ciberseguridad</option>
+              <option value="Auditoría Interna y BIA">Auditoría Interna y Monitoreo Continuo</option>
+              <option value="Tour completo de la plataforma" selected>Tour completo de la plataforma</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- CTA ACTIONS -->
+        <div class="booking-actions">
+          <button type="button" class="btn-primary booking-submit-btn" id="btnBookingSubmit" onclick="submitBookingModal()">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <span>Confirmar y agendar reunión</span>
+          </button>
+          <div class="booking-security-note">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <span>Invitación directa a tu calendario de Teams con confirmación instantánea.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISTA DE CONFIRMACIÓN / ÉXITO -->
+    <div id="bookingSuccessView" style="display:none;">
+      <div class="booking-success-content">
+        <div class="booking-success-icon">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        </div>
+        <h3 class="booking-success-title">¡Demostración agendada con éxito!</h3>
+        <p class="booking-success-desc">Hemos reservado tu espacio y enviado la invitación de Microsoft Teams a <strong id="bookingConfirmedEmail" style="color:var(--text)"></strong>.</p>
+        
+        <div class="booking-summary-card">
+          <div class="bsc-row">
+            <span class="bsc-lbl">Fecha y hora</span>
+            <span class="bsc-val" id="bookingConfirmedTime">Jueves · 09:30 AM</span>
+          </div>
+          <div class="bsc-row">
+            <span class="bsc-lbl">Plataforma</span>
+            <span class="bsc-val" style="display:flex;align-items:center;gap:6px">
+              <svg width="14" height="14" viewBox="0 0 21 21" fill="none"><rect x="1" y="1" width="9" height="9" fill="#F25022"/><rect x="11" y="1" width="9" height="9" fill="#7FBA00"/><rect x="1" y="11" width="9" height="9" fill="#00A4EF"/><rect x="11" y="11" width="9" height="9" fill="#FFB900"/></svg>
+              Microsoft Teams (Enlace en el correo)
+            </span>
+          </div>
+          <div class="bsc-row">
+            <span class="bsc-lbl">Tema</span>
+            <span class="bsc-val" id="bookingConfirmedTopic">Tour completo de la plataforma</span>
+          </div>
+        </div>
+
+        <div class="booking-success-actions">
+          <a id="btnGoogleCalendar" href="#" target="_blank" rel="noopener" class="btn-ghost bsc-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            Añadir a Google Calendar
+          </a>
+          <button type="button" class="btn-primary bsc-btn" onclick="downloadBookingIcs()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Descargar para Outlook (.ics)
+          </button>
+        </div>
+
+        <button type="button" class="btn-ghost" style="width:100%;margin-top:12px;border:none;cursor:pointer" onclick="closeBookingModal()">Listo / Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </main>
 
 <!-- ══════════ PIE ══════════ -->
