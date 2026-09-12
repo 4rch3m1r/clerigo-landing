@@ -19,7 +19,7 @@
  */
 const fs = require("node:fs");
 const path = require("node:path");
-const { segmentos, ZONAS_DE_CODIGO, COMENTARIOS, LITERAL_DE_GUION } = require("./segmentos.cjs");
+const { segmentos, ZONAS_DE_CODIGO, COMENTARIOS, LITERAL_DE_GUION, esTraducible } = require("./segmentos.cjs");
 const { TODAS } = require("./a-ingles.cjs");
 const { CASTELLANO } = require("../donde.cjs");
 const { diccionario } = require("./a-ingles.cjs");
@@ -31,6 +31,10 @@ const DIC = diccionario();
 const RAIZ = path.join(__dirname, "..", "..");
 
 const fallos = [];
+/* Cuántos pares de rótulos gemelos se han llegado a mirar en todo el sitio.
+   Sin esto, el día que el patrón deje de encajar la guarda pasaría comparando
+   cero con cero, que es la peor manera de aprobar. */
+let paresGemelos = 0;
 function comprueba(punto, condicion, detalle) {
   const ok = !!condicion;
   if (!ok) fallos.push(punto + (detalle ? " — " + detalle : ""));
@@ -267,6 +271,46 @@ for (const p of TODAS) {
   comprueba(`${p}: la inglesa no lleva castellano dentro del guion`, enElGuion.length === 0,
     enElGuion.length ? `${enElGuion.length}, p.ej. «${enElGuion[0]}»` : "");
 
+  /* ── LOS RÓTULOS GEMELOS, QUE ES OTRA PREGUNTA ──────────────────────────
+   *
+   * Las dos guardas de arriba preguntan lo mismo por dos caminos: «¿esto
+   * parece castellano?». Y las dos se apoyan en la tilde. Por eso las dos
+   * dejaron pasar esto, que estuvo publicado en clerigo.io/pricing:
+   *
+   *     billing === 'annual' ? 'USD / año' : 'USD / mes'
+   *
+   * El primero salía «USD / year» y el segundo salía «USD / mes». El primero
+   * se traduce porque lleva eñe; el segundo no lleva nada, así que el
+   * extractor no lo sacaba, no aparecía en la cuenta de «sin traducir», y no
+   * había manera de echarlo de menos.
+   *
+   * Esta pregunta NO es «¿parece castellano?» sino «¿su gemelo se trató
+   * igual?». Dos rótulos que elige el mismo ternario son la misma clase de
+   * cosa —los dos estados de un interruptor, singular y plural, anual y
+   * mensual—: o los dos están en el diccionario o ninguno. Uno sí y otro no
+   * no es una decisión, es este fallo.
+   *
+   * Se midió antes de escribirla: 34 pares en las ocho páginas y CERO
+   * descuadrados. Una guarda que nace con cuarenta rojas es una guarda que se
+   * aprende a ignorar.
+   *
+   * Sólo pares donde AL MENOS UNO es texto para leer: dos nombres de clase o
+   * dos identificadores no son rótulos. Y sin huecos de interpolación dentro,
+   * porque entonces el trozo del diccionario no es el literal. */
+  const GEMELOS = /\?\s*(['"])([^'"\n]{1,80})\1\s*:\s*(['"])([^'"\n]{1,80})\3/g;
+  const descuadrados = [];
+  for (const m of es.matchAll(GEMELOS)) {
+    const a = m[2].trim(), b = m[4].trim();
+    if (!esTraducible(a) && !esTraducible(b)) continue;
+    paresGemelos++;
+    const ea = DIC[a] !== undefined, eb = DIC[b] !== undefined;
+    if (ea !== eb) {
+      descuadrados.push(`«${a}» ${ea ? "sí" : "NO"} se traduce y «${b}» ${eb ? "sí" : "NO"}`);
+    }
+  }
+  comprueba(`${p}: los rótulos gemelos se traducen los dos o ninguno`,
+    descuadrados.length === 0, descuadrados.join(" · "));
+
   /* Y la detección de idioma, en las DOS.
      Quitarla no rompe nada que se vea —la página carga igual de bien— y a quien
      llega con el navegador en castellano se le queda el inglés delante sin
@@ -330,6 +374,13 @@ for (const p of TODAS) {
     && es.includes(`<a href="../${ficheroEn}" class="idioma" data-idioma="en"`),
     `la inglesa debe apuntar a es/${ficheroEs} y la castellana a ../${ficheroEn}`);
 }
+
+/* Y que la guarda de los gemelos haya mirado algo de verdad. Se midieron 34
+   pares el día que se escribió; se exige que siga habiendo, no el número
+   exacto, porque el número crece y encoge con la página y clavarlo sería
+   pedir que nadie toque un ternario. */
+comprueba("y la guarda de los rótulos gemelos ha mirado pares de verdad",
+  paresGemelos > 0, paresGemelos + " pares mirados en todo el sitio");
 
 console.log("\n────────────────────────────────────────────────────────────────");
 console.log(fallos.length === 0 ? "TODO PASA" : `FALLAN ${fallos.length}:`);

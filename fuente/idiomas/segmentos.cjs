@@ -486,7 +486,7 @@ function trozosDeLosGuiones(html) {
            pide ADEMÁS «parece castellano o son dos palabras», y «/mes» no es ni
            lo uno ni lo otro: ponerlo sólo en `esTraducible` no servía de nada y
            la página inglesa seguía escribiendo «/mes» en el ciclo mensual. */
-        if ((CORTOS_QUE_SE_TRADUCEN.has(juzgar)
+        if (((CORTOS_QUE_SE_TRADUCEN.has(juzgar) || LLEVA_UN_CORTO.test(juzgar))
           || (texto.length >= 3 && juzgar.length >= 3
             && (PARECE_CASTELLANO.test(juzgar) || DOS_PALABRAS.test(juzgar)))) && esTraducible(juzgar)
           && !NOMBRE_DEL_CODIGO.test(juzgar) && !SOLO_SIGLAS(juzgar)
@@ -545,6 +545,38 @@ function textosDeLosGuiones(html) {
  */
 const CORTOS_QUE_SE_TRADUCEN = new Set(["/mes", "/año", "mes", "año", "día", "días"]);
 
+/**
+ * LOS MISMOS CORTOS, PERO DENTRO DE ALGO MÁS.
+ *
+ * La lista de arriba sólo valía cuando el trozo era EXACTAMENTE uno de ellos, y
+ * así «USD / mes» —el rótulo del periodo del panel de precios— no era traducible
+ * para nadie: no lo sacaba el extractor, no salía en la cuenta de «sin
+ * traducir», y la página inglesa lo servía en castellano. Publicado, y visto en
+ * clerigo.io/pricing, no en el fichero.
+ *
+ * Su gemelo «USD / año» sí pasaba, pero por casualidad: por la eñe de «año».
+ * Dos rótulos del mismo interruptor, uno traducido y el otro no.
+ *
+ * La ceguera se puede nombrar: una palabra corta del castellano, SIN TILDE,
+ * pegada a una sigla o a un número. No da ninguna de las cinco señales de
+ * PARECE_LENGUAJE, y por eso no había forma de echarla de menos.
+ *
+ * LOS BORDES SE ESCRIBEN A MANO, no con el borde de palabra del lenguaje de
+ * expresiones. Para ese borde la tilde NO es letra, así que ve final de palabra
+ * donde no lo hay: el borde del lenguaje encuentra «mes» dentro de «mesón»,
+ * «mesías» y «mesí», y con él cualquiera de esas palabras pasaría a ser un
+ * trozo traducible por llevar un corto que no lleva. Con [^A-Za-zÀ-ÿ] la letra
+ * acentuada es letra, que es lo que es, y ninguna de las tres encaja.
+ *
+ * Se midió antes de escribirlo, y la primera versión de este comentario ponía
+ * mal el ejemplo: decía «año» dentro de «mañana» y «día» dentro de «mediodía»,
+ * y esas dos el borde del lenguaje las lleva bien. Las que falla son las que
+ * siguen con tilde.
+ */
+const LLEVA_UN_CORTO = new RegExp(
+  "(?:^|[^A-Za-zÀ-ÿ])(?:" + [...CORTOS_QUE_SE_TRADUCEN]
+    .map((c) => c.replace(/^\//, "")).join("|") + ")(?:[^A-Za-zÀ-ÿ]|$)");
+
 function esTraducible(s) {
   const t = s.trim();
   /* Vacío no, pero UNA letra sí: «y» entre dos etiquetas es una palabra que
@@ -553,7 +585,12 @@ function esTraducible(s) {
      `PARECE_LENGUAJE`: una letra suelta sólo pasa si es palabra de enlace. */
   if (t.length < 1) return false;
   if (CORTOS_QUE_SE_TRADUCEN.has(t)) return true;
-  if (!PARECE_LENGUAJE.test(t)) return false;
+  /* Llevar un corto dentro cuenta como parecer lenguaje. Aquí mismo se
+     quedaba fuera «USD / mes», y con él el rótulo del ciclo mensual de la
+     página inglesa. Entra como SEÑAL y no como atajo: lo que no se traduce
+     —direcciones, correos, siglas sueltas, la marca— sigue descartándose
+     debajo, o «https://clerigo.io/mes» pasaría a ser texto traducible. */
+  if (!PARECE_LENGUAJE.test(t) && !LLEVA_UN_CORTO.test(t)) return false;
   return !NO_SE_TRADUCE.some((re) => re.test(t));
 }
 

@@ -1500,7 +1500,7 @@ function updateSummary() {
      suya, y no eran la misma. */
   totalEl.textContent = totalDelPedido().total.toLocaleString();
   checkBtn.disabled = activeModules.length === 0;
-  document.getElementById('sumPeriod').textContent = billing === 'annual' ? 'USD / year' : 'USD / mes';
+  document.getElementById('sumPeriod').textContent = billing === 'annual' ? 'USD / year' : 'USD / month';
 
   if (billing === 'annual' && activeModules.length > 0) {
     savingsEl.style.display = 'flex';
