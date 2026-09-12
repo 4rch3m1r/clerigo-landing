@@ -907,7 +907,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
           <div class="users-label"><span>Account users</span><span class="users-val" id="usuariosVal">&nbsp;</span></div>
           <input type="range" max="200" step="1" id="usuariosRango" oninput="setUsuarios(this.value)"
             aria-label="Account users">
-          <div class="cuenta-users-note">Each module you take brings 1 administrator and 1 manager. With all six modules the full package applies: 2 administrators, 5 manager licences —risk, compliance, cybersecurity and internal audit— and 5 Team member licences for WorkSpace. Beyond that, $20 USD per user per month.</div>
+          <div class="cuenta-users-note">Each area you take includes 1 administrator and 1 manager. With the five paid areas you get the full package: 2 administrators, 5 manager licences and 5 Team Member licences for WorkSpace, with the 16 Platform modules included. Beyond that, $20 USD per user per month.</div>
         </div>
         <div class="sum-divider"></div>
         <div class="summary-items" id="summaryItems"></div>
@@ -1174,6 +1174,10 @@ const modules = [
     desc:'The sixteen cross-cutting modules. They come with any area you buy, at no extra cost.',
     color:'#4F46E5', colorVar:'--m3', basePrice:0,
     includedInAll: true,
+    /* Las dos chapas de la tarjeta: la de cuando ya entra y la de cuando
+       todavía no. Sin la primera salía «undefined» escrito en la página. */
+    addonLabel: 'Included',
+    etiquetaApagada: 'Included with any area you take',
     features:['AI Compliance Agent and Chat Agent','Report Manager with visual builder','XSign Engine advanced digital signature','Document Management with version control','Teamwork: board, lists and timeline','Corporate Calendar and Meeting Hub','WorkFlow: rules that run themselves','Internal and external Chat Center','GRC and transformation Projects','Custom Templates and library','Cross-cutting XGRC Catalogs','Supplier, declarant and team member portals','Permissions, roles and segregation of duties','Account security and two-factor authentication','System Audit and traceability','Settings, webhooks and integrations'],
     icon:`<svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m10 0h3a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 9l2 2-2 2M13 9l2 2-2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`
   }
@@ -1182,7 +1186,7 @@ const modules = [
 const faqs = [
   {q:'Can I activate modules later?',a:'Yes. You can add or remove modules from your administration panel at any time. The change takes effect in the next billing cycle.'},
   {q:'Is there a free trial?',a:'All plans include a 14-day free trial with full access to the selected modules. No credit card required to start.'},
-  {q:'How many users are included?',a:'It depends on what you activate. Each module you take brings 1 administrator and 1 manager. If you activate all six modules the full package applies at $5,000 a year, with 2 administrators, 5 manager licences —risk, compliance, cybersecurity and internal audit— and 5 Team member licences for WorkSpace: the same 12 licences, better distributed and with WorkSpace access, which only comes with the package. Additional users are billed separately, annually. For more than 200 users or special needs there is an Enterprise plan.'},
+  {q:'How many users are included?',a:'It depends on what you activate. Each area you take includes 1 administrator and 1 manager, so 10 licences with all five. If you activate the five paid areas you get the full package for $5,000 a year: 2 administrators, 5 manager licences and 5 Team Member licences for WorkSpace. That is twelve instead of ten, and WorkSpace access only comes with the package. Additional users are billed separately, on an annual cycle. For more than 200 users or special needs there is an Enterprise plan.'},
   {q:'Can I integrate Clèrigo with other systems?',a:'Yes. The platform includes a documented REST API to integrate with your digital ecosystem. It also has native connectors for SharePoint, Teams and Power Apps.'},
   {q:'How does the digital signature work?',a:'We integrate with certified digital signature providers. Documents follow a configurable approval flow before being signed and filed automatically in SharePoint.'},
   {q:'Which regulatory frameworks are preconfigured?',a:'ISO 27001, ISO 22301, NIST CSF, PCI-DSS, SWIFT, BCR (Banco Central RD), SIMV, NORTIC A5/A6/A7, Law 172-13 and more. New frameworks are added regularly.'},
@@ -1251,7 +1255,7 @@ function renderModules() {
           border:1px solid ${auto ? `${m.color}35` : 'rgba(14,14,14,0.10)'};">
           ${auto
             ? `<svg width="9" height="9" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg> ${m.addonLabel}`
-            : `<svg width="9" height="9" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> ${m.alwaysFree ? 'Free only with Cybersecurity' : 'Standalone add-on · $1,000/year'}`}
+            : `<svg width="9" height="9" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> ${m.etiquetaApagada || 'Included with any area you take'}`}
         </span>
       </div>` : ''}
       <div class="mod-accent-bar" style="background:${cardSelected ? m.color : 'transparent'}"></div>
@@ -1279,7 +1283,7 @@ function renderModules() {
         <div class="mod-price-val" id="price-${m.id}">
           ${auto && calcModulePrice(m) === 0
             ? `<span style="color:${m.color};font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:4px">Included <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></span>`
-            : `$${calcModulePrice(m).toLocaleString()}<span> ${billing === 'annual' ? '/year' : '/mes'}</span>`}
+            : `$${calcModulePrice(m).toLocaleString()}<span> ${billing === 'annual' ? '/year' : '/month'}</span>`}
         </div>
       </div>
     </div>`;
@@ -1344,8 +1348,14 @@ function licenciasIncluidas() {
      Ahora, si lo elegido ya cuesta el paquete, trae lo del paquete. */
   const todas = troncalesDePago().every(m => selected[m.id]);
   const activos = modules.filter(m => selected[m.id] || isAutoIncluded(m));
+  /* SE COMPARA EN ANUAL, SIEMPRE. Con los precios del ciclo en curso, el
+     redondeo del mensual decide quién se lleva doce licencias: en anual
+     2000+1900+700+400 son los 5.000 del tope justos, y en mensual los mismos
+     cuatro suman 416 contra un tope de 417. Dos de las 31 combinaciones
+     perdían cuatro licencias por pulsar un botón que no cambia lo comprado.
+     Las licencias no dependen de cómo se pague. */
   const yaLoPaga = activos.length > 0
-    && activos.reduce((s, m) => s + calcModulePrice(m), 0) >= topeDelPaquete();
+    && activos.reduce((s, m) => s + ((isAutoIncluded(m) || m.alwaysFree) ? 0 : m.basePrice), 0) >= PER_MODULE;
   if (todas || yaLoPaga) {
     return { paquete: true, admins: ADMINS_INCLUIDOS, gestores: GESTORES_INCLUIDOS,
       colaboradores: COLABORADORES_INCLUIDOS, total: USUARIOS_INCLUIDOS };
@@ -1694,7 +1704,7 @@ function renderOrderBox() {
       <div>$${costeUsuarios.toLocaleString()}</div>
     </div>` : ''}
     ${discount > 0 ? `<div class="order-line" style="color:var(--success)"><div>Discount (${(discount*100).toFixed(0)}%)</div><div>−$${discAmt.toLocaleString()}</div></div>` : ''}
-    <div class="order-line total"><div>Total</div><div>$${final.toLocaleString()} USD${billing === 'annual' ? '/year' : '/mes'}</div></div>
+    <div class="order-line total"><div>Total</div><div>$${final.toLocaleString()} USD${billing === 'annual' ? '/year' : '/month'}</div></div>
     ${active.length === 0 ? '<div style="text-align:center;color:var(--text-3);font-size:12px;padding:12px 0">No modules selected</div>' : ''}`;
 }
 

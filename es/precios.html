@@ -907,7 +907,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
           <div class="users-label"><span>Usuarios de la cuenta</span><span class="users-val" id="usuariosVal">&nbsp;</span></div>
           <input type="range" max="200" step="1" id="usuariosRango" oninput="setUsuarios(this.value)"
             aria-label="Usuarios de la cuenta">
-          <div class="cuenta-users-note">Cada módulo que contratas trae 1 administrador y 1 gestor. Con los seis módulos entra el paquete completo: 2 administradores, 5 licencias de gestor —riesgos, cumplimiento, ciberseguridad y auditoría interna— y 5 licencias de Colaborador para WorkSpace. A partir de ahí, $20 USD por usuario al mes.</div>
+          <div class="cuenta-users-note">Cada área que contratas trae 1 administrador y 1 gestor. Con las cinco áreas de pago entra el paquete completo: 2 administradores, 5 licencias de gestor y 5 licencias de Colaborador para WorkSpace, con los 16 módulos de Plataforma incluidos. A partir de ahí, $20 USD por usuario al mes.</div>
         </div>
         <div class="sum-divider"></div>
         <div class="summary-items" id="summaryItems"></div>
@@ -1174,6 +1174,10 @@ const modules = [
     desc:'Los dieciséis módulos transversales. Entran con cualquier área que contrates, sin coste adicional.',
     color:'#4F46E5', colorVar:'--m3', basePrice:0,
     includedInAll: true,
+    /* Las dos chapas de la tarjeta: la de cuando ya entra y la de cuando
+       todavía no. Sin la primera salía «undefined» escrito en la página. */
+    addonLabel: 'Incluida',
+    etiquetaApagada: 'Se incluye al contratar cualquier área',
     features:['Agente de Cumplimiento con IA y Chat Agent','Report Manager con constructor visual','Firma digital avanzada XSign Engine','Gestor Documental con control de versiones','Teamwork: tablero, listas y cronograma','Calendario corporativo y Meeting Hub','WorkFlow: reglas que trabajan solas','Chat Center interno y externo','Proyectos GRC y de transformación','Plantillas Personalizadas y biblioteca','Catálogos XGRC transversales','Portales de proveedores, declarantes y colaboradores','Permisos, roles y segregación de funciones','Seguridad de la cuenta y segundo factor','Auditoría del Sistema y trazabilidad','Parámetros, webhooks e integraciones'],
     icon:`<svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m10 0h3a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 9l2 2-2 2M13 9l2 2-2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`
   }
@@ -1182,7 +1186,7 @@ const modules = [
 const faqs = [
   {q:'¿Puedo activar módulos después?',a:'Sí. Puedes añadir o quitar módulos desde tu panel de administración en cualquier momento. El cambio aplica en el siguiente ciclo de facturación.'},
   {q:'¿Hay un período de prueba gratuito?',a:'Todos los planes incluyen 14 días de prueba gratuita con acceso completo a los módulos seleccionados. No se requiere tarjeta de crédito para comenzar.'},
-  {q:'¿Cuántos usuarios vienen incluidos?',a:'Depende de lo que actives. Cada módulo que contratas trae 1 administrador y 1 gestor. Si activas los seis módulos entra el paquete completo por $5,000 al año, con 2 administradores, 5 licencias de gestor —riesgos, cumplimiento, ciberseguridad y auditoría interna— y 5 licencias de Colaborador para WorkSpace: son las mismas 12 licencias, mejor repartidas y con el acceso a WorkSpace, que sólo va en el paquete. Los usuarios adicionales se facturan aparte, con periodicidad anual. Para más de 200 usuarios o necesidades especiales hay plan Enterprise.'},
+  {q:'¿Cuántos usuarios vienen incluidos?',a:'Depende de lo que actives. Cada área que contratas trae 1 administrador y 1 gestor, o sea 10 licencias con las cinco. Si activas las cinco áreas de pago entra el paquete completo por $5,000 al año: 2 administradores, 5 licencias de gestor y 5 licencias de Colaborador para WorkSpace. Son doce en vez de diez, y el acceso a WorkSpace sólo va en el paquete. Los usuarios adicionales se facturan aparte, con periodicidad anual. Para más de 200 usuarios o necesidades especiales hay plan Enterprise.'},
   {q:'¿Puedo integrar Clèrigo con otros sistemas?',a:'Sí. La plataforma incluye una API REST documentada para integrarse con tu ecosistema digital. También tiene conectores nativos con SharePoint, Teams y Power Apps.'},
   {q:'¿Cómo funciona la firma digital?',a:'Integramos con proveedores de firma digital certificados. Los documentos siguen un flujo de aprobación configurable antes de ser firmados y archivados automáticamente en SharePoint.'},
   {q:'¿Qué marcos regulatorios están preconfigurados?',a:'ISO 27001, ISO 22301, NIST CSF, PCI-DSS, SWIFT, BCR (Banco Central RD), SIMV, NORTIC A5/A6/A7, Ley 172-13 y más. Nuevos marcos se añaden regularmente.'},
@@ -1251,7 +1255,7 @@ function renderModules() {
           border:1px solid ${auto ? `${m.color}35` : 'rgba(14,14,14,0.10)'};">
           ${auto
             ? `<svg width="9" height="9" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg> ${m.addonLabel}`
-            : `<svg width="9" height="9" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> ${m.alwaysFree ? 'Gratis solo con Ciberseguridad' : 'Complemento independiente · $1,000/año'}`}
+            : `<svg width="9" height="9" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> ${m.etiquetaApagada || 'Se incluye al contratar cualquier área'}`}
         </span>
       </div>` : ''}
       <div class="mod-accent-bar" style="background:${cardSelected ? m.color : 'transparent'}"></div>
@@ -1344,8 +1348,14 @@ function licenciasIncluidas() {
      Ahora, si lo elegido ya cuesta el paquete, trae lo del paquete. */
   const todas = troncalesDePago().every(m => selected[m.id]);
   const activos = modules.filter(m => selected[m.id] || isAutoIncluded(m));
+  /* SE COMPARA EN ANUAL, SIEMPRE. Con los precios del ciclo en curso, el
+     redondeo del mensual decide quién se lleva doce licencias: en anual
+     2000+1900+700+400 son los 5.000 del tope justos, y en mensual los mismos
+     cuatro suman 416 contra un tope de 417. Dos de las 31 combinaciones
+     perdían cuatro licencias por pulsar un botón que no cambia lo comprado.
+     Las licencias no dependen de cómo se pague. */
   const yaLoPaga = activos.length > 0
-    && activos.reduce((s, m) => s + calcModulePrice(m), 0) >= topeDelPaquete();
+    && activos.reduce((s, m) => s + ((isAutoIncluded(m) || m.alwaysFree) ? 0 : m.basePrice), 0) >= PER_MODULE;
   if (todas || yaLoPaga) {
     return { paquete: true, admins: ADMINS_INCLUIDOS, gestores: GESTORES_INCLUIDOS,
       colaboradores: COLABORADORES_INCLUIDOS, total: USUARIOS_INCLUIDOS };

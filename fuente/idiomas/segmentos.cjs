@@ -482,8 +482,13 @@ function trozosDeLosGuiones(html) {
            y así el inglés puede poner el número donde le toque. */
         const texto = dentro.trim();
         const juzgar = sinInterpolar(dentro).trim();
-        if (texto.length >= 3 && juzgar.length >= 3
-          && (PARECE_CASTELLANO.test(juzgar) || DOS_PALABRAS.test(juzgar)) && esTraducible(juzgar)
+        /* La lista de cortos declarados entra también por aquí. Esta puerta
+           pide ADEMÁS «parece castellano o son dos palabras», y «/mes» no es ni
+           lo uno ni lo otro: ponerlo sólo en `esTraducible` no servía de nada y
+           la página inglesa seguía escribiendo «/mes» en el ciclo mensual. */
+        if ((CORTOS_QUE_SE_TRADUCEN.has(juzgar)
+          || (texto.length >= 3 && juzgar.length >= 3
+            && (PARECE_CASTELLANO.test(juzgar) || DOS_PALABRAS.test(juzgar)))) && esTraducible(juzgar)
           && !NOMBRE_DEL_CODIGO.test(juzgar) && !SOLO_SIGLAS(juzgar)
           && !PALABRAS_DEL_NAVEGADOR.has(juzgar) && !PARECE_ESTILO.test(texto)
           && !ES_SELECTOR.test(texto)) {
@@ -522,6 +527,24 @@ function textosDeLosGuiones(html) {
   return trozosDeLosGuiones(html).map((t) => t.texto);
 }
 
+/**
+ * LO QUE SÍ SE TRADUCE AUNQUE NO PAREZCA LENGUAJE.
+ *
+ * `PARECE_LENGUAJE` pide una tilde, dos palabras o algo que se le parezca, y
+ * eso deja fuera trozos cortos y sin acento que SÍ hay que traducir. Se vio en
+ * la página de planes: el precio se pinta con «/año» o «/mes» según el ciclo.
+ * «/año» pasa por la eñe; «/mes» no pasa por nada, así que nunca se ofrecía
+ * para traducir y la página INGLESA escribía «$417 /mes» en cuanto alguien
+ * pulsaba el ciclo mensual. Y la guarda de «no queda castellano» tampoco lo
+ * veía, porque busca tildes y palabras de enlace, y «mes» no es ninguna.
+ *
+ * Va una lista EXPLÍCITA y no una regla más ancha: aflojar `PARECE_LENGUAJE`
+ * para que entren los trozos de tres letras mete dentro nombres de clase,
+ * unidades y siglas, que es justo lo que esa regla existe para dejar fuera.
+ * Si mañana aparece otro rótulo corto, se añade aquí y se ve por qué está.
+ */
+const CORTOS_QUE_SE_TRADUCEN = new Set(["/mes", "/año", "mes", "año", "día", "días"]);
+
 function esTraducible(s) {
   const t = s.trim();
   /* Vacío no, pero UNA letra sí: «y» entre dos etiquetas es una palabra que
@@ -529,6 +552,7 @@ function esTraducible(s) {
      el corte en dos no llegaba nunca. Lo que no es lenguaje ya lo descarta
      `PARECE_LENGUAJE`: una letra suelta sólo pasa si es palabra de enlace. */
   if (t.length < 1) return false;
+  if (CORTOS_QUE_SE_TRADUCEN.has(t)) return true;
   if (!PARECE_LENGUAJE.test(t)) return false;
   return !NO_SE_TRADUCE.some((re) => re.test(t));
 }
