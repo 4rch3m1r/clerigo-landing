@@ -224,6 +224,15 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
     /* Y el rótulo del contador dice lo mismo que decía —lo que trae el
        paquete— con el número nuevo. */
     ["`${usuariosCuenta} usuarios incluidos`", "`1 usuario incluido`"],
+    /* LA MONEDA, DICHA. El original ponía «MDF $15K» a secas en el nivel Gold
+       del programa de socios. Esta página se vende en la República Dominicana,
+       donde «$» se lee peso —RD$— salvo que ponga otra cosa, así que un importe
+       sin moneda se lee por la treintava parte de lo que vale. Decisión del
+       dueño el 2026-09-12: la moneda es siempre el dólar estadounidense, y se
+       dice donde el importe se lee solo. Lo vigilan dos guardas —«no hay más
+       moneda que el dólar» y «todo precio escrito dice USD»— en
+       `fuente/validar.cjs`. */
+    ["MDF $15K USD,", "MDF $15K,"],
   ];
   let normalizada = sal;
   for (const [ahora, antes] of DECLARADAS) {
@@ -588,6 +597,106 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
     comprueba(`${slug}: el «+20%» se lee con el botón encendido, sobre el rojo`,
       enc !== null && enc >= MINIMO,
       enc === null ? "no se han podido leer sus colores" : "contraste " + enc.toFixed(2) + " (mínimo " + MINIMO + ")");
+
+    /* ── 6 ter. UNA SOLA CUENTA DEL TOTAL, Y EL CUPÓN EN LAS DOS PANTALLAS ──
+     *
+     * Esta página enseña el total en DOS sitios: el panel de resumen y la caja
+     * del pedido, dentro de la ventana de alta. Tenía un defecto en cada uno.
+     *
+     * El primero se veía. `applyCoupon` repintaba sólo la caja: con Riesgos
+     * elegido, la caja decía 1.520 y el panel de detrás seguía diciendo 1.900.
+     * Y al revés —con el descuento puesto, un cupón que no vale devolvía la
+     * caja a 1.900 y dejaba el 1.520 en el panel—. El panel sólo se enteraba
+     * cuando la persona tocaba un módulo o el ciclo de facturación.
+     *
+     * El segundo no se veía todavía. Cada pantalla hacía su propia cuenta
+     * —`round(S · (1 − d))` una, `S − round(S · d)` la otra— y coincidían
+     * sólo porque todos los precios son múltiplos de diez. Con un precio en
+     * 1.895, de 3.906 casos pintados en el navegador se separaban 252, de un
+     * dólar cada uno, y nadie lo habría relacionado con el cupón.
+     *
+     * Se vigilan las dos cosas, porque la segunda no se deduce de la primera:
+     * una cuenta compartida no sirve de nada si una de las dos pantallas no se
+     * vuelve a pintar. */
+    const cuerpoDe = (nombre) => {
+      const i = sal.search(new RegExp("^function " + nombre + "\\(", "m"));
+      if (i < 0) return null;
+      const fin = sal.slice(i).search(/^\}/m);
+      return fin < 0 ? null : sal.slice(i, i + fin + 1);
+    };
+    const LA_CUENTA = "totalDelPedido";
+    const PANTALLAS = ["updateSummary", "renderOrderBox"];
+    const laCuenta = cuerpoDe(LA_CUENTA);
+    comprueba(`${slug}: el total lo calcula UNA función, y ahí está el descuento`,
+      laCuenta !== null && /Math\.round\([^\n]*1 - discount/.test(laCuenta),
+      laCuenta === null ? "no hay función " + LA_CUENTA : "existe pero no aplica el descuento");
+    /* Fuera de esa función, `discount` sólo puede LEERSE: para decidir si se
+       enseña la línea del descuento, o para escribir el tanto por ciento.
+       Sumar, restar o multiplicar con él en otro sitio es volver a tener dos
+       cuentas, que es de donde venía el fallo. */
+    const echaCuentasConElDescuento = (cuerpo) =>
+      /[-+*/]\s*discount|discount\s*[-+*/]/.test(String(cuerpo || "").replace(/discount\s*\*\s*100/g, ""));
+    PANTALLAS.forEach((f) => {
+      const c = cuerpoDe(f);
+      const llama = c !== null && c.includes(LA_CUENTA + "(");
+      comprueba(`${slug}: «${f}» saca el total de ${LA_CUENTA}, no de una cuenta propia`,
+        llama && !echaCuentasConElDescuento(c),
+        c === null ? "no se encuentra la función"
+          : llama ? "llama, pero además echa cuentas con el descuento por su cuenta"
+          : "no llama a " + LA_CUENTA);
+    });
+    /* ── LA MONEDA DE LOS NÚMEROS QUE SE PINTAN ──────────────────────────
+     *
+     * El validador del sitio ya exige que todo precio ESCRITO diga USD. Pero
+     * los números de esta página casi no están escritos: se pintan desde los
+     * datos. El de la tarjeta de cada área —el más gordo, 26 píxeles y
+     * negrita— sale de `$${calcModulePrice(m)}`, así que en el fichero no hay
+     * cifra que mirar y aquella guarda no lo ve. Se comprobó: quitándole el
+     * «USD» a esa plantilla, el validador del sitio seguía en verde.
+     *
+     * Esto mira los tres sitios donde la página dice la moneda de un número
+     * pintado. Y son tres comprobaciones con su nombre, no una: con una sola,
+     * perder uno de los tres se confundiría con perder otro.
+     *
+     * Importa porque el mercado es la República Dominicana, donde «$» se lee
+     * peso salvo que ponga otra cosa: «$2,000 /año» leído en pesos es un
+     * módulo por la treintava parte de su precio. */
+    const trozo = (desde, hasta) => {
+      const i = sal.indexOf(desde);
+      if (i < 0) return null;
+      const j = sal.indexOf(hasta, i + desde.length);
+      return j < 0 ? null : sal.slice(i, j);
+    };
+    const laTarjeta = trozo('<div class="mod-price-val"', "</div>");
+    comprueba(`${slug}: el precio de la tarjeta del área dice la moneda`,
+      laTarjeta !== null && laTarjeta.includes("USD"),
+      laTarjeta === null ? "no se encuentra el precio de la tarjeta" : "se pinta sin decir USD");
+    /* La línea ENTERA, no hasta el primer : dentro hay dos divs, y el
+       primero es el rótulo «Total». Cortando ahí, la guarda decía que faltaba
+       la moneda cuando estaba justo después. */
+    /* La línea ENTERA, no hasta el primer `</div>`: dentro hay dos divs y el
+       primero es el rótulo «Total». Cortando ahí, la guarda decía que faltaba
+       la moneda cuando estaba tres caracteres más allá. */
+    const elTotal = sal.split("\n").find((l) => l.includes('class="order-line total"')) || null;
+    comprueba(`${slug}: el total de la caja del pedido dice la moneda`,
+      elTotal !== null && elTotal.includes("USD"),
+      elTotal === null ? "no se encuentra el total del pedido" : "se pinta sin decir USD");
+    /* Las líneas del panel no repiten la moneda a propósito: van una debajo de
+       otra bajo este rótulo. Por eso el rótulo no puede perderla — es el único
+       sitio donde el panel la dice—, y se exige en sus DOS formas: la que va
+       escrita en la página y la que el guion pone al cambiar de ciclo. */
+    const rotuloEscrito = trozo('id="sumPeriod"', "</div>");
+    const rotuloDelGuion = trozo("getElementById('sumPeriod').textContent", ";");
+    comprueba(`${slug}: el rótulo del periodo del panel dice la moneda, en los dos ciclos`,
+      rotuloEscrito !== null && rotuloEscrito.includes("USD")
+      && rotuloDelGuion !== null && (rotuloDelGuion.match(/USD/g) || []).length === 2,
+      "escrito: " + (rotuloEscrito || "no está") + " · guion: " + (rotuloDelGuion || "no está"));
+
+    const cupon = cuerpoDe("applyCoupon");
+    const sinRepintar = PANTALLAS.filter((f) => !String(cupon || "").includes(f + "()"));
+    comprueba(`${slug}: el cupón repinta LAS DOS pantallas que enseñan el total`,
+      cupon !== null && sinRepintar.length === 0,
+      cupon === null ? "no hay función applyCoupon" : "se queda sin repintar: " + sinRepintar.join(", "));
   }
 
   /* ── 7. LA LETRA ──────────────────────────────────────────────────── */

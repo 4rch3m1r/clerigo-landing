@@ -315,6 +315,69 @@ comprueba("y en el original el panel estaba dibujado con CSS, no fotografiado",
 comprueba("el favicon apunta a favicon.png y el fichero existe",
   /rel="icon"[^>]*href="(?:\.\.\/)?favicon\.png"/.test(osc) && fs.existsSync(require("node:path").join(RAIZ, "favicon.png")));
 
+console.log("\n── La moneda ───────────────────────────────────────────────────");
+/* LA MONEDA ES SIEMPRE EL DÓLAR ESTADOUNIDENSE, Y LO DICE.
+ *
+ * Dos cosas distintas, y las dos hacen falta.
+ *
+ * LA PRIMERA: que no aparezca otra moneda. Hoy no aparece ninguna —se buscó
+ * euro, libra, yen, RD$, DOP, MXN, COP, ARS, CLP, PEN, UYU, BRL y CRC—, y esta
+ * guarda está para que siga así el día que alguien quiera «adaptar los precios
+ * al mercado local» en una página y no en las otras.
+ *
+ * LA SEGUNDA: que el signo del dólar no vaya solo. Esta página se vende en la
+ * República Dominicana, donde «$» se lee peso —RD$— salvo que ponga otra cosa.
+ * El precio de la tarjeta de cada área decía «$2,000 /año» a 26 píxeles y en
+ * negrita: leído como pesos, un módulo salía por la treintava parte. Ahora dice
+ * «$2,000 USD /año», y esto vigila que lo siga diciendo.
+ *
+ * QUÉ NO ALCANZA A VER, dicho aquí para que nadie se confíe: sólo ve los
+ * precios ESCRITOS en el fichero. Las líneas del panel y de la caja del pedido
+ * se pintan desde los datos —`'$' + precio`— y no son texto que se pueda leer
+ * aquí. Esas van una debajo de otra bajo un total que sí dice USD, y repetir la
+ * moneda en cada línea sería ruido; la decisión es esa, no un descuido.
+ *
+ * Y SE QUITAN LOS COMENTARIOS ANTES DE MIRAR. Los comentarios de la página de
+ * precios explican el modelo de negocio y están llenos de cifras —«las cinco
+ * áreas valen $7.000 y el paquete sigue en $5.000»—. Sin quitarlos, la guarda
+ * se pondría roja por lo que ella misma explica, que es un vicio que hoy ya ha
+ * pasado tres veces en este repositorio. */
+{
+  const sinComentarios = (h) => h.replace(/<!--[\s\S]*?-->/g, " ").replace(/\/\*[\s\S]*?\*\//g, " ");
+  const OTRAS = /€|£|¥|RD\$|\bEUR\b|\bGBP\b|\bDOP\b|\bMXN\b|\bCOP\b|\bARS\b|\bCLP\b|\bPEN\b|\bUYU\b|\bBRL\b|\bCRC\b/;
+  /* Dos caracteres de número por lo menos, o una K detrás. Con uno solo, el
+     `$1` de las expresiones regulares del selector de idioma —`'/es/$1'`—
+     entraba como si fuera un precio de un dólar. */
+  const PRECIO = /\$\s?\d[\d.,]*(?:\s?[KkMm]\b)?/g;
+  const servidas = [
+    ...fs.readdirSync(RAIZ).filter((f) => f.endsWith(".html")),
+    ...fs.readdirSync(CASTELLANO).filter((f) => f.endsWith(".html")).map((f) => "es/" + f),
+  ];
+  const conOtraMoneda = [];
+  const sinDecirla = [];
+  let mirados = 0;
+  for (const f of servidas) {
+    const h = sinComentarios(lee(require("node:path").join(RAIZ, f)));
+    if (OTRAS.test(h)) conOtraMoneda.push(f + ": " + (h.match(OTRAS) || [])[0]);
+    for (const m of h.matchAll(PRECIO)) {
+      const cifra = m[0];
+      if (/^\$\s?\d$/.test(cifra)) continue;
+      mirados++;
+      if (!/USD/.test(h.slice(m.index, m.index + cifra.length + 16))) {
+        sinDecirla.push(f + ": «" + h.slice(m.index, m.index + 28).replace(/\s+/g, " ") + "»");
+      }
+    }
+  }
+  comprueba("en todo el sitio no hay más moneda que el dólar estadounidense",
+    servidas.length > 10 && conOtraMoneda.length === 0, conOtraMoneda.join(" | "));
+  /* El `mirados > 0` no es adorno: si el patrón deja de encajar, esta
+     comprobación pasaría comparando cero con cero, y sería peor que no tenerla
+     porque nadie volvería a mirar. */
+  comprueba("y todo precio escrito dice USD",
+    mirados > 0 && sinDecirla.length === 0,
+    mirados + " precios mirados" + (sinDecirla.length ? " · sin moneda: " + sinDecirla.slice(0, 6).join(" | ") : ""));
+}
+
 console.log("\n── Estructura intacta ──────────────────────────────────────────");
 /* La prueba dura: quitando marca, dominio, logotipo y color, los tres ficheros
    tienen que ser LA MISMA página. */
