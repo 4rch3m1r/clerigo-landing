@@ -265,13 +265,39 @@ if (require.main === module) {
        es la misma portada con el tema oscuro, y declararla como dirección
        propia la pondría a competir con la portada en el buscador. Comparte la
        canónica de la portada, que es la raíz. */
-    const canonica = p === "index" || p === "oscuro" ? "" : p + ".html";
+    /* LA CANÓNICA ES LA DIRECCIÓN QUE SE PUBLICA, NO EL NOMBRE DEL FICHERO.
+     *
+     * Salía del SLUG —`p + ".html"`—, y eso estaba mal de dos maneras a la vez.
+     * Las dos se midieron antes de tocar nada:
+     *
+     *   1. El slug es el nombre CASTELLANO. En las cuatro páginas que en inglés
+     *      se sirven con otro nombre —pricing, frameworks, contact,
+     *      trustcenter— la inglesa declaraba como canónica su nombre
+     *      castellano, y ésa es una redirección 301 hacia ella misma.
+     *
+     *   2. Y llevaba `.html`, mientras el sitemap publica la dirección limpia.
+     *      Las SEIS páginas inglesas y las seis castellanas declaraban una
+     *      dirección que el sitemap no menciona: la portada decía `/` y
+     *      aparecía en el sitemap, y las demás decían `/legal.html` cuando el
+     *      sitemap ofrecía `/legal`. Una canónica que no coincide con lo que se
+     *      publica no sirve para lo único que sirve una canónica, que es decir
+     *      «de todas estas direcciones, indexa ésta».
+     *
+     * Ahora sale de `ruta`, que es de donde sale también el sitemap, así que no
+     * pueden discrepar. */
+    const rutaDe = (slug, idioma) => {
+      const { PAGINAS: DEL_SEO } = require("../seo/posicionar.cjs");
+      const x = DEL_SEO.find((e) => e.slug === slug);
+      return x && x.ruta ? x.ruta[idioma] : slug;
+    };
+    const canonicaEn = p === "index" || p === "oscuro" ? "" : rutaDe(p, "en");
+    const canonicaEs = p === "index" || p === "oscuro" ? "" : rutaDe(p, "es");
 
     /* El castellano se vuelve a escribir con su selector y su canónica: el
        selector es lo único que se le añade, y tiene que estar en los dos. */
     let es = ponIdioma(partida, "es");
     es = ponSelector(es, "es", ficheroEn, ficheroEs);
-    es = ponAlternativas(es, "es", canonica, SITIO.base);
+    es = ponAlternativas(es, "es", canonicaEn, canonicaEs, SITIO.base);
     es = ponDeteccion(es);
     /* Las capturas y el icono viven en la raiz y la castellana esta un nivel
        mas adentro: sin esto, la ventana del carrusel sale vacia. */
@@ -281,7 +307,7 @@ if (require.main === module) {
     /* Y el inglés, en la raíz. */
     let en = ponIdioma(partida, "en");
     en = ponSelector(en, "en", ficheroEn, ficheroEs);
-    en = ponAlternativas(en, "en", canonica, SITIO.base);
+    en = ponAlternativas(en, "en", canonicaEn, canonicaEs, SITIO.base);
     en = ponDeteccion(en);
     /* La inglesa vive en la RAÍZ, al lado de las capturas: sin prefijo.
        Se quita lo lleve o no. Lo que se lee de `es/` puede traerlo puesto

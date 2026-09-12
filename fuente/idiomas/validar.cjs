@@ -99,7 +99,30 @@ function esqueleto(html) {
  * cantaba sin que nadie entendiera por qué. Ahora el generador escribe en la
  * pareja de abajo, que es la misma que usa esta comprobación.
  */
-const PAREJA_INGLESA = { marcos: "frameworks", confianza: "trustcenter", contacto: "contact" };
+/* Y EL MAPA SE LEE, NO SE COPIA.
+ *
+ * Esto era una lista escrita a mano aquí: `{ marcos, confianza, contacto }`.
+ * Tener el mismo mapa en dos sitios es tenerlo mal en uno de los dos, y es lo
+ * que pasó: cuando la página de planes pasó a servirse como `pricing`, se
+ * actualizó el mapa del generador y NO éste. Resultado: esta comprobación
+ * seguía comparando la castellana contra `precios.html`, que desde entonces es
+ * un redirector de 453 bytes, y cantaba cuatro fallos —estructura distinta, sin
+ * detección de idioma, sin imágenes, selector torcido— que no eran de la página
+ * sino de estar mirando el fichero equivocado. Cuatro fallos permanentes que no
+ * significaban nada, que es la peor clase de fallo: enseña a no mirar.
+ *
+ * El mapa vive en `seo/posicionar.cjs`, de donde salen también el sitemap, las
+ * canónicas y el fichero en el que escribe el generador. Ahora los cuatro leen
+ * lo mismo y no pueden discrepar. */
+const PAREJA_INGLESA = (() => {
+  const { PAGINAS: DEL_SEO } = require("../seo/posicionar.cjs");
+  const m = {};
+  for (const x of DEL_SEO) {
+    const en = x.disco && x.disco.en ? x.disco.en.replace(/\.html$/, "") : x.slug;
+    if (en !== x.slug) m[x.slug] = en;
+  }
+  return m;
+})();
 
 console.log("── Las dos versiones son la misma página ──────────────────────");
 for (const p of TODAS) {

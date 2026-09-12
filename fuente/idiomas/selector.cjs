@@ -162,9 +162,23 @@ function ponSelector(html, idioma, ficheroEn, ficheroEs) {
  * sirve cuando el idioma de quien busca no es ninguno de los dos: el inglés,
  * que es el de por omisión.
  */
-function ponAlternativas(html, idioma, ficheroDePagina, base) {
-  const enIngles = base + "/" + (ficheroDePagina || "");
-  const enCastellano = base + "/es/" + (ficheroDePagina || "");
+/* CADA IDIOMA CON SU NOMBRE DE FICHERO, QUE NO SIEMPRE ES EL MISMO.
+ *
+ * Antes entraba UN solo nombre y servía para las dos direcciones. Eso vale
+ * mientras las dos versiones se llamen igual, y cuatro no se llaman igual:
+ * `precios` se sirve como `pricing`, `marcos` como `frameworks`, `contacto`
+ * como `contact` y `confianza` como `trustcenter`.
+ *
+ * Consecuencia medida en las cuatro: la canónica de la página inglesa declaraba
+ * el nombre CASTELLANO —`pricing.html` decía «mi dirección es /precios.html»—,
+ * y esa dirección es una redirección 301 hacia ella misma. Declararse en una
+ * dirección que redirige es pedirle al buscador que no sepa cuál indexar, y es
+ * justo lo que la canónica existe para evitar.
+ *
+ * Ahora entran los dos nombres y cada versión se declara en el suyo. */
+function ponAlternativas(html, idioma, ficheroEn, ficheroEs, base) {
+  const enIngles = base + "/" + (ficheroEn || "");
+  const enCastellano = base + "/es/" + (ficheroEs || "");
   const etiquetas = [
     '<link rel="alternate" hreflang="en" href="' + enIngles + '">',
     '<link rel="alternate" hreflang="es" href="' + enCastellano + '">',

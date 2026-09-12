@@ -72,7 +72,17 @@ const PAGINAS = [
     es: "Marcos", en: "Frameworks", prioridad: "0.9", nav: true },
   { slug: "confianza", ruta: { en: "trustcenter", es: "confianza" }, disco: { en: "trustcenter.html", es: "confianza.html" },
     es: "Centro de Confianza", en: "Trust Center", prioridad: "0.9", nav: true },
-  { slug: "precios", ruta: { en: "precios", es: "precios" }, disco: { en: "precios.html", es: "precios.html" },
+  /* LA INGLESA SE SIRVE EN `/pricing`, Y ESTO SE HABÍA QUEDADO ATRÁS.
+     La ruta inglesa se normalizó a `/pricing` con sus 301, pero aquí seguía
+     diciendo `precios` en las dos columnas. Consecuencias, las tres medidas:
+     el generador del inglés escribía la página en `precios.html`, que desde
+     entonces es un redirector de 453 bytes —o sea que la traducción caía en el
+     redirector y la página servida se mantenía a mano—; el sitemap y la
+     canónica dejaron de coincidir (`/pricing` contra `/pricing.html`), que es
+     pedirle al buscador que indexe dos direcciones para la misma página; y
+     cualquier regeneración habría borrado el redirector.
+     Es el mismo descuido que ya pasó con `marcos`/`frameworks`. */
+  { slug: "precios", ruta: { en: "pricing", es: "precios" }, disco: { en: "pricing.html", es: "precios.html" },
     es: "Planes", en: "Plans", prioridad: "0.9", nav: true },
   { slug: "contacto", ruta: { en: "contact", es: "contacto" }, disco: { en: "contact.html", es: "contacto.html" },
     es: "Contacto", en: "Contact", prioridad: "0.8", nav: true },
