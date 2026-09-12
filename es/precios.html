@@ -1295,7 +1295,9 @@ function calcModulePrice(m) {
   // sola vez y para toda la cuenta, en costeUsuariosExtra(), no aquí.
   // Módulos incluidos (addonOf) y alwaysFree (Riesgos Terceros): base = 0.
   const base = (isAutoIncluded(m) || m.alwaysFree) ? 0 : m.basePrice;
-  return billing === 'annual' ? base : Math.round(base / 12);
+  /* El +20% del pago mensual, que el interruptor anuncia y antes no se
+     cobraba: esto era `base / 12` a secas. */
+  return billing === 'annual' ? base : Math.round(base * 1.2 / 12);
 }
 
 /* Lo que cuesta la gente. UNA función: las dos pantallas que enseñan un total
@@ -1377,7 +1379,10 @@ function textoDeLasLicencias() {
 
 /* El precio del paquete completo, en el ciclo que toque. */
 function topeDelPaquete() {
-  return billing === 'annual' ? PER_MODULE : Math.round(PER_MODULE / 12);
+  /* Y el mismo recargo en el tope, o si no pagar al mes saldría topado al
+     precio anual y el recargo se evaporaría justo para quien se lo lleva
+     todo, que es quien más paga. */
+  return billing === 'annual' ? PER_MODULE : Math.round(PER_MODULE * 1.2 / 12);
 }
 
 /* La suma de los módulos, CON TOPE: nunca se paga más que llevárselo todo.
