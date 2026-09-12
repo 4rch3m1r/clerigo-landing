@@ -17,7 +17,6 @@
     "CUANDO ALGO DEJE DE SER MENTIRA, se quita de aquí y se escribe en la página.",
     "El orden es ése y no el contrario."
   ],
-
   "confianza": {
     "_deben_estar": [
       "Los datos que el dueño confirmó el 2026-09-06 y que la página promete.",
@@ -34,7 +33,6 @@
       "Respaldo inmutable",
       "security@clerigo.io"
     ],
-
     "_iso_en_proceso": [
       "La certificación ISO 27001 está EN CURSO, no emitida. La página tiene que",
       "decirlo con esas palabras y decir además que hoy no está certificado.",
@@ -45,7 +43,6 @@
       "certificación está en curso",
       "no está certificado en ISO 27001"
     ],
-
     "_no_pueden_estar": [
       "Cada una es una afirmación que el código NO sostiene, o una forma de decir",
       "las cosas que es falsa de origen. El motivo va al lado.",
@@ -57,18 +54,106 @@
       "acaba desactivando, y entonces no guarda nada."
     ],
     "no_pueden_estar": [
-      ["(?<!no está )certificad[oa]s? en ISO 27001|ISO 27001 certificad", "la certificación está en curso, no emitida"],
-      ["SOC ?2 certificad|certificaci[óo]n SOC ?2", "SOC 2 no se certifica, se atestigua: es un informe"],
-      ["cifrado en reposo|cifrado de disco|cifrado del almacenamiento", "no verificado: el repositorio no configura cifrado de disco ni de base"],
-      ["extremo a extremo", "el servidor descifra: no es cifrado extremo a extremo"],
-      ["inicio de sesi[óo]n [úu]nico|\\bSSO\\b|\\bSAML\\b|OpenID Connect", "no verificado: no hay entrada con cuenta corporativa"],
-      ["alta disponibilidad|conmutaci[óo]n por error", "no verificado: no hay nada en el repositorio que lo sostenga"],
-      ["\\bRTO\\b|\\bRPO\\b|recuperaci[óo]n ante desastres", "no verificado: no hay objetivos de recuperación en el código"],
-      ["99[.,]9\\s*%|\\bSLA\\b", "no verificado: no hay compromiso de disponibilidad que se pueda sostener"],
-      ["\\bHSM\\b|Key Vault|\\bBYOK\\b|llave gestionada por el cliente", "no verificado: la llave maestra vive en una variable de entorno"],
-      ["pruebas de intrusi[óo]n|\\bpentest|red team", "no verificado: no consta ninguna"],
-      ["ISO 27017|ISO 27018", "son certificaciones de Azure, no de Clèrigo: mezclarlas induce a error"],
-      ["\\bType II\\b", "en español se escribe «Tipo II»"]
+      [
+        "(?<!no está )certificad[oa]s? en ISO 27001|ISO 27001 certificad",
+        "la certificación está en curso, no emitida"
+      ],
+      [
+        "SOC ?2 certificad|certificaci[óo]n SOC ?2",
+        "SOC 2 no se certifica, se atestigua: es un informe"
+      ],
+      [
+        "cifrado en reposo|cifrado de disco|cifrado del almacenamiento",
+        "no verificado: el repositorio no configura cifrado de disco ni de base"
+      ],
+      [
+        "extremo a extremo",
+        "el servidor descifra: no es cifrado extremo a extremo"
+      ],
+      [
+        "inicio de sesi[óo]n [úu]nico|\\bSSO\\b|\\bSAML\\b|OpenID Connect",
+        "no verificado: no hay entrada con cuenta corporativa"
+      ],
+      [
+        "alta disponibilidad|conmutaci[óo]n por error",
+        "no verificado: no hay nada en el repositorio que lo sostenga"
+      ],
+      [
+        "\\bRTO\\b|\\bRPO\\b|recuperaci[óo]n ante desastres",
+        "no verificado: no hay objetivos de recuperación en el código"
+      ],
+      [
+        "99[.,]9\\s*%|\\bSLA\\b",
+        "no verificado: no hay compromiso de disponibilidad que se pueda sostener"
+      ],
+      [
+        "\\bHSM\\b|Key Vault|\\bBYOK\\b|llave gestionada por el cliente",
+        "no verificado: la llave maestra vive en una variable de entorno"
+      ],
+      [
+        "pruebas de intrusi[óo]n|\\bpentest|red team",
+        "no verificado: no consta ninguna"
+      ],
+      [
+        "ISO 27017|ISO 27018",
+        "son certificaciones de Azure, no de Clèrigo: mezclarlas induce a error"
+      ],
+      [
+        "\\bType II\\b",
+        "en español se escribe «Tipo II»"
+      ]
+    ]
+  },
+  "precios": {
+    "_no_pueden_estar": [
+      "La página de planes TIENE original, así que hasta hoy sus afirmaciones no se",
+      "miraban: la guarda de promesas vivía dentro de la rama de las páginas escritas",
+      "de cero. Tener original vigila que no CAMBIE lo que dice; no vigila que lo que",
+      "dice sea VERDAD. Son dos preguntas distintas y hacían falta las dos.",
+      "",
+      "Lo que había: «También tiene conectores nativos con SharePoint, Teams y Power",
+      "Apps», y «los documentos […] archivados automáticamente en SharePoint».",
+      "Comprobado en app-saas, uno por uno:",
+      "",
+      "  · POWER APPS no existe: ni código, ni configuración, ni tabla.",
+      "  · SHAREPOINT tiene lo CONTRARIO de un conector. `ImportadorView.tsx` ofrece",
+      "    «SharePoint / Lists» y su propia ayuda dice «Descarga la lista como CSV",
+      "    desde SharePoint y cárgala aquí» — trabajo a mano, que es lo que un",
+      "    conector promete ahorrar. Y `gap-server.ts` lo nombra como «lo que vive",
+      "    fuera».",
+      "  · TEAMS sí existe: `src/lib/meeting-hub/teams.ts` con su ruta de ingesta.",
+      "    No se prohíbe.",
+      "  · LA FIRMA no es de terceros: es motor propio, XSign, con CA/RA X.509,",
+      "    CAdES y PAdES, sellado de tiempo, CRL y OCSP. Decir que se integra con",
+      "    proveedores certificados vende MENOS de lo que hay, y la tarjeta de",
+      "    Plataforma de esta misma página ya dice «XSign Engine»: la página se",
+      "    contradecía consigo misma a dos pantallas.",
+      "",
+      "«SharePoint» A SECAS NO SE PROHÍBE: la portada lo nombra en la sección del",
+      "caos, describiendo el desorden del cliente antes de Clèrigo, y eso es cierto.",
+      "Lo que se prohíbe es llamarlo conector."
+    ],
+    "no_pueden_estar": [
+      [
+        "conectores? nativos?",
+        "no hay ningún conector nativo: de SharePoint hay importación por CSV a mano y de Power Apps no hay nada"
+      ],
+      [
+        "Power ?Apps",
+        "no existe en el producto: ni código, ni configuración, ni tabla"
+      ],
+      [
+        "archivados? autom[áa]ticamente en SharePoint",
+        "los documentos se archivan en el Gestor Documental, que es un módulo de la plataforma"
+      ],
+      [
+        "proveedores de firma digital certificados",
+        "la firma es motor propio (XSign): decirlo así vende menos de lo que hay"
+      ],
+      [
+        "integramos con proveedores",
+        "la firma no es de terceros; ver XSign"
+      ]
     ]
   }
 }

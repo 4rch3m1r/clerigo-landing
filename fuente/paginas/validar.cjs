@@ -242,27 +242,6 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
     comprueba(`${slug}: tiene texto, no es una plantilla vacía`,
       dePagina.length > 150, dePagina.length + " palabras");
 
-    /* Y sus AFIRMACIONES, que es lo que de verdad hay que vigilar aquí: una
-       página de confianza sin original es una página donde nadie se entera si
-       «en proceso» pasa a «certificado». */
-    const af = AFIRMACIONES[slug];
-    if (af) {
-      const faltan = (af.deben_estar || []).filter((x) => !sal.includes(x));
-      comprueba(`${slug}: dice todo lo que prometió decir`, faltan.length === 0,
-        "falta: " + faltan.join(" · "));
-
-      const iso = (af.iso_en_proceso || []).filter((x) => !sal.includes(x));
-      comprueba(`${slug}: la ISO 27001 sigue dicha como EN CURSO, no como obtenida`,
-        iso.length === 0, "falta: " + iso.join(" · "));
-
-      const coladas = [];
-      for (const [patron, motivo] of af.no_pueden_estar || []) {
-        const m = sal.match(new RegExp(patron, "i"));
-        if (m) coladas.push(`«${m[0]}» — ${motivo}`);
-      }
-      comprueba(`${slug}: no promete nada que el código no sostenga`,
-        coladas.length === 0, coladas.slice(0, 3).join(" | "));
-    }
   } else if (!sal.includes(`<main class="pagina">`)) {
     comprueba(`${slug}: el cuerpo va dentro de <main class="pagina">`, false);
   } else if (slug === "legal") {
@@ -315,6 +294,43 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
         `» y la página dice «` +
         (dePagina.slice(Math.max(0, corte - 4), corte + 4).join(" ") || "(se acabó)") + "»",
     );
+  }
+
+  /* LAS AFIRMACIONES, DE TODAS LAS PÁGINAS Y NO SÓLO DE LAS ESCRITAS DE CERO.
+   *
+   * Esto vivía dentro de la rama `if (sinOriginal)`, así que sólo miraba el
+   * Centro de Confianza —la única página sin original—. La de planes tiene
+   * original, y por eso nadie miró nunca sus afirmaciones: ahí estuvo
+   * «conectores nativos con SharePoint, Teams y Power Apps», con Power Apps
+   * inexistente en el producto y SharePoint siendo lo CONTRARIO de un
+   * conector —un importador que pide bajar un CSV a mano—.
+   *
+   * La guarda no estaba mal escrita: estaba en el sitio equivocado. Una
+   * página con original tiene vigilado que no CAMBIE lo que decía; nadie
+   * vigilaba que lo que decía fuera VERDAD. Son dos preguntas distintas.
+   *
+   * Las páginas que no declaran nada en `afirmaciones.json` no cambian: las
+   * tres listas se leen con `|| []`. */
+  /* Y sus AFIRMACIONES, que es lo que de verdad hay que vigilar aquí: una
+     página de confianza sin original es una página donde nadie se entera si
+     «en proceso» pasa a «certificado». */
+  const af = AFIRMACIONES[slug];
+  if (af) {
+    const faltan = (af.deben_estar || []).filter((x) => !sal.includes(x));
+    comprueba(`${slug}: dice todo lo que prometió decir`, faltan.length === 0,
+      "falta: " + faltan.join(" · "));
+
+    const iso = (af.iso_en_proceso || []).filter((x) => !sal.includes(x));
+    comprueba(`${slug}: la ISO 27001 sigue dicha como EN CURSO, no como obtenida`,
+      iso.length === 0, "falta: " + iso.join(" · "));
+
+    const coladas = [];
+    for (const [patron, motivo] of af.no_pueden_estar || []) {
+      const m = sal.match(new RegExp(patron, "i"));
+      if (m) coladas.push(`«${m[0]}» — ${motivo}`);
+    }
+    comprueba(`${slug}: no promete nada que el código no sostenga`,
+      coladas.length === 0, coladas.slice(0, 3).join(" | "));
   }
 
   /* ── 2. LO QUE LA PÁGINA HACE ─────────────────────────────────────── */
