@@ -891,8 +891,6 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
 
       <!-- Sellos -->
       <div class="secure-row reveal">
-        <div class="sec-badge"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>SSL-encrypted payments</div>
-        <div class="sec-badge"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>PCI-DSS Compliant</div>
         <div class="sec-badge"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>14-day free trial</div>
         <div class="sec-badge"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Cancel without penalty</div>
         <div class="sec-badge"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Support in Spanish</div>
@@ -947,7 +945,6 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
       <div class="mstep active" data-s="0"><div class="msdot">1</div><div class="mslbl">Account</div></div>
       <div class="mstep" data-s="1"><div class="msdot">2</div><div class="mslbl">Company</div></div>
       <div class="mstep" data-s="2"><div class="msdot">3</div><div class="mslbl">Summary</div></div>
-      <div class="mstep" data-s="3"><div class="msdot">4</div><div class="mslbl">Payment</div></div>
     </div>
 
     <div class="modal-body">
@@ -961,12 +958,6 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
           <div class="fg"><label class="fl">Surname *</label><input class="fc" id="a-last" placeholder="García"></div>
         </div>
         <div class="fg"><label class="fl">Corporate email *</label><input class="fc" id="a-email" type="email" placeholder="ana@empresa.com"></div>
-        <div class="fg"><label class="fl">Password *</label>
-          <input class="fc" id="a-pwd" type="password" placeholder="Minimum 8 characters">
-        </div>
-        <div class="fg"><label class="fl">Confirm password *</label>
-          <input class="fc" id="a-pwd2" type="password" placeholder="Repeat your password">
-        </div>
         <div class="ckg">
           <input type="checkbox" id="a-terms">
           <label class="ckl" for="a-terms">I accept the <a href="legal.html">Terms of Service</a> and the <a href="legal.html">Privacy Policy</a> of Clèrigo.</label>
@@ -1024,7 +1015,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
       <!-- PASO 2: repaso del pedido -->
       <div class="modal-step-view" id="mview2">
         <div class="mview-title">Confirm your order</div>
-        <div class="mview-sub">Review the selected modules before proceeding to payment.</div>
+        <div class="mview-sub">Review what you have chosen. Once you send it we will write to you to activate it.</div>
         <div class="order-box" id="orderBox"><!-- lo rellena el guion --></div>
         <div class="fg"><label class="fl">Discount code</label>
           <div class="coupon-row">
@@ -1035,61 +1026,8 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
         <div id="couponMsg" style="font-size:11px;margin-bottom:12px;display:none;align-items:center;gap:6px;"></div>
         <div class="modal-actions">
           <button class="btn-back" onclick="prevStep()"><svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Back</button>
-          <button class="btn-next" onclick="nextStep()">
-            Go to payment <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- PASO 3: pago -->
-      <div class="modal-step-view" id="mview3">
-        <div class="mview-title">Payment method</div>
-        <div class="mview-sub">All payments are secure and encrypted. You start today.</div>
-
-        <div class="pay-methods" id="payMethods">
-          <div class="pay-opt sel" onclick="selPay(this,'card')">
-            <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M1 10h22" stroke="currentColor" stroke-width="1.8"/></svg>
-            <div class="pay-opt-lbl">Card</div>
-          </div>
-          <div class="pay-opt" onclick="selPay(this,'paypal')">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7.144 19.532l1.049-5.751c.11-.605.691-1.047 1.304-1.047h3.51c2.641 0 4.65-1.165 5.197-3.753.055-.257.095-.505.123-.743C17.623 5.78 15.516 4 12.124 4H6.397c-.66 0-1.223.468-1.326 1.121L3 18.627c-.07.432.264.832.706.832h2.857c.49 0 .91-.338 1.004-.824l.577-3.153" fill="#009cde" opacity=".5"/><path d="M19.337 8.238c-.516 2.588-2.525 3.753-5.197 3.753h-3.51c-.613 0-1.194.442-1.304 1.047l-1.049 5.751-.577 3.153c-.094.486.514.824 1.004.824h2.857c.49 0 .91-.338 1.004-.824l.577-3.153.577-3.153c.094-.486.514-.824 1.004-.824h1.004c2.641 0 4.65-1.165 5.197-3.753.312-1.563.055-2.8-.587-3.821z" fill="#003087"/></svg>
-            <div class="pay-opt-lbl">PayPal</div>
-          </div>
-          <div class="pay-opt" onclick="selPay(this,'google')">
-            <svg width="22" height="22" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-            <div class="pay-opt-lbl">Google Pay</div>
-          </div>
-          <div class="pay-opt" onclick="selPay(this,'apple')">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-            <div class="pay-opt-lbl">Apple Pay</div>
-          </div>
-        </div>
-
-        <!-- Datos de la tarjeta -->
-        <div class="card-fields" id="cardFields">
-          <div class="fg" style="margin-bottom:12px"><label class="fl">Card number</label>
-            <input class="fc" id="cc-num" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCard(this)">
-          </div>
-          <div class="card-row">
-            <div class="fg" style="flex:1;margin-bottom:0"><label class="fl">Expiry</label><input class="fc" id="cc-exp" placeholder="MM/AA" maxlength="5" oninput="formatExp(this)"></div>
-            <div class="fg" style="flex:1;margin-bottom:0"><label class="fl">CVV</label><input class="fc" id="cc-cvv" placeholder="···" maxlength="4" type="password"></div>
-          </div>
-          <div class="fg" style="margin-top:12px;margin-bottom:0"><label class="fl">Name on card</label><input class="fc" id="cc-name" placeholder="ANA GARCIA"></div>
-        </div>
-
-        <!-- Aviso de PayPal / Google / Apple -->
-        <div id="altPayMsg" style="display:none;background:var(--dark-3);border:1px solid var(--border);border-radius:8px;padding:16px;text-align:center;margin-bottom:16px;font-size:13px;color:var(--text-2);line-height:1.6;"></div>
-
-        <div style="display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-3);margin-bottom:16px;">
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-          Transaction encrypted with TLS 1.3. We never store card data.
-        </div>
-
-        <div class="modal-actions">
-          <button class="btn-back" onclick="prevStep()"><svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Back</button>
-          <button class="btn-next" onclick="processPayment()" id="payBtn">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M1 10h22" stroke="currentColor" stroke-width="1.8"/></svg>
-            Pay and activate account
+          <button class="btn-next" onclick="enviarSolicitud()">
+            Submit application <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>
       </div>
@@ -1100,17 +1038,17 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
           <div class="success-ico">
             <svg width="30" height="30" fill="none" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><polyline points="22,4 12,14.01 9,11.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <div class="success-h">Welcome to Clèrigo!</div>
-          <div class="success-d">Your account has been created and your modules are being set up. You will receive an email with your access credentials in the next few minutes.</div>
-          <div class="next-steps">
-            <div class="ns-title">Next steps</div>
-            <div class="ns-item"><div class="ns-num">1</div>Check your email and confirm your account. The link expires in 24 hours.</div>
-            <div class="ns-item"><div class="ns-num">2</div>Sign in to the portal and complete the regulatory frameworks setup wizard.</div>
-            <div class="ns-item"><div class="ns-num">3</div>Your Customer Success Manager will contact you in less than 2 business hours for your onboarding session.</div>
-            <div class="ns-item"><div class="ns-num">4</div>Explore the AI assistant and upload your first documents to see the platform in action.</div>
-          </div>
+          <div class="success-h">Request ready</div>
+            <div class="success-d">We have opened an email with what you chose. Check it and send it: as soon as it arrives we will write to you to activate the account.</div>
+            <div class="next-steps">
+              <div class="ns-title">What happens now</div>
+              <div class="ns-item"><div class="ns-num">1</div>Send the email that just opened. If it did not open, write to us at <a href="mailto:hello@clerigo.io">hello@clerigo.io</a>.</div>
+              <div class="ns-item"><div class="ns-num">2</div>We reply within 2 hours during business hours, with the proposal and the contract.</div>
+              <div class="ns-item"><div class="ns-num">3</div>Once you accept it we create your organisation and you receive access by email.</div>
+              <div class="ns-item"><div class="ns-num">4</div>Would you rather talk it through first? <a href="https://wa.me/18297482545">WhatsApp 829 748 2545</a>.</div>
+            </div>
           <button class="btn-next" style="width:100%;margin-top:20px" onclick="closeModal()">
-            Go to the Clèrigo portal <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Close <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>
       </div>
@@ -1613,7 +1551,8 @@ function closeModalOutside(e) {
   if(e.target === document.getElementById('modalOverlay')) closeModal();
 }
 
-const stepProgress = [12, 38, 63, 88, 100];
+/* Tres pasos y la pantalla final. Eran cuatro: el del pago se quitó. */
+const stepProgress = [15, 45, 75, 100];
 
 function updateModalStep() {
   document.querySelectorAll('.modal-step-view').forEach((v,i) => v.classList.toggle('active', i === currentStep));
@@ -1626,17 +1565,15 @@ function updateModalStep() {
   });
   document.getElementById('mProgress').style.width = stepProgress[currentStep] + '%';
   // la fila de pasos se retira al terminar
-  document.getElementById('mSteps').style.display = currentStep === 4 ? 'none' : '';
+  document.getElementById('mSteps').style.display = currentStep === 3 ? 'none' : '';
 }
 
 function nextStep() {
   if(currentStep === 0) {
     const name = document.getElementById('a-name').value;
     const email = document.getElementById('a-email').value;
-    const pwd = document.getElementById('a-pwd').value;
     const terms = document.getElementById('a-terms').checked;
-    if(!name || !email || !pwd || !terms) { shake(); return; }
-    if(pwd !== document.getElementById('a-pwd2').value) { shakeEl('a-pwd2'); return; }
+    if(!name || !email || !terms) { shake(); return; }
   }
   if(currentStep === 1) {
     const co = document.getElementById('b-co').value;
@@ -1644,7 +1581,7 @@ function nextStep() {
     if(!co || !cy) { shake(); return; }
   }
   if(currentStep === 2) renderOrderBox();
-  currentStep = Math.min(currentStep + 1, 4);
+  currentStep = Math.min(currentStep + 1, 3);
   updateModalStep();
   document.getElementById('modal').scrollTop = 0;
 }
@@ -1746,51 +1683,50 @@ function applyCoupon() {
   renderOrderBox();
 }
 
-function selPay(el, method) {
-  payMethod = method;
-  document.querySelectorAll('.pay-opt').forEach(p => p.classList.remove('sel'));
-  el.classList.add('sel');
-  const cardFields = document.getElementById('cardFields');
-  const altMsg = document.getElementById('altPayMsg');
-  const payBtn = document.getElementById('payBtn');
-  if(method === 'card') {
-    cardFields.style.display = 'block';
-    altMsg.style.display = 'none';
-    payBtn.innerHTML = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M1 10h22" stroke="currentColor" stroke-width="1.8"/></svg> Pay and activate account`;
-  } else {
-    cardFields.style.display = 'none';
-    altMsg.style.display = 'block';
-    const msgs = {
-      paypal: 'Click continue and you will be redirected to PayPal to complete your payment securely. You will return to Clèrigo automatically once confirmed.',
-      google: 'Google Pay detected on your device. Click continue to open the Google Pay selector and complete the payment.',
-      apple: 'Apple Pay detected on your device. Click continue to open Face ID / Touch ID and confirm the payment.'
-    };
-    altMsg.innerHTML = `<div style="color:var(--text-2)">${msgs[method]}</div>`;
-    payBtn.innerHTML = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Continue with ${method.charAt(0).toUpperCase()+method.slice(1)}`;
-  }
-}
 
-function formatCard(el) {
-  let v = el.value.replace(/\D/g,'').substring(0,16);
-  el.value = v.match(/.{1,4}/g)?.join(' ') || v;
-}
 function formatExp(el) {
   let v = el.value.replace(/\D/g,'').substring(0,4);
   if(v.length >= 2) v = v.substring(0,2) + '/' + v.substring(2);
   el.value = v;
 }
 
-function processPayment() {
-  const btn = document.getElementById('payBtn');
-  btn.disabled = true;
-  btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="animation:spin 1s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Processing...`;
-  setTimeout(() => {
-    btn.disabled = false;
-    currentStep = 4;
-    updateModalStep();
-    document.getElementById('modal').scrollTop = 0;
-  }, 2200);
+/**
+ * LA SOLICITUD SALE POR CORREO, que es lo único que este sitio sabe hacer.
+ *
+ * Antes esto se llamaba `processPayment` y era un `setTimeout` de 2,2
+ * segundos: no mandaba nada y luego decía que la cuenta estaba creada.
+ *
+ * Ahora arma un correo a hello@clerigo.io con lo elegido —las áreas, el ciclo,
+ * los usuarios y el total— y lo abre en el gestor de correo de quien lo pide.
+ * Es el mismo canal que usa la página de contacto. No es una compra en línea;
+ * es una solicitud, y la pantalla siguiente lo dice con esas palabras.
+ */
+function enviarSolicitud() {
+  const activos = modules.filter(m => selected[m.id] || isAutoIncluded(m));
+  const nombre = (document.getElementById('a-name').value + ' ' + document.getElementById('a-last').value).trim();
+  const correo = document.getElementById('a-email').value.trim();
+  const empresa = document.getElementById('b-co').value.trim();
+  const pais = document.getElementById('b-cy').value.trim();
+  const lineas = [
+    'I would like to activate Clèrigo XGRC with the following:',
+    '',
+    'Name:   ' + nombre,
+    'Email:   ' + correo,
+    'Company:  ' + empresa,
+    'Country:     ' + pais,
+    '',
+    'Areas:    ' + (activos.map(m => m.name).join(', ') || '(ninguna)'),
+    'Cycle:    ' + (billing === 'annual' ? 'Annual' : 'Monthly'),
+    'Users: ' + usuariosCuenta,
+  ].join('\n');
+  const asunto = 'Activation request — ' + (empresa || nombre || 'Clèrigo XGRC');
+  window.location.href = 'mailto:hello@clerigo.io?subject=' + encodeURIComponent(asunto)
+    + '&body=' + encodeURIComponent(lineas);
+  currentStep = 3;
+  updateModalStep();
+  document.getElementById('modal').scrollTop = 0;
 }
+
 
 // ════════════════════════════════
 //  ARRANQUE

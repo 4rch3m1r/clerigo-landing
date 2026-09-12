@@ -46,8 +46,38 @@ const RETIRADOS = {
        —2 administradores y 5 gestores— son de la cuenta y no del módulo: sumar
        un deslizador por módulo cobraba tres veces a quien usa tres módulos.
        Decisión del cliente, 2026-09-07. */
-    manejadores: ["updateUsers('${m.id}', this.value)"],
-    funciones: ["updateUsers"],
+    /* EL FORMULARIO DE PAGO, RETIRADO ENTERO — 2026-09-11.
+     *
+     * Pedía número de tarjeta, vencimiento, CVV y titular, más una contraseña y
+     * su confirmación en el primer paso. No mandaba nada a ninguna parte: en
+     * toda la página no hay una sola llamada de red. El «pago» era un
+     * `setTimeout` de 2,2 segundos, y después enseñaba «Tu cuenta ha sido
+     * creada», «recibirás un correo con tus credenciales» y «tu Customer
+     * Success Manager te contactará en menos de 2 horas hábiles».
+     *
+     * Eso no es un pago roto: es pedir una contraseña y una tarjeta y decir que
+     * ya está hecho. Debajo del campo de la tarjeta había un sello que decía
+     * «PCI-DSS Compliant».
+     *
+     * No se conecta una pasarela porque este sitio es estático —no hay dónde
+     * guardar una llave— y elegirla es decisión del cliente. Lo que sí se hace
+     * es que la página deje de pedir lo que no puede usar: quedan tres pasos y
+     * un botón que abre un correo a hello@clerigo.io con lo elegido, que es el
+     * canal que la página de contacto ya usa.
+     *
+     * Y NO ES UN CAMBIO DE MODELO: la propia página promete TRES veces que no
+     * hace falta tarjeta —el pie del resumen, el primer paso del modal y la
+     * pregunta frecuente—. Esto la deja diciendo lo que ya vendía. */
+    manejadores: ["updateUsers('${m.id}', this.value)",
+      "selPay(this,'card')", "selPay(this,'paypal')", "selPay(this,'google')", "selPay(this,'apple')",
+      "formatCard(this)", "formatExp(this)", "processPayment()"],
+    funciones: ["updateUsers", "selPay", "formatCard", "processPayment"],
+    identificadores: ["a-pwd", "a-pwd2", "cc-num", "cc-exp", "cc-cvv", "cc-name",
+      "cardFields", "altPayMsg", "payMethods", "payBtn", "mview3"],
+    /* Seis entradas menos: las cuatro de la tarjeta y las dos de contraseña.
+       Y dos botones: «Ir al pago» y «Pagar y activar cuenta». */
+    entradas: 6,
+    botones: 2,
   },
 };
 const PLANTILLA = lee(path.join(AQUI, "plantilla.html"));
@@ -309,9 +339,28 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
         siguen.length === 0, "siguen ahí: " + siguen.join(", "));
     }
   }
+  /* LOS CONTROLES QUE SE RETIRAN A PROPÓSITO SE DESCUENTAN, y se dice cuántos.
+     La regla sigue siendo «no se pierde ningún control»; lo que cambia es que
+     una retirada declarada deja de contar como pérdida. El número va en
+     `RETIRADOS` junto a su porqué, así que no se puede bajar el listón sin
+     escribir al lado la razón. */
+  const menos = RETIRADOS[slug] || {};
   for (const clave of ["entradas", "listas", "opciones", "areas", "botones"]) {
-    comprueba(`${slug}: los mismos controles (${clave})`, hSal[clave] >= hOrg[clave],
-      `el original tiene ${hOrg[clave]} y la página ${hSal[clave]}`);
+    const retirados = menos[clave] || 0;
+    const perdidos = Math.max(0, hOrg[clave] - hSal[clave]);
+    /* EL DESCUENTO TIENE QUE SER EXACTO, NO UN TECHO.
+       La primera versión decía «vale si no has perdido más de lo declarado», y
+       eso deja poner 99 y quedarse sin comprobación para siempre. Lo cazó su
+       propia mutación: subir el número a 99 no hacía saltar nada.
+       Ahora se exige además que lo declarado NO PASE de lo que de verdad falta:
+       declarar de más es tan fallo como perder de más. Así el número no se
+       puede inflar «por si acaso», que es como mueren estas listas. */
+    comprueba(`${slug}: los mismos controles (${clave})`,
+      hSal[clave] >= hOrg[clave] - retirados && retirados <= perdidos,
+      retirados > perdidos
+        ? `se declaran ${retirados} retirados y sólo faltan ${perdidos}: sobra declaración`
+        : `el original tiene ${hOrg[clave]} y la página ${hSal[clave]}`
+          + (retirados ? ` (se declararon ${retirados} retirados)` : ""));
   }
 
   /* ── 3. LA LÍNEA GRÁFICA, LETRA A LETRA ───────────────────────────── */
