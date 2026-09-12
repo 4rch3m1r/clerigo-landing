@@ -18,6 +18,15 @@ const path = require("node:path");
 const { PALABRAS } = require("./vocabulario.cjs");
 const { PAGINAS, NO_INDEXAR, BASE } = require("./posicionar.cjs");
 const { CASTELLANO, INGLES } = require("../donde.cjs");
+/* Qué tarjeta le toca a cada página en cada idioma, y en qué idioma la
+   declara el catálogo que las dibuja. Las dos cosas salen de su fichero: la
+   primera de `sitio.json`, que es lo que el generador escribe en las páginas,
+   y la segunda de `fuente/og/tarjetas.cjs`, que es quien sabe qué pone dentro
+   de cada imagen. Preguntar a las dos es lo que hace que esta guarda no se
+   pueda contentar con «el fichero existe». */
+const SITIO = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "sitio.json"), "utf8"));
+const IDIOMA_DE_LA_TARJETA = Object.fromEntries(
+  require("../og/tarjetas.cjs").map((x) => [x.fichero, x.idioma]));
 
 const RAIZ = path.join(__dirname, "..", "..");
 const lee = (f) => fs.readFileSync(f, "utf8");
@@ -196,6 +205,72 @@ for (const carpeta of [CASTELLANO, INGLES]) {
     comprueba(`${p}: y el texto de la tarjeta también está en ese idioma`,
       !esIngles || sospechosos.length === 0,
       sospechosos.length ? sospechosos.length + " en castellano, p.ej. «" + sospechosos[0].slice(0, 70) + "»" : "");
+
+    /* ── Y LA IMAGEN, QUE ES LO ÚNICO QUE SE VE ─────────────────────────
+     *
+     * Las dos guardas de arriba miran lo que la página DICE: su `og:locale` y
+     * el texto de sus etiquetas. La IMAGEN no la miraba ninguna, y es lo
+     * único que se ve cuando alguien pega el enlace en un chat.
+     *
+     * Estaba mal en NUEVE de las dieciocho páginas, medido el 2026-09-12:
+     * `sitio.json` tenía una sola imagen por página y las dos versiones la
+     * compartían. Seis inglesas servían una tarjeta en castellano y tres
+     * castellanas una en inglés — entre ellas la portada, que es la que más
+     * se comparte. Compartir clerigo.io/pricing enseñaba «Paga por lo que
+     * usas» y compartir clerigo.io/es/ enseñaba «Managing GRC doesn't have
+     * to be complicated».
+     *
+     * `login` y `oscuro` no tienen entrada propia y usan la de la portada,
+     * que es lo que hacen desde siempre: las tres comparten titular.
+     *
+     * TRES COMPROBACIONES, y las tres hacen falta por separado:
+     *
+     *   · la página apunta a la imagen que le toca por su idioma;
+     *   · las TRES etiquetas que llevan dirección apuntan a la misma. Con
+     *     arreglar sólo `og:image`, Twitter y LinkedIn seguirían leyendo la
+     *     vieja por `twitter:image`, y nadie lo vería desde aquí;
+     *   · el catálogo declara esa imagen EN ESE IDIOMA. Sin esto, apuntar la
+     *     inglesa a una tarjeta castellana con otro nombre pasaría de largo:
+     *     el fallo no era que faltara un fichero, era que el fichero estaba
+     *     en el otro idioma. */
+    const suya = (SITIO.paginas[slug] || SITIO.paginas.index).imagen[idioma];
+    const esperada = BASE + "/public/og/" + suya;
+    /* LAS CUATRO, no tres. La cuarta va como enlace —rel="image_src", con
+       href— y no como etiqueta meta con content, y por eso se me pasó al
+       arreglar las otras: las tres quedaron bien y la cuarta seguía apuntando a
+       la tarjeta del otro idioma en ocho de las dieciocho páginas. La encontró
+       una revisión en abanico, no yo. No es la etiqueta más leída —la usan
+       Pinterest y algún lector— pero decir cuatro cosas distintas sobre la
+       misma imagen es pedir que gane la que no debe. */
+    const puestas = [
+      ...["og:image", "og:image:secure_url", "twitter:image"]
+        .map((et) => (h.match(new RegExp('(?:name|property)="' + et + '" content="([^"]*)"')) || [])[1]),
+      (h.match(/<link rel="image_src" href="([^"]*)"/) || [])[1],
+    ].filter((u) => u !== undefined);
+    comprueba(`${p}: la tarjeta que se comparte es la de su idioma`,
+      puestas.every((u) => u === esperada),
+      "debería ser " + suya + " y pone " + puestas.map((u) => String(u).split("/").pop()).join(" / "));
+    comprueba(`${p}: y el catálogo la declara en ese idioma`,
+      IDIOMA_DE_LA_TARJETA[suya] === idioma,
+      suya + " está declarada como «" + IDIOMA_DE_LA_TARJETA[suya] + "» y la página es «" + idioma + "»");
+    /* Y LA FICHA DE LA ORGANIZACIÓN, que también lleva una imagen y estaba
+       clavada a la tarjeta INGLESA de la portada: las nueve páginas castellanas
+       declaraban como imagen de la organización una tarjeta con el titular en
+       inglés. Es la imagen que Google y LinkedIn asocian a la marca, así que
+       no es un detalle de una página: es la de todas. */
+    const laFicha = (h.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/) || [])[1];
+    let deLaOrganizacion = null;
+    if (laFicha) {
+      try {
+        const j = JSON.parse(laFicha);
+        const org = (j["@graph"] || []).find((x) => x["@type"] === "Organization");
+        if (org) deLaOrganizacion = org.image;
+      } catch (e) { /* que la ficha se pueda leer lo vigila otra comprobación */ }
+    }
+    const deLaPortada = BASE + "/public/og/" + SITIO.paginas.index.imagen[idioma];
+    comprueba(`${p}: y la ficha de la organización lleva la tarjeta de ese idioma`,
+      deLaOrganizacion === deLaPortada,
+      "debería ser " + deLaPortada.split("/").pop() + " y pone " + String(deLaOrganizacion).split("/").pop());
 
     /* La ficha. Que se pueda leer, para empezar: una ficha con la coma mal
        puesta no da error en ningún sitio, simplemente no la lee nadie. */

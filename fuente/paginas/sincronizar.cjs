@@ -137,7 +137,19 @@ for (const { slug, chrome } of PAGINAS) {
   const donde = SITIO.paginas[slug];
   if (!donde) throw new Error(`sitio.json no dice dónde vive ${slug}`);
   const canonica = SITIO.base + "/" + donde.fichero;
-  const imagen = SITIO.base + "/" + donde.imagen;
+  /* LA DEL IDIOMA. Este paso escribe la CASTELLANA, así que su tarjeta es la
+     castellana. Antes había una sola por página y las dos versiones la
+     compartían: la inglesa acababa sirviendo una tarjeta en castellano. */
+  /* CON `public/og/`, que es donde vive. Sin ese trozo la dirección era
+     `https://clerigo.io/legal-og.png` y da 404, y la plantilla la estampa en
+     sus CINCO huecos de imagen: og:image, og:image:secure_url, twitter:image,
+     image_src y la ficha de datos.
+     No se veía porque `posicionar.cjs` corre después y sobreescribe tres de
+     las cinco; las otras dos se salvaban sólo porque nadie volvía a correr
+     esto. Y el validador comparaba contra la misma dirección mala, así que los
+     dos estaban de acuerdo y los dos equivocados: doce fallos suyos salían de
+     aquí. Lo encontró una revisión en abanico, no yo. */
+  const imagen = SITIO.base + "/public/og/" + donde.imagen.es;
 
   const { estilo, cuerpo, guion } = despieza(antes);
   const despues = CABECERA

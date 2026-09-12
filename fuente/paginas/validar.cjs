@@ -395,12 +395,35 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
      fuente/sitio.json igual que las calcula el sincronizador, y se exige que la
      página diga exactamente eso. Leerlas de la página sería preguntarle al
      examinado por la respuesta. */
-  const donde = SITIO.paginas[slug] || {};
+  /* SI FALTA LA PÁGINA EN LA TABLA, SE DICE. Con `|| {}` esto aguantaba
+     cuando `imagen` era una cadena —daba `undefined` y la comparación fallaba
+     con su mensaje—; desde que es `{en, es}`, `{}.imagen.es` lanza un
+     TypeError y el validador muere sin decir de qué página hablaba. Salta el
+     día que alguien añada una página y se olvide de la tabla, que es justo el
+     día en que hace falta que esto hable. */
+  const donde = SITIO.paginas[slug];
+  if (!donde) {
+    comprueba(`${slug}: sitio.json dice dónde vive y con qué tarjeta se comparte`,
+      false, "no tiene entrada en fuente/sitio.json");
+    continue;
+  }
   /* La canónica de la CASTELLANA lleva /es/: es la dirección donde vive de
-     verdad. La imagen de la tarjeta NO, porque es la misma en los dos idiomas
-     y está en la raíz. */
+     verdad. La imagen no, que está en la raíz — pero SÍ depende del idioma, y
+     aquí decía lo contrario: «es la misma en los dos idiomas». Lo era, y ése
+     era el fallo: nueve de las dieciocho páginas servían la tarjeta en el
+     idioma equivocado. Esta comprobación mira la castellana, así que pide la
+     castellana. */
   const canonica = SITIO.base + "/es/" + donde.fichero;
-  const imagen = SITIO.base + "/" + donde.imagen;
+  /* CON `public/og/`, que es donde vive. Sin ese trozo la dirección era
+     `https://clerigo.io/legal-og.png` y da 404, y la plantilla la estampa en
+     sus CINCO huecos de imagen: og:image, og:image:secure_url, twitter:image,
+     image_src y la ficha de datos.
+     No se veía porque `posicionar.cjs` corre después y sobreescribe tres de
+     las cinco; las otras dos se salvaban sólo porque nadie volvía a correr
+     esto. Y el validador comparaba contra la misma dirección mala, así que los
+     dos estaban de acuerdo y los dos equivocados: doce fallos suyos salían de
+     aquí. Lo encontró una revisión en abanico, no yo. */
+  const imagen = SITIO.base + "/public/og/" + donde.imagen.es;
   const cabeceraEsperada = CABECERA
     .split("{{TITULO}}").join(titulo)
     .split("{{DESCRIPCION}}").join(desc)

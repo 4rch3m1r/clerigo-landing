@@ -246,7 +246,11 @@ comprueba("y en el original el rótulo decía «Nuestras Certificaciones»",
      generador publicaba las tarjetas viejas sin que nadie lo pidiera.
      Y se miran donde las páginas dicen que están —`public/og/`—, no donde
      estaban hace tres versiones. */
-  const cartas = Object.values(SITIO.paginas).map((p) => p.imagen);
+  /* LAS DOS DE CADA PÁGINA. Con `p.imagen` a secas —cuando era una sola—
+     esto comprobaba siete ficheros; ahora son catorce, y las siete inglesas
+     estaban sin vigilar porque ninguna página las citaba. */
+  const cartas = [...new Set(Object.values(SITIO.paginas)
+    .flatMap((p) => [p.imagen.en, p.imagen.es]))];
   const malas = [];
   for (const c of cartas) {
     const f = require("node:path").join(RAIZ, "public", "og", c);
@@ -260,8 +264,15 @@ comprueba("y en el original el rótulo decía «Nuestras Certificaciones»",
       malas.push(`${c}: ${cab.readUInt32BE(16)} × ${cab.readUInt32BE(20)}, ${kb} KB`);
     }
   }
-  comprueba("las 6 tarjetas de vista previa existen, miden 1200 × 630 y pesan poco",
-    malas.length === 0, malas.join(" | "));
+  /* EL NÚMERO SE CUENTA, NO SE ESCRIBE. Este rótulo decía «las 6 tarjetas» y
+     eran siete; al pasar cada página a tener la suya en cada idioma pasaron a
+     ser catorce, y el rótulo seguía diciendo seis. Un número escrito a mano en
+     el nombre de una guarda envejece solo y manda a trabajar sobre algo falso.
+     Y se exige que haya alguna: con la lista vacía esto pasaría comparando cero
+     con cero. */
+  comprueba(`las ${cartas.length} tarjetas de vista previa existen, miden 1200 × 630 y pesan poco`,
+    cartas.length > 0 && malas.length === 0,
+    cartas.length ? malas.join(" | ") : "la lista de tarjetas ha salido vacía");
 }
 
 /* Las fotos del sistema. Otra vez: se mira el FICHERO, no la etiqueta. Con
@@ -314,6 +325,53 @@ comprueba("y en el original el panel estaba dibujado con CSS, no fotografiado",
 
 comprueba("el favicon apunta a favicon.png y el fichero existe",
   /rel="icon"[^>]*href="(?:\.\.\/)?favicon\.png"/.test(osc) && fs.existsSync(require("node:path").join(RAIZ, "favicon.png")));
+
+console.log("\n── Lo que los generadores prometen ─────────────────────────────");
+/* NINGÚN GENERADOR PROMETE UNA IMAGEN QUE NO ESTÁ.
+ *
+ * `rebrandear.cjs` escribía cuatro veces `https://clerigo.io/og.png` y en la
+ * raíz del sitio no hay ningún `og.png`: las copias viven en `og/` y en
+ * `public/og/`, y se sirven bajo `public/og/`. Las cuatro etiquetas de la
+ * tarjeta de la portada oscura prometían un 404.
+ *
+ * No se veía porque `posicionar.cjs` corre después y las sobreescribe. Y ahí
+ * está el motivo de esta guarda: un defecto tapado por otro paso sigue siendo
+ * un defecto, y el día que el orden cambie sale a la calle.
+ *
+ * Lo mismo le pasaba a `sincronizar.cjs` y a su validador: los dos construían
+ * la dirección como `base + "/" + imagen`, sin el `public/og/`, de acuerdo
+ * entre ellos y los dos equivocados. Eran doce fallos de `paginas/validar.cjs`
+ * que yo llevaba contando como línea de partida.
+ *
+ * Así que esto no mira un caso: mira la FAMILIA. Toda dirección absoluta a un
+ * PNG que un generador tenga escrita tiene que apuntar a un fichero que
+ * exista, mirando el disco y no el nombre. */
+{
+  const GENERADORES = [
+    "fuente/rebrandear.cjs", "fuente/paginas/plantilla.html",
+    "fuente/seo/posicionar.cjs", "fuente/paginas/sincronizar.cjs",
+  ];
+  const BASE_DEL_SITIO = SITIO.base.replace(/\/$/, "");
+  const promesas = [];
+  for (const g of GENERADORES) {
+    const f = require("node:path").join(RAIZ, g);
+    if (!fs.existsSync(f)) { promesas.push(g + ": el fichero no existe"); continue; }
+    /* SIN COMENTARIOS, y hubo que aprenderlo otra vez: el comentario que
+       explica este mismo fallo pone la dirección mala como ejemplo, y esta
+       guarda la encontró y se puso roja por la explicación de lo que vigila.
+       Cuarta vez hoy con el mismo vicio. */
+    const texto = fs.readFileSync(f, "utf8")
+      .replace(/<!--[\s\S]*?-->/g, " ")
+      .replace(/\/\*[\s\S]*?\*\//g, " ")
+      .replace(/(^|[;{}\s])\/\/[^\n]*/g, "$1 ");
+    for (const m of texto.matchAll(new RegExp(BASE_DEL_SITIO.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(/[A-Za-z0-9._/-]+\\.png)", "g"))) {
+      const dentro = require("node:path").join(RAIZ, m[1]);
+      if (!fs.existsSync(dentro)) promesas.push(g + ": " + m[1]);
+    }
+  }
+  comprueba("ningún generador promete una imagen que no está en el disco",
+    promesas.length === 0, [...new Set(promesas)].join(" | "));
+}
 
 console.log("\n── La moneda ───────────────────────────────────────────────────");
 /* LA MONEDA ES SIEMPRE EL DÓLAR ESTADOUNIDENSE, Y LO DICE.

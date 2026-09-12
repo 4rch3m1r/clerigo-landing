@@ -120,8 +120,12 @@ function organizacion(idioma) {
     /* La tarjeta buena, la misma que declara la portada. Apuntaba a `/og.png`,
        que es una copia suelta en la raíz del repositorio que nadie mantiene:
        la ficha de la organización enseñaba la tarjeta vieja mientras la
-       portada enseñaba la nueva. */
-    image: BASE + "/public/og/clerigo-og.png",
+       portada enseñaba la nueva.
+       Y LA DE SU IDIOMA: estaba clavada a la inglesa, así que las nueve páginas
+       castellanas declaraban como imagen de la organización una tarjeta con el
+       titular en inglés. La función ya recibía el idioma; sólo había que
+       usarlo. */
+    image: BASE + "/public/og/" + SITIO.paginas.index.imagen[idioma],
     email: "hello@clerigo.io",
     description: idioma === "es"
       ? "Plataforma de Gobernanza, Riesgo y Cumplimiento que unifica riesgos, cumplimiento normativo, auditoría interna, control interno, ciberseguridad y privacidad."
@@ -331,7 +335,48 @@ for (const carpeta of [CASTELLANO, INGLES]) {
 
     const titulo = (h.match(/<title>([^<]*)<\/title>/) || [, ""])[1];
     const descripcion = (h.match(/<meta name="description" content="([^"]*)"/) || [, ""])[1];
-    const imagen = (h.match(/<meta property="og:image" content="([^"]*)"/) || [, BASE + "/og.png"])[1];
+    /* ── LA TARJETA DE ENLACE, LA DE SU IDIOMA ───────────────────────────
+     *
+     * Antes esto LEÍA la imagen de la propia página y se quedaba con lo que
+     * hubiera. Y lo que había era una sola tarjeta por página para los dos
+     * idiomas, porque `sitio.json` tenía un solo campo. Medido el 2026-09-12
+     * sobre las dieciocho páginas servidas: NUEVE tenían la tarjeta en el
+     * idioma equivocado. Seis inglesas compartían una en castellano y tres
+     * castellanas una en inglés — entre ellas la portada, que es la que más
+     * se comparte de todas.
+     *
+     * Ahora se DECIDE aquí, que es el único paso que corre sobre las dos
+     * versiones sabiendo en cuál está.
+     *
+     * `login` y `oscuro` usan la de la portada. No es un apaño: es lo que ya
+     * hacían las dos versiones inglesas, y las tres páginas dicen lo mismo
+     * —la portada, la portada oscura y la pantalla de acceso comparten
+     * titular—. Se escribe aquí en vez de darles entrada propia en
+     * `sitio.json`, porque esa tabla la recorren el sincronizador y su
+     * validador para las siete páginas interiores y meter dos más les
+     * cambiaría el trabajo.
+     *
+     * Se ponen las CUATRO etiquetas que llevan la dirección de la imagen. Con
+     * poner sólo `og:image`, Twitter y LinkedIn seguirían leyendo la vieja
+     * por `twitter:image`; el `og:image:secure_url` es la que usa Meta cuando
+     * la página se sirve por https, que es siempre; y la cuarta es
+     * `<link rel="image_src" href>`, que va como ENLACE y no como etiqueta
+     * meta — por eso se quedó fuera la primera vez que se escribió esto, y
+     * ocho páginas siguieron apuntando a la tarjeta del otro idioma con las
+     * otras tres ya bien. La plantilla tiene CINCO huecos de imagen: estas
+     * cuatro y el `primaryImageOfPage` de la ficha, que se reescribe entera
+     * un poco más abajo con esta misma dirección. */
+    const deLaPortada = SITIO.paginas.index;
+    const cual = (SITIO.paginas[p.slug] || deLaPortada).imagen[idioma];
+    const imagen = BASE + "/public/og/" + cual;
+    for (const et of ["og:image", "og:image:secure_url"]) {
+      h = h.replace(new RegExp('<meta property="' + et + '" content="[^"]*">'),
+        '<meta property="' + et + '" content="' + imagen + '">');
+    }
+    h = h.replace(/<meta name="twitter:image" content="[^"]*">/,
+      '<meta name="twitter:image" content="' + imagen + '">');
+    h = h.replace(/<link rel="image_src" href="[^"]*">/,
+      '<link rel="image_src" href="' + imagen + '">');
 
     /* 1. Las palabras clave. No posicionan —está dicho arriba— pero es donde
           queda por escrito de qué va cada página, y algún buscador menor las

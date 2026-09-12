@@ -80,9 +80,15 @@ cambia(
      iMessage. Las medidas y el tipo NO son adorno: WhatsApp descarta la imagen
      si tiene que descargarla entera para averiguar cuánto mide, y con
      `og:image:width` y `og:image:height` puestos se la cree y la pinta.
-     `og.png` lo dibuja fuente/hacer-og.ps1. */
-  + '<meta property="og:image" content="https://clerigo.io/og.png">\n'
-  + '<meta property="og:image:secure_url" content="https://clerigo.io/og.png">\n'
+     Y LA DIRECCIÓN LLEVA `public/og/`: apuntaba a `/og.png`, y en la raíz del
+     sitio no hay ningún `og.png` —las copias viven en `og/` y en `public/og/`—,
+     así que las cuatro etiquetas prometían una imagen que da 404. No se veía
+     porque `posicionar.cjs` corre después y las sobreescribe.
+     Esta es la portada oscura CASTELLANA, así que su tarjeta es la castellana.
+     La dibuja `fuente/og/hacer.cjs` desde `fuente/og/tarjetas.cjs`; el
+     comentario citaba `fuente/hacer-og.ps1`, que ya no existe. */
+  + '<meta property="og:image" content="https://clerigo.io/public/og/clerigo-og-es.png">\n'
+  + '<meta property="og:image:secure_url" content="https://clerigo.io/public/og/clerigo-og-es.png">\n'
   + '<meta property="og:image:type" content="image/png">\n'
   + '<meta property="og:image:width" content="1200">\n'
   + '<meta property="og:image:height" content="630">\n'
@@ -91,10 +97,10 @@ cambia(
   + '<meta name="twitter:card" content="summary_large_image">\n'
   + '<meta name="twitter:title" content="Clèrigo | Software GRC de Gobernanza, Riesgo y Cumplimiento">\n'
   + '<meta name="twitter:description" content="Software GRC que unifica riesgos, cumplimiento normativo, auditoría interna, control interno, ciberseguridad y privacidad en una sola plataforma.">\n'
-  + '<meta name="twitter:image" content="https://clerigo.io/og.png">\n'
+  + '<meta name="twitter:image" content="https://clerigo.io/public/og/clerigo-og-es.png">\n'
   + '<meta name="twitter:image:alt" content="Clèrigo | Software GRC de Gobernanza, Riesgo y Cumplimiento">\n'
   + '<meta name="theme-color" content="#0E0E0E">\n'
-  + '<link rel="image_src" href="https://clerigo.io/og.png">\n'
+  + '<link rel="image_src" href="https://clerigo.io/public/og/clerigo-og-es.png">\n'
   /* Para Google y LinkedIn, que leen datos estructurados además de las
      etiquetas de Open Graph. */
   + '<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite",'

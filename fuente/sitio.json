@@ -20,34 +20,68 @@
   "base": "https://clerigo.io",
   "definitiva": "https://clerigo.io",
   "_rutas": "Qué fichero es cada página y con qué tarjeta se comparte.",
+  "_imagen_por_idioma": [
+    "LA TARJETA DEPENDE DEL IDIOMA, y antes no.",
+    "",
+    "Habia UN solo campo `imagen` por pagina y lo usaban las dos versiones. Medido",
+    "el 2026-09-12 sobre las dieciocho paginas servidas: NUEVE servian la tarjeta",
+    "en el idioma equivocado. Seis inglesas compartian una tarjeta en castellano",
+    "—frameworks, trustcenter, contact, pricing, partners, legal— y tres",
+    "castellanas una en ingles —es/index, es/login, es/oscuro—.",
+    "",
+    "O sea que compartir clerigo.io/pricing por WhatsApp ensenaba «Paga por lo que",
+    "usas» y compartir clerigo.io/es/ ensenaba «Managing GRC doesn't have to be",
+    "complicated». La mitad del sitio.",
+    "",
+    "Cinco de las nueve se arreglaron conectando tarjetas QUE YA EXISTIAN y no",
+    "usaba nadie: `frameworks-og.png`, `trustcenter-og.png` y `contact-og.png`",
+    "estaban en el disco y declaradas en `fuente/og/tarjetas.cjs`, y las paginas",
+    "inglesas seguian apuntando a las castellanas. Las otras cuatro se generaron.",
+    "",
+    "EL NOMBRE de cada tarjeta es el de la RUTA de la pagina que la usa",
+    "—frameworks/marcos, trustcenter/confianza, contact/contacto—. En partners,",
+    "legal y la portada la ruta se llama igual en los dos idiomas, asi que ahi se",
+    "marca el idioma en el nombre; se marca el NUEVO y no se renombra el que ya",
+    "estaba publicado, porque los rastreadores guardan la tarjeta dias y renombrar",
+    "la castellana —que era la correcta— dejaria esas paginas sin vista previa",
+    "mientras la vuelven a leer.",
+    "",
+    "`login` y `oscuro` no estan en esta tabla y comparten la de la portada, que",
+    "es lo que ya hacian. Lo dice `fuente/seo/posicionar.cjs` en su paso 5.",
+    "",
+    "Quien lee esto: `fuente/paginas/sincronizar.cjs` y su validador escriben y",
+    "comprueban la CASTELLANA, asi que piden `imagen.es`; `fuente/seo/posicionar.cjs`",
+    "escribe las etiquetas de las dos y pide la del idioma que toca; y",
+    "`fuente/validar.cjs` comprueba que existan TODAS, las catorce."
+  ],
   "paginas": {
     "index": {
       "fichero": "",
-      "imagen": "clerigo-og.png"
+      "imagen": { "en": "clerigo-og.png", "es": "clerigo-og-es.png" }
     },
     "legal": {
       "fichero": "legal",
-      "imagen": "legal-og.png"
+      "imagen": { "en": "legal-og-en.png", "es": "legal-og.png" }
     },
     "precios": {
       "fichero": "precios",
-      "imagen": "precios-og.png"
+      "imagen": { "en": "pricing-og.png", "es": "precios-og.png" }
     },
     "marcos": {
       "fichero": "marcos",
-      "imagen": "marcos-og.png"
+      "imagen": { "en": "frameworks-og.png", "es": "marcos-og.png" }
     },
     "contacto": {
       "fichero": "contacto",
-      "imagen": "contacto-og.png"
+      "imagen": { "en": "contact-og.png", "es": "contacto-og.png" }
     },
     "partners": {
       "fichero": "partners",
-      "imagen": "partners-og.png"
+      "imagen": { "en": "partners-og-en.png", "es": "partners-og.png" }
     },
     "confianza": {
       "fichero": "confianza",
-      "imagen": "confianza-og.png"
+      "imagen": { "en": "trustcenter-og.png", "es": "confianza-og.png" }
     }
   }
 }

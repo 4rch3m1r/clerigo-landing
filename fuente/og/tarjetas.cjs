@@ -60,7 +60,27 @@ module.exports = [
     tira: NORMAS,
   },
   {
-    /* `oscuro.html` es la misma portada con otra piel, y comparte mensaje. */
+    /* LA MISMA, EN CASTELLANO. Faltaba, y por eso `es/index.html` servía la
+       inglesa —y con ella `es/login.html` y `es/oscuro.html`, que comparten
+       la tarjeta de la portada igual que sus gemelas inglesas comparten
+       `clerigo-og.png`—. O sea que la portada castellana se compartía por
+       WhatsApp con el titular en inglés.
+       El titular es el de su propio <h1>, partido igual que el inglés, y el
+       rótulo de la ventana dice «Centro de Comando» porque es como lo llama el
+       sitio —doce veces—, no como lo traduciría yo. */
+    fichero: "clerigo-og-es.png", idioma: "es", variante: "producto",
+    captura: "sistema/sistema-panel.png",
+    rotuloVentana: "Clèrigo XGRC — Centro de Comando",
+    antetitulo: "Gobernanza · Riesgo · Cumplimiento",
+    titular: ["La gestión GRC", "no tiene que ser", "@complicada@"],
+    bajada: "Riesgos, cumplimiento normativo, auditoría interna, control interno, ciberseguridad y privacidad — en una sola plataforma.",
+    tira: NORMAS,
+  },
+  {
+    /* `oscuro.html` es la misma portada con otra piel, y comparte mensaje.
+       OJO: hoy ninguna página apunta a `og.png`. `oscuro.html` usa la de la
+       portada, como `login.html`. Se deja porque el fichero existe y está
+       servido, pero es huérfana. */
     fichero: "og.png", idioma: "en", variante: "producto",
     captura: "sistema/sistema-panel.png",
     rotuloVentana: "Clèrigo XGRC — Command Centre",
@@ -138,7 +158,30 @@ module.exports = [
     tira: NORMAS,
   },
 
+  {
+    /* LA MISMA, EN INGLÉS, que faltaba: `pricing.html` servía `precios-og.png`.
+       SIN PRECIO también, por el mismo motivo escrito arriba: una tarjeta se
+       pega en un chat y se queda ahí. Aunque la página inglesa sí publica el
+       precio, ponerlo en la imagen es lo que no se quiere. */
+    fichero: "pricing-og.png", idioma: "en", variante: "tipografica",
+    antetitulo: "Plans and pricing",
+    titular: ["Pay for what you use,", "not the @whole platform@"],
+    bajada: "Activate only the modules and frameworks your company needs. No hidden charges and no credit card to start.",
+    tira: NORMAS,
+  },
+
   /* ── Partners ────────────────────────────────────────────────────────── */
+  {
+    /* La inglesa lleva el idioma en el nombre porque la ruta se llama igual en
+       los dos —`/partners` y `/es/partners`— y la castellana ya ocupa el
+       nombre de la ruta. Se marca la nueva y no se renombra la que ya está
+       publicada. */
+    fichero: "partners-og-en.png", idioma: "en", variante: "tipografica",
+    antetitulo: "Partner programme",
+    titular: ["For those who already advise", "on risk and @compliance@"],
+    bajada: "Consultancies, auditors and cybersecurity firms: your own portal, revenue share and certification.",
+    tira: NORMAS,
+  },
   {
     fichero: "partners-og.png", idioma: "es", variante: "tipografica",
     antetitulo: "Programa de partners",
@@ -149,6 +192,15 @@ module.exports = [
 
   /* ── Legal. La más callada del juego, a propósito: nadie comparte esta
         página con entusiasmo, y una tarjeta ruidosa aquí desentona. ──── */
+  {
+    /* Con el idioma en el nombre, por lo mismo que la de socios: `/legal` se
+       llama igual en los dos idiomas. */
+    fichero: "legal-og-en.png", idioma: "en", variante: "tipografica",
+    antetitulo: "Legal",
+    titular: ["Terms, privacy", "and @cookies@"],
+    bajada: "Terms of service, processing of personal data and service level commitments.",
+    tira: ["ISO 27001", "GDPR", "LAW 172-13"],
+  },
   {
     fichero: "legal-og.png", idioma: "es", variante: "tipografica",
     antetitulo: "Legal",
