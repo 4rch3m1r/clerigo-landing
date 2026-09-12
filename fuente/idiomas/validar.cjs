@@ -223,7 +223,70 @@ for (const p of TODAS) {
   ];
   /* Palabras que en inglés no existen. Se piden ENTERAS: sin eso, «no» dentro
      de «not» y «de» dentro de «under» encendían la alarma en cada frase. */
-  const SOLO_CASTELLANO = /(^|[\s>(¿¡"'—·])(de|del|la|el|los|las|un|una|unos|unas|con|para|por|que|se|su|sus|y|en|al|más|sin|sobre|entre|desde|hasta|cada|todo|toda|todos|todas|nuestro|nuestra|nuestros|nuestras|son|está|están|este|esta|estos|estas|ni|pero|ya|hay|ser|tiene|puede|debe|hace|cuando|donde|quién|porque|así|aquí|también|sólo|solo)([\s<.,;:)!?"'—·]|$)/;
+  /* LAS PALABRAS QUE EN INGLÉS NO EXISTEN.
+
+     Esta lista es la ÚNICA guarda de idioma que no cuelga del extractor: las
+     demás comparan los trozos que el extractor saca, así que heredan sus
+     cegueras. Ésta barre el HTML de la página inglesa y pregunta por su
+     cuenta. Por eso es donde hay que anotar cada palabra que se haya
+     escapado: arreglar sólo el extractor deja el arreglo sin vigilancia, y
+     el día que alguien lo deshaga el resto vuelve en silencio. Así volvió
+     «USD / mes», que estuvo publicado.
+
+     Las dos primeras líneas son las palabras de enlace, que es con lo que
+     nació. La tercera y la cuarta se añadieron el 2026-09-12, una por cada
+     resto que un barrido encontró servido en castellano dentro de una página
+     inglesa:
+
+       ley, leyes           «Ley 172-13» en el muro de la portada, en el
+                            Centro de Confianza y en la variante oscura;
+                            «SIB / SIMV / Ley 155-17» en el catálogo
+       ej                   «Ej. CLERIGO20», el gris del campo del cupón
+       los días             «Lun–Vie 9:00–18:00 CST», el horario de contacto
+       empresa              los correos de ejemplo de cinco formularios
+       tope, paquete        «Tope del paquete completo» en la caja del pedido
+       mes, año, día…       la familia del rótulo del periodo
+
+     Y unas cuantas más de la misma familia, por si aparecen: usuario,
+     anual, mensual, gratis, incluido, precio. Se midieron las 26 una a una
+     contra las nueve páginas inglesas: CERO falsos positivos, y cero
+     también todas juntas. Una palabra que ensuciara la guarda no entra,
+     aunque sea castellana. */
+  /* LA ARROBA CUENTA COMO BORDE, y hizo falta: los marcadores de correo de los
+     formularios ponían «ana@empresa.com», y con la arroba fuera del borde la
+     palabra «empresa» no encajaba y el resto pasaba. Se comprobó rompiendo el
+     arreglo a propósito.
+     La BARRA no entra, y es a propósito: con ella, «precios» encajaría dentro
+     de cada `href="es/precios"` de las ocho páginas y la guarda se pondría roja
+     en todas por un enlace que está bien. */
+  /* Y LA RAYA CORTA, que no es la larga. La clase llevaba la raya larga (—,
+     U+2014) y el horario de contacto usa la corta (–, U+2013): «Lun–Vie
+     9:00–18:00 CST». Con una y no la otra, ni «Lun» ni «Vie» encajaban y el
+     resto pasaba. Lo cazó su propia mutación; a la vista las dos rayas son
+     casi el mismo signo, y ahí está la gracia. */
+  const SOLO_CASTELLANO = new RegExp("(^|[\\s>(¿¡\"'—–·@])(" + [
+    "de", "del", "la", "el", "los", "las", "un", "una", "unos", "unas", "con", "para",
+    "por", "que", "se", "su", "sus", "y", "en", "al", "más", "sin", "sobre", "entre",
+    "desde", "hasta", "cada", "todo", "toda", "todos", "todas", "nuestro", "nuestra",
+    "nuestros", "nuestras", "son", "está", "están", "este", "esta", "estos", "estas",
+    "ni", "pero", "ya", "hay", "ser", "tiene", "puede", "debe", "hace", "cuando",
+    "donde", "quién", "porque", "así", "aquí", "también", "sólo", "solo",
+    /* LAS DE LOS CINCO RESTOS DEL 2026-09-12, EN LAS DOS FORMAS.
+
+       En minúscula sola no servían: esta expresión se compara SIN ignorar la
+       caja y los rótulos empiezan por mayúscula. La primera versión buscaba
+       «ley» mientras la página decía «Ley», y la guarda se quedó verde con el
+       resto delante. Lo cazó su propia mutación.
+
+       Y no se le pone la «i» a toda la expresión porque arriba hay palabras
+       de dos letras —«se», «su», «ni», «ya», «al», «en»— que en mayúsculas
+       empezarían a encajar dentro de rótulos ingleses. Se duplican sólo
+       éstas. */
+    ...["ley", "leyes", "ej", "lun", "mar", "mié", "jue", "vie", "sáb", "dom",
+      "empresa", "tope", "paquete", "mes", "año", "día", "días",
+      "usuario", "usuarios", "anual", "mensual", "gratis", "incluido", "incluidos",
+      "precio", "precios"].flatMap((w) => [w, w[0].toUpperCase() + w.slice(1)]),
+  ].join("|") + ")([\\s<.,;:)!?\"'—–·]|$)");
   const CON_TILDE = /[áéíóúñ¿¡]/;
 
   const enCrudo = en
@@ -236,7 +299,59 @@ for (const p of TODAS) {
     for (const n of NOMBRES_PROPIOS) t = t.split(n).join(" ");
     if (CON_TILDE.test(t) || SOLO_CASTELLANO.test(t)) sospechosos.push(m[1].replace(/\s+/g, " ").trim().slice(0, 70));
   }
-  comprueba(`${p}: la inglesa no lleva castellano suelto`, sospechosos.length === 0,
+  /* Y LOS DOS SITIOS QUE NO MIRABA NINGUNA GUARDA. Se vieron rompiendo los
+     arreglos a propósito: dos de los cinco restos del 2026-09-12 volvían a la
+     página inglesa y nadie se enteraba.
+
+     PRIMERO, LOS ATRIBUTOS. El barrido de arriba sólo coge lo que va entre un
+     `>` y un `<`. En los atributos vivían los cinco marcadores de correo con
+     «empresa» dentro —«placeholder="ana@empresa.com"», en un campo cuyo
+     rótulo dice «Corporate email *»— y un «placeholder="Nombre y apellido *"»
+     en la página de contacto que no había salido en ningún barrido. Se miran
+     los que alguien LEE, que son los mismos que traduce el extractor. */
+  for (const m of en.matchAll(/\b(alt|title|placeholder|aria-label)="([^"]+)"/g)) {
+    let t = m[2].replace(/&[a-z]+;|&#\d+;/gi, " ").replace(/\s+/g, " ").trim();
+    if (!t || t.length < 3) continue;
+    for (const n of NOMBRES_PROPIOS) t = t.split(n).join(" ");
+    if (CON_TILDE.test(t) || SOLO_CASTELLANO.test(t)) {
+      sospechosos.push(m[1] + '="' + m[2].slice(0, 60) + '"');
+    }
+  }
+
+  /* SEGUNDO, EL MARCADO QUE ESCRIBE EL GUION.
+
+     La guarda de abajo intenta PARTIR el guion en literales, y ahí se queda
+     ciega: el patrón de literal de plantilla no admite comillas invertidas
+     anidadas, y la plantilla de la caja del pedido las lleva. Por eso «Tope
+     del paquete completo» podía volver a la línea 1.653 de la página inglesa
+     —traducido en la 1.384 de la misma página— sin que saltara nada.
+
+     No hay que partir nada. El texto que se escapa está dentro de MARCADO
+     escrito en una plantilla, así que vale el mismo truco de arriba aplicado
+     al cuerpo del guion: no hay que entender el JavaScript, hay que leer el
+     HTML que escribe.
+
+     Dos condiciones, y las dos hicieron falta al medirlo:
+       · se TAPAN los huecos `${…}`, que dentro llevan código;
+       · se exige una ETIQUETA de verdad delante. Con un `>` a secas entraban
+         los operadores de comparación —«if (t >= PAUSA) { … } ultimo = t; if
+         (tiras[» pasaba por texto— y daban cinco falsos positivos. */
+  for (const zona of en.match(ZONAS_DE_CODIGO) || []) {
+    if (!/^<script/i.test(zona)) continue;
+    const cuerpo = zona.slice(zona.indexOf(">") + 1, zona.lastIndexOf("</"))
+      .replace(/\/\*[\s\S]*?\*\//g, " ")
+      .replace(/(^|[;{}\s])\/\/[^\n]*/g, "$1 ")
+      .replace(/\$\{[^{}]*\}/g, " ");
+    for (const m of cuerpo.matchAll(/<\/?[a-zA-Z][^<>]*>([^<>]+)</g)) {
+      let t = m[1].replace(/&[a-z]+;|&#\d+;/gi, " ").replace(/\s+/g, " ").trim();
+      if (!t || t.length < 3) continue;
+      for (const n of NOMBRES_PROPIOS) t = t.split(n).join(" ");
+      if (CON_TILDE.test(t) || SOLO_CASTELLANO.test(t)) sospechosos.push(t.slice(0, 70));
+    }
+  }
+
+  comprueba(`${p}: la inglesa no lleva castellano suelto, ni en sus atributos`,
+    sospechosos.length === 0,
     sospechosos.length ? `${sospechosos.length}, p.ej. «${sospechosos[0]}»` : "");
 
   /* Y LO MISMO DENTRO DEL <script>, QUE ES DONDE ESTA GUARDA ERA CIEGA.

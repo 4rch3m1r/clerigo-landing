@@ -93,7 +93,15 @@ const NO_SE_TRADUCE = [
      inglés, con «REGLAMENTOS CIBERSEGURIDAD» y «y más» a la vista. */
   /^(?:ISO|NIST|SOC|PCI|GDPR|NORTIC|BCRD|SIMV|COBIT|COSO|ITIL|SWIFT|CIS)[\s\d.,:/&-]*$/,
   /^https?:\/\//,
-  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+$/i,        /* direcciones de correo */
+  /* UN CORREO NUESTRO, que es lo que no hay que traducir. La regla decía
+     «cualquier correo» y por ahí se colaban los de EJEMPLO de los
+     formularios —«ana@empresa.com», «tu@empresa.com», «carlos@empresa.com»—,
+     que llevan la palabra «empresa» dentro. Se servían así en inglés: un
+     campo que dice «Corporate email *» y debajo, en gris, «ana@empresa.com».
+     Cinco campos en tres páginas.
+     Medido en las ocho páginas: 48 apariciones de correos de clerigo.io
+     —hello, privacy, legal, security— y 12 de ejemplo. */
+  /^[A-Z0-9._%+-]+@clerigo\.io$/i,
   /* La marca SOLA, no lo que empiece por ella.
      Con `^Clèrigo\b` quedaban fuera frases enteras —«Clèrigo — Gobernanza,
      Riesgo y Cumplimiento sin complicaciones», que es el título de la pestaña y
@@ -470,7 +478,43 @@ function trozosDeLosGuiones(html) {
              lleva un `>` que es una comparación, y ése SÍ es texto. Igual que
              «Resumen del pedido · Ciclo ${billing === 'annual' ? …}»: entero y
              con su expresión, para que el inglés pueda reordenarlo. */
-          if (/<[a-zA-Z/!]/.test(crudo)) continue;
+          if (/<[a-zA-Z/!]/.test(crudo)) {
+            /* EL MARCADO PUEDE ESTAR DENTRO DE UN HUECO, Y ENTONCES EL TEXTO DE
+               DELANTE ES TEXTO.
+
+               En la caja del pedido:
+
+                   Tope del paquete completo
+                   ${licenciasIncluidas().paquete ? '' : `<span …>(activa …)</span>`}
+
+               El trozo llega hasta el `<` siguiente. En la vista tapada ese
+               `<span` no se ve —está dentro del hueco— así que el trozo se
+               estira más allá; pero el texto se lee del ORIGINAL, donde el
+               `<span` sí está, y se tiraba entero.
+
+               Resultado: «Tope del paquete completo» salía traducido en la
+               línea 1.384 y en castellano en la 1.653. La misma cadena, en la
+               misma página, a 269 líneas, y el diccionario ya la tenía —lo que
+               falta no es la traducción, es la POSICIÓN, porque la sustitución
+               va por posiciones y una que no se emite no se sustituye nunca.
+
+               Y no se echaba de menos: la lista de trozos va sin repetidos, así
+               que la otra aparición dejaba la cuenta de «sin traducir»
+               satisfecha.
+
+               Se rescata lo que va antes del primer hueco, y sólo si ESO no
+               trae marcado. */
+            const hueco = crudo.indexOf("${");
+            if (hueco > 0) {
+              const delante = crudo.slice(0, hueco);
+              const cabo = delante.trim();
+              if (cabo && !/<[a-zA-Z/!]/.test(delante) && esTraducible(cabo)) {
+                const ini = desdeDentro + m.index + 1 + delante.indexOf(cabo);
+                fuera.push({ texto: cabo, ini, fin: ini + cabo.length, comilla: t.comilla });
+              }
+            }
+            continue;
+          }
           const texto = crudo.trim();
           if (!texto || !esTraducible(sinInterpolar(crudo).trim())) continue;
           const ini = desdeDentro + m.index + 1 + crudo.indexOf(texto);
@@ -543,7 +587,28 @@ function textosDeLosGuiones(html) {
  * unidades y siglas, que es justo lo que esa regla existe para dejar fuera.
  * Si mañana aparece otro rótulo corto, se añade aquí y se ve por qué está.
  */
-const CORTOS_QUE_SE_TRADUCEN = new Set(["/mes", "/año", "mes", "año", "día", "días"]);
+/* Las palabras cortas del castellano que SÍ se traducen, aunque solas no
+   parezcan lenguaje. Cada una está aquí porque se encontró sirviéndose en
+   castellano dentro de una página inglesa, no por si acaso:
+
+     mes, año, día, días   «USD / mes» en el rótulo del panel de precios
+     ley                   «Ley 172-13» en el muro de la portada, en el
+                           Centro de Confianza y en la variante oscura, y
+                           «SIB / SIMV / Ley 155-17» en el catálogo de
+                           marcos. El diccionario ya la traduce —«Law
+                           172-13»— en más de diez claves donde va rodeada
+                           de más palabras; sola, no la veía nadie.
+     ej                    «Ej. CLERIGO20», el gris del campo del cupón.
+                           Sus hermanas sí estaban traducidas («Ej. Banco
+                           del Norte» → «E.g. Banco del Norte») y pasaban
+                           sólo porque detrás llevan dos palabras de letras.
+     los días             «Lun–Vie 9:00–18:00 CST», el horario de contacto,
+                           con su propio rótulo «Office hours:» al lado en
+                           inglés. Van los siete y no sólo los dos que hoy
+                           se usan: un horario puede nombrar cualquiera, y
+                           se midió que ninguno mete ruido. */
+const CORTOS_QUE_SE_TRADUCEN = new Set(["/mes", "/año", "mes", "año", "día", "días",
+  "ley", "ej", "lun", "mar", "mié", "jue", "vie", "sáb", "dom"]);
 
 /**
  * LOS MISMOS CORTOS, PERO DENTRO DE ALGO MÁS.
@@ -575,7 +640,14 @@ const CORTOS_QUE_SE_TRADUCEN = new Set(["/mes", "/año", "mes", "año", "día", 
  */
 const LLEVA_UN_CORTO = new RegExp(
   "(?:^|[^A-Za-zÀ-ÿ])(?:" + [...CORTOS_QUE_SE_TRADUCEN]
-    .map((c) => c.replace(/^\//, "")).join("|") + ")(?:[^A-Za-zÀ-ÿ]|$)");
+    .map((c) => c.replace(/^\//, "")).join("|") + ")(?:[^A-Za-zÀ-ÿ]|$)",
+  /* SIN MAYÚSCULAS NI MINÚSCULAS. La lista va en minúscula y los rótulos
+     empiezan por mayúscula, así que «Ley 172-13» no encajaba con «ley» y el
+     arreglo no arreglaba nada. Se vio midiendo: las once palabras candidatas
+     daban CERO trozos nuevos, y eso no era que no hicieran falta, era que la
+     medida no miraba. Y la «i» sola, con la lista de antes sin tocar, no
+     añade ni un trozo: 1.580 antes y 1.580 después. */
+  "i");
 
 function esTraducible(s) {
   const t = s.trim();

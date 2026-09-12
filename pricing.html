@@ -957,7 +957,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
           <div class="fg"><label class="fl">First name *</label><input class="fc" id="a-name" placeholder="Ana"></div>
           <div class="fg"><label class="fl">Surname *</label><input class="fc" id="a-last" placeholder="García"></div>
         </div>
-        <div class="fg"><label class="fl">Corporate email *</label><input class="fc" id="a-email" type="email" placeholder="ana@empresa.com"></div>
+        <div class="fg"><label class="fl">Corporate email *</label><input class="fc" id="a-email" type="email" placeholder="ana@company.com"></div>
         <div class="ckg">
           <input type="checkbox" id="a-terms">
           <label class="ckl" for="a-terms">I accept the <a href="legal.html">Terms of Service</a> and the <a href="legal.html">Privacy Policy</a> of Clèrigo.</label>
@@ -1019,7 +1019,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
         <div class="order-box" id="orderBox"><!-- lo rellena el guion --></div>
         <div class="fg"><label class="fl">Discount code</label>
           <div class="coupon-row">
-            <input class="fc" id="coupon" placeholder="Ej. CLERIGO20" style="flex:1">
+            <input class="fc" id="coupon" placeholder="E.g. CLERIGO20" style="flex:1">
             <button class="btn-coupon" onclick="applyCoupon()">Apply</button>
           </div>
         </div>
@@ -1650,7 +1650,7 @@ function renderOrderBox() {
     ${conTope ? `<div class="order-line">
       <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
         <div class="order-dot" style="background:var(--text-3)"></div>
-        Tope del paquete completo
+        Full package cap
         ${licenciasIncluidas().paquete ? '' : `<span style="color:var(--text-3);font-size:10px">(activate the missing ones and ${COLABORADORES_INCLUIDOS} Team member licences are added)</span>`}
       </div>
       <div><span style="color:var(--success);font-size:11px;font-weight:700">$${topeDelPaquete().toLocaleString()}</span></div>
