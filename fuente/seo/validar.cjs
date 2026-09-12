@@ -151,6 +151,52 @@ for (const carpeta of [CASTELLANO, INGLES]) {
       h.includes(`<meta property="og:locale" content="${esIngles ? "en_US" : "es_ES"}">`)
       && h.includes(`<meta property="og:locale:alternate" content="${esIngles ? "es_ES" : "en_US"}">`));
 
+    /* Y QUE EL TEXTO DE LA TARJETA ESTÉ DE VERDAD EN ESE IDIOMA.
+     *
+     * Lo de arriba comprueba lo que la página DECLARA. Esto mira lo que dice.
+     * La diferencia se vio en el depurador de Meta: la portada inglesa salía
+     * con `og:locale` en `en_US`, título en inglés y DESCRIPCIÓN EN CASTELLANO
+     * —«Software GRC que unifica riesgos…»—. Se ve en cada enlace que se
+     * comparte, que es donde una traducción a medias más se nota.
+     *
+     * POR QUÉ HACE FALTA AQUÍ SI YA HAY OTRA GUARDA. `idiomas/validar.cjs` lo
+     * veía, y lo decía: contaba ese trozo entre los que quedan sin traducir.
+     * Pero ahí van más de cien, así que el aviso no distinguía la descripción
+     * de la tarjeta —que la ve cualquiera al compartir— de un rótulo escondido
+     * en un pliegue de la página. Un número grande que nunca baja acaba siendo
+     * un número que nadie mira. Esto le da línea propia: verde o roja por sí
+     * sola, pase lo que pase con las demás.
+     *
+     * LAS EXCEPCIONES SON NOMBRES PROPIOS DE ORGANISMOS DOMINICANOS, y van en
+     * la inglesa a propósito: no tienen traducción oficial, igual que
+     * «Bundesbank» en una página inglesa. El validador bilingüe ya los tiene
+     * declarados; aquí se repiten los que aparecen en las tarjetas. */
+    const NO_CUENTAN = ["Clèrigo", "Superintendencia de Bancos", "Superintendencia de Pensiones",
+      "Superintendencia del Mercado de Valores", "Banco Central de la República Dominicana",
+      "República Dominicana", "SIMV", "BCRD", "NORTIC"];
+    /* LAS PALABRAS DE ENLACE, Y «de» ENTRE ELLAS.
+       La primera lista llevaba «del» y «de la» pero no «de» a secas, y por ahí
+       se colaba un título entero: «Planes y Precios Transparentes de Clèrigo»
+       no tiene ni una tilde —al quitar la marca— y pasaba de largo. Lo cazó su
+       propia mutación.
+       Ninguna de éstas es palabra inglesa suelta, así que no dan falsos
+       positivos en una tarjeta en inglés; se comprobó contra las dieciocho. */
+    const HUELE_A_CASTELLANO =
+      /[áéíóúñ¿¡]|(^|\s)(de|del|la|el|los|las|un|una|y|o|con|para|por|sin|sobre|que|es|al|su|sus|lo|en)(\s|$)/i;
+    const textoDeLaTarjeta = ["og:title", "og:description", "og:image:alt",
+      "twitter:title", "twitter:description", "twitter:image:alt"]
+      .map((et) => (h.match(new RegExp(`(?:name|property)="${et}" content="([^"]*)"`)) || [])[1])
+      .filter(Boolean);
+    const sospechosos = textoDeLaTarjeta.filter((t) => {
+      let limpio = t;
+      for (const n of NO_CUENTAN) limpio = limpio.split(n).join(" ");
+      return HUELE_A_CASTELLANO.test(limpio);
+    });
+    /* Sólo se exige en la INGLESA: en la castellana el castellano es lo suyo. */
+    comprueba(`${p}: y el texto de la tarjeta también está en ese idioma`,
+      !esIngles || sospechosos.length === 0,
+      sospechosos.length ? sospechosos.length + " en castellano, p.ej. «" + sospechosos[0].slice(0, 70) + "»" : "");
+
     /* La ficha. Que se pueda leer, para empezar: una ficha con la coma mal
        puesta no da error en ningún sitio, simplemente no la lee nadie. */
     const bruto = (h.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/) || [, ""])[1];
