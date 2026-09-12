@@ -257,6 +257,53 @@ function meta(html, clave, atributo, valor) {
   return html.replace("</head>", nueva + "\n</head>");
 }
 
+/**
+ * LAS ETIQUETAS DE LA TARJETA, AL PRINCIPIO DEL `<head>`.
+ *
+ * Se saca el bloque de la tarjeta —Open Graph y Twitter, con el comentario que
+ * lo encabeza si lo lleva— y se vuelve a poner justo detrás de la etiqueta
+ * `viewport`. Nada más se mueve.
+ *
+ * SE HACE POR LÍNEAS Y EN UN SOLO PASO, sin expresiones que salten de un sitio
+ * a otro: recolocar etiquetas de a una deja la cabecera a medias si una de
+ * ellas no encaja, y una cabecera a medias no da error, da una página sin
+ * vista previa — que es exactamente el fallo que esto viene a arreglar.
+ *
+ * El orden entre ellas se conserva tal cual estaba. No se inventa ninguno: lo
+ * único que cambia es DÓNDE empieza el bloque.
+ */
+function tarjetaPrimero(html) {
+  const crlf = html.includes("\r\n");
+  const lineas = html.split("\r\n").join("\n").split("\n");
+
+  const esDeLaTarjeta = (l) =>
+    /<meta\s+property="og:/.test(l) || /<meta\s+name="twitter:/.test(l)
+    || /<!-- Open Graph/.test(l) || /<link rel="image_src"/.test(l);
+
+  const iViewport = lineas.findIndex((l) => /<meta\s+name="viewport"/.test(l));
+  if (iViewport < 0) return html;   // sin viewport no se sabe dónde empieza la cabecera
+
+  const tarjeta = [];
+  const resto = [];
+  lineas.forEach((l, i) => {
+    if (i > iViewport && esDeLaTarjeta(l)) tarjeta.push(l);
+    else resto.push(l);
+  });
+  if (!tarjeta.length) return html;
+
+  /* Y se comprueba que no se pierde ni una línea por el camino. Un reordenador
+     que se come una etiqueta es peor que no reordenar. */
+  const j = resto.findIndex((l) => /<meta\s+name="viewport"/.test(l));
+  const salida = [...resto.slice(0, j + 1), ...tarjeta, ...resto.slice(j + 1)];
+  if (salida.length !== lineas.length) {
+    throw new Error("al subir la tarjeta se han perdido líneas: "
+      + lineas.length + " antes y " + salida.length + " después");
+  }
+
+  const texto = salida.join("\n");
+  return crlf ? texto.split("\n").join("\r\n") : texto;
+}
+
 /* ── Y esto SÓLO cuando se ejecuta a mano ────────────────────────────────
  *
  * Sin esta guarda, `require("./posicionar.cjs")` —que lo hacen el validador y
@@ -316,6 +363,30 @@ for (const carpeta of [CASTELLANO, INGLES]) {
     h = reFicha.test(h)
       ? h.replace(reFicha, `<script type="application/ld+json">${json}</script>`)
       : h.replace("</head>", `<script type="application/ld+json">${json}</script>\n</head>`);
+
+    /* 5. Y LA TARJETA, LA PRIMERA DE TODO.
+     *
+     * Esto es el arreglo de un fallo que se veía: al compartir clerigo.io por
+     * WhatsApp no salía vista previa. Medido, la tarjeta estaba bien —imagen
+     * PNG de 1200x630 que existe, pesa 116 KB, se sirve sin redirección, y las
+     * etiquetas sin duplicar—, pero `og:image` caía en el byte 2.208. La
+     * comprobación de este repositorio pide que esté en el primer kilobyte y
+     * medio, y estaba en rojo en la portada y en tres páginas más.
+     *
+     * Quién lo empujaba: `<meta name="keywords">` ocupa 815 bytes y va delante.
+     * Ya pasó una vez —lo cuenta el comentario de `meta()` unas líneas arriba—
+     * y se arregló moviendo las palabras clave detrás; han vuelto a quedar
+     * delante porque cada página trae su cabecera de otro sitio.
+     *
+     * Se arregla de raíz: en vez de pedir a cada fuente que ponga las etiquetas
+     * en orden, se REORDENAN aquí, que es el paso que corre el último y sobre
+     * las dieciséis. Las de la tarjeta suben justo detrás del `viewport`, antes
+     * de la descripción y de las palabras clave. Así la posición no depende de
+     * cómo estuviera escrita la página.
+     *
+     * Es idempotente: si ya están arriba, sacarlas y volverlas a poner en el
+     * mismo sitio deja el fichero igual. */
+    h = tarjetaPrimero(h);
 
     if (h !== antes) { fs.writeFileSync(f, h); hechas++; }
     filas.push(`  ${(idioma + "/" + nombre).padEnd(24)} ${String(clave.length).padStart(3)} palabras · ${(json.length / 1024).toFixed(1)} KB de ficha`);

@@ -162,6 +162,32 @@ for (const [n, tConSelector] of [["oscuro", osc], ["claro", cla]]) {
     && /twitter:card" content="summary_large_image"/.test(t)
     && /twitter:image:alt"/.test(t)
     && /application\/ld\+json/.test(t));
+  /* Y QUE LA IMAGEN MIDA LO QUE LA PÁGINA DICE QUE MIDE.
+     Lo de arriba comprueba que la página DECLARA 1200x630, que es la promesa.
+     Esto abre el fichero y lee su cabecera. La diferencia importa porque
+     Meta descarta sin decir nada una imagen cuyas medidas no cuadran con las
+     declaradas: el enlace sale sin tarjeta y no hay ningún error en ninguna
+     parte. Salió mirando por qué WhatsApp no pintaba la vista previa de
+     clerigo.io — la imagen estaba bien, pero nada lo vigilaba.
+     Las medidas de un PNG viven en su IHDR: cuatro bytes de ancho en el 16 y
+     cuatro de alto en el 20. */
+  const decl = {
+    w: Number((t.match(/og:image:width" content="(\d+)"/) || [])[1]),
+    h: Number((t.match(/og:image:height" content="(\d+)"/) || [])[1]),
+  };
+  const png = laTarjeta.startsWith(SITIO.base + "/")
+    ? require("node:path").join(RAIZ, laTarjeta.slice(SITIO.base.length + 1)) : "";
+  let real = null;
+  if (png && fs.existsSync(png)) {
+    const b = fs.readFileSync(png);
+    if (b.length > 24 && b[0] === 0x89 && b.toString("latin1", 1, 4) === "PNG") {
+      real = { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
+    }
+  }
+  comprueba(`y la imagen mide de verdad lo que declara, en el ${n}`,
+    real !== null && real.w === decl.w && real.h === decl.h,
+    real === null ? "no he podido leer la imagen «" + laTarjeta + "»"
+      : `declara ${decl.w}x${decl.h} y el fichero mide ${real.w}x${real.h}`);
   comprueba(`y están arriba del todo, donde las lee WhatsApp, en el ${n}`,
     t.indexOf('property="og:image"') > 0 && t.indexOf('property="og:image"') < 1536,
     "og:image aparece en el byte " + t.indexOf('property="og:image"'));
