@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://clerigo.io/</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/"/>
@@ -12,7 +12,7 @@
   </url>
   <url>
     <loc>https://clerigo.io/es/</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/"/>
@@ -21,7 +21,7 @@
   </url>
   <url>
     <loc>https://clerigo.io/frameworks</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/frameworks"/>
@@ -30,7 +30,7 @@
   </url>
   <url>
     <loc>https://clerigo.io/es/marcos</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/frameworks"/>
@@ -39,7 +39,7 @@
   </url>
   <url>
     <loc>https://clerigo.io/trustcenter</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/trustcenter"/>
@@ -48,7 +48,7 @@
   </url>
   <url>
     <loc>https://clerigo.io/es/confianza</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/trustcenter"/>
@@ -57,7 +57,7 @@
   </url>
   <url>
     <loc>https://clerigo.io/pricing</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/pricing"/>
@@ -66,7 +66,7 @@
   </url>
   <url>
     <loc>https://clerigo.io/es/precios</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/pricing"/>
@@ -75,7 +75,7 @@
   </url>
   <url>
     <loc>https://clerigo.io/contact</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/contact"/>
@@ -84,7 +84,7 @@
   </url>
   <url>
     <loc>https://clerigo.io/es/contacto</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/contact"/>
@@ -93,7 +93,7 @@
   </url>
   <url>
     <loc>https://clerigo.io/partners</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/partners"/>
@@ -102,7 +102,7 @@
   </url>
   <url>
     <loc>https://clerigo.io/es/partners</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/partners"/>
@@ -111,7 +111,7 @@
   </url>
   <url>
     <loc>https://clerigo.io/legal</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/legal"/>
@@ -120,7 +120,7 @@
   </url>
   <url>
     <loc>https://clerigo.io/es/legal</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/legal"/>
@@ -129,7 +129,7 @@
   </url>
   <url>
     <loc>https://clerigo.io/login</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/login"/>
@@ -138,7 +138,7 @@
   </url>
   <url>
     <loc>https://clerigo.io/es/login</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://clerigo.io/login"/>
