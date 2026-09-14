@@ -1358,7 +1358,14 @@ function totalDelPedido() {
 
 function costeUsuariosExtra() {
   const extra = Math.max(usuariosCuenta - licenciasIncluidas().total, 0);
-  return extra * (billing === 'annual' ? 240 : 20);
+  /* El +20% del pago mensual TAMBIÉN en la gente. El interruptor lo anuncia
+     para el pago entero, pero aquí sólo lo llevaban los módulos: diez usuarios
+     extra costaban 2.400 al año y 200 al mes —el anual entre doce, sin recargo—.
+     Ahora 240 al año y 24 al mes por usuario, con el mismo redondeo que
+     `calcModulePrice`. */
+  return extra * (billing === 'annual'
+    ? PER_USER_MONTHLY * 12
+    : Math.round(PER_USER_MONTHLY * 1.2));
 }
 
 /* Lo que el panel tiene que explicar cuando la suma de los módulos se pasa
