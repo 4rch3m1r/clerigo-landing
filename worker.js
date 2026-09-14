@@ -53,19 +53,17 @@ const NOMBRES_DEL_SITIO = [CANONICO, "www." + CANONICO];
  * que haya visitado clerigo.io. Y los de dos niveles (`a.b.clerigo.io`) no
  * tienen certificado; hoy ya fallan por https, con HSTS tampoco valdrá http.
  *
- * CON `preload`. La palabra sola no mete a nadie en ninguna lista: sólo dice
- * que el dominio ACEPTA estar en la lista de precarga que traen Chrome,
- * Firefox, Safari y Edge. Entrar exige enviarlo en https://hstspreload.org, y
- * eso es una decisión aparte. Una vez dentro, https va escrito en el propio
- * navegador —incluso en la primera visita— para clerigo.io y TODOS sus
- * subdominios, y SALIR tarda meses: hay que pedir la baja y esperar a que
- * salgan versiones nuevas de los navegadores. Mientras no se envíe, quitar
- * `preload` de aquí basta.
+ * SIN `preload`, decidido el 2026-09-13. Declara que el dominio acepta entrar
+ * en la lista de precarga de los navegadores (https://hstspreload.org), de la
+ * que salir tarda meses. La propia hstspreload.org no la recomienda —Chrome y
+ * Safari ya pasan a https solos—, pide subir el max-age por etapas antes de
+ * enviar, y la precarga alcanza también a subdominios internos que no se han
+ * podido revisar. Se llegó a poner y se quitó sin haber enviado nada.
  *
  * Sólo en https y sólo en los dos nombres del sitio: por http el navegador la
  * ignora, y en `wrangler dev` o workers.dev no pinta nada.
  */
-const HSTS = "max-age=31536000; includeSubDomains; preload";
+const HSTS = "max-age=31536000; includeSubDomains";
 
 /** La misma respuesta con HSTS. Se copia porque las cabeceras de una respuesta
  *  servida —y las de `Response.redirect`— son inmutables y escribirlas lanza. */
