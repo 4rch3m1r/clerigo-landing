@@ -915,6 +915,9 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
 .tema-toggle .tema-sol{display:none}
 html[data-tema="oscuro"] .tema-toggle .tema-sol{display:block}
 html[data-tema="oscuro"] .tema-toggle .tema-luna{display:none}
+/* El segundo botón: sólo donde el primero se oculta en móvil (partners). */
+.tema-toggle-movil{display:none}
+@media (max-width:820px){.rp{flex-direction:column}.tema-toggle-movil{display:inline-flex;align-self:flex-end;margin:0 0 10px;color:var(--text);background:var(--dark-2);border-color:var(--border-light)}}
 html[data-tema="oscuro"]{color-scheme:dark}
 html[data-tema="oscuro"]{--red-ink:#FF7066;--red-dim:rgba(235,16,0,0.15);--dark:#0E0E0E;--dark-2:#141414;--dark-3:#1B1B1B;--dark-4:#222222;--border:rgba(255,255,255,0.08);--border-light:rgba(255,255,255,0.12);--text:#F0F0F0;--text-2:rgba(240,240,240,0.65);--text-3:rgba(240,240,240,0.5);--accent:#0265DC;--success:#12805C;--warning:#E68619;--danger:#D7373F;--purple:#7B2FBE;--teal:#0D8F8F}
 html[data-tema="oscuro"] .btn-ghost:hover{background:rgba(240,240,240,0.038)}
@@ -2317,11 +2320,14 @@ function colorOscuro(valor, uso) {
   }
   var SELECTOR = '[style],[fill],[stroke],[stop-color]';
   function todo() { var l = document.querySelectorAll(SELECTOR); for (var i = 0; i < l.length; i++) aplicar(l[i]); }
+  var botones = document.querySelectorAll('.tema-toggle');
   function pintarBoton() {
-    var b = document.getElementById('temaToggle'); if (!b) return;
     var etiqueta = oscuro() ? "Switch to light mode" : "Switch to dark mode";
-    b.setAttribute('aria-label', etiqueta); b.setAttribute('title', etiqueta);
-    b.setAttribute('aria-pressed', oscuro() ? 'true' : 'false');
+    for (var i = 0; i < botones.length; i++) {
+      var b = botones[i];
+      b.setAttribute('aria-label', etiqueta); b.setAttribute('title', etiqueta);
+      b.setAttribute('aria-pressed', oscuro() ? 'true' : 'false');
+    }
   }
   function poner(tema, recordar) {
     R.setAttribute('data-tema', tema);
@@ -2342,8 +2348,8 @@ function colorOscuro(valor, uso) {
       }
     }
   }).observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ATRIBUTOS });
-  var b = document.getElementById('temaToggle');
-  if (b) b.addEventListener('click', function () { poner(oscuro() ? 'claro' : 'oscuro', true); });
+  for (var i = 0; i < botones.length; i++)
+    botones[i].addEventListener('click', function () { poner(oscuro() ? 'claro' : 'oscuro', true); });
   /* Con la página abierta, a las 7 cambia sola —si nadie ha elegido a mano—. */
   setInterval(function () {
     var p = preferido();
