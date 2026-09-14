@@ -142,6 +142,8 @@
   "Aceptar todo": "Accept all",
   "Acepto los": "I accept the",
   "Activa la automatización": "Turn on the automation",
+  "Con estos usuarios el paquete completo sale más barato: trae ${USUARIOS_INCLUIDOS} licencias": "With these users the full package is cheaper: it includes ${USUARIOS_INCLUIDOS} licences",
+  "(con estos usuarios sale más barato: trae ${USUARIOS_INCLUIDOS} licencias)": "(with these users it is cheaper: it includes ${USUARIOS_INCLUIDOS} licences)",
   "Activa los que faltan: el paquete completo cuesta lo mismo y añade las ${COLABORADORES_INCLUIDOS} licencias de Colaborador para WorkSpace": "Activate the missing ones: the full package costs the same and adds ${COLABORADORES_INCLUIDOS} Team member licences for WorkSpace",
   "Actividades de Control (3 principios)": "Control Activities (3 principles)",
   "Actividades de Monitoreo (2 principios)": "Monitoring Activities (2 principles)",

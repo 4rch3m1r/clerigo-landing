@@ -1274,7 +1274,44 @@ function pagasPorEl(m) {
  * nada; ahora ahorra $2.000, y la maquinaria que ya existía para topar deja de
  * ser adorno.
  */
-function licenciasIncluidas() {
+/**
+ * LO QUE TRAE LO ELEGIDO, CONTANDO TAMBIÉN LA GENTE: EL MEJOR DE LOS DOS PRECIOS.
+ *
+ * `licenciasBase()` decide el paquete sólo por el precio de los módulos, y eso
+ * dejaba el total SIN ORDEN: añadir un área podía BAJARLO. Con Cumplimiento,
+ * Ciberseguridad y Auditoría (4.700) y 13 usuarios se pagaban 5.120; añadiendo
+ * Riesgos, 5.060 —el paquete cuesta 5.000 y trae doce licencias en vez de seis,
+ * y las seis que dejan de cobrarse valen más que los 300 que suben los
+ * módulos—. Recorriendo áreas × área añadida × 2 a 200 usuarios × ciclo, 756 de
+ * 29.850 casos bajaban. Con el precio anterior de la gente pasaba con dos áreas
+ * y 40 usuarios: 12.640, y 11.720 al añadir Riesgos.
+ *
+ * La regla que no puede bajar: se cobra lo MÁS BARATO entre llevarse las áreas
+ * sueltas y llevarse el paquete completo, contando módulos Y usuarios. Las
+ * sueltas suben siempre que se añade algo —el área más barata vale 400 y sus
+ * dos licencias ahorran como mucho 120— y el paquete no depende de lo marcado,
+ * así que el mínimo de los dos nunca baja. Es lo que ya prometía el tope: nunca
+ * se paga más que llevárselo todo. A igualdad, el paquete: mismo precio, más
+ * licencias.
+ *
+ * Se compara en anual, por lo mismo que `licenciasBase()`: lo que trae la
+ * cuenta no depende de cómo se pague. El mensual es el anual entre diez en
+ * todos los precios de la página, así que decide lo mismo. */
+function licenciasIncluidas(usuarios = usuariosCuenta) {
+  const base = licenciasBase();
+  if (base.paquete) return base;
+  const activos = modules.filter(m => selected[m.id] || isAutoIncluded(m));
+  if (!activos.length) return base;
+  const porUsuario = PER_USER_MONTHLY * 12;
+  const sueltas = activos.reduce((s, m) => s + ((isAutoIncluded(m) || m.alwaysFree) ? 0 : m.basePrice), 0)
+    + Math.max(usuarios - base.total, 0) * porUsuario;
+  const paquete = PER_MODULE + Math.max(usuarios - USUARIOS_INCLUIDOS, 0) * porUsuario;
+  if (paquete > sueltas) return base;
+  return { paquete: true, porUsuarios: true, admins: ADMINS_INCLUIDOS, gestores: GESTORES_INCLUIDOS,
+    colaboradores: COLABORADORES_INCLUIDOS, total: USUARIOS_INCLUIDOS };
+}
+
+function licenciasBase() {
   /* QUIEN PAGA EL PAQUETE SE LLEVA EL PAQUETE, aunque no lo haya marcado todo.
      Esto no estaba, y con las áreas nuevas hacía falta. Se enumeraron las 31
      combinaciones posibles: SEIS de ellas llegaban al tope de $5.000 —o lo
@@ -1325,7 +1362,12 @@ function topeDelPaquete() {
    Sin él, contratar Continuidad o Privacidad sin su módulo padre sumaba 5.100,
    más que el paquete entero. Salió al enumerar las 256 selecciones posibles. */
 function subtotalModulos(activos) {
-  return Math.min(activos.reduce((s, m) => s + calcModulePrice(m), 0), topeDelPaquete());
+  /* Con el paquete, lo que vale el paquete —aunque lo marcado sume menos, si
+     ha salido más barato por la gente—; sin él, la suma, que entonces queda por
+     debajo del tope. */
+  return licenciasIncluidas().paquete
+    ? topeDelPaquete()
+    : activos.reduce((s, m) => s + calcModulePrice(m), 0);
 }
 
 /**
@@ -1375,8 +1417,11 @@ function lineaTopeResumen() {
   const activos = modules.filter(m => selected[m.id] || isAutoIncluded(m));
   if (!activos.length) return '';
   const suma = activos.reduce((s, m) => s + calcModulePrice(m), 0);
-  if (suma <= topeDelPaquete()) return '';
   const l = licenciasIncluidas();
+  if (!l.paquete || suma === topeDelPaquete()) return '';
+  /* Con signo: resta si lo marcado se pasa del paquete y suma si el paquete
+     ha salido más barato por la gente. Así la lista siempre suma el total. */
+  const ajuste = topeDelPaquete() - suma;
   /* EL TOPE VA EN NEGATIVO, POR LA DIFERENCIA. Esta línea enseñaba el precio
      del paquete —«$5.000»— como un importe más de la lista, y lo que se leía no
      sumaba: con las cinco áreas en anual, 2.000 + 2.000 + 1.900 + 700 + 400 +
@@ -1386,7 +1431,9 @@ function lineaTopeResumen() {
   /* La frase entera en UNA plantilla. Pegando trozos, el de después del número
      —« licencias de Colaborador para WorkSpace»— no llega a ser texto
      traducible y se queda en castellano dentro de la página inglesa. */
-  const ofrece = l.paquete ? '' :
+  const ofrece = l.porUsuarios
+    ? `<div style="font-size:9px;color:var(--text-3);margin-top:1px">Con estos usuarios el paquete completo sale más barato: trae ${USUARIOS_INCLUIDOS} licencias</div>`
+    : l.paquete ? '' :
     `<div style="font-size:9px;color:var(--text-3);margin-top:1px">Activa los que faltan: el paquete completo cuesta lo mismo y añade las ${COLABORADORES_INCLUIDOS} licencias de Colaborador para WorkSpace</div>`;
   return `<div class="sum-item">
       <div class="sum-item-name">
@@ -1396,7 +1443,7 @@ function lineaTopeResumen() {
           ${ofrece}
         </div>
       </div>
-      <div class="sum-item-price" style="color:var(--success)">−$${(suma - topeDelPaquete()).toLocaleString()}</div>
+      <div class="sum-item-price" style="${ajuste < 0 ? 'color:var(--success)' : ''}">${ajuste < 0 ? '−' : '+'}$${Math.abs(ajuste).toLocaleString()}</div>
     </div>`;
 }
 
@@ -1447,7 +1494,10 @@ function toggleModule(id) {
 function setUsuarios(val) {
   /* El suelo ya no es fijo: es lo que traiga la selección de ahora. Sube y baja
      al encender y apagar módulos, y el contador se va con él. */
-  const minimo = licenciasIncluidas().total;
+  /* El suelo sale de `licenciasBase()` y no de `licenciasIncluidas()`: ésta ya
+     depende de cuánta gente haya, y si pusiera el suelo en doce en cuanto el
+     paquete sale más barato, el deslizador no dejaría volver a menos usuarios. */
+  const minimo = licenciasBase().total;
   usuariosCuenta = Math.max(parseInt(val, 10) || minimo, minimo);
   const input = document.getElementById('usuariosRango');
   input.min = minimo;
@@ -1457,7 +1507,7 @@ function setUsuarios(val) {
   if (input.value !== String(usuariosCuenta)) input.value = usuariosCuenta;
   const pct = (usuariosCuenta - minimo) / Math.max(200 - minimo, 1) * 100;
   input.style.background = `linear-gradient(to right,var(--red) ${pct}%,rgba(14,14,14,0.12) ${pct}%)`;
-  const extra = usuariosCuenta - minimo;
+  const extra = Math.max(usuariosCuenta - licenciasIncluidas().total, 0);
   document.getElementById('usuariosVal').textContent = extra === 0
     ? `${usuariosCuenta} usuarios incluidos`
     : `${usuariosCuenta} usuarios (${extra} adicional${extra > 1 ? 'es' : ''})`;
@@ -1635,7 +1685,10 @@ function renderOrderBox() {
   const costeUsuarios = cuenta.usuarios;
   const porModulos = cuenta.modulos;
   const sumaModulos = active.reduce((s,m) => s + calcModulePrice(m), 0);
-  const conTope = sumaModulos > porModulos;
+  /* La línea del paquete, con signo, como en el panel: resta si lo marcado se
+     pasa del paquete y suma si el paquete ha salido más barato por la gente. */
+  const conTope = licenciasIncluidas().paquete && sumaModulos !== porModulos;
+  const ajustePaquete = porModulos - sumaModulos;
   const subtotal = cuenta.subtotal;
   const discAmt = cuenta.descuento;
   const final = cuenta.total;
@@ -1664,8 +1717,9 @@ function renderOrderBox() {
         <div class="order-dot" style="background:var(--text-3)"></div>
         Tope del paquete completo
         ${licenciasIncluidas().paquete ? '' : `<span style="color:var(--text-3);font-size:10px">(activa los que faltan y entran ${COLABORADORES_INCLUIDOS} licencias de Colaborador)</span>`}
+        ${licenciasIncluidas().porUsuarios ? `<span style="color:var(--text-3);font-size:10px">(con estos usuarios sale más barato: trae ${USUARIOS_INCLUIDOS} licencias)</span>` : ''}
       </div>
-      <div><span style="color:var(--success);font-size:11px;font-weight:700">−$${(sumaModulos - porModulos).toLocaleString()}</span></div>
+      <div><span style="${ajustePaquete < 0 ? 'color:var(--success);' : ''}font-size:11px;font-weight:700">${ajustePaquete < 0 ? '−' : '+'}$${Math.abs(ajustePaquete).toLocaleString()}</span></div>
     </div>` : ''}
     ${active.length ? `<div class="order-line">
       <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
