@@ -1,0 +1,16 @@
+<!--
+  Logotipo de Clèrigo (isotipo) en vector. Sólo lo usa fuente/iconos.cjs para
+  el icono de 512 px del manifiesto: el único original era un PNG de 160 px.
+
+  Vectorizado el 2026-09-13 midiendo el isotipo de «C:/3.14/Logo Clerigo.png»
+  (1254 px): vértices del glifo ajustados por mínimos cuadrados contra la
+  cobertura del original, y degradado ajustado a sus colores. Renderizado a
+  160 px y comparado con fuente/logo.png: silueta IoU 0,997 (igual que el
+  original grande reducido), glifo IoU 0,970 (el original reducido da 0,989),
+  error de color medio 2,3/255.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+<defs><linearGradient id="rojo" x1="0" y1="160" x2="160" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#D80A1C"/><stop offset="1" stop-color="#FA3111"/></linearGradient></defs>
+<path fill="url(#rojo)" d="M 9 0 H 151 A 9 9 0 0 1 160 9 V 117 Q 160 119 158.5857864376269 120.41421356237309 L 120.41421356237309 158.5857864376269 Q 119 160 117 160 H 9 A 9 9 0 0 1 0 151 V 9 A 9 9 0 0 1 9 0 Z"/>
+<path fill="#FFFFFF" d="M 23.5 115.25 L 64.95 45.95 L 73.5 61.4 L 41.45 115.25 Z M 54.55 115.15 L 79.45 73 L 88.2 88.55 L 72.4 115.3 Z M 94 45.9 L 118.65 88.55 L 100.6 88.5 L 85.5 61.5 Z M 110.35 98.6 L 127.55 98.55 L 127.55 115.25 L 110.4 115.25 Z"/>
+</svg>

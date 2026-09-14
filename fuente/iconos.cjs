@@ -1,6 +1,6 @@
 /**
- * LOS ICONOS DE PANTALLA DE INICIO: `apple-touch-icon.png` (180x180) e
- * `icono-192.png` (192x192, el del manifiesto). Los dos en la raíz.
+ * LOS ICONOS DE PANTALLA DE INICIO: `apple-touch-icon.png` (180x180),
+ * `icono-192.png` e `icono-512.png` (los del manifiesto). Los tres en la raíz.
  *
  *   node fuente/iconos.cjs
  *
@@ -15,8 +15,11 @@
  * menos —140 px en el de 180, 160 px (1:1) en el de 192—. Nunca se amplía.
  * iOS y Android ponen su propia máscara redondeada encima.
  *
- * No hay de 512: saldría de ampliar 160 px más de tres veces. Cuando exista el
- * logotipo en vector se añade aquí y en `site.webmanifest`.
+ * EL DE 512 SALE DEL VECTOR, `fuente/logo.svg`: ampliar el PNG de 160 px más
+ * de tres veces lo emborronaba. Mismas proporciones que el de 192 —el logotipo
+ * ocupa el 83 %—. El vector está medido contra el original; lo cuenta su
+ * propio comentario. Los de 180 y 192 siguen saliendo del PNG, que a ese tamaño
+ * es el original sin ampliar.
  */
 const fs = require("node:fs");
 const path = require("node:path");
@@ -29,11 +32,13 @@ const TALLER = path.join(__dirname, ".taller-iconos");
 const ICONOS = [
   { fichero: "apple-touch-icon.png", lado: 180, logo: 140 },
   { fichero: "icono-192.png", lado: 192, logo: 160 },
+  { fichero: "icono-512.png", lado: 512, logo: 426, fuente: "logo.svg" },
 ];
 
 fs.rmSync(TALLER, { recursive: true, force: true });
 fs.mkdirSync(TALLER, { recursive: true });
 fs.copyFileSync(path.join(__dirname, "logo.png"), path.join(TALLER, "logo.png"));
+fs.copyFileSync(path.join(__dirname, "logo.svg"), path.join(TALLER, "logo.svg"));
 
 for (const i of ICONOS) {
   const html = path.join(TALLER, i.fichero + ".html");
@@ -41,7 +46,7 @@ for (const i of ICONOS) {
 html, body { margin: 0; width: ${i.lado}px; height: ${i.lado}px; background: #FFFFFF; overflow: hidden; }
 img { position: absolute; width: ${i.logo}px; height: ${i.logo}px;
   left: ${(i.lado - i.logo) / 2}px; top: ${(i.lado - i.logo) / 2}px; }
-</style></head><body><img src="logo.png" alt=""></body></html>`);
+</style></head><body><img src="${i.fuente || "logo.png"}" alt=""></body></html>`);
   const salida = path.join(TALLER, i.fichero);
   execFileSync(CHROME, [
     "--headless=new", "--disable-gpu", "--hide-scrollbars", "--no-first-run",
