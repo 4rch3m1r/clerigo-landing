@@ -39,17 +39,27 @@ const NOMBRES_DEL_SITIO = [CANONICO, "www." + CANONICO];
  * petición por http antes del 301, y ésa se puede interceptar. HSTS le dice al
  * navegador que durante un año vaya directo por https, sin esa primera vuelta.
  *
- * SIN `includeSubDomains` Y SIN `preload`, a propósito. Puesta en la raíz,
- * `includeSubDomains` obliga a https a TODOS los subdominios de clerigo.io —los
- * de la aplicación, los de cada organización, y cualquiera que se cree mañana—,
- * y el que no lo tenga deja de abrir durante un año sin que desde aquí se pueda
- * deshacer. `preload` es peor: lo mete en los navegadores y sacarlo tarda meses.
- * app.clerigo.io ya manda su propia cabecera con `includeSubDomains`.
+ * CON `includeSubDomains`: obliga a https a TODOS los subdominios de clerigo.io
+ * —los de la aplicación, los de cada organización y cualquiera que se cree
+ * mañana— durante un año, y no se puede deshacer desde aquí. Antes de ponerlo
+ * se comprobó el 2026-09-13: el certificado cubre `clerigo.io` y
+ * `*.clerigo.io`; hay un comodín que lleva todo subdominio a la aplicación; y
+ * app, una organización real, un slug inventado y los reservados (api, admin,
+ * mail, static, assets…) contestan por https con certificado válido y YA
+ * redirigen http→https con 301. O sea: no cambia nada que funcione hoy.
+ *
+ * LO QUE HAY QUE SABER A PARTIR DE AQUÍ: un subdominio nuevo que se sirva sólo
+ * por http —fuera del comodín, en otro proveedor— no abrirá en un navegador
+ * que haya visitado clerigo.io. Y los de dos niveles (`a.b.clerigo.io`) no
+ * tienen certificado; hoy ya fallan por https, con HSTS tampoco valdrá http.
+ *
+ * SIN `preload`: mete el dominio en los propios navegadores y sacarlo tarda
+ * meses.
  *
  * Sólo en https y sólo en los dos nombres del sitio: por http el navegador la
  * ignora, y en `wrangler dev` o workers.dev no pinta nada.
  */
-const HSTS = "max-age=31536000";
+const HSTS = "max-age=31536000; includeSubDomains";
 
 /** La misma respuesta con HSTS. Se copia porque las cabeceras de una respuesta
  *  servida —y las de `Response.redirect`— son inmutables y escribirlas lanza. */
