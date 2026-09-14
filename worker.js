@@ -13,7 +13,26 @@
  * Se añade sólo al HTML y sólo si no lo trae ya. Lo demás —imágenes, hojas de
  * estilo, el mapa del sitio— se devuelve sin tocar: ponerle un juego de
  * caracteres a un PNG es decir una cosa falsa de un fichero binario.
+ *
+ * ── UNA SOLA DIRECCIÓN: https://clerigo.io ────────────────────────────────
+ *
+ * Medido el 2026-09-13: `http://clerigo.io/` contestaba 200 sin pasar a https,
+ * y `www.clerigo.io` lo atendía la aplicación, que lo mandaba a
+ * app.clerigo.io/login — compartir «www.clerigo.io» enseñaba la pantalla de
+ * acceso, sin tarjeta. Ahora las dos van con UN 301, en un solo salto y
+ * conservando ruta y consulta: http://www.clerigo.io/pricing?x=1 →
+ * https://clerigo.io/pricing?x=1.
+ *
+ * Esto sólo corre si el Worker va delante de los ficheros —`run_worker_first`
+ * en wrangler.toml— y si `www` le llega —la ruta `www.clerigo.io/*`—. Sin lo
+ * primero, `/` servía `index.html` directamente y nadie redirigía.
+ *
+ * Sólo para los dos nombres del sitio: en `wrangler dev` o en workers.dev no se
+ * toca nada.
  */
+const CANONICO = "clerigo.io";
+const NOMBRES_DEL_SITIO = [CANONICO, "www." + CANONICO];
+
 const REDIRECCIONES = [
   [["/marcos", "/marcos.html"], "/frameworks"],
   [["/confianza", "/confianza.html"], "/trustcenter"],
@@ -24,6 +43,11 @@ const REDIRECCIONES = [
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    if (NOMBRES_DEL_SITIO.includes(url.hostname)
+      && (url.hostname !== CANONICO || url.protocol !== "https:")) {
+      return Response.redirect("https://" + CANONICO + url.pathname + url.search, 301);
+    }
 
     for (const [desde, hasta] of REDIRECCIONES) {
       if (desde.includes(url.pathname)) {

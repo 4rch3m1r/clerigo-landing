@@ -2,6 +2,17 @@ name = "clerigo-landing"
 main = "worker.js"
 compatibility_date = "2024-09-23"
 
+# `www` y `http` se redirigen a https://clerigo.io desde worker.js.
+# La ruta de la raíz se declara también: si hasta hoy estaba puesta desde el
+# panel, un despliegue con sólo la de `www` podría quitarla.
+routes = [
+  { pattern = "clerigo.io/*", zone_name = "clerigo.io" },
+  { pattern = "www.clerigo.io/*", zone_name = "clerigo.io" },
+]
+
 [assets]
 directory = "."
 binding = "ASSETS"
+# El Worker va DELANTE de los ficheros: sin esto `/` servía `index.html`
+# directamente y la redirección de `www` y de `http` no llegaba a ejecutarse.
+run_worker_first = true
