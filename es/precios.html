@@ -454,6 +454,55 @@ input[type=range]:disabled { cursor: not-allowed; opacity: 0.7; }
 .cuenta-users { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
 .cuenta-users input[type=range]::-webkit-slider-thumb { background: var(--red); }
 .cuenta-users-note { font-size: 10px; line-height: 1.55; color: var(--text-3); }
+/* La cabecera del panel: el título y el atajo para llevárselo todo. */
+.summary-head { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; }
+.summary-head .summary-title { margin-bottom: 0; }
+.btn-todas {
+  width: 100%; display: flex; align-items: center; gap: 12px; text-align: left;
+  padding: 11px 14px; border: 1px dashed rgba(235,16,0,0.45); border-radius: 6px;
+  background: var(--red-dim); color: var(--text); cursor: pointer;
+  font-family: 'Source Sans 3', sans-serif; transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.btn-todas:hover { background: rgba(235,16,0,0.16); border-color: var(--red); }
+.btn-todas:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+.btn-todas .casilla {
+  width: 18px; height: 18px; border-radius: 4px; border: 1.5px solid var(--red); flex-shrink: 0;
+  display: grid; place-items: center; color: transparent; background: var(--dark);
+}
+.btn-todas strong { display: block; font-size: 13px; font-weight: 700; line-height: 1.2; }
+.btn-todas small { display: block; font-size: 11px; color: var(--text-2); margin-top: 2px; }
+.btn-todas.activo { border-style: solid; border-color: var(--red); background: var(--red); color: #fff; }
+.btn-todas.activo small { color: #fff; opacity: 0.85; }
+.btn-todas.activo .casilla { background: #fff; color: var(--red); border-color: #fff; }
+/* Los usuarios: número editable con − y +, y el deslizador para ir rápido. */
+.users-stepper {
+  display: flex; align-items: stretch; height: 42px;
+  border: 1px solid var(--border-light); border-radius: 6px; overflow: hidden; background: var(--dark);
+}
+.step-btn {
+  width: 42px; flex-shrink: 0; border: none; background: transparent; color: var(--text);
+  font-size: 20px; line-height: 1; cursor: pointer; transition: background 0.15s;
+}
+.step-btn:hover:not(:disabled) { background: var(--dark-3); }
+.step-btn:disabled { color: var(--text-3); cursor: not-allowed; }
+.users-stepper input {
+  flex: 1; min-width: 0; border: none; border-left: 1px solid var(--border); border-right: 1px solid var(--border);
+  text-align: center; font-family: 'Source Sans 3', sans-serif; font-size: 17px; font-weight: 700;
+  color: var(--text); background: transparent; -moz-appearance: textfield; appearance: textfield;
+}
+.users-stepper input::-webkit-outer-spin-button,
+.users-stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.users-stepper input:disabled { color: var(--text-3); }
+.users-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: var(--dark-3); color: var(--text-2); }
+.chip-ok { background: rgba(15,107,78,0.10); color: var(--success); }
+.chip-aviso { background: transparent; border: 1px dashed var(--border-light); color: var(--text-3); }
+.cuenta-users.inactivo input[type=range] { opacity: 0.35; }
+details.cuenta-users-note summary { cursor: pointer; font-size: 11px; font-weight: 600; color: var(--text-2); list-style: none; }
+details.cuenta-users-note summary::-webkit-details-marker { display: none; }
+details.cuenta-users-note summary::before { content: "+ "; color: var(--red); font-weight: 700; }
+details.cuenta-users-note[open] summary::before { content: "− "; }
+details.cuenta-users-note p { margin-top: 6px; }
 
 /* ── PANEL DE RESUMEN ── */
 .summary-section { display: grid; grid-template-columns: minmax(0,1fr) 360px; gap: 24px; align-items: start; }
@@ -898,12 +947,28 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
     <!-- Resumen -->
     <div>
       <div class="summary-card reveal" id="summaryCard">
-        <div class="summary-title">Tu plan seleccionado</div>
+        <div class="summary-head">
+          <div class="summary-title">Tu plan seleccionado</div>
+          <button type="button" class="btn-todas" id="btnTodas" onclick="alternarTodas()" aria-pressed="false">
+            <span class="casilla"><svg width="11" height="11" fill="none" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
+            <span><strong id="btnTodasTexto">Seleccionar todas las áreas</strong><small id="btnTodasDetalle">&nbsp;</small></span>
+          </button>
+        </div>
         <div class="cuenta-users">
           <div class="users-label"><span>Usuarios de la cuenta</span><span class="users-val" id="usuariosVal">&nbsp;</span></div>
-          <input type="range" max="200" step="1" id="usuariosRango" oninput="setUsuarios(this.value)"
+          <div class="users-stepper">
+            <button type="button" class="step-btn" id="usuariosMenos" onclick="setUsuarios(usuariosCuenta - 1, true)" aria-label="Quitar un usuario">&minus;</button>
+            <input type="number" id="usuariosNum" min="0" max="200" step="1" inputmode="numeric"
+              onchange="setUsuarios(this.value, true)" aria-label="Número de usuarios de la cuenta">
+            <button type="button" class="step-btn" id="usuariosMas" onclick="setUsuarios(usuariosCuenta + 1, true)" aria-label="Añadir un usuario">+</button>
+          </div>
+          <input type="range" max="200" step="1" id="usuariosRango" oninput="setUsuarios(this.value, true)"
             aria-label="Usuarios de la cuenta">
-          <div class="cuenta-users-note">Cada área que contratas trae 1 administrador y 1 gestor. Con las cinco áreas de pago entra el paquete completo: 2 administradores, 10 licencias de gestor y 25 licencias de Colaborador para WorkSpace, con los 16 módulos de Plataforma incluidos. A partir de ahí, $5 USD por usuario al mes.</div>
+          <div class="users-chips" id="usuariosChips" aria-live="polite"></div>
+          <details class="cuenta-users-note">
+            <summary>¿Qué licencias incluye?</summary>
+            <p>Cada área que contratas trae 1 administrador y 1 gestor. Con las cinco áreas de pago entra el paquete completo: 2 administradores, 10 licencias de gestor y 25 licencias de Colaborador para WorkSpace, con los 16 módulos de Plataforma incluidos. A partir de ahí, $5 USD por usuario al mes.</p>
+          </details>
         </div>
         <div class="sum-divider"></div>
         <div class="summary-items" id="summaryItems"></div>
@@ -1141,6 +1206,12 @@ let selected = {};
    por modulo: sumar un deslizador por modulo contaba tres veces a quien usa
    tres modulos. */
 let usuariosCuenta = USUARIOS_INCLUIDOS;
+/* Si la persona ya ha elegido cuántos usuarios quiere. Mientras no toque el
+   contador, sigue a las licencias incluidas: marcar un área no puede traer de
+   regalo usuarios adicionales que nadie ha pedido —antes arrancaba en 37 y al
+   marcar una sola área cobraba 35 de más—. En cuanto lo toca, se respeta su
+   número. */
+let usuariosTocados = false;
 let discount = 0;
 let currentStep = 0;
 let payMethod = 'card';
@@ -1491,27 +1562,75 @@ function toggleModule(id) {
 
 /* El contador de la cuenta. No baja de las licencias incluidas: por debajo de
    las incluidas no hay plan que vender. */
-function setUsuarios(val) {
+function setUsuarios(val, porLaPersona) {
   /* El suelo ya no es fijo: es lo que traiga la selección de ahora. Sube y baja
      al encender y apagar módulos, y el contador se va con él. */
   /* El suelo sale de `licenciasBase()` y no de `licenciasIncluidas()`: ésta ya
      depende de cuánta gente haya, y si pusiera el suelo en doce en cuanto el
      paquete sale más barato, el deslizador no dejaría volver a menos usuarios. */
+  const hayAreas = modules.some(m => selected[m.id] || isAutoIncluded(m));
   const minimo = licenciasBase().total;
-  usuariosCuenta = Math.max(parseInt(val, 10) || minimo, minimo);
+  const maximo = 200;
+  if (porLaPersona) usuariosTocados = true;
+  const pedido = usuariosTocados ? parseInt(val, 10) : minimo;
+  usuariosCuenta = Math.min(Math.max(isNaN(pedido) ? minimo : pedido, minimo), Math.max(maximo, minimo));
+
   const input = document.getElementById('usuariosRango');
-  input.min = minimo;
+  const num = document.getElementById('usuariosNum');
+  input.min = minimo; num.min = minimo;
   /* El control se pone al día con el estado, no al revés: si alguien llama aquí
      con un número por debajo de las licencias incluidas, el tope de arriba lo
      sube y el pulgar tiene que irse con él. */
   if (input.value !== String(usuariosCuenta)) input.value = usuariosCuenta;
-  const pct = (usuariosCuenta - minimo) / Math.max(200 - minimo, 1) * 100;
+  if (num.value !== String(usuariosCuenta)) num.value = usuariosCuenta;
+  const pct = (usuariosCuenta - minimo) / Math.max(maximo - minimo, 1) * 100;
   input.style.background = `linear-gradient(to right,var(--red) ${pct}%,rgba(14,14,14,0.12) ${pct}%)`;
-  const extra = Math.max(usuariosCuenta - licenciasIncluidas().total, 0);
-  document.getElementById('usuariosVal').textContent = extra === 0
-    ? `${usuariosCuenta} usuarios incluidos`
-    : `${usuariosCuenta} usuarios (${extra} adicional${extra > 1 ? 'es' : ''})`;
+
+  /* Sin áreas no hay usuarios que configurar: los controles se apagan y se dice
+     por qué, en vez de enseñar «37 usuarios (37 adicionales)» con un total de 0. */
+  document.querySelector('.cuenta-users').classList.toggle('inactivo', !hayAreas);
+  input.disabled = !hayAreas; num.disabled = !hayAreas;
+  document.getElementById('usuariosMenos').disabled = !hayAreas || usuariosCuenta <= minimo;
+  document.getElementById('usuariosMas').disabled = !hayAreas || usuariosCuenta >= maximo;
+
+  const licIncluidas = licenciasIncluidas().total;
+  const extra = Math.max(usuariosCuenta - licIncluidas, 0);
+  /* El número ya lo enseña el contador, justo debajo: repetirlo en la etiqueta
+     era ruido. */
+  document.getElementById('usuariosVal').textContent = '';
+  document.getElementById('usuariosChips').innerHTML = !hayAreas
+    ? `<span class="chip chip-aviso">Elige al menos un área para configurar los usuarios</span>`
+    : `<span class="chip chip-ok">${Math.min(usuariosCuenta, licIncluidas)} incluidos</span>`
+      + (extra ? `<span class="chip">${extra} adicional${extra > 1 ? 'es' : ''} · $${costeUsuariosExtra().toLocaleString()} USD${billing === 'annual' ? '/año' : '/mes'}</span>` : '');
   updateSummary();
+}
+
+/* SELECCIONAR TODAS LAS ÁREAS, o quitarlas si ya están todas. Es el camino
+   corto al paquete completo, que es lo que más se contrata. Pasa por los
+   mismos pasos que marcar una a una —la plataforma sigue a las áreas y el
+   contador se reajusta—, así que no puede dar un total distinto. */
+function alternarTodas() {
+  const areas = troncalesDePago();
+  const todas = areas.every(m => selected[m.id]);
+  areas.forEach(m => { selected[m.id] = !todas; });
+  const anyCoreOn = modules.some(x => !x.addonOf && !x.includedInAll && selected[x.id]);
+  modules.filter(m => m.includedInAll).forEach(m => { selected[m.id] = anyCoreOn; });
+  renderModules();
+  setUsuarios(usuariosCuenta);
+}
+
+/* El botón dice lo que va a hacer, y con el precio del paquete en el ciclo que
+   toque. */
+function pintarBotonTodas() {
+  const btn = document.getElementById('btnTodas');
+  if (!btn) return;
+  const todas = troncalesDePago().every(m => selected[m.id]);
+  btn.classList.toggle('activo', todas);
+  btn.setAttribute('aria-pressed', todas ? 'true' : 'false');
+  document.getElementById('btnTodasTexto').textContent = todas ? 'Todas las áreas seleccionadas' : 'Seleccionar todas las áreas';
+  document.getElementById('btnTodasDetalle').textContent = todas
+    ? 'Pulsa para quitarlas'
+    : `Paquete completo · $${topeDelPaquete().toLocaleString()} USD${billing === 'annual' ? '/año' : '/mes'} · ${USUARIOS_INCLUIDOS} licencias`;
 }
 
 // ════════════════════════════════
@@ -1525,6 +1644,7 @@ function updateSummary() {
   const savingsText = document.getElementById('savingsText');
 
   const activeModules = modules.filter(m => selected[m.id] || isAutoIncluded(m));
+  pintarBotonTodas();
 
   items.innerHTML = modules.map(m => {
     const isOn = selected[m.id];
@@ -1579,7 +1699,9 @@ function setBilling(type) {
   document.querySelectorAll('.bill-btn').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
   renderModules();
-  updateSummary();
+  /* Por `setUsuarios`: la etiqueta de los usuarios adicionales lleva el importe
+     del ciclo y tiene que cambiar con él. */
+  setUsuarios(usuariosCuenta);
 }
 
 // ════════════════════════════════
@@ -1592,7 +1714,7 @@ document.querySelectorAll('.bill-btn').forEach(btn => {
     document.querySelectorAll('.bill-btn').forEach(b=>b.classList.remove('active'));
     this.classList.add('active');
     renderModules();
-    updateSummary();
+    setUsuarios(usuariosCuenta);
   });
 });
 

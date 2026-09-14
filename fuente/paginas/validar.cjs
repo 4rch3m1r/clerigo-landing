@@ -75,9 +75,15 @@ const RETIRADOS = {
     identificadores: ["a-pwd", "a-pwd2", "cc-num", "cc-exp", "cc-cvv", "cc-name",
       "cardFields", "altPayMsg", "payMethods", "payBtn", "mview3"],
     /* Seis entradas menos: las cuatro de la tarjeta y las dos de contraseña.
-       Y dos botones: «Ir al pago» y «Pagar y activar cuenta». */
-    entradas: 6,
-    botones: 2,
+       Y dos botones: «Ir al pago» y «Pagar y activar cuenta».
+       EL PANEL DE RESUMEN SUMA CONTROLES — 2026-09-14. Para que el plan se
+       entienda de un vistazo, el contador de usuarios pasa a tener un número
+       editable (una entrada más) con − y + (dos botones), y arriba hay un botón
+       para seleccionar todas las áreas (otro más). Así que, en neto: 6 − 1 = 5
+       entradas y 2 − 3 = ningún botón menos que el original. El descuento tiene
+       que ser exacto, por eso baja. */
+    entradas: 5,
+    botones: 0,
   },
 };
 const PLANTILLA = lee(path.join(AQUI, "plantilla.html"));
