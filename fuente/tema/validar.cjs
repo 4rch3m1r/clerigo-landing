@@ -2,7 +2,8 @@
  * VIGILA EL TEMA OSCURO. Los demás validadores lo quitan antes de mirar
  * (`sinTema`); éste mira sólo lo suyo:
  *
- *   · cada página lleva las cuatro piezas, una sola vez y en su sitio;
+ *   · cada página lleva las cuatro piezas, una sola vez y en su sitio, y el
+ *     botón de móvil sólo donde el selector de idioma se oculta;
  *   · el arranque va en el <head>: decide antes de pintar el <body>, sin parpadeo;
  *   · el botón está en el idioma de la página;
  *   · correr el generador otra vez no cambia nada;
@@ -14,7 +15,7 @@ const fs = require("fs");
 const path = require("path");
 const { execFileSync } = require("child_process");
 const { MARCAS, sinTema } = require("./marcas.cjs");
-const { colorOscuro } = require("./oscuro.cjs");
+const { colorOscuro, BOTON_MOVIL } = require("./oscuro.cjs");
 const { PAGINAS } = require("../seo/posicionar.cjs");
 const { CASTELLANO, INGLES } = require("../donde.cjs");
 
@@ -32,7 +33,7 @@ function paginas() {
     for (const p of PAGINAS) {
       if (p.slug === "login") continue;
       const ruta = path.join(carpeta, p.disco[idioma]);
-      if (fs.existsSync(ruta)) lista.push({ nombre: idioma + "/" + p.disco[idioma], ruta, idioma });
+      if (fs.existsSync(ruta)) lista.push({ nombre: idioma + "/" + p.disco[idioma], ruta, idioma, slug: p.slug });
     }
   return lista;
 }
@@ -41,8 +42,19 @@ const antes = new Map();
 for (const pg of paginas()) {
   const html = fs.readFileSync(pg.ruta, "utf8");
   antes.set(pg.ruta, html);
-  for (const [pieza, re] of Object.entries(MARCAS))
-    comprueba(`${pg.nombre}: ${pieza} una sola vez`, cuenta(html, re) === 1, cuenta(html, re) + " veces");
+  for (const [pieza, re] of Object.entries(MARCAS)) {
+    /* El botón de móvil sólo va donde el selector de idioma se oculta. */
+    const esperado = pieza === "movil" ? (BOTON_MOVIL[pg.slug] ? 1 : 0) : 1;
+    comprueba(`${pg.nombre}: ${pieza} ${esperado ? "una sola vez" : "no está"}`, cuenta(html, re) === esperado, cuenta(html, re) + " veces");
+  }
+  if (BOTON_MOVIL[pg.slug]) {
+    const movil = (html.match(MARCAS.movil) || [""])[0];
+    comprueba(`${pg.nombre}: el botón de móvil va encima de la tarjeta, en su idioma`,
+      new RegExp(BOTON_MOVIL[pg.slug] + "\\r?\\n\\s*<button[^>]*id=\"temaToggleMovil\"").test(html) &&
+      movil.includes(pg.idioma === "es" ? "Cambiar a modo oscuro" : "Switch to dark mode"));
+    comprueba(`${pg.nombre}: el botón de móvil sólo se ve por debajo de 820 px`,
+      /\.tema-toggle-movil\{display:none\}/.test(html) && /@media \(max-width:820px\)\{[^\n]*\.tema-toggle-movil\{display:inline-flex/.test(html));
+  }
 
   const cabeza = html.slice(0, html.indexOf("</head>"));
   comprueba(`${pg.nombre}: el arranque va en el <head>`, cabeza.includes('<script id="tema-arranque">'));

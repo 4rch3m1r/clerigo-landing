@@ -235,12 +235,22 @@ const ESTILO_BASE = `
 .tema-toggle .tema-sol{display:none}
 ${PREFIJO} .tema-toggle .tema-sol{display:block}
 ${PREFIJO} .tema-toggle .tema-luna{display:none}
+/* El segundo botón: sólo donde el primero se oculta en móvil (partners). */
+.tema-toggle-movil{display:none}
+@media (max-width:820px){.rp{flex-direction:column}.tema-toggle-movil{display:inline-flex;align-self:flex-end;margin:0 0 10px;color:var(--text);background:var(--dark-2);border-color:var(--border-light)}}
 ${PREFIJO}{color-scheme:dark}`;
 
-function boton(idioma) {
+function boton(idioma, movil) {
   const t = TEXTOS[idioma];
-  return `<button type="button" class="tema-toggle" id="temaToggle" aria-label="${t.aOscuro}" title="${t.aOscuro}">${ICONO_LUNA}${ICONO_SOL}</button>`;
+  const clase = movil ? "tema-toggle tema-toggle-movil" : "tema-toggle";
+  const id = movil ? "temaToggleMovil" : "temaToggle";
+  return `<button type="button" class="${clase}" id="${id}" aria-label="${t.aOscuro}" title="${t.aOscuro}">${ICONO_LUNA}${ICONO_SOL}</button>`;
 }
+
+/* PÁGINAS DONDE EL SELECTOR DE IDIOMA SE OCULTA EN MÓVIL, y con él el botón.
+   En partners el panel de marca entero desaparece por debajo de 820 px: el
+   segundo botón va encima de la tarjeta, y sólo se ve ahí. */
+const BOTON_MOVIL = { partners: '<div class="rp">' };
 
 function motor(idioma) {
   const t = TEXTOS[idioma];
@@ -282,11 +292,14 @@ ${FUENTE_COLOR.replace(/^\/\*[\s\S]*?\*\/\s*/, "")}
   }
   var SELECTOR = '[style],[fill],[stroke],[stop-color]';
   function todo() { var l = document.querySelectorAll(SELECTOR); for (var i = 0; i < l.length; i++) aplicar(l[i]); }
+  var botones = document.querySelectorAll('.tema-toggle');
   function pintarBoton() {
-    var b = document.getElementById('temaToggle'); if (!b) return;
     var etiqueta = oscuro() ? ${JSON.stringify(t.aClaro)} : ${JSON.stringify(t.aOscuro)};
-    b.setAttribute('aria-label', etiqueta); b.setAttribute('title', etiqueta);
-    b.setAttribute('aria-pressed', oscuro() ? 'true' : 'false');
+    for (var i = 0; i < botones.length; i++) {
+      var b = botones[i];
+      b.setAttribute('aria-label', etiqueta); b.setAttribute('title', etiqueta);
+      b.setAttribute('aria-pressed', oscuro() ? 'true' : 'false');
+    }
   }
   function poner(tema, recordar) {
     R.setAttribute('data-tema', tema);
@@ -307,8 +320,8 @@ ${FUENTE_COLOR.replace(/^\/\*[\s\S]*?\*\/\s*/, "")}
       }
     }
   }).observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ATRIBUTOS });
-  var b = document.getElementById('temaToggle');
-  if (b) b.addEventListener('click', function () { poner(oscuro() ? 'claro' : 'oscuro', true); });
+  for (var i = 0; i < botones.length; i++)
+    botones[i].addEventListener('click', function () { poner(oscuro() ? 'claro' : 'oscuro', true); });
   /* Con la página abierta, a las 7 cambia sola —si nadie ha elegido a mano—. */
   setInterval(function () {
     var p = preferido();
@@ -342,6 +355,11 @@ function aplicarATodas() {
       if (!h.includes('<div class="idiomas">')) throw new Error(`${idioma}/${p.disco[idioma]}: no encuentro el selector de idioma`);
       h = h.replace("</head>", `${ARRANQUE}\n${estilo}\n</head>`);
       h = h.replace(/(<div class="idiomas">[\s\S]*?<\/div>)/, `$1${boton(idioma)}`);
+      const ancla = BOTON_MOVIL[p.slug];
+      if (ancla) {
+        if (!h.includes(ancla)) throw new Error(`${idioma}/${p.disco[idioma]}: no encuentro ${ancla} para el botón de móvil`);
+        h = h.replace(ancla, () => `${ancla}\n  ${boton(idioma, true)}`);
+      }
       const fin = h.lastIndexOf("</body>");
       h = h.slice(0, fin) + motor(idioma) + "\n" + h.slice(fin);
 
@@ -356,4 +374,4 @@ function aplicarATodas() {
 
 if (require.main === module) aplicarATodas();
 
-module.exports = { colorOscuro, cssOscuro, bloques, acotar, FICHAS, aplicarATodas };
+module.exports = { colorOscuro, cssOscuro, bloques, acotar, FICHAS, BOTON_MOVIL, aplicarATodas };
