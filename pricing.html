@@ -846,7 +846,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
   <div class="stripe"></div><div class="stripe2"></div>
   <div class="label-chip fade-up">Flexible per-module plans</div>
   <h1 class="fade-up fade-up-1">Choose only what<br>your company <em>needs.</em></h1>
-  <p class="hero-desc fade-up fade-up-2">46 modules across 6 areas. Activate only the ones you need. <strong>All areas = $5,000 USD / year</strong> — each area includes <strong>1 administrator and 1 manager</strong>, and the five together are the full package: <strong>2 administrators, 5 manager licences and 5 Team Member licences</strong> for WorkSpace, with the <strong>16 Platform modules included</strong>. Additional users at <strong>$20 USD / user / month</strong>.</p>
+  <p class="hero-desc fade-up fade-up-2">46 modules across 6 areas. Activate only the ones you need. <strong>All areas = $5,000 USD / year</strong> — each area includes <strong>1 administrator and 1 manager</strong>, and the five together are the full package: <strong>2 administrators, 5 manager licences and 5 Team Member licences</strong> for WorkSpace, with the <strong>16 Platform modules included</strong>. Additional users at <strong>$5 USD / user / month</strong>.</p>
   <div class="billing-toggle fade-up fade-up-3" id="billingToggle">
     <button class="bill-btn active" onclick="setBilling('annual')">Annual</button>
     <button class="bill-btn" onclick="setBilling('monthly')">Monthly <span class="save-badge">+20%</span></button>
@@ -903,7 +903,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
           <div class="users-label"><span>Account users</span><span class="users-val" id="usuariosVal">&nbsp;</span></div>
           <input type="range" max="200" step="1" id="usuariosRango" oninput="setUsuarios(this.value)"
             aria-label="Account users">
-          <div class="cuenta-users-note">Each area you take includes 1 administrator and 1 manager. With the five paid areas you get the full package: 2 administrators, 5 manager licences and 5 Team Member licences for WorkSpace, with the 16 Platform modules included. Beyond that, $20 USD per user per month.</div>
+          <div class="cuenta-users-note">Each area you take includes 1 administrator and 1 manager. With the five paid areas you get the full package: 2 administrators, 5 manager licences and 5 Team Member licences for WorkSpace, with the 16 Platform modules included. Beyond that, $5 USD per user per month.</div>
         </div>
         <div class="sum-divider"></div>
         <div class="summary-items" id="summaryItems"></div>
@@ -1069,7 +1069,7 @@ const GESTORES_INCLUIDOS = 5;
    formación y sus tareas y no ve el resto del producto. */
 const COLABORADORES_INCLUIDOS = 5;
 const USUARIOS_INCLUIDOS = ADMINS_INCLUIDOS + GESTORES_INCLUIDOS + COLABORADORES_INCLUIDOS;
-const PER_USER_MONTHLY = 20; // USD/usuario adicional/mes
+const PER_USER_MONTHLY = 5; // USD/usuario adicional/mes (en mensual, +20%: 6)
 
 // Los iconos de estado, dibujados: ni un pictograma en toda la página.
 const ICO_OK = '<svg width="12" height="12" fill="none" viewBox="0 0 24 24" style="vertical-align:-2px;flex-shrink:0"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg> ';

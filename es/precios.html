@@ -846,7 +846,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
   <div class="stripe"></div><div class="stripe2"></div>
   <div class="label-chip fade-up">Planes flexibles por módulo</div>
   <h1 class="fade-up fade-up-1">Elige solo lo que<br>tu empresa <em>necesita.</em></h1>
-  <p class="hero-desc fade-up fade-up-2">46 módulos en 6 áreas. Activa solo las que necesitas. <strong>Todas las áreas = $5,000 USD / año</strong> — cada área trae <strong>1 administrador y 1 gestor</strong>, y las cinco juntas son el paquete completo: <strong>2 administradores, 5 licencias de gestor y 5 licencias de Colaborador</strong> para WorkSpace, con los <strong>16 módulos de Plataforma incluidos</strong>. Usuarios adicionales a <strong>$20 USD / usuario / mes</strong>.</p>
+  <p class="hero-desc fade-up fade-up-2">46 módulos en 6 áreas. Activa solo las que necesitas. <strong>Todas las áreas = $5,000 USD / año</strong> — cada área trae <strong>1 administrador y 1 gestor</strong>, y las cinco juntas son el paquete completo: <strong>2 administradores, 5 licencias de gestor y 5 licencias de Colaborador</strong> para WorkSpace, con los <strong>16 módulos de Plataforma incluidos</strong>. Usuarios adicionales a <strong>$5 USD / usuario / mes</strong>.</p>
   <div class="billing-toggle fade-up fade-up-3" id="billingToggle">
     <button class="bill-btn active" onclick="setBilling('annual')">Anual</button>
     <button class="bill-btn" onclick="setBilling('monthly')">Mensual <span class="save-badge">+20%</span></button>
@@ -903,7 +903,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
           <div class="users-label"><span>Usuarios de la cuenta</span><span class="users-val" id="usuariosVal">&nbsp;</span></div>
           <input type="range" max="200" step="1" id="usuariosRango" oninput="setUsuarios(this.value)"
             aria-label="Usuarios de la cuenta">
-          <div class="cuenta-users-note">Cada área que contratas trae 1 administrador y 1 gestor. Con las cinco áreas de pago entra el paquete completo: 2 administradores, 5 licencias de gestor y 5 licencias de Colaborador para WorkSpace, con los 16 módulos de Plataforma incluidos. A partir de ahí, $20 USD por usuario al mes.</div>
+          <div class="cuenta-users-note">Cada área que contratas trae 1 administrador y 1 gestor. Con las cinco áreas de pago entra el paquete completo: 2 administradores, 5 licencias de gestor y 5 licencias de Colaborador para WorkSpace, con los 16 módulos de Plataforma incluidos. A partir de ahí, $5 USD por usuario al mes.</div>
         </div>
         <div class="sum-divider"></div>
         <div class="summary-items" id="summaryItems"></div>
@@ -1069,7 +1069,7 @@ const GESTORES_INCLUIDOS = 5;
    formación y sus tareas y no ve el resto del producto. */
 const COLABORADORES_INCLUIDOS = 5;
 const USUARIOS_INCLUIDOS = ADMINS_INCLUIDOS + GESTORES_INCLUIDOS + COLABORADORES_INCLUIDOS;
-const PER_USER_MONTHLY = 20; // USD/usuario adicional/mes
+const PER_USER_MONTHLY = 5; // USD/usuario adicional/mes (en mensual, +20%: 6)
 
 // Los iconos de estado, dibujados: ni un pictograma en toda la página.
 const ICO_OK = '<svg width="12" height="12" fill="none" viewBox="0 0 24 24" style="vertical-align:-2px;flex-shrink:0"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg> ';
