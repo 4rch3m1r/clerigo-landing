@@ -35,6 +35,9 @@ const PASOS = [
   ["el inglés, por sustitución de texto", "fuente/idiomas/a-ingles.cjs"],
   ["el posicionamiento, sobre las dieciséis", "fuente/seo/posicionar.cjs"],
   ["el mapa del sitio y el robots", "fuente/seo/mapa.cjs"],
+  /* El tema oscuro va DETRÁS de todo: lee el CSS que dejaron los pasos de
+     arriba y añade el suyo. Los de arriba lo quitan al leer (`sinTema`). */
+  ["el tema oscuro, de 7 de la tarde a 7 de la mañana", "fuente/tema/oscuro.cjs"],
 ];
 
 const COMPRUEBAS = [
@@ -42,6 +45,7 @@ const COMPRUEBAS = [
   ["las interiores salen de la plantilla", "fuente/paginas/validar.cjs"],
   ["las dos versiones son la misma página", "fuente/idiomas/validar.cjs"],
   ["lo que se le cuenta al buscador es verdad", "fuente/seo/validar.cjs"],
+  ["el tema oscuro está en todas y se lee", "fuente/tema/validar.cjs"],
 ];
 
 const MUTACIONES = [

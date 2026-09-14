@@ -119,7 +119,7 @@ let ajenas = 0;
 for (const { slug, chrome } of PAGINAS) {
   const f = path.join(CASTELLANO, slug + ".html");
   if (!fs.existsSync(f)) { console.log(`  ·  ${slug}.html todavía no existe`); continue; }
-  const antes = lee(f);
+  const antes = require("../tema/marcas.cjs").sinTema(lee(f));
 
   if (!saleDeLaPlantilla(antes, chrome) && !FORZAR) {
     ajenas++;

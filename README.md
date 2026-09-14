@@ -265,6 +265,11 @@ node fuente/seo/posicionar.cjs        # palabras clave, ficha de datos, idioma d
 node fuente/seo/mapa.cjs              # sitemap.xml + robots.txt
 node fuente/seo/validar.cjs           # 204 comprobaciones, y que no se invente nada
 
+# 3b. el tema oscuro, DETRÁS de todo: de 19:00 a 07:00 con la hora de quien
+#     visita, y un botón sol/luna que recuerda lo elegido
+node fuente/tema/oscuro.cjs           # añade a cada página su CSS oscuro, generado
+node fuente/tema/validar.cjs          # las cuatro piezas, idempotente, y la regla de color
+
 # 4. y romperlo todo a propósito, que es lo único que prueba una guarda
 node fuente/mutar.cjs                 # 22 mutaciones sobre la portada
 node fuente/paginas/mutar.cjs marcos  # 15 sobre una interior
