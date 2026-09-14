@@ -425,6 +425,14 @@ for (const carpeta of [CASTELLANO, INGLES]) {
        redirige, contradiciendo la canónica y `og:url`. */
     h = h.replace(/<meta name="twitter:url" content="[^"]*">\r?\n?/g, "");
 
+    /* FUERA `twitter:site` Y `twitter:creator`. Decían `@clerigo_io`, y esa
+       cuenta NO EXISTE: comprobado el 2026-09-13, x.com/clerigo_io contesta
+       «Esta página no existe». Cualquiera podía registrarla y quedarse con la
+       atribución de todas las tarjetas del sitio. Tampoco las escribía ningún
+       generador de `fuente/`: venían del guion viejo, como `twitter:url`. Si
+       algún día hay cuenta de verdad, se ponen aquí con su nombre. */
+    h = h.replace(/<meta name="twitter:(?:site|creator)" content="[^"]*">\r?\n?/g, "");
+
     /* EL ICONO DE PANTALLA DE INICIO Y EL MANIFIESTO. El apple-touch-icon era
        `favicon.png`, de 160 px y con esquinas transparentes que iOS pinta de
        negro; el bueno es de 180, opaco, y lo dibuja `fuente/iconos.cjs`. Van

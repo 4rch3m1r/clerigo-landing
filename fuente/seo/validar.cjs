@@ -290,6 +290,11 @@ for (const carpeta of [CASTELLANO, INGLES]) {
     comprueba(`${p}: og:url es la canónica y no hay twitter:url que la contradiga`,
       (h.match(/<meta property="og:url" content="([^"]*)"/) || [])[1] === laCanonica
       && !/name="twitter:url"/.test(h), laCanonica);
+    /* Ni atribución a una cuenta de X que no es nuestra: `@clerigo_io` no
+       existe, y declararla es regalársela a quien la registre. */
+    comprueba(`${p}: no atribuye la tarjeta a ninguna cuenta de X`,
+      !/name="twitter:(?:site|creator)"/.test(h),
+      (h.match(/name="twitter:(?:site|creator)" content="[^"]*"/g) || []).join(" "));
     /* EL ICONO DE PANTALLA DE INICIO Y EL MANIFIESTO, una vez cada uno. */
     comprueba(`${p}: lleva el apple-touch-icon de 180 y el manifiesto`,
       (h.match(/<link rel="apple-touch-icon"/g) || []).length === 1
