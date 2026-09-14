@@ -42,7 +42,13 @@ const antes = new Map();
 for (const pg of paginas()) {
   const html = fs.readFileSync(pg.ruta, "utf8");
   antes.set(pg.ruta, html);
+  /* La portada lleva el valor oscuro de su gemela en cada elemento con color;
+     las demás, ninguno. */
+  const gemelos = cuenta(html, MARCAS.gemelos);
+  comprueba(`${pg.nombre}: ${pg.slug === "index" ? "los elementos llevan su valor oscuro de la gemela" : "no lleva valores de gemela"}`,
+    pg.slug === "index" ? gemelos > 200 : gemelos === 0, gemelos + " atributos");
   for (const [pieza, re] of Object.entries(MARCAS)) {
+    if (pieza === "gemelos") continue;
     /* El botón de móvil sólo va donde el selector de idioma se oculta. */
     const esperado = pieza === "movil" ? (BOTON_MOVIL[pg.slug] ? 1 : 0) : 1;
     comprueba(`${pg.nombre}: ${pieza} ${esperado ? "una sola vez" : "no está"}`, cuenta(html, re) === esperado, cuenta(html, re) + " veces");
@@ -93,6 +99,11 @@ for (const [entra, uso, sale, nombre] of casos) {
 /* Las páginas: lo que se vio roto al mirarlas en oscuro. */
 const leer = (p) => fs.readFileSync(p, "utf8");
 const portada = leer(path.join(CASTELLANO, "index.html"));
+comprueba("portada: las medallas toman los colores de la portada oscura (nada de tinta aclarada sobre el oro)",
+  !/oscuro"\] \.award-(num|er|lugar|tape-text)\{/.test(portada) &&
+  /oscuro"\] \.award-firm-name\{color:#F5D020\}/.test(portada));
+comprueba("portada: el disco de plata trae su estilo oscuro hecho a mano",
+  /data-tema-style="[^"]*conic-gradient\(#c0c0c0/.test(portada));
 comprueba("portada: el degradado del titular conserva el recorte al texto",
   /oscuro"\] \.hero-title \.word-simple\{[^}]*background-clip:text/.test(portada));
 const marcos = leer(path.join(CASTELLANO, "marcos.html"));

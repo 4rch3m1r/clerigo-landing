@@ -21,7 +21,9 @@ const MARCAS = {
   arranque: /[ \t]*<script id="tema-arranque">[\s\S]*?<\/script>\r?\n?/g,
   estilo: /[ \t]*<style id="tema-oscuro">[\s\S]*?<\/style>\r?\n?/g,
   boton: /<button type="button" class="tema-toggle" id="temaToggle"[\s\S]*?<\/button>/g,
-  movil: /\r?\n[ \t]*<button type="button" class="tema-toggle tema-toggle-movil" id="temaToggleMovil"[\s\S]*?<\/button>/g,
+  /* En la portada, cada elemento con color lleva su valor oscuro hecho a mano. */
+  gemelos: / data-tema-(?:style|fill|stroke|stop-color)="[^"]*"/g,
+  movil:/\r?\n[ \t]*<button type="button" class="tema-toggle tema-toggle-movil" id="temaToggleMovil"[\s\S]*?<\/button>/g,
   motor: /[ \t]*<script id="tema-motor">[\s\S]*?<\/script>\r?\n?/g,
 };
 
@@ -31,6 +33,7 @@ function sinTema(html) {
     .replace(MARCAS.estilo, "")
     .replace(MARCAS.boton, "")
     .replace(MARCAS.movil, "")
+    .replace(MARCAS.gemelos, "")
     .replace(MARCAS.motor, "");
 }
 

@@ -1491,7 +1491,9 @@ function colorOscuro(valor, uso) {
         COLOR.lastIndex = 0;
         if (!COLOR.test(actual)) { COLOR.lastIndex = 0; continue; }
         COLOR.lastIndex = 0;
-        reg = d[a] = { claro: actual, oscuro: convertirValor(actual, a) };
+        /* El valor hecho a mano, si el elemento lo trae (la portada). */
+        var gemelo = el.getAttribute('data-tema-' + a);
+        reg = d[a] = { claro: actual, oscuro: gemelo !== null ? gemelo : convertirValor(actual, a) };
       }
       var quiero = oscuro() ? reg.oscuro : reg.claro;
       if (actual !== quiero) el.setAttribute(a, quiero);

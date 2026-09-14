@@ -61,6 +61,91 @@ function fichasOscuras() {
 }
 const FICHAS = fichasOscuras();
 
+/* ── LA PORTADA TIENE GEMELA OSCURA ─────────────────────────────────────────
+   es/oscuro.html es la misma portada, pintada a mano en oscuro y aprobada. Para
+   la portada no se adivina: cada regla y cada estilo en línea que existe en las
+   dos toma el valor de la gemela. La regla genérica se queda para lo que la
+   gemela no tiene. Así las medallas —oro sobre oro, plata sobre plata— salen
+   como se diseñaron, y no con la tinta aclarada encima del metal. */
+const GEMELAS = { index: "oscuro.html" };
+const ATRIBUTOS_GEMELOS = ["style", "fill", "stroke", "stop-color"];
+const clave = (prelude, selector) => (prelude + "|" + selector).replace(/\s+/g, " ").trim();
+
+function cssDe(html) {
+  return [...html.matchAll(/<style(?![^>]*id="tema-)[^>]*>([\s\S]*?)<\/style>/g)]
+    .map((m) => m[1].replace(/\/\*[\s\S]*?\*\//g, ""))
+    .join("\n");
+}
+
+function gemelaDe(slug, htmlClaro) {
+  if (!GEMELAS[slug]) return null;
+  const oscuro = sinTema(fs.readFileSync(path.join(CASTELLANO, GEMELAS[slug]), "utf8")).split("\r\n").join("\n");
+  const reglas = new Map();
+  const recorre = (lista, prelude) => {
+    for (const b of lista) {
+      if (b.tipo === "at") { recorre(b.hijos, prelude + b.prelude); continue; }
+      const decl = new Map();
+      for (const d of declaraciones(b.cuerpo)) decl.set(d.prop, d.valor);
+      reglas.set(clave(prelude, b.selector), decl);
+    }
+  };
+  recorre(bloques(cssDe(oscuro)), "");
+
+  return { reglas, oscuro };
+}
+
+/* CADA ELEMENTO LLEVA SU VALOR OSCURO. Los estilos en línea y los colores de
+   SVG de la portada no se traducen por valor —un mismo azul es tinta en un
+   sello y relleno translúcido en otro—, sino elemento a elemento: se alinean
+   las etiquetas de las dos portadas (etiqueta, clase y nombres de atributo; la
+   subsecuencia común más larga, así una etiqueta de más en una no descoloca
+   al resto) y cada elemento emparejado recibe data-tema-fill="…",
+   data-tema-style="…"… con el valor de la gemela. El motor usa ese valor en
+   vez de la regla genérica; sinTema() los quita. */
+function etiquetas(html) {
+  /* Dentro de <script> y <style> no hay elementos: se tapan, con el mismo largo. */
+  const tapado = html.replace(/(<(script|style)\b[^>]*>)([\s\S]*?)(<\/\2>)/gi, (m, abre, _n, dentro, cierra) => abre + " ".repeat(dentro.length) + cierra);
+  const inicio = tapado.indexOf("<body");
+  const lista = [];
+  for (const m of tapado.slice(inicio).matchAll(/<([a-zA-Z][\w:-]*)((?:\s+[\w:-]+(?:="[^"]*")?)*)\s*\/?>/g)) {
+    const attrs = new Map([...m[2].matchAll(/([\w:-]+)(?:="([^"]*)")?/g)].map((x) => [x[1], x[2] || ""]));
+    const forma = m[1] + "." + (attrs.get("class") || "") + "|" + [...attrs.keys()].sort().join(",");
+    lista.push({ forma, attrs, fin: inicio + m.index + m[1].length + 1 });
+  }
+  return lista;
+}
+
+const tieneColor = (v) => { COLOR.lastIndex = 0; const si = COLOR.test(v); COLOR.lastIndex = 0; return si; };
+
+function marcarGemela(htmlClaro, htmlOscuro) {
+  const A = etiquetas(htmlClaro), B = etiquetas(htmlOscuro);
+  const n = A.length, m = B.length;
+  /* Subsecuencia común más larga sobre las formas de las etiquetas. */
+  const tabla = Array.from({ length: n + 1 }, () => new Uint16Array(m + 1));
+  for (let i = n - 1; i >= 0; i--)
+    for (let j = m - 1; j >= 0; j--)
+      tabla[i][j] = A[i].forma === B[j].forma ? tabla[i + 1][j + 1] + 1 : Math.max(tabla[i + 1][j], tabla[i][j + 1]);
+  const inserciones = [];
+  let emparejados = 0;
+  for (let i = 0, j = 0; i < n && j < m;) {
+    if (A[i].forma === B[j].forma) {
+      emparejados++;
+      const extra = ATRIBUTOS_GEMELOS
+        .filter((x) => A[i].attrs.has(x) && B[j].attrs.has(x) && tieneColor(A[i].attrs.get(x) + " " + B[j].attrs.get(x)))
+        .map((x) => " data-tema-" + x + '="' + B[j].attrs.get(x) + '"').join("");
+      if (extra) inserciones.push([A[i].fin, extra]);
+      i++; j++;
+    } else if (tabla[i + 1][j] >= tabla[i][j + 1]) i++;
+    else j++;
+  }
+  let salida = htmlClaro;
+  for (let k = inserciones.length - 1; k >= 0; k--) {
+    const [pos, extra] = inserciones[k];
+    salida = salida.slice(0, pos) + extra + salida.slice(pos);
+  }
+  return { html: salida, emparejados, total: n, marcados: inserciones.length };
+}
+
 /* ── Un lector de CSS lo justo para esto ────────────────────────────────────
    Reglas, @media/@supports con sus reglas dentro, y lo demás (@keyframes,
    @font-face) se salta: una animación no se puede acotar a un tema. */
@@ -157,7 +242,7 @@ function luz(valor) {
 }
 const BLANCO = /^(#fff|#ffffff|white|rgb\(\s*255\s*,\s*255\s*,\s*255\s*\))$/i;
 
-function cssOscuro(lista, claros) {
+function cssOscuro(lista, claros, gemela, prelude = "") {
   /* Los valores CLAROS de las fichas de esta página, para el caso de abajo. */
   if (!claros) {
     claros = {};
@@ -167,7 +252,7 @@ function cssOscuro(lista, claros) {
   const out = [];
   for (const b of lista) {
     if (b.tipo === "at") {
-      const dentro = cssOscuro(b.hijos, claros);
+      const dentro = cssOscuro(b.hijos, claros, gemela, prelude + b.prelude);
       if (dentro) out.push(`${b.prelude}{${dentro}}`);
       continue;
     }
@@ -176,6 +261,17 @@ function cssOscuro(lista, claros) {
     const esRaiz = /^:root\b/.test(b.selector.trim());
     const cambios = [];
     const lista = declaraciones(b.cuerpo);
+    const gemelas = !esRaiz && gemela ? gemela.reglas.get(clave(prelude, b.selector)) : null;
+    if (gemelas) {
+      for (const { prop, valor } of lista) {
+        const oscuro = gemelas.get(prop);
+        if (oscuro !== undefined && oscuro !== valor) cambios.push(`${prop}:${oscuro}`);
+      }
+      if (cambios.some((c) => c.startsWith("background:")))
+        for (const d of lista) if (/^(-webkit-)?background-clip$/.test(d.prop) && /text/.test(d.valor)) cambios.push(`${d.prop}:${d.valor}`);
+      if (cambios.length) out.push(`${selectores.join(",")}{${cambios.join(";")}}`);
+      continue;
+    }
     /* TEXTO CON DEGRADADO. `background:` es un atajo que devuelve
        `background-clip` a su valor inicial: al reescribirlo hay que volver a
        poner el recorte, o el degradado sale como un rectángulo detrás del texto. */
@@ -283,7 +379,9 @@ ${FUENTE_COLOR.replace(/^\/\*[\s\S]*?\*\/\s*/, "")}
         COLOR.lastIndex = 0;
         if (!COLOR.test(actual)) { COLOR.lastIndex = 0; continue; }
         COLOR.lastIndex = 0;
-        reg = d[a] = { claro: actual, oscuro: convertirValor(actual, a) };
+        /* El valor hecho a mano, si el elemento lo trae (la portada). */
+        var gemelo = el.getAttribute('data-tema-' + a);
+        reg = d[a] = { claro: actual, oscuro: gemelo !== null ? gemelo : convertirValor(actual, a) };
       }
       var quiero = oscuro() ? reg.oscuro : reg.claro;
       if (actual !== quiero) el.setAttribute(a, quiero);
@@ -349,7 +447,9 @@ function aplicarATodas() {
       const css = [...h.matchAll(/<style(?![^>]*id="tema-)[^>]*>([\s\S]*?)<\/style>/g)]
         .map((m) => m[1].replace(/\/\*[\s\S]*?\*\//g, ""))
         .join("\n");
-      const generado = cssOscuro(bloques(css));
+      const gemela = gemelaDe(p.slug, h);
+      if (gemela) h = marcarGemela(h, gemela.oscuro).html;
+      const generado = cssOscuro(bloques(css), null, gemela);
       const estilo = `<style id="tema-oscuro">${ESTILO_BASE}\n${generado}\n</style>`;
 
       if (!h.includes('<div class="idiomas">')) throw new Error(`${idioma}/${p.disco[idioma]}: no encuentro el selector de idioma`);
