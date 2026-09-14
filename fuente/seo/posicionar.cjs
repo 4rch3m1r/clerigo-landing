@@ -418,7 +418,7 @@ for (const carpeta of [CASTELLANO, INGLES]) {
 
     /* FUERA `twitter:url`. No es una etiqueta de las tarjetas de X —X usa la
        dirección que se comparte— y no la escribe ningún generador de
-       `fuente/`: la dejó el guion viejo `scripts/build-seo.js`, congelada.
+       `fuente/`: la dejó el guion viejo `scripts/build-seo.js` —borrado el 2026-09-13 con el resto de aquel sistema—, congelada.
        Medido el 2026-09-13 en producción, en 13 de las 14 páginas apuntaba a
        la versión CASTELLANA con `.html` —la portada inglesa decía
        `https://clerigo.io/es/`—, o sea, a otra página y a una dirección que

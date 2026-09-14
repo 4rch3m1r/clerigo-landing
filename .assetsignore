@@ -16,12 +16,6 @@ wrangler.jsonc
 wrangler.toml
 worker.js
 README.md
-SEO_SOCIAL_PREVIEW_GUIDE.md
 Marketing/**
 .wrangler/**
 .wrangler
-seo.config.js
-seo.config.json
-link-preview-test.html
-es/link-preview-test.html
-CNAME
