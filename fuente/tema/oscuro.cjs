@@ -334,6 +334,12 @@ ${PREFIJO} .tema-toggle .tema-luna{display:none}
 /* El segundo botón: sólo donde el primero se oculta en móvil (partners). */
 .tema-toggle-movil{display:none}
 @media (max-width:820px){.rp{flex-direction:column}.tema-toggle-movil{display:inline-flex;align-self:flex-end;margin:0 0 10px;color:var(--text);background:var(--dark-2);border-color:var(--border-light)}}
+/* SITIO PARA EL BOTÓN EN LA BARRA. Añade 42 px, y entre 1100 y 1250 px de ancho
+   los enlaces se partían en dos líneas. De 769 a 1320 px los espacios de la
+   barra se estrechan poco a poco —a 1320 valen lo de siempre, a 1000 lo
+   mínimo—: ahora se parte 60-120 px más abajo que antes de haber botón. Por
+   encima de 1320 y en móvil, la barra no cambia. */
+@media (min-width:769px) and (max-width:1320px){nav{gap:clamp(16px,calc(16px + (100vw - 1000px) * .075),40px);padding-left:clamp(24px,calc(24px + (100vw - 1000px) * .075),48px);padding-right:clamp(24px,calc(24px + (100vw - 1000px) * .075),48px)}.nav-links{gap:clamp(16px,calc(16px + (100vw - 1000px) * .0375),28px)}.nav-cta{gap:clamp(8px,calc(8px + (100vw - 1000px) * .0125),12px)}.tema-toggle{margin-left:clamp(0px,calc((100vw - 1000px) * .025),8px)}}
 ${PREFIJO}{color-scheme:dark}`;
 
 function boton(idioma, movil) {
