@@ -498,6 +498,48 @@ input[type=range]:disabled { cursor: not-allowed; opacity: 0.7; }
 .chip-ok { background: rgba(15,107,78,0.10); color: var(--success); }
 .chip-aviso { background: transparent; border: 1px dashed var(--border-light); color: var(--text-3); }
 .cuenta-users.inactivo input[type=range] { opacity: 0.35; }
+/* La composición de las licencias: una barra y una tarjeta por rol. */
+.lic {
+  border: 1px solid var(--border); border-radius: 10px; background: var(--dark);
+  padding: 12px; display: flex; flex-direction: column; gap: 10px;
+  box-shadow: 0 1px 2px rgba(14,14,14,0.04);
+}
+.lic-cabecera { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.lic-cabecera span { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-3); }
+.lic-cabecera strong { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; color: var(--text); }
+.lic-barra { display: flex; height: 6px; border-radius: 3px; overflow: hidden; background: var(--dark-3); gap: 2px; }
+.lic-barra span { height: 100%; border-radius: 3px; transition: width 0.3s ease; }
+.lic-barra span[style*="width:0.00%"] { display: none; }
+.lic-roles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.lic-rol {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 3px;
+  padding: 9px 8px; border-radius: 8px; background: var(--dark-2); border: 1px solid var(--border);
+  transition: opacity 0.2s;
+}
+.lic-rol.vacio { opacity: 0.5; }
+.lic-icono { width: 24px; height: 24px; border-radius: 6px; display: grid; place-items: center; margin-bottom: 3px; }
+.lic-num { font-size: 22px; font-weight: 900; letter-spacing: -0.8px; line-height: 1; color: var(--text); }
+.lic-nombre { font-size: 11px; font-weight: 700; color: var(--text); line-height: 1.2; }
+.lic-desc { font-size: 10px; color: var(--text-3); line-height: 1.3; }
+.lic-extra {
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  padding-top: 10px; border-top: 1px dashed var(--border-light); font-size: 11px; color: var(--text-2);
+}
+.lic-extra span { display: inline-flex; align-items: center; gap: 6px; }
+.lic-extra strong { color: var(--text); font-weight: 700; text-align: right; }
+.lic-punto { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.lic-aviso {
+  font-size: 12px; color: var(--text-3); text-align: center; padding: 12px;
+  border: 1px dashed var(--border-light); border-radius: 10px;
+}
+/* Un color por rol: el mismo en la barra, el icono y el punto. */
+.lic-barra .lic-c-admin, .lic-punto.lic-c-admin { background: var(--red); }
+.lic-barra .lic-c-gestor { background: var(--accent); }
+.lic-barra .lic-c-ws { background: var(--teal); }
+.lic-barra .lic-c-extra, .lic-punto.lic-c-extra { background: var(--text-3); }
+.lic-icono.lic-c-admin { background: var(--red-dim); color: var(--red); }
+.lic-icono.lic-c-gestor { background: rgba(2,87,191,0.10); color: var(--accent); }
+.lic-icono.lic-c-ws { background: rgba(10,115,115,0.10); color: var(--teal); }
 details.cuenta-users-note summary { cursor: pointer; font-size: 11px; font-weight: 600; color: var(--text-2); list-style: none; }
 details.cuenta-users-note summary::-webkit-details-marker { display: none; }
 details.cuenta-users-note summary::before { content: "+ "; color: var(--red); font-weight: 700; }
@@ -1598,11 +1640,36 @@ function setUsuarios(val, porLaPersona) {
   /* El número ya lo enseña el contador, justo debajo: repetirlo en la etiqueta
      era ruido. */
   document.getElementById('usuariosVal').textContent = '';
-  document.getElementById('usuariosChips').innerHTML = !hayAreas
-    ? `<span class="chip chip-aviso">Select at least one area to set up users</span>`
-    : `<span class="chip chip-ok">${Math.min(usuariosCuenta, licIncluidas)} included</span>`
-      + (extra ? `<span class="chip">${extra} additional · $${costeUsuariosExtra().toLocaleString()} USD${billing === 'annual' ? '/year' : '/month'}</span>` : '');
+  document.getElementById('usuariosChips').innerHTML = hayAreas
+    ? composicionDeLicencias(licenciasIncluidas(), extra)
+    : `<div class="lic-aviso">Select at least one area to set up users</div>`;
   updateSummary();
+}
+
+/* QUIÉN ES CADA USUARIO QUE ENTRA EN EL PLAN.
+   «37 incluidos» no le dice nada a quien compra: lo que quiere saber es cuántos
+   pueden administrar, cuántos llevan las áreas y cuántos entran sólo al portal.
+   Una barra con la proporción y una tarjeta por rol; los adicionales, aparte y
+   con lo que cuestan. WorkSpace sólo viene con el paquete: con áreas sueltas
+   la tarjeta sale apagada y lo dice, en vez de desaparecer. */
+function composicionDeLicencias(l, extra) {
+  const total = l.admins + l.gestores + l.colaboradores + extra;
+  const ancho = (n) => (n / Math.max(total, 1) * 100).toFixed(2) + '%';
+  const ICO_ADMIN = '<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const ICO_GESTOR = '<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18" stroke="currentColor" stroke-width="2"/></svg>';
+  const ICO_WORKSPACE = '<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16 5a3 3 0 0 1 0 6M18 14c2 .7 3 2.7 3 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+  return `<div class="lic">
+    <div class="lic-cabecera"><span>Included in your plan</span><strong>${l.total}</strong></div>
+    <div class="lic-barra" aria-hidden="true">
+      <span class="lic-c-admin" style="width:${ancho(l.admins)}"></span><span class="lic-c-gestor" style="width:${ancho(l.gestores)}"></span><span class="lic-c-ws" style="width:${ancho(l.colaboradores)}"></span><span class="lic-c-extra" style="width:${ancho(extra)}"></span>
+    </div>
+    <div class="lic-roles">
+      <div class="lic-rol"><span class="lic-icono lic-c-admin">${ICO_ADMIN}</span><span class="lic-num">${l.admins}</span><span class="lic-nombre">Administrators</span><span class="lic-desc">Account control</span></div>
+      <div class="lic-rol"><span class="lic-icono lic-c-gestor">${ICO_GESTOR}</span><span class="lic-num">${l.gestores}</span><span class="lic-nombre">Managers</span><span class="lic-desc">Run the areas</span></div>
+      <div class="lic-rol ${l.colaboradores ? '' : 'vacio'}"><span class="lic-icono lic-c-ws">${ICO_WORKSPACE}</span><span class="lic-num">${l.colaboradores}</span><span class="lic-nombre">WorkSpace</span><span class="lic-desc">${l.colaboradores ? 'Training and tasks' : 'Package only'}</span></div>
+    </div>
+    ${extra ? `<div class="lic-extra"><span><i class="lic-punto lic-c-extra"></i>Additional users</span><strong>${extra} additional · $${costeUsuariosExtra().toLocaleString()} USD${billing === 'annual' ? '/year' : '/month'}</strong></div>` : ''}
+  </div>`;
 }
 
 /* SELECCIONAR TODAS LAS ÁREAS, o quitarlas si ya están todas. Es el camino
