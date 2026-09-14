@@ -1370,6 +1370,12 @@ function lineaTopeResumen() {
   const suma = activos.reduce((s, m) => s + calcModulePrice(m), 0);
   if (suma <= topeDelPaquete()) return '';
   const l = licenciasIncluidas();
+  /* EL TOPE VA EN NEGATIVO, POR LA DIFERENCIA. Esta línea enseñaba el precio
+     del paquete —«$5.000»— como un importe más de la lista, y lo que se leía no
+     sumaba: con las cinco áreas en anual, 2.000 + 2.000 + 1.900 + 700 + 400 +
+     5.000 son 12.000 y el total decía 5.000. Ahora la línea resta lo que el
+     tope se come —las cinco áreas suman 7.000, así que −$2.000— y la lista
+     suma exactamente el total. Lo mismo en la caja del pedido. */
   /* La frase entera en UNA plantilla. Pegando trozos, el de después del número
      —« licencias de Colaborador para WorkSpace»— no llega a ser texto
      traducible y se queda en castellano dentro de la página inglesa. */
@@ -1383,7 +1389,7 @@ function lineaTopeResumen() {
           ${ofrece}
         </div>
       </div>
-      <div class="sum-item-price">$${topeDelPaquete().toLocaleString()}</div>
+      <div class="sum-item-price" style="color:var(--success)">−$${(suma - topeDelPaquete()).toLocaleString()}</div>
     </div>`;
 }
 
@@ -1621,7 +1627,8 @@ function renderOrderBox() {
   const cuenta = totalDelPedido();
   const costeUsuarios = cuenta.usuarios;
   const porModulos = cuenta.modulos;
-  const conTope = active.reduce((s,m) => s + calcModulePrice(m), 0) > porModulos;
+  const sumaModulos = active.reduce((s,m) => s + calcModulePrice(m), 0);
+  const conTope = sumaModulos > porModulos;
   const subtotal = cuenta.subtotal;
   const discAmt = cuenta.descuento;
   const final = cuenta.total;
@@ -1651,7 +1658,7 @@ function renderOrderBox() {
         Tope del paquete completo
         ${licenciasIncluidas().paquete ? '' : `<span style="color:var(--text-3);font-size:10px">(activa los que faltan y entran ${COLABORADORES_INCLUIDOS} licencias de Colaborador)</span>`}
       </div>
-      <div><span style="color:var(--success);font-size:11px;font-weight:700">$${topeDelPaquete().toLocaleString()}</span></div>
+      <div><span style="color:var(--success);font-size:11px;font-weight:700">−$${(sumaModulos - porModulos).toLocaleString()}</span></div>
     </div>` : ''}
     ${active.length ? `<div class="order-line">
       <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
