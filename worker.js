@@ -33,6 +33,33 @@
 const CANONICO = "clerigo.io";
 const NOMBRES_DEL_SITIO = [CANONICO, "www." + CANONICO];
 
+/* ── HSTS ──────────────────────────────────────────────────────────────────
+ *
+ * Con la redirección de arriba, quien escribe `clerigo.io` a secas hace UNA
+ * petición por http antes del 301, y ésa se puede interceptar. HSTS le dice al
+ * navegador que durante un año vaya directo por https, sin esa primera vuelta.
+ *
+ * SIN `includeSubDomains` Y SIN `preload`, a propósito. Puesta en la raíz,
+ * `includeSubDomains` obliga a https a TODOS los subdominios de clerigo.io —los
+ * de la aplicación, los de cada organización, y cualquiera que se cree mañana—,
+ * y el que no lo tenga deja de abrir durante un año sin que desde aquí se pueda
+ * deshacer. `preload` es peor: lo mete en los navegadores y sacarlo tarda meses.
+ * app.clerigo.io ya manda su propia cabecera con `includeSubDomains`.
+ *
+ * Sólo en https y sólo en los dos nombres del sitio: por http el navegador la
+ * ignora, y en `wrangler dev` o workers.dev no pinta nada.
+ */
+const HSTS = "max-age=31536000";
+
+/** La misma respuesta con HSTS. Se copia porque las cabeceras de una respuesta
+ *  servida —y las de `Response.redirect`— son inmutables y escribirlas lanza. */
+function conHsts(respuesta, url) {
+  if (!NOMBRES_DEL_SITIO.includes(url.hostname) || url.protocol !== "https:") return respuesta;
+  const copia = new Response(respuesta.body, respuesta);
+  copia.headers.set("strict-transport-security", HSTS);
+  return copia;
+}
+
 const REDIRECCIONES = [
   [["/marcos", "/marcos.html"], "/frameworks"],
   [["/confianza", "/confianza.html"], "/trustcenter"],
@@ -46,28 +73,28 @@ export default {
 
     if (NOMBRES_DEL_SITIO.includes(url.hostname)
       && (url.hostname !== CANONICO || url.protocol !== "https:")) {
-      return Response.redirect("https://" + CANONICO + url.pathname + url.search, 301);
+      return conHsts(Response.redirect("https://" + CANONICO + url.pathname + url.search, 301), url);
     }
 
     for (const [desde, hasta] of REDIRECCIONES) {
       if (desde.includes(url.pathname)) {
-        return Response.redirect(new URL(hasta, request.url), 301);
+        return conHsts(Response.redirect(new URL(hasta, request.url), 301), url);
       }
     }
     if (["/login", "/login.html", "/es/login", "/es/login.html"].includes(url.pathname)) {
-      return Response.redirect("https://app.clerigo.io/login", 301);
+      return conHsts(Response.redirect("https://app.clerigo.io/login", 301), url);
     }
 
     const respuesta = await env.ASSETS.fetch(request);
 
     const tipo = respuesta.headers.get("content-type") || "";
     if (!tipo.includes("text/html") || tipo.toLowerCase().includes("charset")) {
-      return respuesta;
+      return conHsts(respuesta, url);
     }
     /* Se clona para poder tocar las cabeceras: las de una respuesta servida
        vienen inmutables y escribir sobre ellas lanza. */
     const copia = new Response(respuesta.body, respuesta);
     copia.headers.set("content-type", "text/html; charset=utf-8");
-    return copia;
+    return conHsts(copia, url);
   },
 };
