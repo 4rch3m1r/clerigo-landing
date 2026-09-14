@@ -425,6 +425,17 @@ for (const carpeta of [CASTELLANO, INGLES]) {
        redirige, contradiciendo la canónica y `og:url`. */
     h = h.replace(/<meta name="twitter:url" content="[^"]*">\r?\n?/g, "");
 
+    /* EL ICONO DE PANTALLA DE INICIO Y EL MANIFIESTO. El apple-touch-icon era
+       `favicon.png`, de 160 px y con esquinas transparentes que iOS pinta de
+       negro; el bueno es de 180, opaco, y lo dibuja `fuente/iconos.cjs`. Van
+       con dirección ABSOLUTA, `/…`, para que la línea sea la misma en las dos
+       versiones: la castellana vive en `/es/` y con rutas relativas cada idioma
+       escribiría una distinta. El manifiesto va justo detrás. */
+    h = h.replace(/<link rel="manifest" href="[^"]*">\r?\n?/g, "");
+    h = h.replace(/<link rel="apple-touch-icon"[^>]*>/,
+      '<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">\n'
+      + '<link rel="manifest" href="/site.webmanifest">');
+
     /* 1. Las palabras clave. No posicionan —está dicho arriba— pero es donde
           queda por escrito de qué va cada página, y algún buscador menor las
           lee. */

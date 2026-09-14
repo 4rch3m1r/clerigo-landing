@@ -1,0 +1,15 @@
+{
+  "name": "Clèrigo XGRC",
+  "short_name": "Clèrigo",
+  "description": "Unified Governance, Risk, Compliance, Cybersecurity, Audit and AI in one enterprise platform.",
+  "lang": "en",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "theme_color": "#0E0E0E",
+  "background_color": "#FFFFFF",
+  "icons": [
+    { "src": "/icono-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ]
+}

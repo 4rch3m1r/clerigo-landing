@@ -58,7 +58,13 @@ function sinPosicionamiento(html) {
     /* La cuarta, que es un `<link ... href>`. Metida en la lista de arriba no
        casaba y no se enteraba nadie: es el atributo el que cambia, no sólo el
        nombre de la etiqueta. */
-    .replace(/(<link rel="image_src" href=")[^"]*(">)/g, "$1·$2");
+    .replace(/(<link rel="image_src" href=")[^"]*(">)/g, "$1·$2")
+    /* El icono de pantalla de inicio y el manifiesto, que también los pone el
+       posicionamiento: el icono vuelve a la forma de la plantilla y el
+       manifiesto se quita. Que estén bien lo mira `seo/validar.cjs`. */
+    .replace(/<link rel="apple-touch-icon" href="\/apple-touch-icon\.png" sizes="180x180">/g,
+      '<link rel="apple-touch-icon" href="favicon.png">')
+    .replace(/[ \t]*<link rel="manifest" href="[^"]*">\r?\n?/g, "");
 }
 
 module.exports = { sinPosicionamiento };

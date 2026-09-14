@@ -90,6 +90,29 @@ comprueba("la portada oscura NO está en el mapa",
   "es la misma portada con otra piel: dos veces el mismo texto en el índice");
 
 /* ── 2. La carta a los rastreadores ─────────────────────────────────────── */
+console.log("\n── Iconos y manifiesto ─────────────────────────────────────────");
+/* Se mira el FICHERO: medidas de su cabecera y que sea OPACO —tipo de color 2,
+   RGB sin alfa—. Con transparencia, iOS pinta de negro las esquinas. */
+const icono = (f, lado) => {
+  const ruta = path.join(RAIZ, f);
+  if (!fs.existsSync(ruta)) return f + " no existe";
+  const b = fs.readFileSync(ruta);
+  if (b.readUInt32BE(16) !== lado || b.readUInt32BE(20) !== lado) return `${f} mide ${b.readUInt32BE(16)}x${b.readUInt32BE(20)}`;
+  if (b[25] !== 2) return f + " no es opaco (tipo de color " + b[25] + ")";
+  return "";
+};
+comprueba("apple-touch-icon.png mide 180x180 y es opaco", icono("apple-touch-icon.png", 180) === "",
+  icono("apple-touch-icon.png", 180));
+let manifiesto = null;
+try { manifiesto = JSON.parse(lee(path.join(RAIZ, "site.webmanifest"))); } catch { /* a null */ }
+const iconosMal = manifiesto && Array.isArray(manifiesto.icons)
+  ? manifiesto.icons.map((i) => icono(i.src.replace(/^\//, ""), Number(String(i.sizes).split("x")[0]))).filter(Boolean)
+  : ["sin icons"];
+comprueba("site.webmanifest se lee, es de Clèrigo y sus iconos existen con sus medidas",
+  manifiesto !== null && /Clèrigo/.test(manifiesto.name) && manifiesto.start_url === "/"
+  && manifiesto.icons.length > 0 && iconosMal.length === 0,
+  manifiesto ? iconosMal.join(" | ") : "no es JSON válido");
+
 console.log("\n── robots.txt ──────────────────────────────────────────────────");
 
 const fRobots = path.join(RAIZ, "robots.txt");
@@ -267,6 +290,12 @@ for (const carpeta of [CASTELLANO, INGLES]) {
     comprueba(`${p}: og:url es la canónica y no hay twitter:url que la contradiga`,
       (h.match(/<meta property="og:url" content="([^"]*)"/) || [])[1] === laCanonica
       && !/name="twitter:url"/.test(h), laCanonica);
+    /* EL ICONO DE PANTALLA DE INICIO Y EL MANIFIESTO, una vez cada uno. */
+    comprueba(`${p}: lleva el apple-touch-icon de 180 y el manifiesto`,
+      (h.match(/<link rel="apple-touch-icon"/g) || []).length === 1
+      && h.includes('<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">')
+      && (h.match(/<link rel="manifest"/g) || []).length === 1
+      && h.includes('<link rel="manifest" href="/site.webmanifest">'));
     if (slug === "index" && SITIO.paginas.index.tarjeta) {
       const texto = SITIO.paginas.index.tarjeta[idioma];
       comprueba(`${p}: el texto de la tarjeta es el de sitio.json`,

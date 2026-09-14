@@ -478,7 +478,7 @@ const esqueleto = (s) => pelado(
        entre la clara y la oscura a propósito: la oscura lleva `noindex` por
        ser la misma portada con otra piel, y dos copias del mismo texto en el
        índice del buscador se pagan. */
-    .replace(/^.*(og:|twitter:|rel="canonical"|name="description"|name="theme-color"|rel="image_src"|application\/ld\+json|name="keywords"|name="robots").*$/gm, "")
+    .replace(/^.*(og:|twitter:|rel="canonical"|name="description"|name="theme-color"|rel="image_src"|application\/ld\+json|name="keywords"|name="robots"|rel="apple-touch-icon"|rel="manifest").*$/gm, "")
     .replace(/^\s*--logo:.*$/gm, "")
     /* El bloque de ajustes de teléfono es el ÚNICO añadido de verdad, y se
        quita aquí a propósito para que el resto de la página siga comparándose

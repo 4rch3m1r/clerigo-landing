@@ -469,7 +469,10 @@ for (const p of TODAS) {
     const deEstilos = [...h.matchAll(/\burl\(\s*(['"]?)((?!https?:|\/\/|#|data:)[^'")\s]*\.(?:png|jpg|jpeg|svg|webp|ico))\1\s*\)/g)]
       .map((m) => m[2]);
     const citados = [...deAtributos, ...deEstilos];
-    const rotos = [...new Set(citados)].filter((r) => !fs.existsSync(path.resolve(base, r)));
+    /* Las que empiezan por `/` son absolutas del SITIO —el apple-touch-icon—
+       y se buscan desde la raíz, no desde la carpeta de la página. */
+    const rotos = [...new Set(citados)].filter((r) =>
+      !fs.existsSync(r.startsWith("/") ? path.join(RAIZ, r) : path.resolve(base, r)));
     comprueba(`${p}: las imágenes que cita la ${cual} existen desde donde ella vive`,
       citados.length > 0 && rotos.length === 0,
       citados.length === 0 ? "no cita ninguna" : `${rotos.length} de ${citados.length}: ${rotos.slice(0, 2).join(" ")}`);
