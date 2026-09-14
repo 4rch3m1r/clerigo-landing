@@ -50,6 +50,20 @@ const AQUI = __dirname;
 const SITIO = JSON.parse(fs.readFileSync(path.join(AQUI, "..", "sitio.json"), "utf8"));
 const BASE = SITIO.base.replace(/\/$/, "");
 
+/* ── DÓNDE SE SIRVE CADA TARJETA ──────────────────────────────────────────
+ *
+ * Las PNG, bajo `/public/og/`, que es donde llevan publicadas desde el
+ * principio: los rastreadores las tienen cacheadas por esa dirección y
+ * moverlas no arregla nada. La de la portada es JPG y va bajo `/og/`
+ * —https://clerigo.io/og/clerigo-preview.jpg—. `fuente/og/hacer.cjs` escribe
+ * cada tarjeta en las dos carpetas, así que las dos direcciones existen; ésta
+ * es la ÚNICA función que decide cuál se declara, y la usan el validador y la
+ * ficha de datos para no volver a tener dos respuestas. */
+function urlDeTarjeta(nombre) {
+  return BASE + (/\.jpe?g$/i.test(nombre) ? "/og/" : "/public/og/") + nombre;
+}
+const tipoDeTarjeta = (nombre) => (/\.jpe?g$/i.test(nombre) ? "image/jpeg" : "image/png");
+
 /* Las páginas, con su fichero y el nombre que se les da en cada idioma. Ese
    nombre es el de la miga y el del elemento de navegación: tiene que ser el
    MISMO que se ve en la barra, o Google lo trata como dato que no cuadra. */
@@ -105,6 +119,11 @@ const PAGINAS = [
    sitemap sería pedirle al buscador que indexe dos veces el mismo texto, que
    es contenido duplicado y se paga. Lleva `noindex` por eso mismo. */
 const NO_INDEXAR = ["oscuro"];
+/* `login` NO VA EN EL MAPA. `/login` y `/es/login` contestan 301 hacia
+   app.clerigo.io/login (`_redirects`), así que el sitemap estaba entregando
+   dos direcciones que no son páginas de este sitio. Sigue en `PAGINAS` porque
+   de ahí sale el enlace de navegación de la ficha de datos, que sí es real. */
+const FUERA_DEL_MAPA = ["login"];
 
 const lee = (f) => fs.readFileSync(f, "utf8");
 
@@ -125,7 +144,7 @@ function organizacion(idioma) {
        castellanas declaraban como imagen de la organización una tarjeta con el
        titular en inglés. La función ya recibía el idioma; sólo había que
        usarlo. */
-    image: BASE + "/public/og/" + SITIO.paginas.index.imagen[idioma],
+    image: urlDeTarjeta(SITIO.paginas.index.imagen[idioma]),
     email: "hello@clerigo.io",
     description: idioma === "es"
       ? "Plataforma de Gobernanza, Riesgo y Cumplimiento que unifica riesgos, cumplimiento normativo, auditoría interna, control interno, ciberseguridad y privacidad."
@@ -368,15 +387,43 @@ for (const carpeta of [CASTELLANO, INGLES]) {
      * un poco más abajo con esta misma dirección. */
     const deLaPortada = SITIO.paginas.index;
     const cual = (SITIO.paginas[p.slug] || deLaPortada).imagen[idioma];
-    const imagen = BASE + "/public/og/" + cual;
+    const imagen = urlDeTarjeta(cual);
     for (const et of ["og:image", "og:image:secure_url"]) {
       h = h.replace(new RegExp('<meta property="' + et + '" content="[^"]*">'),
         '<meta property="' + et + '" content="' + imagen + '">');
     }
+    /* Y su tipo, que tiene que casar con el fichero: la de la portada es JPG
+       y la etiqueta decía `image/png`. */
+    h = h.replace(/<meta property="og:image:type" content="[^"]*">/,
+      '<meta property="og:image:type" content="' + tipoDeTarjeta(cual) + '">');
     h = h.replace(/<meta name="twitter:image" content="[^"]*">/,
       '<meta name="twitter:image" content="' + imagen + '">');
     h = h.replace(/<link rel="image_src" href="[^"]*">/,
       '<link rel="image_src" href="' + imagen + '">');
+
+    /* EL TEXTO DE LA TARJETA DE LA PORTADA, si `sitio.json` lo declara. Sólo
+       las etiquetas de la tarjeta: el <title> y la meta description se quedan
+       como están, que son las del buscador. `meta()` reemplaza en su sitio,
+       así que no se mueve ninguna línea. */
+    const texto = p.slug === "index" && SITIO.paginas.index.tarjeta
+      ? SITIO.paginas.index.tarjeta[idioma] : null;
+    if (texto) {
+      h = meta(h, "og:title", "property", texto.titulo);
+      h = meta(h, "og:description", "property", texto.descripcion);
+      h = meta(h, "og:image:alt", "property", texto.alt);
+      h = meta(h, "twitter:title", "name", texto.titulo);
+      h = meta(h, "twitter:description", "name", texto.descripcion);
+      h = meta(h, "twitter:image:alt", "name", texto.alt);
+    }
+
+    /* FUERA `twitter:url`. No es una etiqueta de las tarjetas de X —X usa la
+       dirección que se comparte— y no la escribe ningún generador de
+       `fuente/`: la dejó el guion viejo `scripts/build-seo.js`, congelada.
+       Medido el 2026-09-13 en producción, en 13 de las 14 páginas apuntaba a
+       la versión CASTELLANA con `.html` —la portada inglesa decía
+       `https://clerigo.io/es/`—, o sea, a otra página y a una dirección que
+       redirige, contradiciendo la canónica y `og:url`. */
+    h = h.replace(/<meta name="twitter:url" content="[^"]*">\r?\n?/g, "");
 
     /* 1. Las palabras clave. No posicionan —está dicho arriba— pero es donde
           queda por escrito de qué va cada página, y algún buscador menor las
@@ -445,4 +492,4 @@ console.log(`  base: ${BASE}\n`);
 
 if (require.main === module) aplicar();
 
-module.exports = { PAGINAS, NO_INDEXAR, BASE, aplicar };
+module.exports = { PAGINAS, NO_INDEXAR, FUERA_DEL_MAPA, BASE, urlDeTarjeta, tipoDeTarjeta, aplicar };

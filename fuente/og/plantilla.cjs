@@ -44,7 +44,97 @@ function pintaTitular(lineas) {
     .join("")).join("<br>");
 }
 
+/**
+ * LA VARIANTE «marca»: la tarjeta de la marca, sin captura.
+ *
+ * Es la que se ve al compartir la portada. Una captura del sistema reducida al
+ * tamaño de un sello en un chat se lee como ruido; lo que se reconoce a ese
+ * tamaño es el logotipo, el nombre y una frase grande. Por eso aquí no hay
+ * bajada ni tira de normas en letra de 12 px: el texto más pequeño son los
+ * rótulos de las seis áreas, a 23 px.
+ *
+ * Mismo sistema que las otras dos: retícula, filo rojo, tokens y logotipo real.
+ * El logotipo es un PNG de 160 px y no hay vector, así que no pasa de 88 px.
+ */
+function plantillaMarca(t) {
+  return `<!DOCTYPE html>
+<html lang="${t.idioma}">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;900&family=Source+Code+Pro:wght@600&display=swap" rel="stylesheet">
+<style>
+:root {${TOKENS}}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1200px; height: 630px; }
+body {
+  font-family: "Source Sans 3", -apple-system, "Segoe UI", sans-serif;
+  background: var(--blanco); color: var(--tinta);
+  position: relative; overflow: hidden; -webkit-font-smoothing: antialiased;
+}
+.reticula {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(14,14,14,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14,14,14,0.035) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(120% 100% at 10% 15%, #000 0%, transparent 75%);
+          mask-image: radial-gradient(120% 100% at 10% 15%, #000 0%, transparent 75%);
+}
+.filo { position: absolute; left: 0; top: 0; bottom: 0; width: 14px; background: var(--red); }
+.hoja {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 700px;
+  padding: 64px 0 58px 92px; display: flex; flex-direction: column;
+}
+.marca { display: flex; align-items: center; gap: 20px; }
+.marca img { width: 88px; height: 88px; display: block; border-radius: 20px; }
+.marca .nombre { font-size: 58px; font-weight: 700; letter-spacing: -1.2px; line-height: 1; }
+.marca .sub {
+  font-family: "Source Code Pro", monospace; font-size: 20px; font-weight: 600;
+  letter-spacing: 3px; color: var(--tinta-3); line-height: 1; margin-left: -4px; margin-top: 14px;
+}
+h1 {
+  margin-top: auto; margin-bottom: auto;
+  font-weight: 900; font-size: 64px; line-height: 1.06; letter-spacing: -1.9px;
+}
+h1 .subrayado { position: relative; white-space: nowrap; }
+h1 .subrayado::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 2px; height: 7px; background: var(--red);
+}
+.dominio { font-size: 32px; font-weight: 700; letter-spacing: -0.4px; }
+.dominio b { color: var(--red); }
+.areas {
+  position: absolute; right: 72px; top: 50%; transform: translateY(-50%);
+  width: 390px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+.area {
+  height: 118px; background: var(--blanco);
+  border: 1px solid var(--borde); border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(14,14,14,0.07);
+  padding: 20px 20px; display: flex; flex-direction: column; justify-content: space-between;
+}
+.area i { display: block; width: 26px; height: 6px; border-radius: 3px; background: var(--red); }
+.area span { font-size: 23px; font-weight: 700; letter-spacing: -0.3px; line-height: 1.1; }
+</style>
+</head>
+<body>
+  <div class="reticula"></div>
+  <div class="filo"></div>
+  <div class="hoja">
+    <div class="marca">
+      <img src="logo.png" alt="">
+      <div class="nombre">Cl&egrave;rigo</div>
+      <div class="sub">XGRC</div>
+    </div>
+    <h1>${pintaTitular(t.titular)}</h1>
+    <div class="dominio">clerigo<b>.io</b></div>
+  </div>
+  <div class="areas">${t.areas.map((a) => `<div class="area"><i></i><span>${escapa(a)}</span></div>`).join("")}</div>
+</body>
+</html>`;
+}
+
 function plantilla(t) {
+  if (t.variante === "marca") return plantillaMarca(t);
   const conVentana = t.variante === "producto";
   return `<!DOCTYPE html>
 <html lang="${t.idioma}">

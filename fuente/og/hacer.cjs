@@ -120,7 +120,13 @@ const dormir = (ms) => new Promise((r) => setTimeout(r, ms));
     });
     await dormir(500);
 
-    const r = await pedir("Page.captureScreenshot", { format: "png", captureBeyondViewport: false });
+    /* JPG cuando el fichero lo pide: la tarjeta de la portada va en JPG, a
+       calidad 90, que a 1200x630 sobre fondo claro deja bordes limpios y pesa
+       una fracción del PNG. */
+    const jpg = /\.jpe?g$/i.test(t.fichero);
+    const r = await pedir("Page.captureScreenshot", jpg
+      ? { format: "jpeg", quality: 90, captureBeyondViewport: false }
+      : { format: "png", captureBeyondViewport: false });
     const bytes = Buffer.from(r.data, "base64");
     for (const d of DESTINOS) {
       const f = path.join(RAIZ, d, t.fichero);

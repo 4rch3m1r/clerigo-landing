@@ -57,7 +57,26 @@
   "paginas": {
     "index": {
       "fichero": "",
-      "imagen": { "en": "clerigo-og.png", "es": "clerigo-og-es.png" }
+      "imagen": { "en": "clerigo-preview.jpg", "es": "clerigo-preview-es.jpg" },
+      "_tarjeta": [
+        "El texto de la TARJETA de la portada —og:title, og:description y los de",
+        "Twitter—, que ya no es el del <title> ni el de la meta description. Esos",
+        "dos son para el buscador y no se tocan; la tarjeta es lo que se lee en un",
+        "chat. Lo escribe fuente/seo/posicionar.cjs, el ultimo paso, asi que",
+        "regenerar la portada desde el original no lo puede deshacer."
+      ],
+      "tarjeta": {
+        "en": {
+          "titulo": "Clèrigo XGRC — Intelligent Governance, Risk & Compliance",
+          "descripcion": "Unified Governance, Risk, Compliance, Cybersecurity, Audit and AI in one enterprise platform.",
+          "alt": "Clèrigo XGRC"
+        },
+        "es": {
+          "titulo": "Clèrigo XGRC — Gobernanza, Riesgo y Cumplimiento Inteligentes",
+          "descripcion": "Gobernanza, riesgo, cumplimiento, ciberseguridad, auditoría e IA unificados en una sola plataforma empresarial.",
+          "alt": "Clèrigo XGRC"
+        }
+      }
     },
     "legal": {
       "fichero": "legal",

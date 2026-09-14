@@ -16,7 +16,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { PALABRAS } = require("./vocabulario.cjs");
-const { PAGINAS, NO_INDEXAR, BASE } = require("./posicionar.cjs");
+const { PAGINAS, NO_INDEXAR, FUERA_DEL_MAPA, BASE, urlDeTarjeta, tipoDeTarjeta } = require("./posicionar.cjs");
 const { CASTELLANO, INGLES } = require("../donde.cjs");
 /* Qué tarjeta le toca a cada página en cada idioma, y en qué idioma la
    declara el catálogo que las dibuja. Las dos cosas salen de su fichero: la
@@ -48,7 +48,7 @@ comprueba("sitemap.xml existe", fs.existsSync(fMapa));
 const mapa = fs.existsSync(fMapa) ? lee(fMapa) : "";
 const direcciones = [...mapa.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
 
-const indexables = PAGINAS.filter((p) => !NO_INDEXAR.includes(p.slug));
+const indexables = PAGINAS.filter((p) => !NO_INDEXAR.includes(p.slug) && !FUERA_DEL_MAPA.includes(p.slug));
 comprueba("una entrada por página y por idioma",
   direcciones.length === indexables.length * 2,
   `${direcciones.length} direcciones, esperaba ${indexables.length * 2}`);
@@ -234,7 +234,7 @@ for (const carpeta of [CASTELLANO, INGLES]) {
      *     el fallo no era que faltara un fichero, era que el fichero estaba
      *     en el otro idioma. */
     const suya = (SITIO.paginas[slug] || SITIO.paginas.index).imagen[idioma];
-    const esperada = BASE + "/public/og/" + suya;
+    const esperada = urlDeTarjeta(suya);
     /* LAS CUATRO, no tres. La cuarta va como enlace —rel="image_src", con
        href— y no como etiqueta meta con content, y por eso se me pasó al
        arreglar las otras: las tres quedaron bien y la cuarta seguía apuntando a
@@ -250,6 +250,31 @@ for (const carpeta of [CASTELLANO, INGLES]) {
     comprueba(`${p}: la tarjeta que se comparte es la de su idioma`,
       puestas.every((u) => u === esperada),
       "debería ser " + suya + " y pone " + puestas.map((u) => String(u).split("/").pop()).join(" / "));
+    /* EL TIPO DE LA IMAGEN CASA CON EL FICHERO. La portada pasó a JPG; una
+       etiqueta que sigue diciendo `image/png` es una contradicción más. */
+    const tipo = (h.match(/<meta property="og:image:type" content="([^"]*)"/) || [])[1];
+    comprueba(`${p}: og:image:type es el del fichero`, tipo === tipoDeTarjeta(suya),
+      "dice «" + tipo + "» y el fichero es " + suya);
+    /* UNA SOLA DE CADA Y SIN CONTRADICCIONES. `twitter:url` apuntaba a la
+       página castellana en trece de catorce; `og:url` tiene que ser la canónica. */
+    const repetidas = ["og:title", "og:description", "og:image", "og:url", "og:type", "og:site_name",
+      "og:image:width", "og:image:height", "og:image:alt", "twitter:card", "twitter:title",
+      "twitter:description", "twitter:image", "twitter:image:alt"]
+      .filter((et) => (h.match(new RegExp(`(?:name|property)="${et}" content=`, "g")) || []).length !== 1);
+    comprueba(`${p}: cada etiqueta de la tarjeta está una vez y sólo una`, repetidas.length === 0,
+      repetidas.join(", "));
+    const laCanonica = (h.match(/<link rel="canonical" href="([^"]*)"/) || [])[1];
+    comprueba(`${p}: og:url es la canónica y no hay twitter:url que la contradiga`,
+      (h.match(/<meta property="og:url" content="([^"]*)"/) || [])[1] === laCanonica
+      && !/name="twitter:url"/.test(h), laCanonica);
+    if (slug === "index" && SITIO.paginas.index.tarjeta) {
+      const texto = SITIO.paginas.index.tarjeta[idioma];
+      comprueba(`${p}: el texto de la tarjeta es el de sitio.json`,
+        h.includes(`<meta property="og:title" content="${texto.titulo}">`)
+        && h.includes(`<meta name="twitter:title" content="${texto.titulo}">`)
+        && h.includes(`<meta property="og:description" content="${texto.descripcion}">`)
+        && h.includes(`<meta name="twitter:description" content="${texto.descripcion}">`));
+    }
     comprueba(`${p}: y el catálogo la declara en ese idioma`,
       IDIOMA_DE_LA_TARJETA[suya] === idioma,
       suya + " está declarada como «" + IDIOMA_DE_LA_TARJETA[suya] + "» y la página es «" + idioma + "»");
@@ -267,7 +292,7 @@ for (const carpeta of [CASTELLANO, INGLES]) {
         if (org) deLaOrganizacion = org.image;
       } catch (e) { /* que la ficha se pueda leer lo vigila otra comprobación */ }
     }
-    const deLaPortada = BASE + "/public/og/" + SITIO.paginas.index.imagen[idioma];
+    const deLaPortada = urlDeTarjeta(SITIO.paginas.index.imagen[idioma]);
     comprueba(`${p}: y la ficha de la organización lleva la tarjeta de ese idioma`,
       deLaOrganizacion === deLaPortada,
       "debería ser " + deLaPortada.split("/").pop() + " y pone " + String(deLaOrganizacion).split("/").pop());

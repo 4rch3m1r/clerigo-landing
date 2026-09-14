@@ -10,6 +10,27 @@ const { pelado, restosDeTemaOscuro, EXCEPCIONES, sinLasMaquetas, sinLaTiraDeInte
 /* Donde vive el sitio: de aqui salen las direcciones absolutas de la cabecera. */
 const SITIO = JSON.parse(fs.readFileSync(require("node:path").join(__dirname, "sitio.json"), "utf8"));
 
+/* Las medidas de una imagen, leídas de su cabecera: el IHDR de un PNG, o el
+   primer marcador SOF de un JPG —la tarjeta de la portada es JPG—. `null` si
+   no es ninguna de las dos. */
+function medidasDeImagen(b) {
+  if (b.length > 24 && b[0] === 0x89 && b.toString("latin1", 1, 4) === "PNG") {
+    return { w: b.readUInt32BE(16), h: b.readUInt32BE(20), tipo: "image/png" };
+  }
+  if (b.length > 4 && b[0] === 0xFF && b[1] === 0xD8) {
+    let i = 2;
+    while (i + 9 < b.length) {
+      if (b[i] !== 0xFF) { i++; continue; }
+      const marca = b[i + 1];
+      if (marca >= 0xC0 && marca <= 0xCF && ![0xC4, 0xC8, 0xCC].includes(marca)) {
+        return { w: b.readUInt16BE(i + 7), h: b.readUInt16BE(i + 5), tipo: "image/jpeg" };
+      }
+      i += 2 + b.readUInt16BE(i + 2);
+    }
+  }
+  return null;
+}
+
 /* El original de Archemir no viaja en el repositorio —es público y ese fichero
    lleva su marca—. Sin él no se puede comparar contra la fuente, así que se
    dice claro en vez de morir leyendo un fichero que no existe. */
@@ -157,7 +178,7 @@ for (const [n, tConSelector] of [["oscuro", osc], ["claro", cla]]) {
   comprueba(`las etiquetas de la tarjeta están completas en el ${n}`,
     /og:image:width" content="1200"/.test(t)
     && /og:image:height" content="630"/.test(t)
-    && /og:image:type" content="image\/png"/.test(t)
+    && /og:image:type" content="image\/(png|jpeg)"/.test(t)
     && /og:image:alt"/.test(t)
     && /twitter:card" content="summary_large_image"/.test(t)
     && /twitter:image:alt"/.test(t)
@@ -177,17 +198,12 @@ for (const [n, tConSelector] of [["oscuro", osc], ["claro", cla]]) {
   };
   const png = laTarjeta.startsWith(SITIO.base + "/")
     ? require("node:path").join(RAIZ, laTarjeta.slice(SITIO.base.length + 1)) : "";
-  let real = null;
-  if (png && fs.existsSync(png)) {
-    const b = fs.readFileSync(png);
-    if (b.length > 24 && b[0] === 0x89 && b.toString("latin1", 1, 4) === "PNG") {
-      real = { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
-    }
-  }
-  comprueba(`y la imagen mide de verdad lo que declara, en el ${n}`,
-    real !== null && real.w === decl.w && real.h === decl.h,
+  const real = png && fs.existsSync(png) ? medidasDeImagen(fs.readFileSync(png)) : null;
+  const tipoDeclarado = (t.match(/og:image:type" content="([^"]*)"/) || [])[1];
+  comprueba(`y la imagen mide de verdad lo que declara, y es del tipo que declara, en el ${n}`,
+    real !== null && real.w === decl.w && real.h === decl.h && real.tipo === tipoDeclarado,
     real === null ? "no he podido leer la imagen «" + laTarjeta + "»"
-      : `declara ${decl.w}x${decl.h} y el fichero mide ${real.w}x${real.h}`);
+      : `declara ${decl.w}x${decl.h} ${tipoDeclarado} y el fichero es ${real.w}x${real.h} ${real.tipo}`);
   comprueba(`y están arriba del todo, donde las lee WhatsApp, en el ${n}`,
     t.indexOf('property="og:image"') > 0 && t.indexOf('property="og:image"') < 1536,
     "og:image aparece en el byte " + t.indexOf('property="og:image"'));
@@ -255,13 +271,12 @@ comprueba("y en el original el rótulo decía «Nuestras Certificaciones»",
   for (const c of cartas) {
     const f = require("node:path").join(RAIZ, "public", "og", c);
     if (!fs.existsSync(f)) { malas.push(c + " no está"); continue; }
-    const cab = Buffer.alloc(24);
-    const fd = fs.openSync(f, "r");
-    fs.readSync(fd, cab, 0, 24, 0);
-    fs.closeSync(fd);
+    /* Y en `og/`, que es de donde se sirven las JPG. */
+    if (!fs.existsSync(require("node:path").join(RAIZ, "og", c))) { malas.push(c + " no está en og/"); continue; }
+    const med = medidasDeImagen(fs.readFileSync(f)) || { w: 0, h: 0 };
     const kb = Math.round(fs.statSync(f).size / 1024);
-    if (cab.readUInt32BE(16) !== 1200 || cab.readUInt32BE(20) !== 630 || kb >= 300) {
-      malas.push(`${c}: ${cab.readUInt32BE(16)} × ${cab.readUInt32BE(20)}, ${kb} KB`);
+    if (med.w !== 1200 || med.h !== 630 || kb >= 300) {
+      malas.push(`${c}: ${med.w} × ${med.h}, ${kb} KB`);
     }
   }
   /* EL NÚMERO SE CUENTA, NO SE ESCRIBE. Este rótulo decía «las 6 tarjetas» y

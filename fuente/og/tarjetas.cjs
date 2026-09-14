@@ -47,6 +47,29 @@ const SEGURIDAD_EN = ["AES-256", "ZERO TRUST", "TENANT ISOLATION", "AUDIT TRAIL"
 const SEGURIDAD_ES = ["AES-256", "ZERO TRUST", "AISLAMIENTO POR ORGANIZACIÓN", "BITÁCORA"];
 
 module.exports = [
+  /* ── LA TARJETA DE LA PORTADA, la que se ve al compartir clerigo.io ──────
+   *
+   * En JPG y bajo `/og/` —https://clerigo.io/og/clerigo-preview.jpg—, no bajo
+   * `/public/og/` como las PNG. Las PNG no se mueven: están cacheadas por los
+   * rastreadores y cambiarles la dirección no arregla nada. Quién decide la
+   * carpeta por la extensión es `urlDeTarjeta()` en `seo/posicionar.cjs`.
+   *
+   * Sin captura: reducida a un sello en un chat, una captura del sistema es
+   * ruido. El texto es el de `og:title`, en grande, y las seis áreas de
+   * `og:description`. Las dos PNG de la portada de abajo se quedan servidas
+   * —hay enlaces compartidos que las citan— pero ya no las declara ninguna
+   * página. */
+  {
+    fichero: "clerigo-preview.jpg", idioma: "en", variante: "marca",
+    titular: ["Intelligent", "Governance, Risk", "& @Compliance@"],
+    areas: ["Governance", "Risk", "Compliance", "Cybersecurity", "Audit", "AI"],
+  },
+  {
+    fichero: "clerigo-preview-es.jpg", idioma: "es", variante: "marca",
+    titular: ["Gobernanza,", "Riesgo y", "@Cumplimiento@"],
+    areas: ["Gobernanza", "Riesgo", "Cumplimiento", "Ciberseguridad", "Auditoría", "IA"],
+  },
+
   /* ── La portada. La tarjeta que más se comparte, con diferencia. ────── */
   {
     fichero: "clerigo-og.png", idioma: "en", variante: "producto",

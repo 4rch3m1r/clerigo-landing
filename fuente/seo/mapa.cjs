@@ -33,7 +33,7 @@
  */
 const fs = require("node:fs");
 const path = require("node:path");
-const { PAGINAS, NO_INDEXAR, BASE } = require("./posicionar.cjs");
+const { PAGINAS, NO_INDEXAR, FUERA_DEL_MAPA, BASE } = require("./posicionar.cjs");
 const { CASTELLANO, INGLES } = require("../donde.cjs");
 
 const RAIZ = path.join(__dirname, "..", "..");
@@ -49,7 +49,7 @@ function cuandoSeTocó(f) {
 
 const entradas = [];
 for (const p of PAGINAS) {
-  if (NO_INDEXAR.includes(p.slug)) continue;
+  if (NO_INDEXAR.includes(p.slug) || FUERA_DEL_MAPA.includes(p.slug)) continue;
   /* La ruta pública va sin extensión —Cloudflare sirve /marcos y redirige
      desde /marcos.html—, pero para leer la FECHA hay que abrir el fichero de
      verdad, que sí la tiene. Son dos cosas distintas y por eso van separadas. */
