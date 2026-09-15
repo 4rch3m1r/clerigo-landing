@@ -102,6 +102,9 @@ const portada = leer(path.join(CASTELLANO, "index.html"));
 comprueba("la barra estrecha sus espacios de 769 a 1320 px para que el botón no parta los enlaces, y a 1320 vale lo de siempre",
   /@media \(min-width:769px\) and \(max-width:1320px\)\{nav\{gap:clamp\(16px,calc\(16px \+ \(100vw - 1000px\) \* \.075\),40px\)/.test(portada) &&
   (16 + 320 * 0.075 === 40) && (24 + 320 * 0.075 === 48) && (16 + 320 * 0.0375 === 28) && (8 + 320 * 0.0125 === 12));
+comprueba("en móvil la barra no parte «log in» ni se sale: botones sin partir y espacios estrechos por debajo de 768 px",
+  /@media \(max-width:768px\)\{nav\{gap:12px\}\.nav-cta\{gap:8px\}\.tema-toggle\{margin-left:0;width:32px;height:32px\}\.nav-cta \.btn-ghost,\.nav-cta \.btn-primary,\.nav-logo-text\{white-space:nowrap\}\}/.test(portada) &&
+  /@media \(max-width:389px\)\{\.nav-logo-text small\{display:none\}\}/.test(portada));
 comprueba("portada: las medallas toman los colores de la portada oscura (nada de tinta aclarada sobre el oro)",
   !/oscuro"\] \.award-(num|er|lugar|tape-text)\{/.test(portada) &&
   /oscuro"\] \.award-firm-name\{color:#F5D020\}/.test(portada));
