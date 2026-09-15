@@ -442,7 +442,7 @@ nav, footer {
   --border-light: rgba(255,255,255,0.12);
   --text: #F0F0F0;
   --text-2: rgba(240,240,240,0.65);
-  --text-3: rgba(240,240,240,0.35);
+  --text-3: rgba(240,240,240,0.55);
 }
 nav { background: rgba(14,14,14,0.85); }
 footer { background: #0E0E0E; }
