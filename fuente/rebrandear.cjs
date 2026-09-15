@@ -1056,7 +1056,7 @@ cambia(
   position: relative; overflow: hidden;
   flex: 0 0 auto; cursor: pointer;
   font-size: 11px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase;
-  color: var(--text-3); background: transparent;
+  color: var(--text-2); background: transparent;
   border: 1px solid var(--border); border-radius: 999px;
   padding: 7px 14px;
   transition: color .2s, border-color .2s, background .2s;
@@ -1238,7 +1238,7 @@ cambia(
   }, true);
 
   function centraLaTira() {
-    if (!franja || !tiras[cual]) return;
+    if (arrancando || !franja || !tiras[cual]) return;
     var t = tiras[cual];
     var destino = t.offsetLeft - (franja.clientWidth - t.offsetWidth) / 2;
     var tope = franja.scrollWidth - franja.clientWidth;
@@ -1369,7 +1369,12 @@ cambia(
     x0 = null;
   });
 
+  /* AL ABRIR NO SE CENTRA LA TIRA. Está en la primera lámina, que ya es su
+     sitio, y medirla obligaba al navegador a maquetar la página entera antes
+     de pintarla: 280 ms de primera pintura en un teléfono (Lighthouse). */
+  var arrancando = true;
   pinta();
+  arrancando = false;
   enMarcha();
 })();
 </script>

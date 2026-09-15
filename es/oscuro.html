@@ -39,7 +39,7 @@
 <link rel="dns-prefetch" href="https://app.clerigo.io">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300;1,400&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300;1,400&family=Source+Code+Pro:wght@400;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" data-fuente-diferida><noscript><link rel="preload" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300;1,400&family=Source+Code+Pro:wght@400;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" data-fuente-diferida><noscript><link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300;1,400&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet"></noscript></noscript>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://clerigo.io/#organizacion","name":"Clèrigo","alternateName":"Clerigo","url":"https://clerigo.io/","logo":{"@type":"ImageObject","url":"https://clerigo.io/icono-512.png","width":512,"height":512},"image":"https://clerigo.io/og/clerigo-preview-es.jpg","email":"hello@clerigo.io","contactPoint":[{"@type":"ContactPoint","contactType":"sales","email":"hello@clerigo.io","availableLanguage":["es","en"]},{"@type":"ContactPoint","contactType":"customer support","email":"hello@clerigo.io","availableLanguage":["es","en"]}],"address":{"@type":"PostalAddress","addressLocality":"Santo Domingo","addressCountry":"DO"},"description":"Plataforma de Gobernanza, Riesgo y Cumplimiento que unifica riesgos, cumplimiento normativo, auditoría interna, control interno, ciberseguridad y privacidad.","knowsAbout":["Gobierno, riesgo y cumplimiento (GRC)","Gestión de riesgos","Cumplimiento normativo","Auditoría interna","Control interno","Ciberseguridad","Privacidad y protección de datos","Continuidad del negocio","Riesgo de terceros","ISO 27001","NIST CSF","COSO ERM"],"areaServed":["República Dominicana","Latinoamérica"],"sameAs":["https://www.linkedin.com/company/clerigo"]},{"@type":"WebSite","@id":"https://clerigo.io/#sitio","name":"Clèrigo","alternateName":["Clerigo","clerigo.io"],"url":"https://clerigo.io/","inLanguage":"es","publisher":{"@id":"https://clerigo.io/#organizacion"}},{"@type":"WebPage","@id":"https://clerigo.io/es/#pagina","name":"Clèrigo | Software GRC (Modo Oscuro)","description":"Software GRC integral de Gobernanza, Riesgo y Cumplimiento: riesgos, auditoría interna, control interno, ciberseguridad y privacidad en un solo entorno.","url":"https://clerigo.io/es/","inLanguage":"es","isPartOf":{"@id":"https://clerigo.io/#sitio"},"about":{"@id":"https://clerigo.io/#producto"},"primaryImageOfPage":{"@type":"ImageObject","url":"https://clerigo.io/og/clerigo-preview-es.jpg"},"breadcrumb":{"@id":"https://clerigo.io/es/#migas"}},{"@type":"BreadcrumbList","@id":"https://clerigo.io/es/#migas","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://clerigo.io/es/"},{"@type":"ListItem","position":2,"name":"","item":"https://clerigo.io/es/"}]},{"@type":"SiteNavigationElement","name":"Marcos","url":"https://clerigo.io/es/marcos"},{"@type":"SiteNavigationElement","name":"Centro de Confianza","url":"https://clerigo.io/es/confianza"},{"@type":"SiteNavigationElement","name":"Planes","url":"https://clerigo.io/es/precios"},{"@type":"SiteNavigationElement","name":"Contacto","url":"https://clerigo.io/es/contacto"},{"@type":"SiteNavigationElement","name":"Iniciar Sesión","url":"https://app.clerigo.io/login"}]}</script>
 <style>
 /* ── TOKENS ── */
@@ -259,7 +259,7 @@ section { position: relative; }
   display: flex; align-items: center; padding: 0 14px; gap: 6px;
 }
 .preview-dot { width: 10px; height: 10px; border-radius: 50%; }
-.preview-title { font-size: 11px; color: var(--text-3); margin-left: 8px; font-family: 'Source Code Pro', monospace; }
+.preview-title { font-size: 11px; color: var(--text-2); margin-left: 8px; font-family: 'Source Code Pro', monospace; }
 .preview-body { display: grid; grid-template-columns: 180px 1fr; }
 .preview-sidebar { background: #141414; border-right: 1px solid var(--border); padding: 12px 0; }
 .preview-nav-item {
@@ -657,7 +657,7 @@ footer {
   display: grid; grid-template-columns: 220px 1fr; gap: 60px;
   max-width: 1160px; margin: 0 auto; padding: 0 48px;
 }
-.footer-brand .brand-desc { font-size: 13px; color: var(--text-3); line-height: 1.7; margin-top: 12px; }
+.footer-brand .brand-desc { font-size: 13px; color: var(--text-2); line-height: 1.7; margin-top: 12px; }
 .footer-links { display: grid; grid-template-columns: repeat(4,1fr); gap: 32px; }
 .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-3); margin-bottom: 14px; }
 .footer-col a {
@@ -1637,7 +1637,7 @@ footer {
   position: relative; overflow: hidden;
   flex: 0 0 auto; cursor: pointer;
   font-size: 11px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase;
-  color: var(--text-3); background: transparent;
+  color: var(--text-2); background: transparent;
   border: 1px solid var(--border); border-radius: 999px;
   padding: 7px 14px;
   transition: color .2s, border-color .2s, background .2s;
@@ -2918,7 +2918,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
 
       <!-- ── PCI-DSS ── -->
       <a href="https://www.pcisecuritystandards.org/" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal" title="PCI Security Standards Council - PCI-DSS">
-        <img src="../public/pci-dss.svg" width="88" height="42" alt="PCI Security Standards Council · PCI-DSS" style="object-fit:contain;display:block;">
+        <img loading="lazy" decoding="async" data-diferida src="../public/pci-dss.svg" width="88" height="42" alt="PCI Security Standards Council · PCI-DSS" style="object-fit:contain;display:block;">
         <span class="fw-logo-label">PCI-DSS</span>
       </a>
 
@@ -2949,43 +2949,43 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
 
       <!-- ── HIPAA ── -->
       <a href="https://www.hhs.gov/hipaa/index.html" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-3" title="HIPAA - Ley de Responsabilidad y Portabilidad del Seguro Médico">
-        <img src="../public/hipaa.svg" width="88" height="42" alt="HIPAA · Health Insurance Portability and Accountability Act" style="object-fit:contain;display:block;">
+        <img loading="lazy" decoding="async" data-diferida src="../public/hipaa.svg" width="88" height="42" alt="HIPAA · Health Insurance Portability and Accountability Act" style="object-fit:contain;display:block;">
         <span class="fw-logo-label">HIPAA</span>
       </a>
 
       <!-- ── SWIFT CSP ── -->
       <a href="https://www.swift.com/myswift/customer-security-programme-csp" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-4" title="SWIFT - Programa de Seguridad del Cliente (CSP)">
-        <img src="../public/swift.svg" width="88" height="42" alt="SWIFT CSP · Customer Security Programme" style="object-fit:contain;display:block;">
+        <img loading="lazy" decoding="async" data-diferida src="../public/swift.svg" width="88" height="42" alt="SWIFT CSP · Customer Security Programme" style="object-fit:contain;display:block;">
         <span class="fw-logo-label">SWIFT CSP</span>
       </a>
 
       <!-- ── COBIT ── -->
       <a href="https://www.isaca.org/resources/cobit" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-5" title="COBIT 2019 - ISACA">
-        <img src="../public/cobit.svg" width="88" height="42" alt="COBIT 2019 · ISACA Framework" style="object-fit:contain;display:block;">
+        <img loading="lazy" decoding="async" data-diferida src="../public/cobit.svg" width="88" height="42" alt="COBIT 2019 · ISACA Framework" style="object-fit:contain;display:block;">
         <span class="fw-logo-label">COBIT 2019</span>
       </a>
 
       <!-- ── COSO ── -->
       <a href="https://www.coso.org/" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal" title="COSO - Marco de Control Interno y Gestión de Riesgos">
-        <img src="../public/coso.svg" width="88" height="42" alt="COSO ERM · Internal Control Framework" style="object-fit:contain;display:block;">
+        <img loading="lazy" decoding="async" data-diferida src="../public/coso.svg" width="88" height="42" alt="COSO ERM · Internal Control Framework" style="object-fit:contain;display:block;">
         <span class="fw-logo-label">COSO ERM</span>
       </a>
 
       <!-- ── ITIL 4 ── -->
       <a href="https://www.peoplecert.org/ways-to-certify/itil-framework" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-2" title="ITIL 4 - Gestión de Servicios de TI (PeopleCert)">
-        <img src="../public/itil.svg" width="88" height="42" alt="ITIL 4 · AXELOS / PeopleCert" style="object-fit:contain;display:block;">
+        <img loading="lazy" decoding="async" data-diferida src="../public/itil.svg" width="88" height="42" alt="ITIL 4 · AXELOS / PeopleCert" style="object-fit:contain;display:block;">
         <span class="fw-logo-label">ITIL 4</span>
       </a>
 
       <!-- ── NORTIC ── -->
       <a href="https://nortic.ogtic.gob.do/" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-3" title="NORTIC - Normas Técnicas OGTIC República Dominicana">
-        <img src="../public/ogtic.png" width="48" height="48" alt="NORTIC · OGTIC" style="object-fit:contain;margin-bottom:6px;display:block;">
+        <img loading="lazy" decoding="async" data-diferida src="../public/ogtic.png" width="48" height="48" alt="NORTIC · OGTIC" style="object-fit:contain;margin-bottom:6px;display:block;">
         <span class="fw-logo-label">NORTIC</span>
       </a>
 
       <!-- ── BCRD ── wide card -->
       <a href="https://www.bancentral.gov.do/" target="_blank" rel="noopener noreferrer" class="fw-logo-card fw-wide reveal reveal-4" title="Banco Central de la República Dominicana">
-        <img src="../public/bcrd.png" width="48" height="48" alt="Banco Central de la República Dominicana" style="object-fit:contain;flex-shrink:0;display:block;">
+        <img loading="lazy" decoding="async" data-diferida src="../public/bcrd.png" width="48" height="48" alt="Banco Central de la República Dominicana" style="object-fit:contain;flex-shrink:0;display:block;">
         <div>
           <div class="fw-logo-label" style="font-size:9px;margin-bottom:3px">BCRD</div>
           <div style="font-size:9px;color:var(--text-3);line-height:1.4;font-weight:600">Reglamento de Seguridad<br>Cibernética y de la Información</div>
@@ -2994,7 +2994,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
 
       <!-- ── SIMV ── wide card -->
       <a href="https://simv.gob.do/" target="_blank" rel="noopener noreferrer" class="fw-logo-card fw-wide reveal reveal-5" title="Superintendencia del Mercado de Valores">
-        <img src="../public/simv-logo.png" width="48" height="48" alt="Superintendencia del Mercado de Valores" style="object-fit:contain;flex-shrink:0;display:block;">
+        <img loading="lazy" decoding="async" data-diferida src="../public/simv-logo.png" width="48" height="48" alt="Superintendencia del Mercado de Valores" style="object-fit:contain;flex-shrink:0;display:block;">
         <div>
           <div class="fw-logo-label" style="font-size:9px;margin-bottom:3px">SIMV</div>
           <div style="font-size:9px;color:var(--text-3);line-height:1.4;font-weight:600">Reglamento de Seguridad<br>Cibernética Mercado de Valores</div>
@@ -3027,13 +3027,13 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
 
       <!-- ── Mercado de Valores RD ── -->
       <a href="https://bvrd.com.do/" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-2" title="Bolsa y Mercados de Valores de la República Dominicana">
-        <img src="../public/bvrd-logo.png" width="56" height="38" alt="Bolsa y Mercados de Valores de la República Dominicana" style="object-fit:contain;margin-bottom:6px;display:block;">
+        <img loading="lazy" decoding="async" data-diferida src="../public/bvrd-logo.png" width="56" height="38" alt="Bolsa y Mercados de Valores de la República Dominicana" style="object-fit:contain;margin-bottom:6px;display:block;">
         <span class="fw-logo-label">Mercado de Valores RD</span>
       </a>
 
       <!-- ── Ley 172-13 ── wide card -->
       <a href="https://ogtic.gob.do/transparencia/base-legal-de-la-institucion/ley-no-172-13-sobre-proteccion-integral-de-los-datos-personales/" target="_blank" rel="noopener noreferrer" class="fw-logo-card fw-wide reveal reveal-4" title="Ley No. 172-13 de Protección Integral de Datos Personales (RD)">
-        <img src="../public/bandera-rd.svg" width="52" height="35" alt="Bandera de la República Dominicana" style="border-radius:4px;box-shadow:0 2px 6px rgba(0,0,0,0.18);border:1px solid rgba(0,0,0,0.12);flex-shrink:0;display:block;">
+        <img loading="lazy" decoding="async" data-diferida src="../public/bandera-rd.svg" width="52" height="35" alt="Bandera de la República Dominicana" style="border-radius:4px;box-shadow:0 2px 6px rgba(0,0,0,0.18);border:1px solid rgba(0,0,0,0.12);flex-shrink:0;display:block;">
         <div>
           <div class="fw-logo-label" style="font-size:10px;margin-bottom:3px;color:var(--text)">Ley 172-13</div>
           <div style="font-size:9px;color:var(--text-3);line-height:1.4;font-weight:600">Protección de Datos Personales<br>República Dominicana</div>
@@ -3090,19 +3090,19 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
 
       <!-- ── SEC ── -->
       <a href="https://www.sec.gov/" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-1" title="SEC - Comisión de Bolsa y Valores de los Estados Unidos">
-        <img src="../public/sec.svg" width="88" height="42" alt="U.S. Securities and Exchange Commission · SEC" style="object-fit:contain;display:block;">
+        <img loading="lazy" decoding="async" data-diferida src="../public/sec.svg" width="88" height="42" alt="U.S. Securities and Exchange Commission · SEC" style="object-fit:contain;display:block;">
         <span class="fw-logo-label">SEC</span>
       </a>
 
       <!-- ── FINRA ── -->
       <a href="https://www.finra.org/" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-2" title="FINRA - Autoridad Regulatoria de la Industria Financiera (EE. UU.)">
-        <img src="../public/finra.svg" width="88" height="42" alt="Financial Industry Regulatory Authority · FINRA" style="object-fit:contain;display:block;">
+        <img loading="lazy" decoding="async" data-diferida src="../public/finra.svg" width="88" height="42" alt="Financial Industry Regulatory Authority · FINRA" style="object-fit:contain;display:block;">
         <span class="fw-logo-label">FINRA</span>
       </a>
 
       <!-- ── OFAC ── -->
       <a href="https://ofac.treasury.gov/" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-3" title="OFAC - Oficina de Control de Activos Extranjeros (Departamento del Tesoro de EE. UU.)">
-        <img src="../public/ofac.svg" width="88" height="42" alt="Office of Foreign Assets Control · OFAC" style="object-fit:contain;display:block;">
+        <img loading="lazy" decoding="async" data-diferida src="../public/ofac.svg" width="88" height="42" alt="Office of Foreign Assets Control · OFAC" style="object-fit:contain;display:block;">
         <span class="fw-logo-label">OFAC</span>
       </a>
 
@@ -3114,7 +3114,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
           <circle cx="60" cy="60" r="6" fill="var(--text-3)"/>
           <circle cx="90" cy="60" r="6" fill="var(--text-3)"/>
         </svg>
-        <span class="fw-logo-label" style="color:var(--text-3)">Y más marcos</span>
+        <span class="fw-logo-label" style="color:var(--text-2)">Y más marcos</span>
       </a>
 
     </div>
@@ -3525,7 +3525,7 @@ document.querySelectorAll('.platform-frame, .preview-body').forEach(el => barObs
   }, true);
 
   function centraLaTira() {
-    if (!franja || !tiras[cual]) return;
+    if (arrancando || !franja || !tiras[cual]) return;
     var t = tiras[cual];
     var destino = t.offsetLeft - (franja.clientWidth - t.offsetWidth) / 2;
     var tope = franja.scrollWidth - franja.clientWidth;
@@ -3656,7 +3656,12 @@ document.querySelectorAll('.platform-frame, .preview-body').forEach(el => barObs
     x0 = null;
   });
 
+  /* AL ABRIR NO SE CENTRA LA TIRA. Está en la primera lámina, que ya es su
+     sitio, y medirla obligaba al navegador a maquetar la página entera antes
+     de pintarla: 280 ms de primera pintura en un teléfono (Lighthouse). */
+  var arrancando = true;
   pinta();
+  arrancando = false;
   enMarcha();
 })();
 </script>

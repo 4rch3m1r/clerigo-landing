@@ -318,7 +318,9 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
      justo trece delata las dos formas de estropearlo: quitar el `lazy` de
      todas, o ponérselo también a la primera. */
   comprueba(`el carrusel no se carga entero hasta que se baja, en el ${n}`,
-    cuenta(t, /loading="lazy"/g) === 13, cuenta(t, /loading="lazy"/g) + " con carga diferida");
+    /* Sin contar los logotipos que difiere `seo/rapido.cjs`: no son del carrusel. */
+    cuenta(t, /loading="lazy"(?! decoding="async" data-diferida)/g) === 13,
+    cuenta(t, /loading="lazy"(?! decoding="async" data-diferida)/g) + " con carga diferida");
   /* El `(?:\.\.\/)?` no es cosmético: sin él, en la castellana —que cita las
      imágenes con `../`— las dos cuentas daban CERO y la comprobación pasaba por
      vacío. Una guarda que compara cero con cero no mira nada, y esta lleva

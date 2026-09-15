@@ -42,7 +42,9 @@
 
 /** La página sin nada de lo que puso el posicionamiento. */
 function sinPosicionamiento(html) {
-  return html
+  /* Lo de `rapido.cjs` —las fuentes diferidas y los logotipos perezosos—
+     también lo pone el posicionamiento. */
+  return require("./rapido.cjs").sinAcelerar(html)
     .replace(/[ \t]*<meta name="keywords" content="[^"]*">\n?/g, "")
     .replace(/[ \t]*<meta name="robots" content="[^"]*">\n?/g, "")
     .replace(/[ \t]*<meta property="og:locale:alternate" content="[^"]*">\n?/g, "")
