@@ -101,6 +101,16 @@ export default {
 
     const respuesta = await env.ASSETS.fetch(request);
 
+    /* LAS REDIRECCIONES DE LOS FICHEROS, PERMANENTES. Cloudflare quita solo el
+       `.html` y la barra final —/pricing.html → /pricing, /index.html → /—,
+       pero con un 307, que es TEMPORAL: le dice al buscador que la dirección
+       vieja sigue siendo la buena, y Google tenía indexada «clerigo.io ›
+       precios». El destino es el mismo que ya decide Cloudflare; sólo cambia
+       el código. Medido el 2026-09-15. */
+    if ((respuesta.status === 307 || respuesta.status === 308) && respuesta.headers.get("location")) {
+      return conHsts(Response.redirect(new URL(respuesta.headers.get("location"), request.url), 301), url);
+    }
+
     const tipo = respuesta.headers.get("content-type") || "";
     if (!tipo.includes("text/html") || tipo.toLowerCase().includes("charset")) {
       return conHsts(respuesta, url);

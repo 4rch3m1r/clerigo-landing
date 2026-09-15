@@ -106,7 +106,7 @@ const PAGINAS = [
      cualquier regeneración habría borrado el redirector.
      Es el mismo descuido que ya pasó con `marcos`/`frameworks`. */
   { slug: "precios", ruta: { en: "pricing", es: "precios" }, disco: { en: "pricing.html", es: "precios.html" },
-    es: "Planes", en: "Plans", prioridad: "0.9", nav: true },
+    es: "Planes", en: "Pricing", prioridad: "0.9", nav: true },
   { slug: "contacto", ruta: { en: "contact", es: "contacto" }, disco: { en: "contact.html", es: "contacto.html" },
     es: "Contacto", en: "Contact", prioridad: "0.8", nav: true },
   { slug: "partners", ruta: { en: "partners", es: "partners" }, disco: { en: "partners.html", es: "partners.html" },
@@ -141,8 +141,13 @@ function organizacion(idioma) {
   return {
     "@type": "Organization",
     "@id": BASE + "/#organizacion",
+    /* LA MARCA SE ESCRIBE «Clèrigo», con acento grave; el dominio, sin él.
+       «Clerigo» es la misma empresa escrita como la escribe quien teclea el
+       dominio, y se declara para que las dos formas sean UNA entidad.
+       «Clèrigo XGRC» NO va aquí: es el producto, y tiene su propia ficha
+       (#producto). Ponerlo como otro nombre de la empresa mezclaba las dos. */
     name: "Clèrigo",
-    alternateName: "Clèrigo XGRC",
+    alternateName: "Clerigo",
     url: BASE + "/",
     logo: { "@type": "ImageObject", url: BASE + "/favicon.png", width: 160, height: 160 },
     /* La tarjeta buena, la misma que declara la portada. Apuntaba a `/og.png`,
@@ -161,9 +166,12 @@ function organizacion(idioma) {
     /* De qué sabe esta casa. Es el sitio donde las palabras clave cuentan de
        verdad: aquí las lee una máquina que las usa para clasificar, no una
        etiqueta que Google ignora desde 2009. */
-    knowsAbout: idioma === "es"
-      ? [...CATEGORIA_ES, ...MODULOS_ES, ...NORMAS]
-      : [...CATEGORIA_EN, ...MODULOS_EN, ...NORMAS],
+    /* Los temas de verdad, no la lista de búsquedas. Aquí iban ~60 términos
+       —«GRC tool», «cloud GRC», «multi-tenant GRC software»…—: eso es una
+       lista de palabras clave metida en la ficha, y la ficha sirve para decir
+       qué es la empresa, no para posicionar. Las palabras siguen en
+       `vocabulario.cjs` para lo que sí las usa. */
+    knowsAbout: idioma === "es" ? SABE_ES : SABE_EN,
     areaServed: idioma === "es" ? REGION_ES.slice(0, 2) : REGION_EN.slice(0, 2),
     /* Los perfiles oficiales. Es de lo que tira Google para reconocer a la
        empresa como entidad —el panel de la derecha del buscador—. Sólo los que
@@ -172,6 +180,17 @@ function organizacion(idioma) {
     sameAs: [PERFIL_LINKEDIN],
   };
 }
+
+const SABE_ES = [
+  "Gobierno, riesgo y cumplimiento (GRC)", "Gestión de riesgos", "Cumplimiento normativo",
+  "Auditoría interna", "Control interno", "Ciberseguridad", "Privacidad y protección de datos",
+  "Continuidad del negocio", "Riesgo de terceros", "ISO 27001", "NIST CSF", "COSO ERM",
+];
+const SABE_EN = [
+  "Governance, risk and compliance (GRC)", "Risk management", "Regulatory compliance",
+  "Internal audit", "Internal control", "Cybersecurity", "Privacy and data protection",
+  "Business continuity", "Third-party risk management", "ISO 27001", "NIST CSF", "COSO ERM",
+];
 
 /* ── La ficha del producto ──────────────────────────────────────────────── */
 function aplicacion(idioma) {
@@ -183,6 +202,8 @@ function aplicacion(idioma) {
     applicationSubCategory: idioma === "es" ? "Software GRC" : "GRC Software",
     operatingSystem: idioma === "es" ? "Navegador web" : "Web browser",
     url: BASE + "/",
+    /* Empresa → producto: la misma entidad lo crea y lo publica, por su @id. */
+    creator: { "@id": BASE + "/#organizacion" },
     publisher: { "@id": BASE + "/#organizacion" },
     inLanguage: ["es", "en", "fr", "pt"],
     description: idioma === "es"
@@ -235,7 +256,11 @@ function ficha(pagina, idioma, esIngles, titulo, descripcion, imagen, canonica) 
     {
       "@type": "WebSite",
       "@id": BASE + "/#sitio",
+      /* El nombre del sitio en los resultados. `alternateName` es lo que
+         Google acepta para las otras formas en que se conoce: sin acento y el
+         dominio tal cual. */
       name: "Clèrigo",
+      alternateName: ["Clerigo", "clerigo.io"],
       url: BASE + "/",
       inLanguage: idioma,
       publisher: { "@id": BASE + "/#organizacion" },
@@ -485,6 +510,21 @@ for (const carpeta of [CASTELLANO, INGLES]) {
     h = h.replace(/<meta property="og:locale:alternate" content="[^"]*">\r?\n?/g, "");
     h = h.replace(/(<meta property="og:locale" content="[^"]*">)/,
       `$1\n<meta property="og:locale:alternate" content="${esIngles ? "es_ES" : "en_US"}">`);
+
+    /* 3b. LOS IDIOMAS ALTERNATIVOS, A SU DIRECCIÓN CANÓNICA.
+          El paso bilingüe los escribe con el nombre de FICHERO
+          (`/pricing.html`, `/es/precios.html`), y esas direcciones
+          redirigen. Medido el 2026-09-15 en las doce interiores: Google no
+          sigue un hreflang que redirige, y el sitemap declaraba las buenas —
+          dos versiones distintas de la misma relación. Aquí se ponen las del
+          sitemap, que es el paso que sabe la ruta pública de cada una. */
+    if (!NO_INDEXAR.includes(p.slug) && !FUERA_DEL_MAPA.includes(p.slug)) {
+      const enIngles = BASE + "/" + p.ruta.en;
+      const enCastellano = BASE + "/es/" + p.ruta.es;
+      h = h.replace(/<link rel="alternate" hreflang="en" href="[^"]*">/, `<link rel="alternate" hreflang="en" href="${enIngles}">`)
+        .replace(/<link rel="alternate" hreflang="es" href="[^"]*">/, `<link rel="alternate" hreflang="es" href="${enCastellano}">`)
+        .replace(/<link rel="alternate" hreflang="x-default" href="[^"]*">/, `<link rel="alternate" hreflang="x-default" href="${enIngles}">`);
+    }
 
     /* 4. La ficha de datos, entera y en el idioma de la página. */
     const canonica = (h.match(/<link rel="canonical" href="([^"]*)"/) || [])[1];

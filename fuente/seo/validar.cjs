@@ -454,6 +454,41 @@ if (fs.existsSync(path.join(RAIZ, "_redirects"))) {
   }
 }
 
+/* ── LOS IDIOMAS ALTERNATIVOS APUNTAN A PÁGINAS, NO A REDIRECCIONES ────────
+ * Un hreflang a `/pricing.html` redirige y Google no lo sigue. Cada uno tiene
+ * que ser una dirección del sitemap. */
+{
+  const delMapa = new Set([...fs.readFileSync(path.join(__dirname, "..", "..", "sitemap.xml"), "utf8").matchAll(/<loc>([^<]*)<\/loc>/g)].map((m) => m[1]));
+  for (const [carpeta, idioma] of [[CASTELLANO, "es"], [INGLES, "en"]]) {
+    for (const p of PAGINAS) {
+      if (NO_INDEXAR.includes(p.slug) || FUERA_DEL_MAPA.includes(p.slug)) continue;
+      const f = path.join(carpeta, p.disco[idioma]);
+      if (!fs.existsSync(f)) continue;
+      const alt = [...fs.readFileSync(f, "utf8").matchAll(/<link rel="alternate" hreflang="[^"]*" href="([^"]*)">/g)].map((m) => m[1]);
+      const malas = alt.filter((u) => !delMapa.has(u));
+      comprueba(`${idioma}/${p.disco[idioma]}: sus hreflang apuntan a direcciones del sitemap, sin redirección`,
+        alt.length === 3 && malas.length === 0, malas.join(", "));
+    }
+  }
+}
+
+/* ── LA ENTIDAD: empresa y producto separados, con el mismo @id ────────── */
+{
+  const h = fs.readFileSync(path.join(INGLES, "index.html"), "utf8");
+  const g = JSON.parse((h.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/) || [, "{}"])[1])["@graph"] || [];
+  const org = g.find((x) => x["@type"] === "Organization") || {};
+  const web = g.find((x) => x["@type"] === "WebSite") || {};
+  const app = g.find((x) => x["@type"] === "SoftwareApplication") || {};
+  comprueba("la empresa se llama Clèrigo, y el producto Clèrigo XGRC, cada uno en su ficha",
+    org.name === "Clèrigo" && app.name === "Clèrigo XGRC" && !JSON.stringify(org.alternateName || "").includes("XGRC"));
+  comprueba("el producto lo crea y lo publica la misma empresa, por su @id",
+    app.creator?.["@id"] === org["@id"] && app.publisher?.["@id"] === org["@id"] && web.publisher?.["@id"] === org["@id"]);
+  comprueba("el sitio declara sus otros nombres (Clerigo, clerigo.io)",
+    Array.isArray(web.alternateName) && web.alternateName.includes("Clerigo") && web.alternateName.includes("clerigo.io"));
+  comprueba("knowsAbout son temas, no una lista de palabras clave",
+    Array.isArray(org.knowsAbout) && org.knowsAbout.length > 0 && org.knowsAbout.length <= 15, (org.knowsAbout || []).length + " términos");
+}
+
 console.log("\n────────────────────────────────────────────────────────────────");
 console.log(fallos.length === 0 ? `TODO PASA  ·  ${cuantas} comprobaciones` : `FALLAN ${fallos.length} de ${cuantas}:`);
 fallos.forEach((f) => console.log("  · " + f));

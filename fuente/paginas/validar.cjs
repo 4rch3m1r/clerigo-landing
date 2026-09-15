@@ -464,10 +464,16 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
   /* Y que las tres alternativas estén: sin ellas, el buscador trata las dos
      versiones como páginas distintas que dicen casi lo mismo y elige una por
      su cuenta. */
+  /* A la dirección PÚBLICA de cada idioma —/pricing y /es/precios—, que no
+     es el nombre del fichero: ése redirige. Antes se miraba con `includes` y
+     el nombre castellano, así que `/partners` casaba dentro de
+     `/partners.html` y daba por buena una dirección que redirige. */
+  const rutas = (require("../seo/posicionar.cjs").PAGINAS.find((x) => x.slug === slug) || {}).ruta;
   comprueba(`${slug}: declara sus dos idiomas y cuál se sirve por omisión`,
-    sal.includes(`hreflang="en" href="${SITIO.base}/${donde.fichero}"`)
-    && sal.includes(`hreflang="es" href="${SITIO.base}/es/${donde.fichero}"`)
-    && sal.includes(`hreflang="x-default" href="${SITIO.base}/${donde.fichero}"`));
+    !!rutas
+    && sal.includes(`hreflang="en" href="${SITIO.base}/${rutas.en}">`)
+    && sal.includes(`hreflang="es" href="${SITIO.base}/es/${rutas.es}">`)
+    && sal.includes(`hreflang="x-default" href="${SITIO.base}/${rutas.en}">`));
   comprueba(`${slug}: tiene título y descripción propios`,
     titulo.includes("Clèrigo") && desc.length > 40,
     `título «${titulo}», descripción de ${desc.length} letras`);
