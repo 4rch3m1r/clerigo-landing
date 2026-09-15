@@ -395,9 +395,17 @@ if (producto) {
    *
    * Cuando el precio esté decidido, esta comprobación se da la vuelta otra
    * vez: se exigirá que exista Y que case con el de la página de planes. */
-  comprueba("la ficha del producto no declara precio mientras no esté decidido",
-    producto.offers === undefined,
-    producto.offers ? `declara «${JSON.stringify(producto.offers).slice(0, 60)}»` : "");
+  /* Y SE DIO LA VUELTA el 2026-09-15: el precio ya está publicado en
+     /pricing y el dueño pidió declararlo. Ahora se exige que exista y que case
+     con la página —el área más barata y el paquete completo—. */
+  const pagina = fs.readFileSync(path.join(INGLES, "pricing.html"), "utf8");
+  const areas = [...pagina.matchAll(/basePrice:(\d+)/g)].map((m) => Number(m[1])).filter((n) => n > 0);
+  const todo = Number((pagina.match(/const PER_MODULE = (\d+);/) || [])[1]);
+  const o = producto.offers || {};
+  comprueba("la ficha del producto declara el precio que publica /pricing",
+    o["@type"] === "AggregateOffer" && o.priceCurrency === "USD"
+    && o.lowPrice === Math.min(...areas) && o.highPrice === todo,
+    `ficha ${o.lowPrice}–${o.highPrice}, página ${Math.min(...areas)}–${todo}`);
 }
 
 /* ── LAS REDIRECCIONES SE LEEN DE VERDAD ────────────────────────────────

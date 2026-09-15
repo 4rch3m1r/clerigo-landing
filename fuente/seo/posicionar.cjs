@@ -149,7 +149,10 @@ function organizacion(idioma) {
     name: "Clèrigo",
     alternateName: "Clerigo",
     url: BASE + "/",
-    logo: { "@type": "ImageObject", url: BASE + "/favicon.png", width: 160, height: 160 },
+    /* El logotipo de 512 × 512, opaco —el mismo del manifiesto—. Antes era
+       `favicon.png`, de 160: vale para Google (pide 112 como mínimo), pero es
+       el tamaño de un icono de pestaña y es lo que se ve en el panel. */
+    logo: { "@type": "ImageObject", url: BASE + "/icono-512.png", width: 512, height: 512 },
     /* La tarjeta buena, la misma que declara la portada. Apuntaba a `/og.png`,
        que es una copia suelta en la raíz del repositorio que nadie mantiene:
        la ficha de la organización enseñaba la tarjeta vieja mientras la
@@ -160,6 +163,15 @@ function organizacion(idioma) {
        usarlo. */
     image: urlDeTarjeta(SITIO.paginas.index.imagen[idioma]),
     email: "hello@clerigo.io",
+    /* Datos confirmados por el dueño el 2026-09-15: el correo público de
+       ventas y soporte, sin teléfono —no hay uno público—, y la ubicación a
+       nivel de ciudad, sin dirección física. Ni nombre legal, ni fundación,
+       ni fundadores: no se publican hasta que él los confirme. */
+    contactPoint: [
+      { "@type": "ContactPoint", contactType: "sales", email: "hello@clerigo.io", availableLanguage: ["es", "en"] },
+      { "@type": "ContactPoint", contactType: "customer support", email: "hello@clerigo.io", availableLanguage: ["es", "en"] },
+    ],
+    address: { "@type": "PostalAddress", addressLocality: "Santo Domingo", addressCountry: "DO" },
     description: idioma === "es"
       ? "Plataforma de Gobernanza, Riesgo y Cumplimiento que unifica riesgos, cumplimiento normativo, auditoría interna, control interno, ciberseguridad y privacidad."
       : "Governance, Risk and Compliance platform that unifies risk, regulatory compliance, internal audit, internal control, cybersecurity and privacy.",
@@ -192,6 +204,30 @@ const SABE_EN = [
   "Business continuity", "Third-party risk management", "ISO 27001", "NIST CSF", "COSO ERM",
 ];
 
+/* ── EL PRECIO, SACADO DE LA PÁGINA DE PLANES ─────────────────────────────
+ *
+ * Hasta el 2026-09-15 la ficha no llevaba precio a propósito: no estaba
+ * decidido. Ya lo está —/pricing lo publica— y el dueño pidió declararlo.
+ *
+ * Se LEE de pricing.html y no se copia aquí: el día que cambie un precio en la
+ * página, la ficha cambia con ella, y no pueden quedar dos cifras distintas.
+ * Es una oferta agregada: desde el área más barata sola hasta todas las áreas
+ * juntas, al año, en USD. */
+function ofertas() {
+  const h = fs.readFileSync(path.join(INGLES, "pricing.html"), "utf8");
+  const areas = [...h.matchAll(/basePrice:(\d+)/g)].map((m) => Number(m[1])).filter((n) => n > 0);
+  const todo = Number((h.match(/const PER_MODULE = (\d+);/) || [])[1]);
+  if (!areas.length || !todo) throw new Error("pricing.html: no encuentro los precios de las áreas");
+  return {
+    "@type": "AggregateOffer",
+    priceCurrency: "USD",
+    lowPrice: Math.min(...areas),
+    highPrice: todo,
+    offerCount: areas.length,
+    url: BASE + "/pricing",
+  };
+}
+
 /* ── La ficha del producto ──────────────────────────────────────────────── */
 function aplicacion(idioma) {
   return {
@@ -205,6 +241,8 @@ function aplicacion(idioma) {
     /* Empresa → producto: la misma entidad lo crea y lo publica, por su @id. */
     creator: { "@id": BASE + "/#organizacion" },
     publisher: { "@id": BASE + "/#organizacion" },
+    /* Los cuatro son de verdad: app-saas/src/lib/traducciones tiene en, fr y pt
+       con las mismas 1.436 claves (comprobado el 2026-09-15). */
     inLanguage: ["es", "en", "fr", "pt"],
     description: idioma === "es"
       ? "Software GRC que unifica riesgos, cumplimiento normativo, auditoría interna, control interno, ciberseguridad y privacidad en una sola plataforma."
@@ -223,7 +261,7 @@ function aplicacion(idioma) {
      * Cuando esté definido se vuelve a poner, y entonces tiene que casar con
      * lo que diga la página de planes o Search Console avisa.
      */
-    offers: undefined,
+    offers: ofertas(),
   };
 }
 
@@ -232,7 +270,9 @@ function aplicacion(idioma) {
    esta dirección, y es la que enlaza el botón de la barra: la ficha declara la
    de destino, no la que redirige. */
 const LOGIN = "https://app.clerigo.io/login";
-const PERFIL_LINKEDIN = "https://linkedin.com/company/clerigo";
+/* El perfil oficial, con la dirección que da el propio LinkedIn (con www),
+   confirmado por el dueño el 2026-09-15. */
+const PERFIL_LINKEDIN = "https://www.linkedin.com/company/clerigo";
 function navegacion(idioma, esIngles) {
   return PAGINAS.filter((p) => p.nav).map((p) => ({
     "@type": "SiteNavigationElement",
