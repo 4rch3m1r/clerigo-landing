@@ -38,7 +38,10 @@ const { sinTema } = require("./marcas.cjs");
 const AQUI = __dirname;
 const FUENTE_COLOR = fs.readFileSync(path.join(AQUI, "color.js"), "utf8");
 const colorOscuro = new Function(FUENTE_COLOR + "\nreturn colorOscuro;")();
-const COLOR = /#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)|\bwhite\b|\bblack\b/g;
+/* `white` y `black` sueltos, no dentro de otra palabra: `white-space: nowrap`
+   se convertía en `#0E0E0E-space` y la etiqueta de «incluido» de los precios
+   se partía en dos líneas en oscuro. */
+const COLOR = /#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)|(?<![\w-])(?:white|black)(?![\w-])/g;
 const PREFIJO = 'html[data-tema="oscuro"]';
 
 /* ── La paleta oscura que ya existe: la de la portada oscura ────────────── */
@@ -80,13 +83,21 @@ function cssDe(html) {
 function gemelaDe(slug, htmlClaro) {
   if (!GEMELAS[slug]) return null;
   const oscuro = sinTema(fs.readFileSync(path.join(CASTELLANO, GEMELAS[slug]), "utf8")).split("\r\n").join("\n");
-  const reglas = new Map();
+  const reglas = new Map(), vistas = new Map();
   const recorre = (lista, prelude) => {
     for (const b of lista) {
       if (b.tipo === "at") { recorre(b.hijos, prelude + b.prelude); continue; }
       const decl = new Map();
       for (const d of declaraciones(b.cuerpo)) decl.set(d.prop, d.valor);
-      reglas.set(clave(prelude, b.selector), decl);
+      /* El mismo selector puede salir varias veces —`.hero-actions` centra en
+         una regla y alinea a la izquierda en otra—: se empareja la primera con
+         la primera, la segunda con la segunda. Con una sola entrada por
+         selector, la última pisaba a todas y el tema oscuro volvía a poner el
+         `flex-start` de escritorio encima del centrado del móvil. */
+      const k = clave(prelude, b.selector);
+      const n = (vistas.get(k) || 0) + 1;
+      vistas.set(k, n);
+      reglas.set(k + "#" + n, decl);
     }
   };
   recorre(bloques(cssDe(oscuro)), "");
@@ -242,9 +253,36 @@ function luz(valor) {
 }
 const BLANCO = /^(#fff|#ffffff|white|rgb\(\s*255\s*,\s*255\s*,\s*255\s*\))$/i;
 
+/* LOS ATAJOS SE LLEVAN POR DELANTE LO QUE VENÍA DETRÁS. `border: 1px solid …`
+   devuelve `border-bottom` a su valor inicial, igual que `background:` hace con
+   `background-clip`. En claro, `border: …; border-bottom: none` deja la cinta
+   de la medalla sin raya abajo; si el oscuro reescribe sólo el `border`, la
+   raya vuelve y la medalla crece 1 px, y con ella toda la portada. Así que la
+   regla oscura se escribe en el MISMO orden que la clara, y detrás de cada atajo
+   cambiado se repiten las propiedades de su familia que la clara ponía después. */
+const ATAJOS = /^(background|border(-top|-right|-bottom|-left)?|outline|text-decoration|column-rule)$/;
+function enOrden(lista, cambios) {
+  const nuevo = new Map();
+  for (const c of cambios) { const k = c.indexOf(":"); nuevo.set(c.slice(0, k), c.slice(k + 1)); }
+  const tocados = [], salida = [];
+  for (const d of lista) {
+    const familia = tocados.find((s) => d.prop.startsWith(s + "-") || d.prop.startsWith("-webkit-" + s + "-"));
+    if (nuevo.has(d.prop)) {
+      salida.push(d.prop + ":" + nuevo.get(d.prop));
+      nuevo.delete(d.prop);
+      if (ATAJOS.test(d.prop)) tocados.push(d.prop);
+    } else if (familia) {
+      salida.push(d.prop + ":" + d.valor);
+    }
+  }
+  for (const [p, v] of nuevo) salida.push(p + ":" + v);
+  return salida;
+}
+
 function cssOscuro(lista, claros, gemela, prelude = "") {
   /* Los valores CLAROS de las fichas de esta página, para el caso de abajo. */
   if (!claros) {
+    if (gemela) gemela.vistas = new Map();
     claros = {};
     for (const b of lista) if (b.tipo !== "at" && /^:root\b/.test(b.selector.trim()))
       for (const d of declaraciones(b.cuerpo)) if (d.prop.startsWith("--")) claros[d.prop] = d.valor;
@@ -261,15 +299,20 @@ function cssOscuro(lista, claros, gemela, prelude = "") {
     const esRaiz = /^:root\b/.test(b.selector.trim());
     const cambios = [];
     const lista = declaraciones(b.cuerpo);
-    const gemelas = !esRaiz && gemela ? gemela.reglas.get(clave(prelude, b.selector)) : null;
+    let gemelas = null;
+    if (!esRaiz && gemela) {
+      const k = clave(prelude, b.selector);
+      const n = (gemela.vistas.get(k) || 0) + 1;
+      gemela.vistas.set(k, n);
+      gemelas = gemela.reglas.get(k + "#" + n) || null;
+    }
     if (gemelas) {
       for (const { prop, valor } of lista) {
         const oscuro = gemelas.get(prop);
-        if (oscuro !== undefined && oscuro !== valor) cambios.push(`${prop}:${oscuro}`);
+        /* Sólo lo que lleva color: el tema oscuro no mueve nada de sitio. */
+        if (oscuro !== undefined && oscuro !== valor && tieneColor(valor + " " + oscuro)) cambios.push(`${prop}:${oscuro}`);
       }
-      if (cambios.some((c) => c.startsWith("background:")))
-        for (const d of lista) if (/^(-webkit-)?background-clip$/.test(d.prop) && /text/.test(d.valor)) cambios.push(`${d.prop}:${d.valor}`);
-      if (cambios.length) out.push(`${selectores.join(",")}{${cambios.join(";")}}`);
+      if (cambios.length) out.push(`${selectores.join(",")}{${enOrden(lista, cambios).join(";")}}`);
       continue;
     }
     /* TEXTO CON DEGRADADO. `background:` es un atajo que devuelve
@@ -288,7 +331,6 @@ function cssOscuro(lista, claros, gemela, prelude = "") {
       const nuevo = convertir(valor, prop, b.selector, recortes.length > 0);
       if (nuevo !== valor) cambios.push(`${prop}:${nuevo}`);
     }
-    if (cambios.some((c) => c.startsWith("background:"))) for (const d of recortes) cambios.push(`${d.prop}:${d.valor}`);
     /* TEXTO BLANCO SOBRE UNA FICHA QUE SE ACLARA. `background: var(--text);
        color: white` es una píldora oscura en claro; en oscuro --text es casi
        blanca y el texto dejaría de verse. La píldora se queda con su valor
@@ -304,7 +346,7 @@ function cssOscuro(lista, claros, gemela, prelude = "") {
         if (nuevo !== valor) cambios.push(`${prop}:${nuevo}`);
       }
     }
-    if (cambios.length) out.push(`${selectores.join(",")}{${cambios.join(";")}}`);
+    if (cambios.length) out.push(`${selectores.join(",")}{${enOrden(lista, cambios).join(";")}}`);
   }
   return out.join("\n");
 }
@@ -370,7 +412,7 @@ function motor(idioma) {
 (function () {
 ${FUENTE_COLOR.replace(/^\/\*[\s\S]*?\*\/\s*/, "")}
   var R = document.documentElement, CLAVE = 'clerigo-tema';
-  var COLOR = /#[0-9a-fA-F]{3,8}\\b|rgba?\\([^)]*\\)|\\bwhite\\b|\\bblack\\b/g;
+  var COLOR = /#[0-9a-fA-F]{3,8}\\b|rgba?\\([^)]*\\)|(?<![\\w-])(?:white|black)(?![\\w-])/g;
   var ATRIBUTOS = ['style', 'fill', 'stroke', 'stop-color'];
   var guardados = new WeakMap();
   function preferido() { try { return localStorage.getItem(CLAVE); } catch (e) { return null; } }

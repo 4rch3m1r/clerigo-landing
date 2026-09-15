@@ -687,7 +687,7 @@ html[data-tema="oscuro"] .gbg-grid{background-image:linear-gradient(rgba(240,240
 html[data-tema="oscuro"] .stat-card{box-shadow:0 2px 8px rgba(0,0,0,0.044)}
 html[data-tema="oscuro"] .stat-card:hover{box-shadow:0 6px 20px rgba(0,0,0,0.132)}
 html[data-tema="oscuro"] .filter-toolbar{background:rgba(14,14,14,0.92);box-shadow:0 10px 30px rgba(0,0,0,0.088)}
-html[data-tema="oscuro"] .tab-btn.active{box-shadow:0 2px 8px rgba(0,0,0,0.33);background:#16181C}
+html[data-tema="oscuro"] .tab-btn.active{background:#16181C;box-shadow:0 2px 8px rgba(0,0,0,0.33)}
 html[data-tema="oscuro"] .sec-chip.active{background:#16181C}
 html[data-tema="oscuro"] .fw-col-header{background:#0E0E0E}
 html[data-tema="oscuro"] .fw-card:hover{box-shadow:0 8px 24px rgba(0,0,0,0.132)}
@@ -1420,7 +1420,7 @@ function colorOscuro(valor, uso) {
 }
 
   var R = document.documentElement, CLAVE = 'clerigo-tema';
-  var COLOR = /#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)|\bwhite\b|\bblack\b/g;
+  var COLOR = /#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)|(?<![\w-])(?:white|black)(?![\w-])/g;
   var ATRIBUTOS = ['style', 'fill', 'stroke', 'stop-color'];
   var guardados = new WeakMap();
   function preferido() { try { return localStorage.getItem(CLAVE); } catch (e) { return null; } }

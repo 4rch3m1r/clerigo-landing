@@ -1271,7 +1271,7 @@ function colorOscuro(valor, uso) {
 }
 
   var R = document.documentElement, CLAVE = 'clerigo-tema';
-  var COLOR = /#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)|\bwhite\b|\bblack\b/g;
+  var COLOR = /#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)|(?<![\w-])(?:white|black)(?![\w-])/g;
   var ATRIBUTOS = ['style', 'fill', 'stroke', 'stop-color'];
   var guardados = new WeakMap();
   function preferido() { try { return localStorage.getItem(CLAVE); } catch (e) { return null; } }

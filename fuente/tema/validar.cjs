@@ -105,6 +105,22 @@ comprueba("la barra estrecha sus espacios de 769 a 1320 px para que el botón no
 comprueba("en móvil la barra no parte «log in» ni se sale: botones sin partir y espacios estrechos por debajo de 768 px",
   /@media \(max-width:768px\)\{nav\{gap:12px\}\.nav-cta\{gap:8px\}\.tema-toggle\{margin-left:0;width:32px;height:32px\}\.nav-cta \.btn-ghost,\.nav-cta \.btn-primary,\.nav-logo-text\{white-space:nowrap\}\}/.test(portada) &&
   /@media \(max-width:389px\)\{\.nav-logo-text small\{display:none\}\}/.test(portada));
+/* El tema oscuro cambia colores y nada más: ni alineaciones ni tamaños. Se mira
+   el CSS generado de la portada —el que copia de la gemela— quitando la hoja
+   base del botón, que sí lleva medidas a propósito. */
+{
+  const bloque = (portada.match(/<style id="tema-oscuro">([\s\S]*?)<\/style>/) || ["", ""])[1];
+  const generado = bloque.split("\n")
+    .filter((l) => l.startsWith('html[data-tema="oscuro"] ') || l.startsWith("@media") && l.includes('html[data-tema="oscuro"] '))
+    .filter((l) => !/tema-toggle|tema-sol|tema-luna/.test(l));
+  const sinColor = generado.flatMap((l) => [...l.matchAll(/\{([^{}]*)\}/g)].flatMap((m) => m[1].split(";")))
+    .filter((d) => d && !/#[0-9a-f]{3,8}\b|rgba?\(|white|black|var\(--|gradient|transparent|none|text$|^\s*(border|background)(-[a-z]+)*:/i.test(d));
+  comprueba("portada: el bloque oscuro sólo cambia colores (nada de alineaciones: los botones del móvil siguen centrados)",
+    sinColor.length === 0 && !/oscuro"\] \.hero-actions\{/.test(portada), sinColor.slice(0, 4).join(" | "));
+}
+comprueba("el motor no confunde `white-space` con el color blanco",
+  (() => { const re = /(?<![\w-])(?:white|black)(?![\w-])/g; return "white-space:nowrap".replace(re, "X") === "white-space:nowrap" && "color:white".replace(re, "X") === "color:X"; })()
+  && /var COLOR = [^;]*\(\?<!\[\\\\w-\]\)\(\?:white\|black\)/.test(portada) === false && portada.includes("(?<![\\w-])(?:white|black)(?![\\w-])"));
 comprueba("portada: las medallas toman los colores de la portada oscura (nada de tinta aclarada sobre el oro)",
   !/oscuro"\] \.award-(num|er|lugar|tape-text)\{/.test(portada) &&
   /oscuro"\] \.award-firm-name\{color:#F5D020\}/.test(portada));
