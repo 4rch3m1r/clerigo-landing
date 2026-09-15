@@ -1,5 +1,6 @@
 /**
- * METE LAS SECCIONES DEL AGENTE Y DE LA ARQUITECTURA EN LAS CUATRO PORTADAS.
+ * METE LAS SECCIONES DEL AGENTE, DE LA ARQUITECTURA Y DE LA SEGURIDAD EN LAS
+ * CUATRO PORTADAS.
  *
  *   node fuente/secciones/aplicar.cjs
  *
@@ -35,6 +36,7 @@ const path = require("node:path");
 const { ES, EN } = require("./contenido.cjs");
 const { M, CSS, seccionesNuevas, dominios } = require("./marcado.cjs");
 const CIFRAS = require("./cifras.cjs");
+const { M_SEGURIDAD, CSS_SEGURIDAD, seccionSeguridad } = require("./seguridad.cjs");
 
 const RAIZ = path.join(__dirname, "..", "..");
 const PAGINAS = [
@@ -65,7 +67,7 @@ for (const { f, t } of PAGINAS) {
   const finEstilo = "</style>";
   const iEstilo = h.lastIndexOf(finEstilo);
   if (iEstilo < 0) throw new Error(f + ": no encuentro el cierre de la hoja de estilo");
-  h = entreMarcas(h, M.css, CSS.trim(), h.slice(iEstilo, iEstilo + finEstilo.length));
+  h = entreMarcas(h, M.css, (CSS + CSS_SEGURIDAD).trim(), h.slice(iEstilo, iEstilo + finEstilo.length));
 
   /* 2. Las dos secciones nuevas, ANTES de la de la solución: primero se dice
         qué hace el agente y cómo se trabaja con él, y sólo después con qué
@@ -139,6 +141,29 @@ for (const { f, t } of PAGINAS) {
     }
     h = h.replace(re, (_, a, b, d, e, g) =>
       `${a}${dato.valor}${b}${dato.sufijo}${d}${dato.rotulo}${e}${dato.desc}${g}`);
+  }
+
+  /* 6. La seguridad. Sustituye a la franja de cinco pastillas que había bajo
+        las cifras: aquello era una lista de funciones; esto cuenta la
+        seguridad como arquitectura. La primera pasada recorta la franja
+        entera —contando <div> como en la rejilla de módulos—; las siguientes
+        sólo reemplazan lo que hay entre las marcas. */
+  if (h.indexOf(M_SEGURIDAD.seccion[0]) >= 0) {
+    h = entreMarcas(h, M_SEGURIDAD.seccion, seccionSeguridad(t), "");
+  } else {
+    const iFranja = h.indexOf(M_SEGURIDAD.franja);
+    if (iFranja < 0) throw new Error(f + ": no encuentro ni la sección de seguridad ni la franja que sustituye");
+    const iDiv = h.indexOf('<div class="security-strip">', iFranja);
+    let prof = 0, fin = -1, m;
+    const re = /<div\b|<\/div>/g;
+    re.lastIndex = iDiv;
+    while ((m = re.exec(h))) {
+      prof += m[0] === "</div>" ? -1 : 1;
+      if (prof === 0) { fin = m.index + m[0].length; break; }
+    }
+    if (iDiv < 0 || fin < 0) throw new Error(f + ": no encuentro el cierre de la franja de seguridad");
+    h = h.slice(0, iFranja) + `${M_SEGURIDAD.seccion[0]}\n${seccionSeguridad(t)}\n${M_SEGURIDAD.seccion[1]}` + h.slice(fin);
+    console.log(`  ${f.padEnd(16)} franja de seguridad fuera, sección de seguridad dentro`);
   }
 
   if (h === antes) { console.log(`  ${f.padEnd(16)} ya estaba al día`); continue; }

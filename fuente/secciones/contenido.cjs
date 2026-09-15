@@ -70,6 +70,26 @@ const ES = {
     ],
     cierre: ["Una plataforma. Una fuente de verdad.", "Un agente que convierte la gestión en ejecución."],
   },
+
+  /* ── La seguridad ───────────────────────────────────────────────────────
+     Sustituye a la franja de cinco pastillas bajo las cifras. No es una lista
+     de funciones: la seguridad se cuenta como parte de la arquitectura, capa a
+     capa, y el dibujo de las seis capas apiladas lo dice sin palabras. */
+  seguridad: {
+    chip: "Seguridad desde el diseño",
+    titulo: "Seguridad desde el diseño.<br>Resiliencia por defecto.",
+    subtitulo: "Seguridad, identidad, protección de datos y resiliencia diseñadas e integradas en la plataforma desde sus fundamentos.",
+    pilares: [
+      { num: "01", nombre: "Identidad Zero Trust", texto: "Microsoft Entra ID, Google, Cisco Duo, SSO, MFA y Passkeys." },
+      { num: "02", nombre: "Protección de Datos", texto: "Cifrado de extremo a extremo, enmascaramiento de datos, aislamiento entre tenants y protección de información sensible." },
+      { num: "03", nombre: "Seguridad de Aplicaciones", texto: "WAF, Rate Limiting, APIs seguras y protección continua frente a amenazas en la capa de aplicación." },
+      { num: "04", nombre: "Infraestructura Resiliente", texto: "Microsoft Azure, respaldos inmutables, datacenter replicado y una arquitectura diseñada para garantizar disponibilidad, recuperación y continuidad operativa." },
+      { num: "05", nombre: "Inteligencia de Seguridad", texto: "Integración nativa con Microsoft Defender, Tenable, Vicarius y otras plataformas empresariales de seguridad." },
+      { num: "06", nombre: "Desarrollo Seguro", texto: "CI/CD controlado, despliegue continuo, prácticas de desarrollo seguro y protección durante todo el ciclo de vida del software." },
+    ],
+    /* La declaración arquitectónica, en tres golpes. */
+    cierre: ["Defensa en profundidad.", "Protección continua.", "Diseñado para operaciones críticas."],
+  },
 };
 
 const EN = {
@@ -115,6 +135,21 @@ const EN = {
       { nombre: "AI", partes: ["Read AI", "Compliance Agent", "Risk Analysis", "Regulatory Intelligence", "Report Generation"] },
     ],
     cierre: ["One platform. One source of truth.", "An agent that turns management into execution."],
+  },
+
+  seguridad: {
+    chip: "Security by Design",
+    titulo: "Security by Design.<br>Resilience by Default.",
+    subtitulo: "Security, identity, data protection and resilience, designed and built into the platform from its foundations.",
+    pilares: [
+      { num: "01", nombre: "Zero Trust Identity", texto: "Microsoft Entra ID, Google, Cisco Duo, SSO, MFA and Passkeys." },
+      { num: "02", nombre: "Data Protection", texto: "End-to-end encryption, data masking, tenant isolation and protection of sensitive information." },
+      { num: "03", nombre: "Application Security", texto: "WAF, rate limiting, secure APIs and continuous protection against threats at the application layer." },
+      { num: "04", nombre: "Resilient Infrastructure", texto: "Microsoft Azure, immutable backups, a replicated datacenter and an architecture designed to guarantee availability, recovery and operational continuity." },
+      { num: "05", nombre: "Security Intelligence", texto: "Native integration with Microsoft Defender, Tenable, Vicarius and other enterprise security platforms." },
+      { num: "06", nombre: "Secure Development", texto: "Controlled CI/CD, continuous deployment, secure development practices and protection across the entire software lifecycle." },
+    ],
+    cierre: ["Defense in Depth.", "Continuous Protection.", "Built for Critical Operations."],
   },
 };
 

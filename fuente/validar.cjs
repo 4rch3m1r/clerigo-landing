@@ -747,9 +747,13 @@ for (const e of excepcionadas) console.log("        (excepción justificada L" +
 
 console.log("\n── Comportamiento ──────────────────────────────────────────────");
 for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
-  comprueba(`mismas animaciones que el original en el ${n}`,
-    cuenta(t, /@keyframes/g) === cuenta(org, /@keyframes/g),
-    `${cuenta(t, /@keyframes/g)} vs ${cuenta(org, /@keyframes/g)}`);
+  /* Las del original más UNA, y se dice cuál: `seg-baja`, el punto que baja
+     por el eje del dibujo de la sección de seguridad. Se apaga con
+     prefers-reduced-motion. */
+  comprueba(`las animaciones del original más la de la seguridad, en el ${n}`,
+    cuenta(t, /@keyframes/g) === cuenta(org, /@keyframes/g) + 1
+    && /@keyframes seg-baja/.test(t),
+    `${cuenta(t, /@keyframes/g)} vs ${cuenta(org, /@keyframes/g)} + 1`);
   /* Una consulta de medios MÁS que el original, y sólo una: la de 480 px que
      retira «Planes» de la barra en el teléfono. Sin ella, el botón de
      «Contacto» se corta en cualquier pantalla de menos de 414 px. Es el único
@@ -800,10 +804,13 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
      de Archemir —son la propuesta de valor de Clèrigo, escrita de cero— y por
      eso se cuentan aquí en vez de darlas por buenas. Si mañana aparece una
      tercera sección sin que nadie la declare, esto lo dice. */
-  comprueba(`las secciones del original más las 2 del agente, en el ${n}`,
-    cuenta(t, /<section/g) === cuenta(org, /<section/g) + 2
-    && /<section id="agente">/.test(t) && /<section id="modos">/.test(t),
-    `${cuenta(t, /<section/g)} vs ${cuenta(org, /<section/g)} + 2`);
+  /* Y una tercera: `#seguridad`, que sustituye a la franja de cinco
+     pastillas —un <div>, no una sección— bajo las cifras. */
+  comprueba(`las secciones del original más las 2 del agente y la de seguridad, en el ${n}`,
+    cuenta(t, /<section/g) === cuenta(org, /<section/g) + 3
+    && /<section id="agente">/.test(t) && /<section id="modos">/.test(t)
+    && /<section id="seguridad">/.test(t) && !/<div class="security-strip">/.test(t),
+    `${cuenta(t, /<section/g)} vs ${cuenta(org, /<section/g)} + 3`);
   /* Los del original más CUATRO, y se escribe de donde sale cada uno:
        +1  el Centro de Confianza en la fila legal del pie, donde lo busca el
            comité de seguridad del cliente;
