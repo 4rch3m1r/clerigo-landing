@@ -243,7 +243,7 @@ if (require.main === module) {
        copiaba el inglés encima del castellano sin que saltara nada. */
     const origen = path.join(CASTELLANO, p + ".html");
     if (!fs.existsSync(origen)) { console.log("  " + p.padEnd(12) + " no está en es/, se salta"); continue; }
-    const partida = require("../tema/marcas.cjs").sinTema(fs.readFileSync(origen, "utf8"));
+    const partida = require("../tema/marcas.cjs").sinTema(require("../seo/enlaces.cjs").sinEnlaces(fs.readFileSync(origen, "utf8")));
 
     /* Para el SELECTOR, cada página necesita su propio nombre de fichero: desde
        `oscuro.html` se salta a `oscuro.html` del otro idioma, no a `index`. */

@@ -35,6 +35,7 @@ const PASOS = [
   ["el inglés, por sustitución de texto", "fuente/idiomas/a-ingles.cjs"],
   ["el posicionamiento, sobre las dieciséis", "fuente/seo/posicionar.cjs"],
   ["el mapa del sitio y el robots", "fuente/seo/mapa.cjs"],
+  ["los enlaces internos, a su dirección canónica", "fuente/seo/enlaces.cjs"],
   /* El tema oscuro va DETRÁS de todo: lee el CSS que dejaron los pasos de
      arriba y añade el suyo. Los de arriba lo quitan al leer (`sinTema`). */
   ["el tema oscuro, de 7 de la tarde a 7 de la mañana", "fuente/tema/oscuro.cjs"],

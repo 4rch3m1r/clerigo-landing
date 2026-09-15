@@ -36,8 +36,9 @@
  *     penaliza el sitio entero, y además sería mentir.
  *   · `SearchAction` (la caja de búsqueda bajo el resultado). Exige que el
  *     sitio TENGA un buscador propio, y no lo tiene.
- *   · `sameAs` con perfiles de redes. En el pie hay rótulos de LinkedIn, X e
- *     Instagram, pero no llevan dirección: no hay perfiles que declarar.
+ *   · `sameAs` con X o Instagram: sus rótulos del pie no llevan dirección. Sí se
+ *     declara LinkedIn, que es el único perfil que las páginas enlazan de verdad
+ *     (https://linkedin.com/company/clerigo, en las dos páginas de contacto).
  *   · Teléfono y dirección postal. No están en ninguna página.
  */
 const fs = require("node:fs");
@@ -156,6 +157,11 @@ function organizacion(idioma) {
       ? [...CATEGORIA_ES, ...MODULOS_ES, ...NORMAS]
       : [...CATEGORIA_EN, ...MODULOS_EN, ...NORMAS],
     areaServed: idioma === "es" ? REGION_ES.slice(0, 2) : REGION_EN.slice(0, 2),
+    /* Los perfiles oficiales. Es de lo que tira Google para reconocer a la
+       empresa como entidad —el panel de la derecha del buscador—. Sólo los que
+       el sitio enlaza: declarar uno que la página no enseña es una ficha que no
+       dice lo mismo que la página. */
+    sameAs: [PERFIL_LINKEDIN],
   };
 }
 
@@ -193,11 +199,16 @@ function aplicacion(idioma) {
 }
 
 /* ── Los sitios a los que se puede ir desde la barra ────────────────────── */
+/* El acceso vive en la aplicación. `/login` y `/es/login` redirigen (301) a
+   esta dirección, y es la que enlaza el botón de la barra: la ficha declara la
+   de destino, no la que redirige. */
+const LOGIN = "https://app.clerigo.io/login";
+const PERFIL_LINKEDIN = "https://linkedin.com/company/clerigo";
 function navegacion(idioma, esIngles) {
   return PAGINAS.filter((p) => p.nav).map((p) => ({
     "@type": "SiteNavigationElement",
     name: idioma === "es" ? p.es : p.en,
-    url: (esIngles ? BASE + "/" : BASE + "/es/") + p.ruta[idioma],
+    url: p.slug === "login" ? LOGIN : (esIngles ? BASE + "/" : BASE + "/es/") + p.ruta[idioma],
   }));
 }
 

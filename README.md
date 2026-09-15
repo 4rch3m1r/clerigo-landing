@@ -263,6 +263,7 @@ node fuente/idiomas/validar.cjs       # quitando el texto, son la MISMA página
 # 3. el posicionamiento, que va el ÚLTIMO y sobre las dieciséis páginas
 node fuente/seo/posicionar.cjs        # palabras clave, ficha de datos, idioma de la tarjeta
 node fuente/seo/mapa.cjs              # sitemap.xml + robots.txt
+node fuente/seo/enlaces.cjs           # enlaces internos a /pricing, /es/precios… sin redirección
 node fuente/seo/validar.cjs           # 204 comprobaciones, y que no se invente nada
 
 # 3b. el tema oscuro, DETRÁS de todo: de 19:00 a 07:00 con la hora de quien

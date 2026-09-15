@@ -45,7 +45,7 @@ function trozosDelSitio() {
   for (const p of PAGINAS) {
     const ruta = path.join(CASTELLANO, p + ".html");
     if (!fs.existsSync(ruta)) continue;
-    const lista = segmentos(require("../tema/marcas.cjs").sinTema(fs.readFileSync(ruta, "utf8")));
+    const lista = segmentos(require("../tema/marcas.cjs").sinTema(require("../seo/enlaces.cjs").sinEnlaces(fs.readFileSync(ruta, "utf8"))));
     porPagina.set(p, lista.map((x) => x.texto));
     for (const x of lista) if (!todos.has(x.texto)) todos.set(x.texto, p);
   }

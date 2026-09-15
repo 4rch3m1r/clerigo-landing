@@ -120,7 +120,9 @@ function etiquetas(html) {
   const lista = [];
   for (const m of tapado.slice(inicio).matchAll(/<([a-zA-Z][\w:-]*)((?:\s+[\w:-]+(?:="[^"]*")?)*)\s*\/?>/g)) {
     const attrs = new Map([...m[2].matchAll(/([\w:-]+)(?:="([^"]*)")?/g)].map((x) => [x[1], x[2] || ""]));
-    const forma = m[1] + "." + (attrs.get("class") || "") + "|" + [...attrs.keys()].sort().join(",");
+    /* `data-enlace` lo añade fuente/seo/enlaces.cjs en unas páginas y no en la
+       gemela: no cuenta para la forma, o los enlaces dejarían de emparejarse. */
+    const forma = m[1] + "." + (attrs.get("class") || "") + "|" + [...attrs.keys()].filter((k) => k !== "data-enlace").sort().join(",");
     lista.push({ forma, attrs, fin: inicio + m.index + m[1].length + 1 });
   }
   return lista;

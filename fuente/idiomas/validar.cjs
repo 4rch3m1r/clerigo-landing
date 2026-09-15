@@ -137,8 +137,8 @@ for (const p of TODAS) {
       (fs.existsSync(rEn) ? "" : "falta la inglesa ") + (fs.existsSync(rEs) ? "" : "falta la castellana"));
     continue;
   }
-  const en = require("../tema/marcas.cjs").sinTema(fs.readFileSync(rEn, "utf8")).split("\r\n").join("\n");
-  const es = require("../tema/marcas.cjs").sinTema(fs.readFileSync(rEs, "utf8")).split("\r\n").join("\n");
+  const en = require("../tema/marcas.cjs").sinTema(require("../seo/enlaces.cjs").sinEnlaces(fs.readFileSync(rEn, "utf8"))).split("\r\n").join("\n");
+  const es = require("../tema/marcas.cjs").sinTema(require("../seo/enlaces.cjs").sinEnlaces(fs.readFileSync(rEs, "utf8"))).split("\r\n").join("\n");
 
   const eEn = esqueleto(en).split("\n");
   const eEs = esqueleto(es).split("\n");

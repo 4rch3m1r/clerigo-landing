@@ -91,7 +91,7 @@ const PLANTILLA = lee(path.join(AQUI, "plantilla.html"));
 const PAGINAS = require("./paginas.cjs");
 
 function lee(p) {
-  return require("../tema/marcas.cjs").sinTema(fs.readFileSync(p, "utf8")).split("\r\n").join("\n");
+  return require("../tema/marcas.cjs").sinTema(require("../seo/enlaces.cjs").sinEnlaces(fs.readFileSync(p, "utf8"))).split("\r\n").join("\n");
 }
 
 const fallos = [];

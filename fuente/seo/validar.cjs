@@ -430,6 +430,30 @@ if (fs.existsSync(path.join(RAIZ, "_redirects"))) {
     malas.length === 0, malas.map(([n, l]) => "línea " + n + ": «" + l + "»").join(" · "));
 }
 
+/* ── LOS ENLACES INTERNOS VAN A LA DIRECCIÓN CANÓNICA ─────────────────────
+ * Ni un enlace interno por nombre de fichero: `precios.html` redirige (301 en
+ * la raíz, 307 en /es/) y Google no ve enlazadas directamente las páginas
+ * principales, que son las que pone debajo del resultado. Ver
+ * fuente/seo/enlaces.cjs. */
+{
+  const { tablaDeRutas } = require("./enlaces.cjs");
+  const destinos = new Set(tablaDeRutas(PAGINAS).values());
+  for (const [carpeta, idioma] of [[CASTELLANO, "es"], [INGLES, "en"]]) {
+    for (const p of PAGINAS) {
+      if (p.slug === "login") continue;
+      const f = path.join(carpeta, p.disco[idioma]);
+      if (!fs.existsSync(f)) continue;
+      const h = fs.readFileSync(f, "utf8");
+      const porFichero = [...h.matchAll(/href="((?!https?:|\/|#|mailto:|tel:|data:)[^"#]+\.html)[^"]*"/g)].map((m) => m[1]);
+      const internos = [...h.matchAll(/href="(\/[^"#]*)(?:#[^"]*)?" data-enlace=/g)].map((m) => m[1]);
+      const raros = internos.filter((r) => !destinos.has(r));
+      comprueba(`${idioma}/${p.disco[idioma]}: los enlaces internos van a su dirección canónica, sin redirección`,
+        porFichero.length === 0 && internos.length > 0 && raros.length === 0,
+        (porFichero.length ? "por fichero: " + [...new Set(porFichero)].join(", ") + " " : "") + (raros.length ? "destinos desconocidos: " + raros.join(", ") : ""));
+    }
+  }
+}
+
 console.log("\n────────────────────────────────────────────────────────────────");
 console.log(fallos.length === 0 ? `TODO PASA  ·  ${cuantas} comprobaciones` : `FALLAN ${fallos.length} de ${cuantas}:`);
 fallos.forEach((f) => console.log("  · " + f));
