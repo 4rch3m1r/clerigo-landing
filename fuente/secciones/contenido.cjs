@@ -85,7 +85,7 @@ const ES = {
       { num: "03", nombre: "Seguridad de Aplicaciones", texto: "WAF, Rate Limiting, APIs seguras y protección continua frente a amenazas en la capa de aplicación." },
       { num: "04", nombre: "Infraestructura Resiliente", texto: "Microsoft Azure, respaldos inmutables, datacenter replicado y una arquitectura diseñada para garantizar disponibilidad, recuperación y continuidad operativa." },
       { num: "05", nombre: "Inteligencia de Seguridad", texto: "Integración nativa con Microsoft Defender, Tenable, Vicarius y otras plataformas empresariales de seguridad." },
-      { num: "06", nombre: "Desarrollo Seguro", texto: "CI/CD controlado, despliegue continuo, prácticas de desarrollo seguro y protección durante todo el ciclo de vida del software." },
+      { num: "06", nombre: "Desarrollo Seguro", texto: "Desarrollo seguro bajo estándares internacionales, con seguridad integrada desde el diseño y durante todo el ciclo de vida del software." },
     ],
     /* La declaración arquitectónica, en tres golpes. */
     cierre: ["Defensa en profundidad.", "Protección continua.", "Diseñado para operaciones críticas."],
@@ -147,7 +147,7 @@ const EN = {
       { num: "03", nombre: "Application Security", texto: "WAF, rate limiting, secure APIs and continuous protection against threats at the application layer." },
       { num: "04", nombre: "Resilient Infrastructure", texto: "Microsoft Azure, immutable backups, a replicated datacenter and an architecture designed to guarantee availability, recovery and operational continuity." },
       { num: "05", nombre: "Security Intelligence", texto: "Native integration with Microsoft Defender, Tenable, Vicarius and other enterprise security platforms." },
-      { num: "06", nombre: "Secure Development", texto: "Controlled CI/CD, continuous deployment, secure development practices and protection across the entire software lifecycle." },
+      { num: "06", nombre: "Secure Development", texto: "Secure development under international standards, with security built in from the design stage and throughout the entire software lifecycle." },
     ],
     cierre: ["Defense in Depth.", "Continuous Protection.", "Built for Critical Operations."],
   },
