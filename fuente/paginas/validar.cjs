@@ -429,7 +429,8 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
      esto. Y el validador comparaba contra la misma dirección mala, así que los
      dos estaban de acuerdo y los dos equivocados: doce fallos suyos salían de
      aquí. Lo encontró una revisión en abanico, no yo. */
-  const imagen = SITIO.base + "/public/og/" + donde.imagen.es;
+  /* Y con su versión (`?v=N`), que la decide `urlDeTarjeta`: ver posicionar.cjs. */
+  const imagen = require("../seo/posicionar.cjs").urlDeTarjeta(donde.imagen.es);
   const cabeceraEsperada = CABECERA
     .split("{{TITULO}}").join(titulo)
     .split("{{DESCRIPCION}}").join(desc)
@@ -477,7 +478,7 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
      fichero está, que pesa lo que puede tragar WhatsApp y que mide lo que
      piden las tarjetas grandes. */
   /* De la dirección al fichero de al lado: la tarjeta tiene que estar aquí. */
-  const fImagen = path.join(RAIZ, imagen.slice(SITIO.base.length + 1));
+  const fImagen = path.join(RAIZ, imagen.slice(SITIO.base.length + 1).split("?")[0]);
   const hayImagen = imagen !== "" && fs.existsSync(fImagen);
   comprueba(`${slug}: la imagen de la vista previa existe de verdad`, hayImagen, imagen || "no declara ninguna");
   if (hayImagen) {

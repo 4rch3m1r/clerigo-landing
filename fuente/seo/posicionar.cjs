@@ -60,8 +60,16 @@ const BASE = SITIO.base.replace(/\/$/, "");
  * cada tarjeta en las dos carpetas, así que las dos direcciones existen; ésta
  * es la ÚNICA función que decide cuál se declara, y la usan el validador y la
  * ficha de datos para no volver a tener dos respuestas. */
+/* LA VERSIÓN DE CADA TARJETA. Facebook y LinkedIn guardan la imagen por su
+   dirección: rehacer el PNG con el mismo nombre no basta, siguen enseñando la
+   vieja durante días aunque se vuelva a extraer la página. Cuando cambia lo
+   que pone una tarjeta, se sube aquí su número y la dirección pasa a llevar
+   `?v=N` —el fichero es el mismo—, así que la toman nueva al momento.
+     · frameworks-og / marcos-og → 2: «66» pasó a «65+» (2026-09-15). */
+const VERSION_DE_TARJETA = { "frameworks-og.png": 2, "marcos-og.png": 2 };
 function urlDeTarjeta(nombre) {
-  return BASE + (/\.jpe?g$/i.test(nombre) ? "/og/" : "/public/og/") + nombre;
+  const v = VERSION_DE_TARJETA[nombre];
+  return BASE + (/\.jpe?g$/i.test(nombre) ? "/og/" : "/public/og/") + nombre + (v ? "?v=" + v : "");
 }
 const tipoDeTarjeta = (nombre) => (/\.jpe?g$/i.test(nombre) ? "image/jpeg" : "image/png");
 

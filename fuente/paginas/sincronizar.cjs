@@ -149,7 +149,8 @@ for (const { slug, chrome } of PAGINAS) {
      esto. Y el validador comparaba contra la misma dirección mala, así que los
      dos estaban de acuerdo y los dos equivocados: doce fallos suyos salían de
      aquí. Lo encontró una revisión en abanico, no yo. */
-  const imagen = SITIO.base + "/public/og/" + donde.imagen.es;
+  /* Y con su versión (`?v=N`), que la decide `urlDeTarjeta`: ver posicionar.cjs. */
+  const imagen = require("../seo/posicionar.cjs").urlDeTarjeta(donde.imagen.es);
 
   const { estilo, cuerpo, guion } = despieza(antes);
   const despues = CABECERA
