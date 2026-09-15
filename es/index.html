@@ -3617,6 +3617,22 @@ document.querySelectorAll('.platform-frame, .preview-body').forEach(el => barObs
      Antes se usaba scrollIntoView, que mueve el documento entero: con el pase
      automático eso sería la página desplazándose sola cada tres segundos
      mientras alguien lee otra cosa más abajo. */
+  /* Y SIN ANIMAR MIENTRAS LA PÁGINA SE MUEVE. Un desplazamiento suave, aunque
+     sea de la tira, CANCELA el que el navegador tenga en marcha en el
+     documento. «Explorar la plataforma» salta once mil píxeles hacia abajo con
+     scroll-behavior: smooth; si el pase de lámina caía a mitad de camino, la
+     página se quedaba parada —o volvía arriba— y el botón parecía no hacer
+     nada. Sólo funcionaba después de desplazarse a mano, porque entonces el
+     carrusel ya no está a la vista y el pase se detiene. Medido: con la tira
+     animada el salto acababa en 0; moviéndola de golpe, llegaba a 11.029.
+     Así que mientras la página se desplaza —o acaban de pulsar un enlace a
+     un ancla— la tira se recoloca sin animación. */
+  var paginaEnMarcha = 0;
+  window.addEventListener('scroll', function () { paginaEnMarcha = Date.now(); }, { passive: true });
+  document.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('a[href^="#"]')) paginaEnMarcha = Date.now();
+  }, true);
+
   function centraLaTira() {
     if (!franja || !tiras[cual]) return;
     var t = tiras[cual];
@@ -3624,8 +3640,10 @@ document.querySelectorAll('.platform-frame, .preview-body').forEach(el => barObs
     var tope = franja.scrollWidth - franja.clientWidth;
     if (destino < 0) destino = 0;
     if (destino > tope) destino = tope;
-    if (franja.scrollTo) {
-      franja.scrollTo({ left: destino, behavior: pocoMovimiento ? 'auto' : 'smooth' });
+    if (Math.abs(franja.scrollLeft - destino) < 1) return;
+    var suave = !pocoMovimiento && Date.now() - paginaEnMarcha > 1200;
+    if (suave && franja.scrollTo) {
+      franja.scrollTo({ left: destino, behavior: 'smooth' });
     } else { franja.scrollLeft = destino; }
   }
 
