@@ -497,6 +497,22 @@ if (fs.existsSync(path.join(RAIZ, "_redirects"))) {
     Array.isArray(org.knowsAbout) && org.knowsAbout.length > 0 && org.knowsAbout.length <= 15, (org.knowsAbout || []).length + " términos");
 }
 
+/* ── LO DE rapido.cjs SE PONE UNA VEZ ─────────────────────────────────────
+ * Llegó a anidarse seis veces la hoja de fuentes dentro de su <noscript>. */
+{
+  const { acelera } = require("./rapido.cjs");
+  for (const [carpeta, idioma] of [[CASTELLANO, "es"], [INGLES, "en"]]) {
+    for (const p of PAGINAS) {
+      const f = path.join(carpeta, p.disco[idioma]);
+      if (p.slug === "login" || !fs.existsSync(f)) continue;
+      const h = fs.readFileSync(f, "utf8");
+      const n = (h.match(/data-fuente-diferida/g) || []).length;
+      comprueba(`${idioma}/${p.disco[idioma]}: una sola hoja de fuentes diferida, y aplicarlo otra vez no cambia nada`,
+        n === 1 && acelera(h) === h, n + " hojas");
+    }
+  }
+}
+
 console.log("\n────────────────────────────────────────────────────────────────");
 console.log(fallos.length === 0 ? `TODO PASA  ·  ${cuantas} comprobaciones` : `FALLAN ${fallos.length} de ${cuantas}:`);
 fallos.forEach((f) => console.log("  · " + f));

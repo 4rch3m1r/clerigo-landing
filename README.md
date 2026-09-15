@@ -279,6 +279,7 @@ node fuente/seo/mutar.cjs             # 16 sobre el posicionamiento
 
 # las tarjetas de vista previa (Windows: usa System.Drawing)
 node fuente/og/hacer.cjs               # las once tarjetas de vista previa
+node fuente/imagenes/webp.cjs          # capturas del sistema en WebP (800/1200/1600), servidas con srcset
 ```
 
 **El idioma se elige solo.** Quien llega con el navegador en castellano va a

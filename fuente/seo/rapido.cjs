@@ -22,8 +22,21 @@
  * Se marcan con `data-fuente-diferida` y `data-diferida` para poder
  * deshacerlo exacto, y aplicarlo dos veces deja la página igual.
  */
-const FUENTE = /<link href="(https:\/\/fonts\.googleapis\.com\/css2\?[^"]+)" rel="stylesheet">/g;
+const fs = require("node:fs");
+const path = require("node:path");
+
+/* EL `(?<!<noscript>)` NO SOBRA. La primera versión volvía a encontrar la hoja
+   que ella misma deja dentro del `<noscript>` y la envolvía otra vez: cada
+   pasada de `posicionar.cjs` anidaba un nivel más, y había seis. Con JavaScript
+   sólo actuaba la primera, así que no se veía. `plegar()` deshace lo acumulado
+   antes de volver a ponerlo. */
+const FUENTE = /(?<!<noscript>)<link href="(https:\/\/fonts\.googleapis\.com\/css2\?[^"]+)" rel="stylesheet">/g;
 const FUENTE_DIFERIDA = /<link rel="preload" href="([^"]+)" as="style" onload="this\.onload=null;this\.rel='stylesheet'" data-fuente-diferida><noscript><link href="[^"]+" rel="stylesheet"><\/noscript>/g;
+function plegar(h) {
+  let antes;
+  do { antes = h; h = h.replace(FUENTE_DIFERIDA, (_, url) => `<link href="${url}" rel="stylesheet">`); } while (h !== antes);
+  return h;
+}
 const PEREZA = ' loading="lazy" decoding="async" data-diferida';
 
 /* ── LA PORTADA NO SE MAQUETA ENTERA ANTES DE PINTAR ──────────────────────
@@ -53,20 +66,40 @@ const VISIBILIDAD = '<style data-rapido>html:not(.sin-cv) body>section:not(#hero
   + 'if(location.hash)q();document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href*=\'#\']");if(a)q()},true);'
   + 'addEventListener("hashchange",q)})()</script>';
 
+/* ── LAS CAPTURAS DEL SISTEMA, EN WEBP Y DEL ANCHO QUE TOCA ──────────────
+ *
+ * Las genera `fuente/imagenes/webp.cjs` en 800, 1200 y 1600 px. El PNG se queda
+ * como `src`, de respaldo; `srcset` deja que cada pantalla pida el suyo. La del
+ * panel pasa de 144 KB a 20 KB en un teléfono. `sizes` es el ancho medido al
+ * que se pintan en clerigo.io: la del hero, 902 px como mucho; las del
+ * carrusel, 1.062; por debajo de 1024, casi todo el ancho. */
+const CAPTURA = /<img((?:(?!\ssrcset=)[^>])*?)\ssrc="((?:\.\.\/)?)sistema\/(sistema-[a-z0-9-]+)\.png"/g;
+const CON_WEBP = / srcset="[^"]*" sizes="[^"]*" data-webp/g;
+
+function conWebp(h) {
+  return h.replace(CAPTURA, (todo, antes, prefijo, nombre) => {
+    if (!fs.existsSync(path.join(__dirname, "..", "..", "sistema", "webp", `${nombre}-800.webp`))) return todo;
+    const ancho = /class="foto-sistema"/.test(antes) ? 902 : 1062;
+    const srcset = [800, 1200, 1600].map((w) => `${prefijo}sistema/webp/${nombre}-${w}.webp ${w}w`).join(", ");
+    return `<img${antes} srcset="${srcset}" sizes="(max-width: 1024px) 92vw, ${ancho}px" data-webp src="${prefijo}sistema/${nombre}.png"`;
+  });
+}
+
 function acelera(html) {
-  let h = String(html)
+  let h = plegar(String(html))
     .replace(FUENTE, (_, url) =>
       `<link rel="preload" href="${url}" as="style" onload="this.onload=null;this.rel='stylesheet'" data-fuente-diferida>`
       + `<noscript><link href="${url}" rel="stylesheet"></noscript>`)
     .replace(/<img(?![^>]*\sloading=)(?=[^>]*\ssrc="(?:\.\.\/)?public\/)/g, "<img" + PEREZA);
+  h = conWebp(h);
   if (h.includes('<section id="hero">') && !h.includes(VISIBILIDAD)) h = h.replace("</head>", VISIBILIDAD + "\n</head>");
   return h;
 }
 
 function sinAcelerar(html) {
-  return String(html)
-    .replace(FUENTE_DIFERIDA, (_, url) => `<link href="${url}" rel="stylesheet">`)
+  return plegar(String(html))
     .split(PEREZA).join("")
+    .replace(CON_WEBP, "")
     .split(VISIBILIDAD + "\n").join("")
     .split(VISIBILIDAD).join("");
 }
