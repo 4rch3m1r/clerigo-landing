@@ -82,8 +82,17 @@ const RETIRADOS = {
        para seleccionar todas las áreas (otro más). Así que, en neto: 6 − 1 = 5
        entradas y 2 − 3 = ningún botón menos que el original. El descuento tiene
        que ser exacto, por eso baja. */
+    /* TRES BOTONES PASAN A SER ENLACES — 2026-09-16. «Solicitar demo
+       gratuita», «Hablar con ventas» y «Ver demo» eran <button> sin nada
+       detrás: se pulsaban y no pasaba nada. Ahora llevan a donde decían que
+       llevaban —los dos primeros a contacto, el tercero a la sección de
+       plataforma de la portada—, y para eso son <a>: así funcionan con el
+       teclado, se abren en otra pestaña y los buscadores ven el enlace.
+       El control no se ha perdido, ha cambiado de etiqueta; pero la cuenta
+       mira <button>, así que aquí se declara. Tres menos, y el contador de
+       usuarios trajo uno de más: 3 − 1 = 2. */
     entradas: 5,
-    botones: 0,
+    botones: 2,
   },
 };
 const PLANTILLA = lee(path.join(AQUI, "plantilla.html"));

@@ -613,6 +613,14 @@ details.cuenta-users-note p { margin-top: 6px; }
   font-family: 'Source Sans 3', sans-serif; transition: all 0.15s;
 }
 .btn-demo:hover { background: var(--dark-4); border-color: var(--border-light); color: var(--text); }
+/* LOS DOS QUE LLEVAN A CONTACTO SON ENLACES, NO BOTONES. Eran <button> sin
+   nada detrás: se pulsaban y no pasaba nada. Como <a> funcionan con el
+   teclado, se abren en otra pestaña con el botón central y los buscadores
+   ven que la página de precios lleva a la de contacto. A cambio hay que
+   ponerles el centrado y quitarles el subrayado, que en un <button> venían
+   puestos. */
+a.btn-demo { display: flex; align-items: center; justify-content: center; text-decoration: none; }
+a.btn-ent { text-decoration: none; }
 .sum-note { font-size: 10px; color: var(--text-3); text-align: center; margin-top: 10px; line-height: 1.65; }
 
 /* ── BANDA EMPRESARIAL ── */
@@ -1043,11 +1051,11 @@ html[data-tema="oscuro"] select.fc{background-image:url("data:image/svg+xml,%3Cs
           <div class="ent-desc">Precios personalizados, SLA garantizado, onboarding dedicado, integración con tu infraestructura y soporte 24/7.</div>
         </div>
         <div class="ent-right">
-          <button class="btn-ent g">Ver demo</button>
-          <button class="btn-ent r">
+          <a class="btn-ent g" href="/es/#platform" data-enlace="index.html#platform">Ver demo</a>
+          <a class="btn-ent r" href="/es/contacto" data-enlace="contacto.html">
             <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Hablar con ventas
-          </button>
+          </a>
         </div>
       </div>
 
@@ -1108,7 +1116,7 @@ html[data-tema="oscuro"] select.fc{background-image:url("data:image/svg+xml,%3Cs
           <svg width="15" height="15" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Comenzar onboarding
         </button>
-        <button class="btn-demo">Solicitar demo gratuita</button>
+        <a class="btn-demo" href="/es/contacto" data-enlace="contacto.html">Solicitar demo gratuita</a>
         <p class="sum-note">Prueba gratuita de 14 días. Sin tarjeta requerida para empezar. Cancela cuando quieras.</p>
       </div>
     </div>
