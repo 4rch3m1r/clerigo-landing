@@ -121,6 +121,18 @@ nav {
   border-radius: 4px; transition: all 0.15s; cursor: pointer; background: none;
 }
 .btn-ghost:hover { color: var(--text); border-color: var(--border-light); background: rgba(14,14,14,0.04); }
+/* EL BOTÓN DE PRECIOS DE LA BARRA, EN AMARILLO. Es la acción que el dueño
+   quiere que se vea: entre «login», que es gris, y «Contacto», que es rojo de
+   marca, el de precios se quedaba en el montón. Se elige por su DESTINO y no
+   por su posición —«.btn-ghost + .btn-ghost»— para que valga igual en las dos
+   lenguas y no se vaya con el orden. La letra va oscura sobre el amarillo:
+   blanca sobre este tono no se lee. */
+.nav-cta .btn-ghost[href$="/pricing"], .nav-cta .btn-ghost[href$="/precios"] {
+  color: #16181C; background: #F7CE1E; border-color: #F7CE1E; font-weight: 700;
+}
+.nav-cta .btn-ghost[href$="/pricing"]:hover, .nav-cta .btn-ghost[href$="/precios"]:hover {
+  color: #16181C; background: #FFD93D; border-color: #FFD93D;
+}
 .btn-primary {
   color: white; font-size: 13px; font-weight: 700; text-decoration: none;
   padding: 8px 20px; background: var(--red);
