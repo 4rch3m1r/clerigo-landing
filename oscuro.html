@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<style data-rapido>html:not(.sin-cv) #how,html:not(.sin-cv) #frameworks,html:not(.sin-cv) #testimonials,html:not(.sin-cv) #cta,html:not(.sin-cv) body>footer{content-visibility:auto;contain-intrinsic-size:auto 900px}</style><script data-rapido>(function(){var d=document.documentElement;function q(){d.classList.add("sin-cv")}if(location.hash)q();document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href*='#']");if(a)q()},true);addEventListener("hashchange",q)})()</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
@@ -1914,8 +1915,23 @@ footer .social-icon:hover { background: rgba(255,255,255,0.09); border-color: rg
 .seg-cuerpo:has(.seg-pilar[data-capa="6"]:hover) .seg-capa-6 .seg-rotulo { fill: var(--red); }
 /* ══ FIN DEL ESTILO DE AGENTE Y ARQUITECTURA ══ */
 
+/* ── EL SELECTOR DE IDIOMA ─────────────────────────────────────────────
+   Cuál está activo lo dice el `lang` del documento y no una clase escrita a
+   mano: así el marcado es el mismo en las dos versiones y lo único que
+   cambia entre ellas son los dos enlaces. */
+.idiomas { display: flex; align-items: center; gap: 2px; margin-right: 4px; }
+.idiomas .idioma {
+  font-size: 11px; font-weight: 700; letter-spacing: .6px;
+  color: var(--text-3); padding: 5px 7px; border-radius: 5px; text-decoration: none;
+  transition: color .2s, background .2s;
+}
+.idiomas .idioma:hover { color: var(--text-2); }
+html[lang="en"] .idioma[data-idioma="en"],
+html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(--dark-3); }
+@media (max-width: 768px) { .idiomas { display: none; } }
+/* ── FIN DEL SELECTOR DE IDIOMA ── */
 </style><meta name="keywords" content="GRC software, GRC platform, GRC, governance risk and compliance, compliance software, risk management software, audit management software, GRC tool, integrated management system, ISMS, ISO management systems, compliance automation, cloud GRC, multi-tenant GRC software, risk management, regulatory compliance, compliance management, internal audit, internal control, corporate governance, cybersecurity, privacy and data protection, business continuity, document management, digital signature, third party risk management, vendor risk management, action plans, ISO 27001, ISO 27701, ISO 9001, ISO 22301, ISO 31000, ISO 37301, ISO 37001, ISO 42001, ISO 30301, NIST CSF, NIST 800-53, NIST Privacy Framework, Dominican Republic, Latin America, SIMV, Dominican banking regulator, NORTIC">
-
+
 
 <script>
 /* El idioma del navegador decide; la eleccion de la persona manda. Ver
@@ -1957,7 +1973,6 @@ footer .social-icon:hover { background: rgba(255,255,255,0.09); border-color: rg
   location.replace(destino + location.search + location.hash);
 })();
 </script>
-<style data-rapido>html:not(.sin-cv) #how,html:not(.sin-cv) #frameworks,html:not(.sin-cv) #testimonials,html:not(.sin-cv) #cta,html:not(.sin-cv) body>footer{content-visibility:auto;contain-intrinsic-size:auto 900px}</style><script data-rapido>(function(){var d=document.documentElement;function q(){d.classList.add("sin-cv")}if(location.hash)q();document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href*='#']");if(a)q()},true);addEventListener("hashchange",q)})()</script>
 </head>
 <body>
 

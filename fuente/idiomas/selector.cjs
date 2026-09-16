@@ -49,7 +49,10 @@ const ESTILO = [
   ".idiomas { display: flex; align-items: center; gap: 2px; margin-right: 4px; }",
   ".idiomas .idioma {",
   "  font-size: 11px; font-weight: 700; letter-spacing: .6px;",
-  "  color: var(--text-3); padding: 5px 7px; border-radius: 5px;",
+  /* SIN SUBRAYADO. Son dos enlaces, y el navegador los subraya por omisión: en
+     la barra quedaban como un enlace de texto suelto, no como el par de
+     pastillas que son. El resto de los enlaces de la barra ya lo quitan. */
+  "  color: var(--text-3); padding: 5px 7px; border-radius: 5px; text-decoration: none;",
   "  transition: color .2s, background .2s;",
   "}",
   ".idiomas .idioma:hover { color: var(--text-2); }",

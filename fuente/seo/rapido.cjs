@@ -96,8 +96,8 @@ function conWebp(h) {
 }
 
 /* Lo que pone `VISIBILIDAD`, esté donde esté. */
-const RASTRO_ESTILO = /\n?<style data-rapido>[\s\S]*?<\/style>/g;
-const RASTRO_GUION = /\n?<script data-rapido>[\s\S]*?<\/script>/g;
+const RASTRO_ESTILO = /\r?\n?<style data-rapido>[\s\S]*?<\/style>/g;
+const RASTRO_GUION = /\r?\n?<script data-rapido>[\s\S]*?<\/script>/g;
 function sinVisibilidad(h) { return h.replace(RASTRO_ESTILO, "").replace(RASTRO_GUION, ""); }
 
 function acelera(html) {
@@ -112,7 +112,17 @@ function acelera(html) {
      exacto no lo encontraba y se metía otro: había dos. Por su marca da igual
      dónde haya quedado, y el resultado no depende de cuántas veces se corra. */
   h = sinVisibilidad(h);
-  if (h.includes('<section id="hero">')) h = h.replace("</head>", VISIBILIDAD + "\n</head>");
+  /* Y VA AL PRINCIPIO DE LA CABECERA, NO AL FINAL. Al final era la última hoja
+     de la página, y el paso del idioma mete el estilo del selector EN/ES justo
+     antes del último `</style>`: acababa DENTRO de este bloque, y la pasada
+     siguiente, al quitarlo para volver a ponerlo, se lo llevaba por delante.
+     Resultado: en la portada —y sólo en la portada— el EN/ES salía sin estilo,
+     dos enlaces subrayados y pegados, y encima visible en el móvil, donde el
+     resto de las páginas lo esconden. */
+  /* Con el salto de línea de la página: las de disco son de Windows, y escribir
+     «\n» a secas dejaba el fichero distinto en cada pasada. */
+  const salto = h.includes("\r\n") ? "\r\n" : "\n";
+  if (h.includes('<section id="hero">')) h = h.replace("<head>", "<head>" + salto + VISIBILIDAD);
   return h;
 }
 
