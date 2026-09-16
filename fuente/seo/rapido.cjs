@@ -52,6 +52,14 @@ const PEREZA = ' loading="lazy" decoding="async" data-diferida';
  * cuanto la ve una vez: la barra de desplazamiento no baila al volver.
  * Sólo en la portada: es la única página hecha de secciones sueltas.
  *
+ * Y SÓLO DE «CÓMO FUNCIONA» HACIA ABAJO, no en todas. Con todas, Lighthouse
+ * bajaba «Prácticas recomendadas» a 79: su aviso de letra legible sólo sabe
+ * medir el texto PINTADO, y al dejar sin pintar media página la proporción
+ * caía al 34 %. Con estos cinco tramos —que son los que pesan: la rejilla de
+ * marcos son 1.666 px de tarjetas— pasa al 78 %, o sea 100, y encima la
+ * primera pintura salió MEJOR que aplicándolo a todo: 1.040 ms contra 1.224
+ * (mediana de cinco medidas, móvil y CPU a la cuarta parte).
+ *
  * PERO LOS ENLACES A SECCIONES ATERRIZABAN MAL. Medido en Chrome sin ventana
  * a 390 y a 1280 px: «#platform», «#solution»… quedaban hasta 1.700 px por
  * debajo o 1.100 por encima, porque el desplazamiento suave calcula el destino
@@ -61,7 +69,9 @@ const PEREZA = ' loading="lazy" decoding="async" data-diferida';
  * visibilidad diferida (`html.sin-cv`) ANTES del salto: el navegador maqueta
  * todo en ese momento y el destino sale exacto. La carga sigue siendo rápida;
  * lo que se paga, se paga al pulsar. */
-const VISIBILIDAD = '<style data-rapido>html:not(.sin-cv) body>section:not(#hero),html:not(.sin-cv) body>footer{content-visibility:auto;contain-intrinsic-size:auto 900px}</style>'
+const TRAMOS = ["#how", "#frameworks", "#testimonials", "#cta", "body>footer"];
+const VISIBILIDAD = '<style data-rapido>' + TRAMOS.map((s) => 'html:not(.sin-cv) ' + s).join(",")
+  + '{content-visibility:auto;contain-intrinsic-size:auto 900px}</style>'
   + '<script data-rapido>(function(){var d=document.documentElement;function q(){d.classList.add("sin-cv")}'
   + 'if(location.hash)q();document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href*=\'#\']");if(a)q()},true);'
   + 'addEventListener("hashchange",q)})()</script>';
