@@ -245,6 +245,16 @@ section { position: relative; }
 }
 .btn-large.red { background: var(--red); color: white; }
 .btn-large.red:hover { background: #c80d00; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(235,16,0,0.35); }
+/* Y EL GRANDE DEL HERO, IGUAL. Es el mismo destino que el de la barra, así que
+   el mismo amarillo; el «Contacto» del final de la página sigue en rojo, que es
+   la acción de cerrar. Por destino otra vez: en la oscura el enlace es
+   «precios.html» y en la clara «/es/precios». */
+.btn-large[href$="/pricing"], .btn-large[href$="/precios"], .btn-large[href$="precios.html"], .btn-large[href$="pricing.html"] {
+  background: #F7CE1E; color: #16181C;
+}
+.btn-large[href$="/pricing"]:hover, .btn-large[href$="/precios"]:hover, .btn-large[href$="precios.html"]:hover, .btn-large[href$="pricing.html"]:hover {
+  background: #FFD93D; box-shadow: 0 8px 32px rgba(247,206,30,0.30);
+}
 .btn-large.outline { background: none; color: var(--text); border: 1px solid var(--border-light); }
 .btn-large.outline:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.2); transform: translateY(-1px); }
 
