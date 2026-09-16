@@ -1,6 +1,6 @@
 {
  "_": "Copia de app-saas/src/app/legal/documentos.ts. NO se edita a mano: se refresca con `node fuente/legal/traer-de-la-app.cjs`. Manda la aplicación.",
- "version": "2.4",
+ "version": "2.5",
  "documentos": [
   {
    "id": "terminos",
@@ -232,7 +232,7 @@
         },
         {
          "fuerte": "Usuarios adicionales:",
-         "texto": "se facturan a $20 USD por usuario por mes, prorrateados según la fecha de activación."
+         "texto": "se facturan a $5 USD por usuario por mes, prorrateados según la fecha de activación."
         },
         {
          "fuerte": "Renovación automática:",
@@ -740,9 +740,9 @@
    "ruta": "/legal/cookies",
    "titulo": "Política de Cookies",
    "corto": "Cookies",
-   "sumario": "Solo cookies técnicas: sesión, autenticación y seguridad.",
-   "entradilla": "Clèrigo XGRC utiliza únicamente cookies técnicas: las imprescindibles para iniciar sesión, mantenerla y protegerla. No usamos cookies de publicidad ni de analítica, no incrustamos rastreadores de terceros y no vendemos ni compartimos tus datos con nadie. Esta política te explica exactamente qué se guarda en tu navegador y por qué.",
-   "actualizado": "20 de agosto de 2026",
+   "sumario": "En la plataforma, solo cookies técnicas. En el sitio web, medición con Google Tag Manager.",
+   "entradilla": "Esta política cubre dos sitios que conviene no confundir. En la plataforma —app.clerigo.io— utilizamos únicamente cookies técnicas: las imprescindibles para iniciar sesión, mantenerla y protegerla. En el sitio web público —clerigo.io— cargamos además Google Tag Manager para medir cómo se usan las páginas. No mostramos publicidad, no elaboramos perfiles individuales y no vendemos ni compartimos tus datos con nadie. Aquí te explicamos qué se guarda en tu navegador, qué se envía a Google y cómo impedirlo.",
+   "actualizado": "16 de septiembre de 2026",
    "secciones": [
     {
      "n": "01",
@@ -769,11 +769,11 @@
         },
         {
          "fuerte": "Propias:",
-         "texto": "establecidas directamente por la plataforma desde su propio dominio. Todas las que usamos son de este tipo."
+         "texto": "establecidas desde nuestro propio dominio. Todas las de la plataforma son de este tipo."
         },
         {
          "fuerte": "De terceros:",
-         "texto": "establecidas por proveedores externos. La plataforma no establece ninguna."
+         "texto": "establecidas por proveedores externos. La plataforma no establece ninguna; en el sitio web público puede establecerlas Google, a través de las etiquetas que carga Google Tag Manager."
         }
        ]
       },
@@ -857,6 +857,35 @@
          "Pestaña abierta dentro de la sesión de trabajo en curso"
         ]
        ]
+      },
+      {
+       "t": "p",
+       "texto": "Todo lo anterior es la plataforma. El sitio web público —clerigo.io— es otra cosa: no hace falta cuenta, no se inicia sesión y no escribe ninguna cookie propia. Lo que sí carga es Google Tag Manager, un gestor de etiquetas de Google que sirve para activar herramientas de medición sin tocar el código de cada página. Nuestro contenedor es GTM-N2T7DR3D."
+      },
+      {
+       "t": "p",
+       "texto": "Google Tag Manager, por sí solo, no escribe cookies ni te identifica: pide un archivo a googletagmanager.com y ejecuta las etiquetas que tengamos configuradas. En esa petición Google recibe tu dirección IP, la dirección de la página que estás viendo y los datos habituales de cualquier petición web —navegador, sistema e idioma—. Las cookies, si llega a haberlas, las ponen las etiquetas que se activen desde el contenedor, y en ese caso son cookies de Google."
+      },
+      {
+       "t": "tabla",
+       "cols": [
+        "Qué",
+        "Dónde",
+        "Duración",
+        "Finalidad"
+       ],
+       "filas": [
+        [
+         "Google Tag Manager (contenedor GTM-N2T7DR3D)",
+         "Solo en el sitio web clerigo.io",
+         "No escribe cookies por sí mismo",
+         "Cargar las etiquetas de medición del sitio web"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "texto": "Si en algún momento el contenedor pasa a cargar una herramienta que sí escriba cookies —Google Analytics, por ejemplo—, este documento se actualizará con su nombre, su duración y su finalidad, y donde la ley exija consentimiento previo se pedirá antes de activarla."
       }
      ]
     },
@@ -876,12 +905,12 @@
          "texto": "no mostramos anuncios ni utilizamos cookies publicitarias de ningún tipo."
         },
         {
-         "fuerte": "Sin rastreadores de terceros:",
-         "texto": "no incrustamos píxeles ni etiquetas de redes sociales, plataformas publicitarias o proveedores de analítica."
+         "fuerte": "Sin píxeles publicitarios ni de redes sociales:",
+         "texto": "no incrustamos píxeles de plataformas publicitarias ni de redes sociales. El único tercero que carga el sitio web es Google Tag Manager, declarado en el apartado 02."
         },
         {
-         "fuerte": "Sin analítica de comportamiento:",
-         "texto": "no usamos cookies para medir tu navegación ni para elaborar perfiles de uso individual."
+         "fuerte": "Sin perfiles individuales:",
+         "texto": "la medición del sitio web nos dice qué páginas se visitan y desde dónde se llega, no quién eres. No elaboramos perfiles individuales ni cruzamos esa medición con tu cuenta de la plataforma."
         },
         {
          "fuerte": "Sin venta ni cesión:",
@@ -895,7 +924,7 @@
       },
       {
        "t": "p",
-       "texto": "Por eso la plataforma no muestra un banner de consentimiento de cookies: no hay categorías opcionales que aceptar o rechazar. Si en el futuro incorporáramos cualquier cookie no esencial, actualizaríamos esta política y pediríamos tu consentimiento previo antes de activarla."
+       "texto": "Por eso la plataforma no muestra un banner de consentimiento: todas sus cookies son imprescindibles para que funcione y no hay categorías opcionales que aceptar o rechazar. En el sitio web público, la medición no escribe cookies en tu navegador y puedes impedirla en cualquier momento bloqueando googletagmanager.com, como se explica en el apartado 04. Si alguna vez incorporamos cookies no esenciales, actualizaremos este documento y pediremos tu consentimiento antes de activarlas, no después."
       }
      ]
     },
@@ -905,11 +934,15 @@
      "bloques": [
       {
        "t": "p",
-       "texto": "Solo las cookies no esenciales pueden desactivarse, y en esta plataforma no hay ninguna. Aun así, mantienes el control completo sobre lo que se guarda en tu navegador:"
+       "texto": "En la plataforma no hay ninguna cookie no esencial que desactivar. En el sitio web público sí puedes impedir la medición, y no pierdes nada por hacerlo: la web funciona igual. En los dos casos mantienes el control completo sobre lo que se guarda en tu navegador:"
       },
       {
        "t": "lista",
        "items": [
+        {
+         "fuerte": "Medición del sitio web:",
+         "texto": "bloquea el dominio googletagmanager.com desde los ajustes de tu navegador o con cualquier extensión de bloqueo de contenido. Ninguna parte de la web deja de funcionar por hacerlo."
+        },
         {
          "fuerte": "Configuración de tu navegador:",
          "texto": "puedes bloquear o eliminar cookies y almacenamiento local desde los ajustes de privacidad de cualquier navegador, en cualquier momento."
@@ -936,11 +969,11 @@
      "bloques": [
       {
        "t": "p",
-       "texto": "Algunos navegadores envían señales «Do Not Track» (DNT) para indicar que el usuario no desea ser rastreado. La plataforma no realiza ningún seguimiento de tu comportamiento, por lo que no hay nada que estas señales deban desactivar: el resultado es el mismo las envíes o no."
+       "texto": "Algunos navegadores envían señales «Do Not Track» (DNT) o «Global Privacy Control» (GPC) para indicar que el usuario no desea ser rastreado. La plataforma no realiza ningún seguimiento de tu comportamiento, así que ahí el resultado es el mismo las envíes o no. En el sitio web público, la medición no reacciona de forma automática a esas señales: decirlo es más honesto que dejarlo entender. Si no quieres que se cargue, bloquea el dominio como se explica en el apartado 04."
       },
       {
        "t": "p",
-       "texto": "Por la misma razón, el derecho a «No vender ni compartir mi información personal» previsto en el CCPA se cumple de partida: no vendemos ni compartimos información personal con terceros. Cualquier consulta sobre este punto puede dirigirse al Delegado de Protección de Datos indicado en la Política de Privacidad."
+       "texto": "El derecho a «No vender ni compartir mi información personal» previsto en el CCPA se cumple de partida: no vendemos información personal ni la compartimos con fines publicitarios o de publicidad cruzada. La medición del sitio web se limita a estadísticas de uso. Cualquier consulta sobre este punto puede dirigirse al Delegado de Protección de Datos indicado en la Política de Privacidad."
       }
      ]
     },
@@ -1026,7 +1059,7 @@
   "Planes mensuales:": "Monthly plans:",
   "se facturan cada mes en la fecha de suscripción, con un recargo del 20 % respecto al precio anual equivalente.": "billed each month on the subscription date, with a 20 % surcharge over the equivalent annual price.",
   "Usuarios adicionales:": "Additional users:",
-  "se facturan a $20 USD por usuario por mes, prorrateados según la fecha de activación.": "billed at USD 20 per user per month, pro-rated from the activation date.",
+  "se facturan a $5 USD por usuario por mes, prorrateados según la fecha de activación.": "billed at USD 5 per user per month, pro-rated from the activation date.",
   "Renovación automática:": "Automatic renewal:",
   "los planes se renuevan automáticamente al vencer, salvo que el Cliente notifique la cancelación con al menos 15 días de anticipación.": "plans renew automatically on expiry unless the Client gives notice of cancellation at least 15 days in advance.",
   "Los pagos vencidos pueden resultar en la suspensión del Servicio tras un período de gracia de 10 días. Clèrigo no se responsabiliza por pérdidas derivadas de suspensiones por falta de pago.": "Overdue payments may result in suspension of the Service after a 10-day grace period. Clèrigo accepts no responsibility for losses arising from suspensions due to non-payment.",
@@ -1182,8 +1215,9 @@
   "También puedes presentar una reclamación ante la autoridad de protección de datos competente en tu jurisdicción.": "You may also lodge a complaint with the data protection authority competent in your jurisdiction.",
   "Política de Cookies": "Cookie Policy",
   "Cookies": "Cookies",
-  "Solo cookies técnicas: sesión, autenticación y seguridad.": "Technical cookies only: session, authentication and security.",
-  "Clèrigo XGRC utiliza únicamente cookies técnicas: las imprescindibles para iniciar sesión, mantenerla y protegerla. No usamos cookies de publicidad ni de analítica, no incrustamos rastreadores de terceros y no vendemos ni compartimos tus datos con nadie. Esta política te explica exactamente qué se guarda en tu navegador y por qué.": "Clèrigo XGRC uses technical cookies only: the ones essential to sign in, stay signed in and keep the session safe. We do not use advertising or analytics cookies, we embed no third-party trackers, and we neither sell nor share your data with anyone. This policy tells you exactly what is stored in your browser and why.",
+  "En la plataforma, solo cookies técnicas. En el sitio web, medición con Google Tag Manager.": "On the platform, technical cookies only. On the website, measurement via Google Tag Manager.",
+  "Esta política cubre dos sitios que conviene no confundir. En la plataforma —app.clerigo.io— utilizamos únicamente cookies técnicas: las imprescindibles para iniciar sesión, mantenerla y protegerla. En el sitio web público —clerigo.io— cargamos además Google Tag Manager para medir cómo se usan las páginas. No mostramos publicidad, no elaboramos perfiles individuales y no vendemos ni compartimos tus datos con nadie. Aquí te explicamos qué se guarda en tu navegador, qué se envía a Google y cómo impedirlo.": "This policy covers two sites that are worth keeping apart. On the platform —app.clerigo.io— we use only technical cookies: those essential to sign in, stay signed in and keep the session protected. On the public website —clerigo.io— we additionally load Google Tag Manager to measure how the pages are used. We show no advertising, we build no individual profiles and we neither sell nor share your data with anyone. Here we explain what is stored in your browser, what is sent to Google and how to prevent it.",
+  "16 de septiembre de 2026": "16 September 2026",
   "¿Qué son las Cookies?": "What Are Cookies?",
   "Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas un sitio web. Junto con las cookies, también utilizamos tecnologías similares —almacenamiento local (localStorage) y de sesión (sessionStorage)— para recordar preferencias de la interfaz.": "Cookies are small text files stored on your device when you visit a website. Alongside cookies we also use similar technologies — local storage (localStorage) and session storage (sessionStorage) — to remember interface preferences.",
   "Las cookies pueden ser:": "Cookies can be:",
@@ -1192,9 +1226,9 @@
   "Persistentes:": "Persistent:",
   "permanecen en tu dispositivo durante un período definido o hasta que las elimines manualmente.": "remain on your device for a set period or until you delete them yourself.",
   "Propias:": "First-party:",
-  "establecidas directamente por la plataforma desde su propio dominio. Todas las que usamos son de este tipo.": "set directly by the platform from its own domain. Every cookie we use is of this kind.",
+  "establecidas desde nuestro propio dominio. Todas las de la plataforma son de este tipo.": "set from our own domain. All of the platform's cookies are of this kind.",
   "De terceros:": "Third-party:",
-  "establecidas por proveedores externos. La plataforma no establece ninguna.": "set by external providers. The platform sets none.",
+  "establecidas por proveedores externos. La plataforma no establece ninguna; en el sitio web público puede establecerlas Google, a través de las etiquetas que carga Google Tag Manager.": "set by external providers. The platform sets none; on the public website they may be set by Google, through the tags loaded by Google Tag Manager.",
   "La diferencia práctica entre una cookie y el almacenamiento local es a dónde va el dato: la cookie viaja al servidor en cada petición; el almacenamiento local se queda en tu navegador y nunca se envía. Por eso las preferencias de interfaz no son cookies.": "The practical difference between a cookie and local storage is where the data goes: a cookie travels to the server on every request; local storage stays in your browser and is never sent. That is why interface preferences are not cookies.",
   "Cookies que Utilizamos": "Cookies We Use",
   "Todas las cookies de la plataforma son estrictamente necesarias: sirven para autenticarte, mantener tu sesión y protegerla. Sin ellas no es posible iniciar sesión ni usar el Servicio, y por eso no están sujetas a consentimiento ni pueden desactivarse desde la plataforma.": "Every cookie on the platform is strictly necessary: it serves to authenticate you, keep your session and protect it. Without them it is not possible to sign in or use the Service, which is why they are not subject to consent and cannot be switched off from within the platform.",
@@ -1224,21 +1258,31 @@
   "ucrisk_tab": "ucrisk_tab",
   "Almacenamiento de sesión": "Session storage",
   "Pestaña abierta dentro de la sesión de trabajo en curso": "The tab open within the current working session",
+  "Todo lo anterior es la plataforma. El sitio web público —clerigo.io— es otra cosa: no hace falta cuenta, no se inicia sesión y no escribe ninguna cookie propia. Lo que sí carga es Google Tag Manager, un gestor de etiquetas de Google que sirve para activar herramientas de medición sin tocar el código de cada página. Nuestro contenedor es GTM-N2T7DR3D.": "Everything above concerns the platform. The public website —clerigo.io— is a different matter: no account is needed, there is no sign-in and it writes no first-party cookies. What it does load is Google Tag Manager, a tag manager from Google used to activate measurement tools without touching the code of each page. Our container is GTM-N2T7DR3D.",
+  "Google Tag Manager, por sí solo, no escribe cookies ni te identifica: pide un archivo a googletagmanager.com y ejecuta las etiquetas que tengamos configuradas. En esa petición Google recibe tu dirección IP, la dirección de la página que estás viendo y los datos habituales de cualquier petición web —navegador, sistema e idioma—. Las cookies, si llega a haberlas, las ponen las etiquetas que se activen desde el contenedor, y en ese caso son cookies de Google.": "Google Tag Manager, on its own, writes no cookies and does not identify you: it requests a file from googletagmanager.com and runs whichever tags we have configured. In that request Google receives your IP address, the address of the page you are viewing and the usual data of any web request —browser, operating system and language—. Cookies, if there are any, are set by the tags activated from the container, and in that case they are Google's cookies.",
+  "Qué": "What",
+  "Google Tag Manager (contenedor GTM-N2T7DR3D)": "Google Tag Manager (container GTM-N2T7DR3D)",
+  "Solo en el sitio web clerigo.io": "Only on the clerigo.io website",
+  "No escribe cookies por sí mismo": "Writes no cookies by itself",
+  "Cargar las etiquetas de medición del sitio web": "Loads the website's measurement tags",
+  "Si en algún momento el contenedor pasa a cargar una herramienta que sí escriba cookies —Google Analytics, por ejemplo—, este documento se actualizará con su nombre, su duración y su finalidad, y donde la ley exija consentimiento previo se pedirá antes de activarla.": "If at some point the container starts loading a tool that does write cookies —Google Analytics, for example— this document will be updated with its name, its duration and its purpose, and wherever the law requires prior consent it will be requested before activating it.",
   "Lo que NO Hacemos": "What We Do NOT Do",
   "Para que quede por escrito y no haya que deducirlo de una ausencia:": "So that it is on the record and does not have to be inferred from an absence:",
   "Sin publicidad:": "No advertising:",
   "no mostramos anuncios ni utilizamos cookies publicitarias de ningún tipo.": "we show no ads and use no advertising cookies of any kind.",
-  "Sin rastreadores de terceros:": "No third-party trackers:",
-  "no incrustamos píxeles ni etiquetas de redes sociales, plataformas publicitarias o proveedores de analítica.": "we embed no pixels or tags from social networks, advertising platforms or analytics providers.",
-  "Sin analítica de comportamiento:": "No behavioural analytics:",
-  "no usamos cookies para medir tu navegación ni para elaborar perfiles de uso individual.": "we use no cookies to measure your browsing or to build individual usage profiles.",
+  "Sin píxeles publicitarios ni de redes sociales:": "No advertising or social network pixels:",
+  "no incrustamos píxeles de plataformas publicitarias ni de redes sociales. El único tercero que carga el sitio web es Google Tag Manager, declarado en el apartado 02.": "we embed no pixels from advertising platforms or social networks. The only third party the website loads is Google Tag Manager, declared in section 02.",
+  "Sin perfiles individuales:": "No individual profiling:",
+  "la medición del sitio web nos dice qué páginas se visitan y desde dónde se llega, no quién eres. No elaboramos perfiles individuales ni cruzamos esa medición con tu cuenta de la plataforma.": "the website's measurement tells us which pages are visited and where visitors arrive from, not who you are. We build no individual profiles and we do not cross-reference that measurement with your platform account.",
   "Sin venta ni cesión:": "No selling or sharing:",
   "no vendemos, alquilamos ni compartimos con terceros los datos asociados a tu navegación.": "we do not sell, rent or share with third parties the data associated with your browsing.",
   "Sin decisiones automatizadas basadas en cookies:": "No automated decisions based on cookies:",
   "ninguna cookie alimenta perfiles, puntuaciones ni decisiones sobre ti.": "no cookie feeds profiles, scores or decisions about you.",
-  "Por eso la plataforma no muestra un banner de consentimiento de cookies: no hay categorías opcionales que aceptar o rechazar. Si en el futuro incorporáramos cualquier cookie no esencial, actualizaríamos esta política y pediríamos tu consentimiento previo antes de activarla.": "That is why the platform shows no cookie consent banner: there are no optional categories to accept or reject. If we were to add any non-essential cookie in future, we would update this policy and ask for your prior consent before enabling it.",
+  "Por eso la plataforma no muestra un banner de consentimiento: todas sus cookies son imprescindibles para que funcione y no hay categorías opcionales que aceptar o rechazar. En el sitio web público, la medición no escribe cookies en tu navegador y puedes impedirla en cualquier momento bloqueando googletagmanager.com, como se explica en el apartado 04. Si alguna vez incorporamos cookies no esenciales, actualizaremos este documento y pediremos tu consentimiento antes de activarlas, no después.": "That is why the platform shows no consent banner: all of its cookies are essential for it to work and there are no optional categories to accept or reject. On the public website, the measurement writes no cookies in your browser and you can prevent it at any time by blocking googletagmanager.com, as explained in section 04. If we ever add non-essential cookies, we will update this document and ask for your consent before activating them, not afterwards.",
   "Gestión de tus Preferencias": "Managing Your Preferences",
-  "Solo las cookies no esenciales pueden desactivarse, y en esta plataforma no hay ninguna. Aun así, mantienes el control completo sobre lo que se guarda en tu navegador:": "Only non-essential cookies can be switched off, and this platform has none. Even so, you keep full control over what is stored in your browser:",
+  "En la plataforma no hay ninguna cookie no esencial que desactivar. En el sitio web público sí puedes impedir la medición, y no pierdes nada por hacerlo: la web funciona igual. En los dos casos mantienes el control completo sobre lo que se guarda en tu navegador:": "On the platform there is no non-essential cookie to disable. On the public website you can prevent the measurement, and you lose nothing by doing so: the site works just the same. In both cases you keep full control over what is stored in your browser:",
+  "Medición del sitio web:": "Website measurement:",
+  "bloquea el dominio googletagmanager.com desde los ajustes de tu navegador o con cualquier extensión de bloqueo de contenido. Ninguna parte de la web deja de funcionar por hacerlo.": "block the googletagmanager.com domain from your browser settings or with any content-blocking extension. No part of the site stops working as a result.",
   "Configuración de tu navegador:": "Your browser settings:",
   "puedes bloquear o eliminar cookies y almacenamiento local desde los ajustes de privacidad de cualquier navegador, en cualquier momento.": "you can block or delete cookies and local storage from any browser's privacy settings, at any time.",
   "Cuentas recordadas:": "Remembered accounts:",
@@ -1247,8 +1291,8 @@
   "al cerrar sesión se invalidan las cookies de autenticación.": "signing out invalidates the authentication cookies.",
   "Bloquear las cookies esenciales impide iniciar sesión: sin ellas el servidor no puede reconocer que ya te has autenticado. Borrar el almacenamiento local no impide usar la plataforma; solo hace que se olviden tus preferencias de vista y las cuentas recordadas.": "Blocking the essential cookies prevents signing in: without them the server cannot tell that you have already authenticated. Clearing local storage does not stop you using the platform; it only makes it forget your view preferences and remembered accounts.",
   "Señales Do Not Track (DNT) y Derechos CCPA": "Do Not Track (DNT) Signals and CCPA Rights",
-  "Algunos navegadores envían señales «Do Not Track» (DNT) para indicar que el usuario no desea ser rastreado. La plataforma no realiza ningún seguimiento de tu comportamiento, por lo que no hay nada que estas señales deban desactivar: el resultado es el mismo las envíes o no.": "Some browsers send \"Do Not Track\" (DNT) signals to indicate that the user does not wish to be tracked. The platform does not track your behaviour at all, so there is nothing for these signals to switch off: the result is the same whether you send them or not.",
-  "Por la misma razón, el derecho a «No vender ni compartir mi información personal» previsto en el CCPA se cumple de partida: no vendemos ni compartimos información personal con terceros. Cualquier consulta sobre este punto puede dirigirse al Delegado de Protección de Datos indicado en la Política de Privacidad.": "For the same reason, the CCPA right to \"Do not sell or share my personal information\" is met from the outset: we do not sell or share personal information with third parties. Any query on this point can be addressed to the Data Protection Officer named in the Privacy Policy.",
+  "Algunos navegadores envían señales «Do Not Track» (DNT) o «Global Privacy Control» (GPC) para indicar que el usuario no desea ser rastreado. La plataforma no realiza ningún seguimiento de tu comportamiento, así que ahí el resultado es el mismo las envíes o no. En el sitio web público, la medición no reacciona de forma automática a esas señales: decirlo es más honesto que dejarlo entender. Si no quieres que se cargue, bloquea el dominio como se explica en el apartado 04.": "Some browsers send \"Do Not Track\" (DNT) or \"Global Privacy Control\" (GPC) signals to indicate that the user does not wish to be tracked. The platform does not track your behaviour at all, so there the result is the same whether you send them or not. On the public website, the measurement does not react automatically to those signals: saying so is more honest than leaving it to be assumed. If you do not want it loaded, block the domain as explained in section 04.",
+  "El derecho a «No vender ni compartir mi información personal» previsto en el CCPA se cumple de partida: no vendemos información personal ni la compartimos con fines publicitarios o de publicidad cruzada. La medición del sitio web se limita a estadísticas de uso. Cualquier consulta sobre este punto puede dirigirse al Delegado de Protección de Datos indicado en la Política de Privacidad.": "The CCPA right to \"Do not sell or share my personal information\" is met from the outset: we do not sell personal information, nor do we share it for advertising or cross-context behavioural advertising purposes. The website's measurement is limited to usage statistics. Any query on this point can be addressed to the Data Protection Officer named in the Privacy Policy.",
   "Actualizaciones de Esta Política": "Updates to This Policy",
   "Actualizamos esta Política de Cookies cuando cambian las cookies que utilizamos o los requisitos legales aplicables. La versión vigente está siempre publicada en esta misma dirección, con su fecha de última actualización al inicio.": "We update this Cookie Policy when the cookies we use or the applicable legal requirements change. The version in force is always published at this same address, with its last updated date at the top.",
   "Si alguna vez incorporamos cookies no esenciales, este documento se actualizará y se solicitará tu consentimiento antes de activarlas, no después. Para preguntas sobre el uso de cookies, escríbenos a privacy@clerigo.io. Respondemos dentro de los 5 días hábiles siguientes a tu consulta.": "If we ever add non-essential cookies, this document will be updated and your consent will be sought before enabling them, not after. For questions about our use of cookies, write to us at privacy@clerigo.io. We reply within 5 business days of your query."
