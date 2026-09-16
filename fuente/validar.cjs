@@ -47,10 +47,8 @@ const { CASTELLANO } = require("./donde.cjs");
 const OSCURO = require("node:path").join(CASTELLANO, "oscuro.html");
 const CLARO = require("node:path").join(CASTELLANO, "index.html");
 
-/* Y sin lo de `seo/rapido.cjs` —un estilo y un guion suyos en la portada— ni el
-   contenedor de Google Tag Manager, que también los pone el posicionamiento: la
-   cuenta de guiones de aquí abajo es contra el original de Archemir. */
-const lee = (p) => require("./seo/etiquetas.cjs").sinEtiqueta(require("./seo/rapido.cjs").sinAcelerar(require("./tema/marcas.cjs").sinTema(require("./seo/enlaces.cjs").sinEnlaces(fs.readFileSync(p, "utf8"))))).split("\r\n").join("\n");
+/* Y sin lo de `seo/rapido.cjs`, que añade a la portada un estilo y un guion suyos. */
+const lee = (p) => require("./seo/rapido.cjs").sinAcelerar(require("./tema/marcas.cjs").sinTema(require("./seo/enlaces.cjs").sinEnlaces(fs.readFileSync(p, "utf8")))).split("\r\n").join("\n");
 const org = lee(ORIGINAL);
 const osc = lee(OSCURO);
 const cla = lee(CLARO);

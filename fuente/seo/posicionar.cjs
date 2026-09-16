@@ -601,9 +601,6 @@ for (const carpeta of [CASTELLANO, INGLES]) {
     /* 6. Que pinte antes en un teléfono: ver `rapido.cjs`. */
     h = require("./rapido.cjs").acelera(h);
 
-    /* 7. Google Tag Manager: ver `etiquetas.cjs`. */
-    h = require("./etiquetas.cjs").etiqueta(h);
-
     if (h !== antes) { fs.writeFileSync(f, h); hechas++; }
     filas.push(`  ${(idioma + "/" + nombre).padEnd(24)} ${String(clave.length).padStart(3)} palabras · ${(json.length / 1024).toFixed(1)} KB de ficha`);
   }
