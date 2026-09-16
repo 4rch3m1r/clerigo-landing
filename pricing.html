@@ -513,7 +513,10 @@ input[type=range]:disabled { cursor: not-allowed; opacity: 0.7; }
 .lic-barra { display: flex; height: 6px; border-radius: 3px; overflow: hidden; background: var(--dark-3); gap: 2px; }
 .lic-barra span { height: 100%; border-radius: 3px; transition: width 0.3s ease; }
 .lic-barra span[style*="width:0.00%"] { display: none; }
-.lic-roles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+/* Cuatro roles: en el móvil caben de dos en dos, y de cuatro en cuanto hay
+   sitio. Con tres columnas el cuarto se quedaba solo en una fila. */
+.lic-roles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+@media (min-width: 560px) { .lic-roles { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .lic-rol {
   display: flex; flex-direction: column; align-items: flex-start; gap: 3px;
   padding: 9px 8px; border-radius: 8px; background: var(--dark-2); border: 1px solid var(--border);
@@ -539,10 +542,12 @@ input[type=range]:disabled { cursor: not-allowed; opacity: 0.7; }
 .lic-barra .lic-c-admin, .lic-punto.lic-c-admin { background: var(--red); }
 .lic-barra .lic-c-gestor { background: var(--accent); }
 .lic-barra .lic-c-ws { background: var(--teal); }
+.lic-barra .lic-c-audit { background: var(--purple); }
 .lic-barra .lic-c-extra, .lic-punto.lic-c-extra { background: var(--text-3); }
 .lic-icono.lic-c-admin { background: var(--red-dim); color: var(--red); }
 .lic-icono.lic-c-gestor { background: rgba(2,87,191,0.10); color: var(--accent); }
 .lic-icono.lic-c-ws { background: rgba(10,115,115,0.10); color: var(--teal); }
+.lic-icono.lic-c-audit { background: rgba(107,39,168,0.10); color: var(--purple); }
 details.cuenta-users-note summary { cursor: pointer; font-size: 11px; font-weight: 600; color: var(--text-2); list-style: none; }
 details.cuenta-users-note summary::-webkit-details-marker { display: none; }
 details.cuenta-users-note summary::before { content: "+ "; color: var(--red); font-weight: 700; }
@@ -989,7 +994,7 @@ html[data-tema="oscuro"] select.fc{background-image:url("data:image/svg+xml,%3Cs
   <div class="stripe"></div><div class="stripe2"></div>
   <div class="label-chip fade-up">Flexible per-module plans</div>
   <h1 class="fade-up fade-up-1">Choose only what<br>your company <em>needs.</em></h1>
-  <p class="hero-desc fade-up fade-up-2">46 modules across 6 areas. Activate only the ones you need. <strong>All areas = $10,000 USD / year</strong> — each area includes <strong>1 global administrator and 1 manager</strong>, and the five together are the full package: <strong>5 global administrators, 10 Manager licences and 25 Team Member licences</strong> for WorkSpace, with the <strong>16 Platform modules included</strong>. Additional users at <strong>$5 USD / user / month</strong>.</p>
+  <p class="hero-desc fade-up fade-up-2">46 modules across 6 areas. Activate only the ones you need. <strong>All areas = $10,000 USD / year</strong> — each area includes <strong>1 global administrator and 1 manager</strong>, and the five together are the full package: <strong>5 global administrators, 10 Manager licences, 25 Team Member licences for WorkSpace</strong> and 5 External Auditor licences, with the <strong>16 Platform modules included</strong>. Additional users at <strong>$5 USD / user / month</strong>.</p>
   <div class="billing-toggle fade-up fade-up-3" id="billingToggle">
     <button class="bill-btn active" onclick="setBilling('annual')">Annual</button>
     <button class="bill-btn" onclick="setBilling('monthly')">Monthly <span class="save-badge">+20%</span></button>
@@ -1061,7 +1066,7 @@ html[data-tema="oscuro"] select.fc{background-image:url("data:image/svg+xml,%3Cs
           <div class="users-chips" id="usuariosChips" aria-live="polite"></div>
           <details class="cuenta-users-note">
             <summary>Which licences are included?</summary>
-            <p>Each area you take includes 1 global administrator and 1 manager. With the five paid areas you get the full package: 5 global administrators, 10 Manager licences and 25 Team Member licences for WorkSpace, with the 16 Platform modules included. Beyond that, $5 USD per user per month.</p>
+            <p>Each area you take includes 1 global administrator and 1 manager. With the five paid areas you get the full package: 5 global administrators, 10 Manager licences, 25 Team Member licences for WorkSpace and 5 External Auditor licences, with the 16 Platform modules included. Beyond that, $5 USD per user per month.</p>
           </details>
         </div>
         <div class="sum-divider"></div>
@@ -1227,7 +1232,11 @@ const GESTORES_INCLUIDOS = 10;
 /* Team Member es el rol de WorkSpace: el portal donde esa gente ve su
    formación y sus tareas y no ve el resto del producto. */
 const COLABORADORES_INCLUIDOS = 25;
-const USUARIOS_INCLUIDOS = ADMINS_INCLUIDOS + GESTORES_INCLUIDOS + COLABORADORES_INCLUIDOS;
+/* External Auditor es el rol de sólo lectura para auditores de fuera: entran a
+   ver evidencias y papeles de trabajo sin poder tocar nada. También van con el
+   paquete, y son de la cuenta. Decisión del dueño, 2026-09-15. */
+const AUDITORES_INCLUIDOS = 5;
+const USUARIOS_INCLUIDOS = ADMINS_INCLUIDOS + GESTORES_INCLUIDOS + COLABORADORES_INCLUIDOS + AUDITORES_INCLUIDOS;
 const PER_USER_MONTHLY = 5; // USD/usuario adicional/mes (en mensual, +20%: 6)
 
 // Los iconos de estado, dibujados: ni un pictograma en toda la página.
@@ -1281,7 +1290,7 @@ const modules = [
 const faqs = [
   {q:'Can I activate modules later?',a:'Yes. You can add or remove modules from your administration panel at any time. The change takes effect in the next billing cycle.'},
   {q:'Is there a free trial?',a:'All plans include a 14-day free trial with full access to the selected modules. No credit card required to start.'},
-  {q:'How many users are included?',a:'It depends on what you activate. Each area you take includes 1 global administrator and 1 manager, so 10 licences with all five. If you activate the five paid areas you get the full package for $10,000 USD a year: 5 global administrators, 10 Manager licences and 25 Team Member licences for WorkSpace. That is 40 instead of ten, and WorkSpace access only comes with the package. Additional users are billed separately, on the same cycle as the plan: $60 USD per year, or $6 USD per month on monthly billing. For more than 200 users or special needs there is an Enterprise plan.'},
+  {q:'How many users are included?',a:'It depends on what you activate. Each area you take includes 1 global administrator and 1 manager, so 10 licences with all five. If you activate the five paid areas you get the full package for $10,000 USD a year: 5 global administrators, 10 Manager licences, 25 Team Member licences for WorkSpace and 5 External Auditor licences. That is 45 instead of ten, and WorkSpace access only comes with the package. Additional users are billed separately, on the same cycle as the plan: $60 USD per year, or $6 USD per month on monthly billing. For more than 200 users or special needs there is an Enterprise plan.'},
   {q:'Can I integrate Clèrigo with other systems?',a:'Yes. The platform includes a documented REST API, with its OpenAPI specification, to integrate with your digital ecosystem. There is a Microsoft Teams integration for the Meeting Hub, and data import from spreadsheet or CSV — for example, lists exported from SharePoint.'},
   {q:'How does the digital signature work?',a:'With our own engine: XSign signs on the server with X.509 certificates, timestamping and validation through CRL and OCSP, and supports multiple signatories and batch signing. Documents follow a configurable approval flow and are filed in the Document Manager.'},
   {q:'Which regulatory frameworks are preconfigured?',a:'ISO 27001, ISO 22301, NIST CSF, PCI-DSS, SWIFT, BCR (Banco Central RD), SIMV, NORTIC A5/A6/A7, Law 172-13 and more. New frameworks are added regularly.'},
@@ -1295,7 +1304,8 @@ const faqs = [
 let billing = 'annual';
 let selected = {};
 /* Los usuarios son de la CUENTA, no de cada modulo: el paquete trae doce
-   licencias —5 administradores globales, 10 Managers y 25 Team Member de WorkSpace—
+   licencias —5 administradores globales, 10 Managers, 25 Team Member de WorkSpace
+   y 5 External Auditor—
    y a partir de ahi se paga por persona. Por eso hay UN contador y no uno
    por modulo: sumar un deslizador por modulo contaba tres veces a quien usa
    tres modulos. */
@@ -1420,7 +1430,8 @@ function pagasPorEl(m) {
  * Dos caminos:
  *   · por áreas sueltas, cada una que pagas trae 1 administrador global y 1 Manager;
  *   · con las cinco de pago entra el PAQUETE: 5 administradores globales + 10 Managers +
- *     25 Team Member de WorkSpace, que sólo van en el paquete.
+ *     25 Team Member de WorkSpace y 5 External Auditor, que sólo van en el
+ *     paquete.
  *
  * AQUÍ HABÍA UNA COINCIDENCIA QUE YA NO EXISTE, y conviene contarlo porque el
  * comentario anterior avisaba de ella. Decía que los dos caminos daban doce «y
@@ -1473,7 +1484,7 @@ function licenciasIncluidas(usuarios = usuariosCuenta) {
   const paquete = PER_MODULE + Math.max(usuarios - USUARIOS_INCLUIDOS, 0) * porUsuario;
   if (paquete > sueltas) return base;
   return { paquete: true, porUsuarios: true, admins: ADMINS_INCLUIDOS, gestores: GESTORES_INCLUIDOS,
-    colaboradores: COLABORADORES_INCLUIDOS, total: USUARIOS_INCLUIDOS };
+    colaboradores: COLABORADORES_INCLUIDOS, auditores: AUDITORES_INCLUIDOS, total: USUARIOS_INCLUIDOS };
 }
 
 function licenciasBase() {
@@ -1498,10 +1509,10 @@ function licenciasBase() {
     && activos.reduce((s, m) => s + ((isAutoIncluded(m) || m.alwaysFree) ? 0 : m.basePrice), 0) >= PER_MODULE;
   if (todas || yaLoPaga) {
     return { paquete: true, admins: ADMINS_INCLUIDOS, gestores: GESTORES_INCLUIDOS,
-      colaboradores: COLABORADORES_INCLUIDOS, total: USUARIOS_INCLUIDOS };
+      colaboradores: COLABORADORES_INCLUIDOS, auditores: AUDITORES_INCLUIDOS, total: USUARIOS_INCLUIDOS };
   }
   const n = modules.filter(m => (selected[m.id] || isAutoIncluded(m)) && pagasPorEl(m)).length;
-  return { paquete: false, admins: n, gestores: n, colaboradores: 0, total: n * 2 };
+  return { paquete: false, admins: n, gestores: n, colaboradores: 0, auditores: 0, total: n * 2 };
 }
 
 /* Cómo se dice en una línea lo que trae. */
@@ -1511,7 +1522,7 @@ function textoDeLasLicencias() {
      clave del diccionario y el inglés puede reordenarla. Concatenando, la
      traducción sale a cachos —«administradores globales, » por un lado y « Managers y »
      por otro— y la mitad ni llega a ser texto traducible. */
-  if (l.paquete) return `${l.admins} global administrators, ${l.gestores} Managers and ${l.colaboradores} Team Member`;
+  if (l.paquete) return `${l.admins} global administrators, ${l.gestores} Managers, ${l.colaboradores} Team Member and ${l.auditores} External Auditor`;
   return `${l.admins} global administrator${l.admins > 1 ? 's' : ''} and ${l.gestores} Manager${l.gestores > 1 ? 's' : ''}`;
 }
 
@@ -1705,20 +1716,22 @@ function setUsuarios(val, porLaPersona) {
    con lo que cuestan. WorkSpace sólo viene con el paquete: con áreas sueltas
    la tarjeta sale apagada y lo dice, en vez de desaparecer. */
 function composicionDeLicencias(l, extra) {
-  const total = l.admins + l.gestores + l.colaboradores + extra;
+  const total = l.admins + l.gestores + l.colaboradores + l.auditores + extra;
   const ancho = (n) => (n / Math.max(total, 1) * 100).toFixed(2) + '%';
   const ICO_ADMIN = '<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6l7-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const ICO_GESTOR = '<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18" stroke="currentColor" stroke-width="2"/></svg>';
   const ICO_WORKSPACE = '<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16 5a3 3 0 0 1 0 6M18 14c2 .7 3 2.7 3 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+  const ICO_AUDITOR = '<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="13" r="2.5" stroke="currentColor" stroke-width="2"/><path d="M14 15l2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
   return `<div class="lic">
     <div class="lic-cabecera"><span>Included in your plan</span><strong>${l.total}</strong></div>
     <div class="lic-barra" aria-hidden="true">
-      <span class="lic-c-admin" style="width:${ancho(l.admins)}"></span><span class="lic-c-gestor" style="width:${ancho(l.gestores)}"></span><span class="lic-c-ws" style="width:${ancho(l.colaboradores)}"></span><span class="lic-c-extra" style="width:${ancho(extra)}"></span>
+      <span class="lic-c-admin" style="width:${ancho(l.admins)}"></span><span class="lic-c-gestor" style="width:${ancho(l.gestores)}"></span><span class="lic-c-ws" style="width:${ancho(l.colaboradores)}"></span><span class="lic-c-audit" style="width:${ancho(l.auditores)}"></span><span class="lic-c-extra" style="width:${ancho(extra)}"></span>
     </div>
     <div class="lic-roles">
       <div class="lic-rol"><span class="lic-icono lic-c-admin">${ICO_ADMIN}</span><span class="lic-num">${l.admins}</span><span class="lic-nombre">Global Administrators</span><span class="lic-desc">Account control</span></div>
       <div class="lic-rol"><span class="lic-icono lic-c-gestor">${ICO_GESTOR}</span><span class="lic-num">${l.gestores}</span><span class="lic-nombre">Managers</span><span class="lic-desc">Run the areas</span></div>
       <div class="lic-rol ${l.colaboradores ? '' : 'vacio'}"><span class="lic-icono lic-c-ws">${ICO_WORKSPACE}</span><span class="lic-num">${l.colaboradores}</span><span class="lic-nombre">Team Member</span><span class="lic-desc">${l.colaboradores ? 'Training and tasks' : 'Package only'}</span></div>
+      <div class="lic-rol ${l.auditores ? '' : 'vacio'}"><span class="lic-icono lic-c-audit">${ICO_AUDITOR}</span><span class="lic-num">${l.auditores}</span><span class="lic-nombre">External Auditor</span><span class="lic-desc">${l.auditores ? 'Read-only access to evidence' : 'Package only'}</span></div>
     </div>
     ${extra ? `<div class="lic-extra"><span><i class="lic-punto lic-c-extra"></i>Additional users</span><strong>${extra} additional · $${costeUsuariosExtra().toLocaleString()} USD${billing === 'annual' ? '/year' : '/month'}</strong></div>` : ''}
   </div>`;
