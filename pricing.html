@@ -989,7 +989,7 @@ html[data-tema="oscuro"] select.fc{background-image:url("data:image/svg+xml,%3Cs
   <div class="stripe"></div><div class="stripe2"></div>
   <div class="label-chip fade-up">Flexible per-module plans</div>
   <h1 class="fade-up fade-up-1">Choose only what<br>your company <em>needs.</em></h1>
-  <p class="hero-desc fade-up fade-up-2">46 modules across 6 areas. Activate only the ones you need. <strong>All areas = $10,000 USD / year</strong> — each area includes <strong>1 administrator and 1 manager</strong>, and the five together are the full package: <strong>5 administrators, 10 manager licences and 25 Team Member licences</strong> for WorkSpace, with the <strong>16 Platform modules included</strong>. Additional users at <strong>$5 USD / user / month</strong>.</p>
+  <p class="hero-desc fade-up fade-up-2">46 modules across 6 areas. Activate only the ones you need. <strong>All areas = $10,000 USD / year</strong> — each area includes <strong>1 global administrator and 1 manager</strong>, and the five together are the full package: <strong>5 global administrators, 10 Manager licences and 25 Team Member licences</strong> for WorkSpace, with the <strong>16 Platform modules included</strong>. Additional users at <strong>$5 USD / user / month</strong>.</p>
   <div class="billing-toggle fade-up fade-up-3" id="billingToggle">
     <button class="bill-btn active" onclick="setBilling('annual')">Annual</button>
     <button class="bill-btn" onclick="setBilling('monthly')">Monthly <span class="save-badge">+20%</span></button>
@@ -1061,7 +1061,7 @@ html[data-tema="oscuro"] select.fc{background-image:url("data:image/svg+xml,%3Cs
           <div class="users-chips" id="usuariosChips" aria-live="polite"></div>
           <details class="cuenta-users-note">
             <summary>Which licences are included?</summary>
-            <p>Each area you take includes 1 administrator and 1 manager. With the five paid areas you get the full package: 5 administrators, 10 manager licences and 25 Team Member licences for WorkSpace, with the 16 Platform modules included. Beyond that, $5 USD per user per month.</p>
+            <p>Each area you take includes 1 global administrator and 1 manager. With the five paid areas you get the full package: 5 global administrators, 10 Manager licences and 25 Team Member licences for WorkSpace, with the 16 Platform modules included. Beyond that, $5 USD per user per month.</p>
           </details>
         </div>
         <div class="sum-divider"></div>
@@ -1224,7 +1224,7 @@ const PER_MODULE = 10000; // USD/año, todos los módulos
    auditoría interna—. Son de la CUENTA, no de cada módulo. */
 const ADMINS_INCLUIDOS = 5;
 const GESTORES_INCLUIDOS = 10;
-/* Colaborador es el rol de WorkSpace: el portal donde esa gente ve su
+/* Team Member es el rol de WorkSpace: el portal donde esa gente ve su
    formación y sus tareas y no ve el resto del producto. */
 const COLABORADORES_INCLUIDOS = 25;
 const USUARIOS_INCLUIDOS = ADMINS_INCLUIDOS + GESTORES_INCLUIDOS + COLABORADORES_INCLUIDOS;
@@ -1281,7 +1281,7 @@ const modules = [
 const faqs = [
   {q:'Can I activate modules later?',a:'Yes. You can add or remove modules from your administration panel at any time. The change takes effect in the next billing cycle.'},
   {q:'Is there a free trial?',a:'All plans include a 14-day free trial with full access to the selected modules. No credit card required to start.'},
-  {q:'How many users are included?',a:'It depends on what you activate. Each area you take includes 1 administrator and 1 manager, so 10 licences with all five. If you activate the five paid areas you get the full package for $10,000 USD a year: 5 administrators, 10 manager licences and 25 Team Member licences for WorkSpace. That is 40 instead of ten, and WorkSpace access only comes with the package. Additional users are billed separately, on the same cycle as the plan: $60 USD per year, or $6 USD per month on monthly billing. For more than 200 users or special needs there is an Enterprise plan.'},
+  {q:'How many users are included?',a:'It depends on what you activate. Each area you take includes 1 global administrator and 1 manager, so 10 licences with all five. If you activate the five paid areas you get the full package for $10,000 USD a year: 5 global administrators, 10 Manager licences and 25 Team Member licences for WorkSpace. That is 40 instead of ten, and WorkSpace access only comes with the package. Additional users are billed separately, on the same cycle as the plan: $60 USD per year, or $6 USD per month on monthly billing. For more than 200 users or special needs there is an Enterprise plan.'},
   {q:'Can I integrate Clèrigo with other systems?',a:'Yes. The platform includes a documented REST API, with its OpenAPI specification, to integrate with your digital ecosystem. There is a Microsoft Teams integration for the Meeting Hub, and data import from spreadsheet or CSV — for example, lists exported from SharePoint.'},
   {q:'How does the digital signature work?',a:'With our own engine: XSign signs on the server with X.509 certificates, timestamping and validation through CRL and OCSP, and supports multiple signatories and batch signing. Documents follow a configurable approval flow and are filed in the Document Manager.'},
   {q:'Which regulatory frameworks are preconfigured?',a:'ISO 27001, ISO 22301, NIST CSF, PCI-DSS, SWIFT, BCR (Banco Central RD), SIMV, NORTIC A5/A6/A7, Law 172-13 and more. New frameworks are added regularly.'},
@@ -1295,7 +1295,7 @@ const faqs = [
 let billing = 'annual';
 let selected = {};
 /* Los usuarios son de la CUENTA, no de cada modulo: el paquete trae doce
-   licencias —5 administradores, 10 gestores y 25 Colaboradores de WorkSpace—
+   licencias —5 administradores globales, 10 Managers y 25 Team Member de WorkSpace—
    y a partir de ahi se paga por persona. Por eso hay UN contador y no uno
    por modulo: sumar un deslizador por modulo contaba tres veces a quien usa
    tres modulos. */
@@ -1418,9 +1418,9 @@ function pagasPorEl(m) {
  * LO QUE TRAE LO QUE HAS ELEGIDO.
  *
  * Dos caminos:
- *   · por áreas sueltas, cada una que pagas trae 1 administrador y 1 gestor;
- *   · con las cinco de pago entra el PAQUETE: 5 administradores + 10 gestores +
- *     5 Colaboradores de WorkSpace, que sólo van en el paquete.
+ *   · por áreas sueltas, cada una que pagas trae 1 administrador global y 1 Manager;
+ *   · con las cinco de pago entra el PAQUETE: 5 administradores globales + 10 Managers +
+ *     25 Team Member de WorkSpace, que sólo van en el paquete.
  *
  * AQUÍ HABÍA UNA COINCIDENCIA QUE YA NO EXISTE, y conviene contarlo porque el
  * comentario anterior avisaba de ella. Decía que los dos caminos daban doce «y
@@ -1509,10 +1509,10 @@ function textoDeLasLicencias() {
   const l = licenciasIncluidas();
   /* Cada frase entera en UNA plantilla, y no pegando trozos: así es una sola
      clave del diccionario y el inglés puede reordenarla. Concatenando, la
-     traducción sale a cachos —«administradores, » por un lado y « gestores y »
+     traducción sale a cachos —«administradores globales, » por un lado y « Managers y »
      por otro— y la mitad ni llega a ser texto traducible. */
-  if (l.paquete) return `${l.admins} administrators, ${l.gestores} managers and ${l.colaboradores} team members`;
-  return `${l.admins} administrator${l.admins > 1 ? 's' : ''} and ${l.gestores} manager${l.gestores > 1 ? 's' : ''}`;
+  if (l.paquete) return `${l.admins} global administrators, ${l.gestores} Managers and ${l.colaboradores} Team Member`;
+  return `${l.admins} global administrator${l.admins > 1 ? 's' : ''} and ${l.gestores} Manager${l.gestores > 1 ? 's' : ''}`;
 }
 
 /* El precio del paquete completo, en el ciclo que toque. */
@@ -1594,12 +1594,12 @@ function lineaTopeResumen() {
      tope se come —las cinco áreas suman 7.000, así que −$2.000— y la lista
      suma exactamente el total. Lo mismo en la caja del pedido. */
   /* La frase entera en UNA plantilla. Pegando trozos, el de después del número
-     —« licencias de Colaborador para WorkSpace»— no llega a ser texto
+     —« licencias de Team Member para WorkSpace»— no llega a ser texto
      traducible y se queda en castellano dentro de la página inglesa. */
   const ofrece = l.porUsuarios
     ? `<div style="font-size:9px;color:var(--text-3);margin-top:1px">With these users the full package is cheaper: it includes ${USUARIOS_INCLUIDOS} licences</div>`
     : l.paquete ? '' :
-    `<div style="font-size:9px;color:var(--text-3);margin-top:1px">Activate the missing ones: the full package costs the same and adds ${COLABORADORES_INCLUIDOS} Team member licences for WorkSpace</div>`;
+    `<div style="font-size:9px;color:var(--text-3);margin-top:1px">Activate the missing ones: the full package costs the same and adds ${COLABORADORES_INCLUIDOS} Team Member licences for WorkSpace</div>`;
   return `<div class="sum-item">
       <div class="sum-item-name">
         <div class="sum-dot" style="background:var(--success)"></div>
@@ -1716,9 +1716,9 @@ function composicionDeLicencias(l, extra) {
       <span class="lic-c-admin" style="width:${ancho(l.admins)}"></span><span class="lic-c-gestor" style="width:${ancho(l.gestores)}"></span><span class="lic-c-ws" style="width:${ancho(l.colaboradores)}"></span><span class="lic-c-extra" style="width:${ancho(extra)}"></span>
     </div>
     <div class="lic-roles">
-      <div class="lic-rol"><span class="lic-icono lic-c-admin">${ICO_ADMIN}</span><span class="lic-num">${l.admins}</span><span class="lic-nombre">Administrators</span><span class="lic-desc">Account control</span></div>
+      <div class="lic-rol"><span class="lic-icono lic-c-admin">${ICO_ADMIN}</span><span class="lic-num">${l.admins}</span><span class="lic-nombre">Global Administrators</span><span class="lic-desc">Account control</span></div>
       <div class="lic-rol"><span class="lic-icono lic-c-gestor">${ICO_GESTOR}</span><span class="lic-num">${l.gestores}</span><span class="lic-nombre">Managers</span><span class="lic-desc">Run the areas</span></div>
-      <div class="lic-rol ${l.colaboradores ? '' : 'vacio'}"><span class="lic-icono lic-c-ws">${ICO_WORKSPACE}</span><span class="lic-num">${l.colaboradores}</span><span class="lic-nombre">WorkSpace</span><span class="lic-desc">${l.colaboradores ? 'Training and tasks' : 'Package only'}</span></div>
+      <div class="lic-rol ${l.colaboradores ? '' : 'vacio'}"><span class="lic-icono lic-c-ws">${ICO_WORKSPACE}</span><span class="lic-num">${l.colaboradores}</span><span class="lic-nombre">Team Member</span><span class="lic-desc">${l.colaboradores ? 'Training and tasks' : 'Package only'}</span></div>
     </div>
     ${extra ? `<div class="lic-extra"><span><i class="lic-punto lic-c-extra"></i>Additional users</span><strong>${extra} additional · $${costeUsuariosExtra().toLocaleString()} USD${billing === 'annual' ? '/year' : '/month'}</strong></div>` : ''}
   </div>`;
@@ -1957,7 +1957,7 @@ function renderOrderBox() {
       <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
         <div class="order-dot" style="background:var(--text-3)"></div>
         Full package cap
-        ${licenciasIncluidas().paquete ? '' : `<span style="color:var(--text-3);font-size:10px">(activate the missing ones and ${COLABORADORES_INCLUIDOS} Team member licences are added)</span>`}
+        ${licenciasIncluidas().paquete ? '' : `<span style="color:var(--text-3);font-size:10px">(activate the missing ones and ${COLABORADORES_INCLUIDOS} Team Member licences are added)</span>`}
         ${licenciasIncluidas().porUsuarios ? `<span style="color:var(--text-3);font-size:10px">(with these users it is cheaper: it includes ${USUARIOS_INCLUIDOS} licences)</span>` : ''}
       </div>
       <div><span style="${ajustePaquete < 0 ? 'color:var(--success);' : ''}font-size:11px;font-weight:700">${ajustePaquete < 0 ? '−' : '+'}$${Math.abs(ajustePaquete).toLocaleString()}</span></div>
