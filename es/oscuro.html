@@ -1928,7 +1928,15 @@ footer .social-icon:hover { background: rgba(255,255,255,0.09); border-color: rg
 .idiomas .idioma:hover { color: var(--text-2); }
 html[lang="en"] .idioma[data-idioma="en"],
 html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(--dark-3); }
-@media (max-width: 768px) { .idiomas { display: none; } }
+@media (max-width: 768px) {
+  .idiomas { gap: 0; margin-right: 2px; }
+  .idiomas .idioma {
+    font-size: 10px; letter-spacing: .4px; padding: 4px 6px;
+    color: var(--text-2); background: var(--dark-3);
+  }
+  html[lang="en"] .idioma[data-idioma="en"],
+  html[lang="es"] .idioma[data-idioma="es"] { display: none; }
+}
 /* ── FIN DEL SELECTOR DE IDIOMA ── */
 </style><meta name="keywords" content="software GRC, plataforma GRC, GRC, gobierno riesgo y cumplimiento, software de cumplimiento, software de gestión de riesgos, software de auditoría, herramienta GRC, sistema de gestión integrado, SGSI, sistemas de gestión ISO, automatización del cumplimiento, GRC en la nube, software GRC multiempresa, gestión de riesgos, cumplimiento normativo, cumplimiento regulatorio, auditoría interna, control interno, gobierno corporativo, ciberseguridad, privacidad y protección de datos, continuidad del negocio, gestión documental, firma digital, riesgo de terceros, gestión de proveedores, planes de acción, ISO 27001, ISO 27701, ISO 9001, ISO 22301, ISO 31000, ISO 37301, ISO 37001, ISO 42001, ISO 30301, NIST CSF, NIST 800-53, NIST Privacy Framework, República Dominicana, Latinoamérica, SIMV, Superintendencia de Bancos, Banco Central de la República Dominicana, NORTIC">
 

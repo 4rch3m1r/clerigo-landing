@@ -103,8 +103,13 @@ comprueba("la barra estrecha sus espacios de 769 a 1320 px para que el botón no
   /@media \(min-width:769px\) and \(max-width:1320px\)\{nav\{gap:clamp\(16px,calc\(16px \+ \(100vw - 1000px\) \* \.075\),40px\)/.test(portada) &&
   (16 + 320 * 0.075 === 40) && (24 + 320 * 0.075 === 48) && (16 + 320 * 0.0375 === 28) && (8 + 320 * 0.0125 === 12));
 comprueba("en móvil la barra no parte «log in» ni se sale: botones sin partir y espacios estrechos por debajo de 768 px",
-  /@media \(max-width:768px\)\{nav\{gap:12px\}\.nav-cta\{gap:8px\}\.tema-toggle\{margin-left:0;width:32px;height:32px\}\.nav-cta \.btn-ghost,\.nav-cta \.btn-primary,\.nav-logo-text\{white-space:nowrap\}\}/.test(portada) &&
-  /@media \(max-width:389px\)\{\.nav-logo-text small\{display:none\}\}/.test(portada));
+  /@media \(max-width:768px\)\{nav\{gap:10px\}\.nav-cta\{gap:8px\}\.tema-toggle\{margin-left:0;width:32px;height:32px\}\.nav-cta \.btn-ghost,\.nav-cta \.btn-primary,\.nav-logo-text\{white-space:nowrap\}\}/.test(portada) &&
+  /@media \(max-width:389px\)\{\.nav-logo-text small\{display:none\}\}/.test(portada) &&
+  /* Y el sitio del selector EN/ES, que desde el 2026-09-16 también se ve en el
+     móvil: la barra se aprieta a 420 y a 340 para que siga cabiendo en una
+     línea. Medido de 320 a 768 px en las doce páginas con barra. */
+  /@media \(max-width:420px\)\{nav\{gap:8px\}\.idiomas \.idioma\{padding:4px 5px\}\}/.test(portada) &&
+  /@media \(max-width:340px\)\{nav\{padding:0 14px;gap:7px\}\.idiomas\{margin-right:0\}\.idiomas \.idioma\{padding:4px 4px\}/.test(portada));
 /* El tema oscuro cambia colores y nada más: ni alineaciones ni tamaños. Se mira
    el CSS generado de la portada —el que copia de la gemela— quitando la hoja
    base del botón, que sí lleva medidas a propósito. */

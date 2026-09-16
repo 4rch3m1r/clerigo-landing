@@ -1930,7 +1930,15 @@ footer .social-icon:hover { background: rgba(255,255,255,0.09); border-color: rg
 .idiomas .idioma:hover { color: var(--text-2); }
 html[lang="en"] .idioma[data-idioma="en"],
 html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(--dark-3); }
-@media (max-width: 768px) { .idiomas { display: none; } }
+@media (max-width: 768px) {
+  .idiomas { gap: 0; margin-right: 2px; }
+  .idiomas .idioma {
+    font-size: 10px; letter-spacing: .4px; padding: 4px 6px;
+    color: var(--text-2); background: var(--dark-3);
+  }
+  html[lang="en"] .idioma[data-idioma="en"],
+  html[lang="es"] .idioma[data-idioma="es"] { display: none; }
+}
 /* ── FIN DEL SELECTOR DE IDIOMA ── */
 </style>
 
@@ -1998,10 +2006,11 @@ html[data-tema="oscuro"] .tema-toggle .tema-luna{display:none}
    el «XGRC» del rótulo se retira por debajo de 390 px (el logotipo y
    «Clèrigo» siguen). Medido en las doce páginas con barra: cabe entera y en
    una línea de 320 a 768 px. */
-@media (max-width:768px){nav{gap:12px}.nav-cta{gap:8px}.tema-toggle{margin-left:0;width:32px;height:32px}.nav-cta .btn-ghost,.nav-cta .btn-primary,.nav-logo-text{white-space:nowrap}}
+@media (max-width:768px){nav{gap:10px}.nav-cta{gap:8px}.tema-toggle{margin-left:0;width:32px;height:32px}.nav-cta .btn-ghost,.nav-cta .btn-primary,.nav-logo-text{white-space:nowrap}}
+@media (max-width:420px){nav{gap:8px}.idiomas .idioma{padding:4px 5px}}
 @media (max-width:400px){.nav-cta .btn-ghost,.nav-cta .btn-primary{padding:7px 12px}}
 @media (max-width:389px){.nav-logo-text small{display:none}}
-@media (max-width:340px){nav{padding:0 14px}.nav-cta{gap:6px}.nav-cta .btn-ghost,.nav-cta .btn-primary{padding:7px 9px}}
+@media (max-width:340px){nav{padding:0 14px;gap:7px}.idiomas{margin-right:0}.idiomas .idioma{padding:4px 4px}.nav-cta{gap:6px}.nav-cta .btn-ghost,.nav-cta .btn-primary{padding:7px 9px}}
 @media (min-width:769px) and (max-width:1320px){nav{gap:clamp(16px,calc(16px + (100vw - 1000px) * .075),40px);padding-left:clamp(24px,calc(24px + (100vw - 1000px) * .075),48px);padding-right:clamp(24px,calc(24px + (100vw - 1000px) * .075),48px)}.nav-links{gap:clamp(16px,calc(16px + (100vw - 1000px) * .0375),28px)}.nav-cta{gap:clamp(8px,calc(8px + (100vw - 1000px) * .0125),12px)}.tema-toggle{margin-left:clamp(0px,calc((100vw - 1000px) * .025),8px)}}
 html[data-tema="oscuro"]{color-scheme:dark}
 html[data-tema="oscuro"]{--red-ink:#FF7066;--red-dim:rgba(235,16,0,0.15);--dark:#0E0E0E;--dark-2:#141414;--dark-3:#1B1B1B;--dark-4:#222222;--border:rgba(255,255,255,0.08);--border-light:rgba(255,255,255,0.12);--text:#F0F0F0;--text-2:rgba(240,240,240,0.65);--text-3:rgba(240,240,240,0.5);--accent:#0265DC;--success:#12805C;--warning:#E68619;--danger:#D7373F;--purple:#7B2FBE;--teal:#0D8F8F}

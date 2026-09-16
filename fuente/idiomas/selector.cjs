@@ -58,7 +58,19 @@ const ESTILO = [
   ".idiomas .idioma:hover { color: var(--text-2); }",
   'html[lang="en"] .idioma[data-idioma="en"],',
   'html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(--dark-3); }',
-  "@media (max-width: 768px) { .idiomas { display: none; } }",
+  /* EN EL MÓVIL TAMBIÉN SE PUEDE CAMBIAR DE IDIOMA. Estaba escondido por
+     debajo de 768 px y el idioma quedaba a lo que detectara el navegador. Se
+     queda, pero más apretado —10 px y menos aire— porque en la barra de un
+     teléfono compiten con el logotipo, el sol/luna, «log in» y «Contacto». */
+  "@media (max-width: 768px) {",
+  "  .idiomas { gap: 0; margin-right: 2px; }",
+  "  .idiomas .idioma {",
+  "    font-size: 10px; letter-spacing: .4px; padding: 4px 6px;",
+  "    color: var(--text-2); background: var(--dark-3);",
+  "  }",
+  '  html[lang="en"] .idioma[data-idioma="en"],',
+  '  html[lang="es"] .idioma[data-idioma="es"] { display: none; }',
+  "}",
   /* Cierra con un rótulo propio y no con su última regla. El validador aplana
      cada bloque `{ … }` a una línea antes de comparar, así que anclar el final
      en «background: var(--dark-3); }» no casaba —quedaba «…;}», sin el

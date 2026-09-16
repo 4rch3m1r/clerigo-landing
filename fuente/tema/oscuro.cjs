@@ -389,10 +389,11 @@ ${PREFIJO} .tema-toggle .tema-luna{display:none}
    el «XGRC» del rótulo se retira por debajo de 390 px (el logotipo y
    «Clèrigo» siguen). Medido en las doce páginas con barra: cabe entera y en
    una línea de 320 a 768 px. */
-@media (max-width:768px){nav{gap:12px}.nav-cta{gap:8px}.tema-toggle{margin-left:0;width:32px;height:32px}.nav-cta .btn-ghost,.nav-cta .btn-primary,.nav-logo-text{white-space:nowrap}}
+@media (max-width:768px){nav{gap:10px}.nav-cta{gap:8px}.tema-toggle{margin-left:0;width:32px;height:32px}.nav-cta .btn-ghost,.nav-cta .btn-primary,.nav-logo-text{white-space:nowrap}}
+@media (max-width:420px){nav{gap:8px}.idiomas .idioma{padding:4px 5px}}
 @media (max-width:400px){.nav-cta .btn-ghost,.nav-cta .btn-primary{padding:7px 12px}}
 @media (max-width:389px){.nav-logo-text small{display:none}}
-@media (max-width:340px){nav{padding:0 14px}.nav-cta{gap:6px}.nav-cta .btn-ghost,.nav-cta .btn-primary{padding:7px 9px}}
+@media (max-width:340px){nav{padding:0 14px;gap:7px}.idiomas{margin-right:0}.idiomas .idioma{padding:4px 4px}.nav-cta{gap:6px}.nav-cta .btn-ghost,.nav-cta .btn-primary{padding:7px 9px}}
 @media (min-width:769px) and (max-width:1320px){nav{gap:clamp(16px,calc(16px + (100vw - 1000px) * .075),40px);padding-left:clamp(24px,calc(24px + (100vw - 1000px) * .075),48px);padding-right:clamp(24px,calc(24px + (100vw - 1000px) * .075),48px)}.nav-links{gap:clamp(16px,calc(16px + (100vw - 1000px) * .0375),28px)}.nav-cta{gap:clamp(8px,calc(8px + (100vw - 1000px) * .0125),12px)}.tema-toggle{margin-left:clamp(0px,calc((100vw - 1000px) * .025),8px)}}
 ${PREFIJO}{color-scheme:dark}`;
 
