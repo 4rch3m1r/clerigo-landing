@@ -633,6 +633,16 @@ section { position: relative; }
   flex-direction: row; padding: 14px 20px; gap: 14px; text-align: left;
 }
 .fw-logo-card.fw-wide .fw-logo-label { font-size: 10px; }
+/* La sigla, para los organismos de los que no publicamos logotipo. Se dibuja
+   con los colores del tema —no lleva color propio— así que sirve en claro y en
+   oscuro sin tener que generar nada. Un logotipo inventado sería peor. */
+.fw-sigla {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 52px; height: 36px; padding: 0 9px; flex-shrink: 0;
+  border: 1px solid var(--border-light); border-radius: 6px;
+  background: var(--dark-3); color: var(--text-2);
+  font-size: 11px; font-weight: 800; letter-spacing: 1px;
+}
 
 /* legacy fw-tag kept for other uses */
 .fw-tag {
@@ -2908,6 +2918,41 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
         <img loading="lazy" decoding="async" data-diferida src="public/ofac.svg" width="88" height="42" alt="Office of Foreign Assets Control · OFAC" style="object-fit:contain;display:block;">
         <span class="fw-logo-label">OFAC</span>
         </a>
+        <a href="https://sb.gob.do/" target="_blank" rel="noopener noreferrer" class="fw-logo-card fw-wide reveal" title="Junta Monetaria — Superintendencia de Bancos (Dominican Republic)">
+        <img loading="lazy" decoding="async" data-diferida src="public/sb.png" width="48" height="48" alt="Superintendencia de Bancos" style="object-fit:contain;flex-shrink:0;display:block;">
+        <div>
+        <div class="fw-logo-label" style="font-size:10px;margin-bottom:3px;color:var(--text)">JM / SB</div>
+        <div style="font-size:9px;color:var(--text-3);line-height:1.4;font-weight:600">Junta Monetaria regulations<br>Supervised by the Superintendencia de Bancos</div>
+        </div>
+        </a>
+        <a href="https://uaf.gob.do/" target="_blank" rel="noopener noreferrer" class="fw-logo-card fw-wide reveal" title="UAF — Financial Analysis Unit (Dominican Republic)">
+        <span class="fw-sigla" aria-hidden="true">UAF</span>
+        <div>
+        <div class="fw-logo-label" style="font-size:10px;margin-bottom:3px;color:var(--text)">UAF</div>
+        <div style="font-size:9px;color:var(--text-3);line-height:1.4;font-weight:600">Financial Analysis Unit<br>Anti-money laundering</div>
+        </div>
+        </a>
+        <a href="https://indotel.gob.do/" target="_blank" rel="noopener noreferrer" class="fw-logo-card fw-wide reveal" title="INDOTEL — Dominican Telecommunications Institute">
+        <span class="fw-sigla" aria-hidden="true">INDOTEL</span>
+        <div>
+        <div class="fw-logo-label" style="font-size:10px;margin-bottom:3px;color:var(--text)">INDOTEL</div>
+        <div style="font-size:9px;color:var(--text-3);line-height:1.4;font-weight:600">Dominican Telecommunications Institute<br>Personal data protection</div>
+        </div>
+        </a>
+        <a href="https://idecoop.gob.do/" target="_blank" rel="noopener noreferrer" class="fw-logo-card fw-wide reveal" title="IDECOOP — Cooperative Development and Credit Institute">
+        <span class="fw-sigla" aria-hidden="true">IDECOOP</span>
+        <div>
+        <div class="fw-logo-label" style="font-size:10px;margin-bottom:3px;color:var(--text)">IDECOOP</div>
+        <div style="font-size:9px;color:var(--text-3);line-height:1.4;font-weight:600">Cooperative Development and Credit Institute<br>Cooperative sector</div>
+        </div>
+        </a>
+        <a href="https://nortic.ogtic.gob.do/" target="_blank" rel="noopener noreferrer" class="fw-logo-card fw-wide reveal" title="OGTIC — Government Office of Information Technology">
+        <img loading="lazy" decoding="async" data-diferida src="public/ogtic.png" width="48" height="48" alt="OGTIC" style="object-fit:contain;flex-shrink:0;display:block;">
+        <div>
+        <div class="fw-logo-label" style="font-size:10px;margin-bottom:3px;color:var(--text)">OGTIC</div>
+        <div style="font-size:9px;color:var(--text-3);line-height:1.4;font-weight:600">Government Office of Information Technology<br>Issues the NORTIC standards</div>
+        </div>
+        </a>
         </div>
       </div>
 
@@ -2955,9 +3000,33 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
         <span class="fw-logo-label">HIPAA</span>
         </a>
         <!-- ── NORTIC ── -->
-        <a href="https://nortic.ogtic.gob.do/" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-5" title="NORTIC - Normas Técnicas OGTIC República Dominicana">
-        <img loading="lazy" decoding="async" data-diferida src="public/ogtic.png" width="48" height="48" alt="NORTIC · OGTIC" style="object-fit:contain;margin-bottom:6px;display:block;">
-        <span class="fw-logo-label">NORTIC</span>
+        <a href="https://uaf.gob.do/" target="_blank" rel="noopener noreferrer" class="fw-logo-card fw-wide reveal" title="Law 155-17 against Money Laundering and Terrorist Financing (Dominican Republic)">
+        <img loading="lazy" decoding="async" data-diferida src="public/bandera-rd.svg" width="52" height="35" alt="Bandera de la República Dominicana" style="border-radius:4px;box-shadow:0 2px 6px rgba(0,0,0,0.18);border:1px solid rgba(0,0,0,0.12);flex-shrink:0;display:block;">
+        <div>
+        <div class="fw-logo-label" style="font-size:10px;margin-bottom:3px;color:var(--text)">Law 155-17</div>
+        <div style="font-size:9px;color:var(--text-3);line-height:1.4;font-weight:600">Anti-Money Laundering<br>Dominican Republic</div>
+        </div>
+        </a>
+        <a href="https://simv.gob.do/" target="_blank" rel="noopener noreferrer" class="fw-logo-card fw-wide reveal" title="Law 249-17 on the Securities Market of the Dominican Republic">
+        <img loading="lazy" decoding="async" data-diferida src="public/bandera-rd.svg" width="52" height="35" alt="Bandera de la República Dominicana" style="border-radius:4px;box-shadow:0 2px 6px rgba(0,0,0,0.18);border:1px solid rgba(0,0,0,0.12);flex-shrink:0;display:block;">
+        <div>
+        <div class="fw-logo-label" style="font-size:10px;margin-bottom:3px;color:var(--text)">Law 249-17</div>
+        <div style="font-size:9px;color:var(--text-3);line-height:1.4;font-weight:600">Securities market<br>Dominican Republic</div>
+        </div>
+        </a>
+        <a href="https://idecoop.gob.do/" target="_blank" rel="noopener noreferrer" class="fw-logo-card fw-wide reveal" title="Law 127-64 on Cooperative Associations and Standard 01-17 (Dominican Republic)">
+        <img loading="lazy" decoding="async" data-diferida src="public/bandera-rd.svg" width="52" height="35" alt="Bandera de la República Dominicana" style="border-radius:4px;box-shadow:0 2px 6px rgba(0,0,0,0.18);border:1px solid rgba(0,0,0,0.12);flex-shrink:0;display:block;">
+        <div>
+        <div class="fw-logo-label" style="font-size:10px;margin-bottom:3px;color:var(--text)">Law 127-64</div>
+        <div style="font-size:9px;color:var(--text-3);line-height:1.4;font-weight:600">Cooperative Associations<br>Dominican Republic</div>
+        </div>
+        </a>
+        <a href="https://nortic.ogtic.gob.do/" target="_blank" rel="noopener noreferrer" class="fw-logo-card fw-wide reveal" title="NORTIC A7, A8 and A9 (2025) — OGTIC technical standards">
+        <img loading="lazy" decoding="async" data-diferida src="public/ogtic.png" width="48" height="48" alt="NORTIC · OGTIC" style="object-fit:contain;flex-shrink:0;display:block;">
+        <div>
+        <div class="fw-logo-label" style="font-size:10px;margin-bottom:3px;color:var(--text)">NORTIC A7 · A8 · A9</div>
+        <div style="font-size:9px;color:var(--text-3);line-height:1.4;font-weight:600">Information security, cybersecurity and<br>technology risk · OGTIC 2025</div>
+        </div>
         </a>
         </div>
       </div>
@@ -3106,8 +3175,162 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
         </svg>
         <span class="fw-logo-label">ISO 42001</span>
         </a>
+        <a href="https://www.iso.org/standard/62085.html" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-3" title="ISO 9001 - Quality Management System">
+        <svg width="64" height="64" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="96" fill="none" stroke="#2FA37F" stroke-width="6"/>
+        <circle cx="100" cy="100" r="84" fill="none" stroke="#2FA37F" stroke-width="1.5"/>
+        <circle cx="100" cy="100" r="82" fill="#2FA37F" opacity="0.08"/>
+        <circle cx="100" cy="100" r="55" fill="none" stroke="rgba(47,163,127,0.3)" stroke-width="1.2"/>
+        <ellipse cx="100" cy="100" rx="30" ry="55" fill="none" stroke="rgba(47,163,127,0.3)" stroke-width="1.2"/>
+        <line x1="45" y1="100" x2="155" y2="100" stroke="rgba(47,163,127,0.3)" stroke-width="1.2"/>
+        <line x1="100" y1="45" x2="100" y2="155" stroke="rgba(47,163,127,0.3)" stroke-width="1.2"/>
+        <text x="100" y="97" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="38" fill="white" letter-spacing="-1">ISO</text>
+        <text x="100" y="128" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="22" fill="#2FA37F" letter-spacing="1">9001</text>
+        <path id="giso9001-top" d="M 22,100 A 78,78 0 0,1 178,100" fill="none"/>
+        <text font-family="Arial,sans-serif" font-size="9" font-weight="700" fill="#2FA37F" letter-spacing="0.5">
+        <textPath href="#giso9001-top" startOffset="7%">Quality Management Systems</textPath>
+        </text>
+        <path id="giso9001-bot" d="M 45,132 A 65,65 0 0,0 155,132" fill="none"/>
+        <text font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#2FA37F" letter-spacing="2">
+        <textPath href="#giso9001-bot" startOffset="22%">Certified</textPath>
+        </text>
+        </svg>
+        <span class="fw-logo-label">ISO 9001</span>
+        </a>
+        <a href="https://www.iso.org/standard/65034.html" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-4" title="ISO 37001 - Anti-Bribery Management System">
+        <svg width="64" height="64" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="96" fill="none" stroke="#D08A45" stroke-width="6"/>
+        <circle cx="100" cy="100" r="84" fill="none" stroke="#D08A45" stroke-width="1.5"/>
+        <circle cx="100" cy="100" r="82" fill="#D08A45" opacity="0.08"/>
+        <circle cx="100" cy="100" r="55" fill="none" stroke="rgba(208,138,69,0.3)" stroke-width="1.2"/>
+        <ellipse cx="100" cy="100" rx="30" ry="55" fill="none" stroke="rgba(208,138,69,0.3)" stroke-width="1.2"/>
+        <line x1="45" y1="100" x2="155" y2="100" stroke="rgba(208,138,69,0.3)" stroke-width="1.2"/>
+        <line x1="100" y1="45" x2="100" y2="155" stroke="rgba(208,138,69,0.3)" stroke-width="1.2"/>
+        <text x="100" y="97" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="38" fill="white" letter-spacing="-1">ISO</text>
+        <text x="100" y="128" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="22" fill="#D08A45" letter-spacing="1">37001</text>
+        <path id="giso37001-top" d="M 22,100 A 78,78 0 0,1 178,100" fill="none"/>
+        <text font-family="Arial,sans-serif" font-size="9" font-weight="700" fill="#D08A45" letter-spacing="0.5">
+        <textPath href="#giso37001-top" startOffset="7%">Anti-Bribery Management</textPath>
+        </text>
+        <path id="giso37001-bot" d="M 45,132 A 65,65 0 0,0 155,132" fill="none"/>
+        <text font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#D08A45" letter-spacing="2">
+        <textPath href="#giso37001-bot" startOffset="22%">Certified</textPath>
+        </text>
+        </svg>
+        <span class="fw-logo-label">ISO 37001</span>
+        </a>
+        <a href="https://www.iso.org/standard/43757.html" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-5" title="ISO/IEC 27017 - Security Controls for Cloud Services">
+        <svg width="64" height="64" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="96" fill="none" stroke="#4A90C2" stroke-width="6"/>
+        <circle cx="100" cy="100" r="84" fill="none" stroke="#4A90C2" stroke-width="1.5"/>
+        <circle cx="100" cy="100" r="82" fill="#4A90C2" opacity="0.08"/>
+        <circle cx="100" cy="100" r="55" fill="none" stroke="rgba(74,144,194,0.3)" stroke-width="1.2"/>
+        <ellipse cx="100" cy="100" rx="30" ry="55" fill="none" stroke="rgba(74,144,194,0.3)" stroke-width="1.2"/>
+        <line x1="45" y1="100" x2="155" y2="100" stroke="rgba(74,144,194,0.3)" stroke-width="1.2"/>
+        <line x1="100" y1="45" x2="100" y2="155" stroke="rgba(74,144,194,0.3)" stroke-width="1.2"/>
+        <text x="100" y="97" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="38" fill="white" letter-spacing="-1">ISO</text>
+        <text x="100" y="128" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="22" fill="#4A90C2" letter-spacing="1">27017</text>
+        <path id="giso27017-top" d="M 22,100 A 78,78 0 0,1 178,100" fill="none"/>
+        <text font-family="Arial,sans-serif" font-size="9" font-weight="700" fill="#4A90C2" letter-spacing="0.5">
+        <textPath href="#giso27017-top" startOffset="7%">Cloud Security Controls</textPath>
+        </text>
+        <path id="giso27017-bot" d="M 45,132 A 65,65 0 0,0 155,132" fill="none"/>
+        <text font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#4A90C2" letter-spacing="2">
+        <textPath href="#giso27017-bot" startOffset="22%">Standard</textPath>
+        </text>
+        </svg>
+        <span class="fw-logo-label">ISO 27017</span>
+        </a>
+        <a href="https://www.iso.org/standard/78973.html" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-6" title="ISO/IEC 27035 - Information Security Incident Management">
+        <svg width="64" height="64" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="96" fill="none" stroke="#3D8BBF" stroke-width="6"/>
+        <circle cx="100" cy="100" r="84" fill="none" stroke="#3D8BBF" stroke-width="1.5"/>
+        <circle cx="100" cy="100" r="82" fill="#3D8BBF" opacity="0.08"/>
+        <circle cx="100" cy="100" r="55" fill="none" stroke="rgba(61,139,191,0.3)" stroke-width="1.2"/>
+        <ellipse cx="100" cy="100" rx="30" ry="55" fill="none" stroke="rgba(61,139,191,0.3)" stroke-width="1.2"/>
+        <line x1="45" y1="100" x2="155" y2="100" stroke="rgba(61,139,191,0.3)" stroke-width="1.2"/>
+        <line x1="100" y1="45" x2="100" y2="155" stroke="rgba(61,139,191,0.3)" stroke-width="1.2"/>
+        <text x="100" y="97" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="38" fill="white" letter-spacing="-1">ISO</text>
+        <text x="100" y="128" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="22" fill="#3D8BBF" letter-spacing="1">27035</text>
+        <path id="giso27035-top" d="M 22,100 A 78,78 0 0,1 178,100" fill="none"/>
+        <text font-family="Arial,sans-serif" font-size="9" font-weight="700" fill="#3D8BBF" letter-spacing="0.5">
+        <textPath href="#giso27035-top" startOffset="7%">Security Incident Management</textPath>
+        </text>
+        <path id="giso27035-bot" d="M 45,132 A 65,65 0 0,0 155,132" fill="none"/>
+        <text font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#3D8BBF" letter-spacing="2">
+        <textPath href="#giso27035-bot" startOffset="22%">Standard</textPath>
+        </text>
+        </svg>
+        <span class="fw-logo-label">ISO 27035</span>
+        </a>
+        <a href="https://www.iso.org/standard/71670.html" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-2" title="ISO/IEC 27701 - Privacy Information Management System">
+        <svg width="64" height="64" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="96" fill="none" stroke="#B97BF5" stroke-width="6"/>
+        <circle cx="100" cy="100" r="84" fill="none" stroke="#B97BF5" stroke-width="1.5"/>
+        <circle cx="100" cy="100" r="82" fill="#B97BF5" opacity="0.08"/>
+        <circle cx="100" cy="100" r="55" fill="none" stroke="rgba(185,123,245,0.3)" stroke-width="1.2"/>
+        <ellipse cx="100" cy="100" rx="30" ry="55" fill="none" stroke="rgba(185,123,245,0.3)" stroke-width="1.2"/>
+        <line x1="45" y1="100" x2="155" y2="100" stroke="rgba(185,123,245,0.3)" stroke-width="1.2"/>
+        <line x1="100" y1="45" x2="100" y2="155" stroke="rgba(185,123,245,0.3)" stroke-width="1.2"/>
+        <text x="100" y="97" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="38" fill="white" letter-spacing="-1">ISO</text>
+        <text x="100" y="128" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="22" fill="#B97BF5" letter-spacing="1">27701</text>
+        <path id="giso27701-top" d="M 22,100 A 78,78 0 0,1 178,100" fill="none"/>
+        <text font-family="Arial,sans-serif" font-size="9" font-weight="700" fill="#B97BF5" letter-spacing="0.5">
+        <textPath href="#giso27701-top" startOffset="7%">Privacy Information Management</textPath>
+        </text>
+        <path id="giso27701-bot" d="M 45,132 A 65,65 0 0,0 155,132" fill="none"/>
+        <text font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#B97BF5" letter-spacing="2">
+        <textPath href="#giso27701-bot" startOffset="22%">Certified</textPath>
+        </text>
+        </svg>
+        <span class="fw-logo-label">ISO 27701</span>
+        </a>
+        <a href="https://www.iso.org/standard/62289.html" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-3" title="ISO/IEC 29134 - Privacy Impact Assessment">
+        <svg width="64" height="64" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="96" fill="none" stroke="#DA6BE8" stroke-width="6"/>
+        <circle cx="100" cy="100" r="84" fill="none" stroke="#DA6BE8" stroke-width="1.5"/>
+        <circle cx="100" cy="100" r="82" fill="#DA6BE8" opacity="0.08"/>
+        <circle cx="100" cy="100" r="55" fill="none" stroke="rgba(218,107,232,0.3)" stroke-width="1.2"/>
+        <ellipse cx="100" cy="100" rx="30" ry="55" fill="none" stroke="rgba(218,107,232,0.3)" stroke-width="1.2"/>
+        <line x1="45" y1="100" x2="155" y2="100" stroke="rgba(218,107,232,0.3)" stroke-width="1.2"/>
+        <line x1="100" y1="45" x2="100" y2="155" stroke="rgba(218,107,232,0.3)" stroke-width="1.2"/>
+        <text x="100" y="97" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="38" fill="white" letter-spacing="-1">ISO</text>
+        <text x="100" y="128" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="22" fill="#DA6BE8" letter-spacing="1">29134</text>
+        <path id="giso29134-top" d="M 22,100 A 78,78 0 0,1 178,100" fill="none"/>
+        <text font-family="Arial,sans-serif" font-size="9" font-weight="700" fill="#DA6BE8" letter-spacing="0.5">
+        <textPath href="#giso29134-top" startOffset="7%">Privacy Impact Assessment</textPath>
+        </text>
+        <path id="giso29134-bot" d="M 45,132 A 65,65 0 0,0 155,132" fill="none"/>
+        <text font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#DA6BE8" letter-spacing="2">
+        <textPath href="#giso29134-bot" startOffset="22%">Guidelines</textPath>
+        </text>
+        </svg>
+        <span class="fw-logo-label">ISO 29134</span>
+        </a>
+        <a href="https://www.iso.org/standard/81684.html" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-4" title="ISO/IEC 38500 - Governance of IT for the Organization">
+        <svg width="64" height="64" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="96" fill="none" stroke="#9B6BE8" stroke-width="6"/>
+        <circle cx="100" cy="100" r="84" fill="none" stroke="#9B6BE8" stroke-width="1.5"/>
+        <circle cx="100" cy="100" r="82" fill="#9B6BE8" opacity="0.08"/>
+        <circle cx="100" cy="100" r="55" fill="none" stroke="rgba(155,107,232,0.3)" stroke-width="1.2"/>
+        <ellipse cx="100" cy="100" rx="30" ry="55" fill="none" stroke="rgba(155,107,232,0.3)" stroke-width="1.2"/>
+        <line x1="45" y1="100" x2="155" y2="100" stroke="rgba(155,107,232,0.3)" stroke-width="1.2"/>
+        <line x1="100" y1="45" x2="100" y2="155" stroke="rgba(155,107,232,0.3)" stroke-width="1.2"/>
+        <text x="100" y="97" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="38" fill="white" letter-spacing="-1">ISO</text>
+        <text x="100" y="128" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="22" fill="#9B6BE8" letter-spacing="1">38500</text>
+        <path id="giso38500-top" d="M 22,100 A 78,78 0 0,1 178,100" fill="none"/>
+        <text font-family="Arial,sans-serif" font-size="9" font-weight="700" fill="#9B6BE8" letter-spacing="0.5">
+        <textPath href="#giso38500-top" startOffset="7%">Governance of IT</textPath>
+        </text>
+        <path id="giso38500-bot" d="M 45,132 A 65,65 0 0,0 155,132" fill="none"/>
+        <text font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#9B6BE8" letter-spacing="2">
+        <textPath href="#giso38500-bot" startOffset="22%">Standard</textPath>
+        </text>
+        </svg>
+        <span class="fw-logo-label">ISO 38500</span>
+        </a>
         <!-- ── NIST CSF ── -->
-        <a href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-3" title="NIST - Marco de Ciberseguridad">
+        <a href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-5" title="NIST - Marco de Ciberseguridad">
         <svg width="90" height="52" viewBox="0 0 250 140" xmlns="http://www.w3.org/2000/svg">
         <rect x="0" y="0" width="250" height="64" rx="4" fill="#003087"/>
         <text x="125" y="46" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="40" fill="white" letter-spacing="6">NIST</text>
@@ -3118,7 +3341,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
         <span class="fw-logo-label">NIST CSF</span>
         </a>
         <!-- ── SOC 2 Type II ── -->
-        <a href="https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-4" title="AICPA SOC 2 Tipo II">
+        <a href="https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-6" title="AICPA SOC 2 Tipo II">
         <svg width="64" height="64" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
         <circle cx="100" cy="100" r="96" fill="none" stroke="#d4353b" stroke-width="6"/>
         <circle cx="100" cy="100" r="84" fill="none" stroke="#d4353b" stroke-width="1.5"/>
@@ -3137,32 +3360,32 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
         <span class="fw-logo-label">SOC 2 Type II</span>
         </a>
         <!-- ── PCI-DSS ── -->
-        <a href="https://www.pcisecuritystandards.org/" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-5" title="PCI Security Standards Council - PCI-DSS">
+        <a href="https://www.pcisecuritystandards.org/" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-2" title="PCI Security Standards Council - PCI-DSS">
         <img loading="lazy" decoding="async" data-diferida src="public/pci-dss.svg" width="88" height="42" alt="PCI Security Standards Council · PCI-DSS" style="object-fit:contain;display:block;">
         <span class="fw-logo-label">PCI-DSS</span>
         </a>
         <!-- ── SWIFT CSP ── -->
-        <a href="https://www.swift.com/myswift/customer-security-programme-csp" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-6" title="SWIFT - Programa de Seguridad del Cliente (CSP)">
+        <a href="https://www.swift.com/myswift/customer-security-programme-csp" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-3" title="SWIFT - Programa de Seguridad del Cliente (CSP)">
         <img loading="lazy" decoding="async" data-diferida src="public/swift.svg" width="88" height="42" alt="SWIFT CSP · Customer Security Programme" style="object-fit:contain;display:block;">
         <span class="fw-logo-label">SWIFT CSP</span>
         </a>
         <!-- ── COBIT ── -->
-        <a href="https://www.isaca.org/resources/cobit" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-2" title="COBIT 2019 - ISACA">
+        <a href="https://www.isaca.org/resources/cobit" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-4" title="COBIT 2019 - ISACA">
         <img loading="lazy" decoding="async" data-diferida src="public/cobit.svg" width="88" height="42" alt="COBIT 2019 · ISACA Framework" style="object-fit:contain;display:block;">
         <span class="fw-logo-label">COBIT 2019</span>
         </a>
         <!-- ── COSO ── -->
-        <a href="https://www.coso.org/" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-3" title="COSO - Marco de Control Interno y Gestión de Riesgos">
+        <a href="https://www.coso.org/" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-5" title="COSO - Marco de Control Interno y Gestión de Riesgos">
         <img loading="lazy" decoding="async" data-diferida src="public/coso.svg" width="88" height="42" alt="COSO ERM · Internal Control Framework" style="object-fit:contain;display:block;">
         <span class="fw-logo-label">COSO ERM</span>
         </a>
         <!-- ── ITIL 4 ── -->
-        <a href="https://www.peoplecert.org/ways-to-certify/itil-framework" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-4" title="ITIL 4 - Gestión de Servicios de TI (PeopleCert)">
+        <a href="https://www.peoplecert.org/ways-to-certify/itil-framework" target="_blank" rel="noopener noreferrer" class="fw-logo-card reveal reveal-6" title="ITIL 4 - Gestión de Servicios de TI (PeopleCert)">
         <img loading="lazy" decoding="async" data-diferida src="public/itil.svg" width="88" height="42" alt="ITIL 4 · AXELOS / PeopleCert" style="object-fit:contain;display:block;">
         <span class="fw-logo-label">ITIL 4</span>
         </a>
         <!-- ── Entre Otros ── -->
-        <a href="marcos.html" class="fw-logo-card reveal reveal-5" style="border-style:dashed;opacity:0.75" title="Ver los más de 65 marcos y normativas soportados">
+        <a href="marcos.html" class="fw-logo-card reveal reveal-2" style="border-style:dashed;opacity:0.75" title="Ver los más de 65 marcos y normativas soportados">
         <svg width="44" height="44" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
         <circle cx="60" cy="60" r="56" fill="none" stroke="rgba(240,240,240,0.2)" stroke-width="3" stroke-dasharray="6 4"/>
         <circle cx="30" cy="60" r="6" fill="var(--text-3)"/>
