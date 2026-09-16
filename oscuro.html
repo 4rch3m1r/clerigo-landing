@@ -633,15 +633,20 @@ section { position: relative; }
   flex-direction: row; padding: 14px 20px; gap: 14px; text-align: left;
 }
 .fw-logo-card.fw-wide .fw-logo-label { font-size: 10px; }
-/* La sigla, para los organismos de los que no publicamos logotipo. Se dibuja
-   con los colores del tema —no lleva color propio— así que sirve en claro y en
-   oscuro sin tener que generar nada. Un logotipo inventado sería peor. */
-.fw-sigla {
-  display: inline-flex; align-items: center; justify-content: center;
-  min-width: 52px; height: 36px; padding: 0 9px; flex-shrink: 0;
-  border: 1px solid var(--border-light); border-radius: 6px;
-  background: var(--dark-3); color: var(--text-2);
-  font-size: 11px; font-weight: 800; letter-spacing: 1px;
+/* Los logotipos de los organismos vienen de sus webs oficiales y cada uno trae
+   la forma que quiere: el de la UAF es cuatro veces y media más ancho que alto
+   y el de IDECOOP casi cuadrado. Con un alto fijo, el apaisado se comía media
+   tarjeta. Se acotan por los DOS lados y el navegador elige: ninguno pasa de
+   96 de ancho ni de 40 de alto, y todos conservan su proporción. */
+.fw-marca {
+  max-width: 96px; max-height: 40px; width: auto; height: auto;
+  object-fit: contain; flex-shrink: 0; display: block;
+  /* SOBRE BLANCO, SIEMPRE. Los tres llegan con el fondo transparente y la
+     tinta azul marino: sobre la tarjeta oscura no se veian. Los otros
+     —SIMV, SB, OGTIC— vienen con su recuadro blanco de fabrica y por eso
+     nadie lo habia notado. Se les pone aqui el mismo, en los dos temas: es
+     el fondo para el que estan dibujados. */
+  background: #FFFFFF; border-radius: 4px; padding: 3px;
 }
 
 /* legacy fw-tag kept for other uses */
@@ -2926,21 +2931,21 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
         </div>
         </a>
         <a href="https://uaf.gob.do/" target="_blank" rel="noopener noreferrer" class="fw-logo-card fw-wide reveal" title="UAF — Financial Analysis Unit (Dominican Republic)">
-        <span class="fw-sigla" aria-hidden="true">UAF</span>
+        <img loading="lazy" decoding="async" data-diferida class="fw-marca" src="public/uaf.png" width="96" height="40" alt="Financial Analysis Unit">
         <div>
         <div class="fw-logo-label" style="font-size:10px;margin-bottom:3px;color:var(--text)">UAF</div>
         <div style="font-size:9px;color:var(--text-3);line-height:1.4;font-weight:600">Financial Analysis Unit<br>Anti-money laundering</div>
         </div>
         </a>
         <a href="https://indotel.gob.do/" target="_blank" rel="noopener noreferrer" class="fw-logo-card fw-wide reveal" title="INDOTEL — Dominican Telecommunications Institute">
-        <span class="fw-sigla" aria-hidden="true">INDOTEL</span>
+        <img loading="lazy" decoding="async" data-diferida class="fw-marca" src="public/indotel.png" width="96" height="40" alt="Dominican Telecommunications Institute">
         <div>
         <div class="fw-logo-label" style="font-size:10px;margin-bottom:3px;color:var(--text)">INDOTEL</div>
         <div style="font-size:9px;color:var(--text-3);line-height:1.4;font-weight:600">Dominican Telecommunications Institute<br>Personal data protection</div>
         </div>
         </a>
         <a href="https://idecoop.gob.do/" target="_blank" rel="noopener noreferrer" class="fw-logo-card fw-wide reveal" title="IDECOOP — Cooperative Development and Credit Institute">
-        <span class="fw-sigla" aria-hidden="true">IDECOOP</span>
+        <img loading="lazy" decoding="async" data-diferida class="fw-marca" src="public/idecoop.png" width="96" height="40" alt="Cooperative Development and Credit Institute">
         <div>
         <div class="fw-logo-label" style="font-size:10px;margin-bottom:3px;color:var(--text)">IDECOOP</div>
         <div style="font-size:9px;color:var(--text-3);line-height:1.4;font-weight:600">Cooperative Development and Credit Institute<br>Cooperative sector</div>
