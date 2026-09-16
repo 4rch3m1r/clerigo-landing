@@ -507,8 +507,15 @@ if (fs.existsSync(path.join(RAIZ, "_redirects"))) {
       if (p.slug === "login" || !fs.existsSync(f)) continue;
       const h = fs.readFileSync(f, "utf8");
       const n = (h.match(/data-fuente-diferida/g) || []).length;
-      comprueba(`${idioma}/${p.disco[idioma]}: una sola hoja de fuentes diferida, y aplicarlo otra vez no cambia nada`,
-        n === 1 && acelera(h) === h, n + " hojas");
+      const marcas = (h.match(/data-rapido/g) || []).length;
+      /* `acelera` es idempotente sobre SU resultado, no sobre la página tal cual:
+         el paso del tema oscuro mueve de sitio el bloque de la portada, así que
+         volver a aplicarlo lo devuelve al final de la cabecera. Lo que no puede
+         pasar es que se DUPLIQUE, y eso es lo que se mira: una hoja de fuentes,
+         como mucho dos marcas de `rapido` —su estilo y su guion— y que aplicarlo
+         dos veces dé lo mismo que una. */
+      comprueba(`${idioma}/${p.disco[idioma]}: lo de rapido.cjs está una sola vez`,
+        n === 1 && marcas <= 2 && acelera(acelera(h)) === acelera(h), `${n} hojas, ${marcas} marcas`);
     }
   }
 }

@@ -1916,22 +1916,8 @@ footer .social-icon:hover { background: rgba(255,255,255,0.09); border-color: rg
 .seg-cuerpo:has(.seg-pilar[data-capa="6"]:hover) .seg-capa-6 .seg-rotulo { fill: var(--red); }
 /* ══ FIN DEL ESTILO DE AGENTE Y ARQUITECTURA ══ */
 
-/* ── EL SELECTOR DE IDIOMA ─────────────────────────────────────────────
-   Cuál está activo lo dice el `lang` del documento y no una clase escrita a
-   mano: así el marcado es el mismo en las dos versiones y lo único que
-   cambia entre ellas son los dos enlaces. */
-.idiomas { display: flex; align-items: center; gap: 2px; margin-right: 4px; }
-.idiomas .idioma {
-  font-size: 11px; font-weight: 700; letter-spacing: .6px;
-  color: var(--text-3); padding: 5px 7px; border-radius: 5px;
-  transition: color .2s, background .2s;
-}
-.idiomas .idioma:hover { color: var(--text-2); }
-html[lang="en"] .idioma[data-idioma="en"],
-html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(--dark-3); }
-@media (max-width: 768px) { .idiomas { display: none; } }
-/* ── FIN DEL SELECTOR DE IDIOMA ── */
 </style>
+
 <script>
 /* El idioma del navegador decide; la eleccion de la persona manda. Ver
    fuente/idiomas/deteccion.cjs para el porque de cada cuidado. */
@@ -1971,7 +1957,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
   if (destino === ruta) return;
   location.replace(destino + location.search + location.hash);
 })();
-</script>
+</script>
 <style data-rapido>html:not(.sin-cv) body>section:not(#hero),html:not(.sin-cv) body>footer{content-visibility:auto;contain-intrinsic-size:auto 900px}</style><script data-rapido>(function(){var d=document.documentElement;function q(){d.classList.add("sin-cv")}if(location.hash)q();document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href*='#']");if(a)q()},true);addEventListener("hashchange",q)})()</script>
 <script id="tema-arranque">(function(){var t=null;try{t=localStorage.getItem('clerigo-tema')}catch(e){}if(t!=='oscuro'&&t!=='claro'){var h=new Date().getHours();t=(h>=19||h<7)?'oscuro':'claro'}document.documentElement.setAttribute('data-tema',t)})();</script>
 <style id="tema-oscuro">

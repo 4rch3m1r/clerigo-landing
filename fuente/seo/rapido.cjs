@@ -85,6 +85,11 @@ function conWebp(h) {
   });
 }
 
+/* Lo que pone `VISIBILIDAD`, esté donde esté. */
+const RASTRO_ESTILO = /\n?<style data-rapido>[\s\S]*?<\/style>/g;
+const RASTRO_GUION = /\n?<script data-rapido>[\s\S]*?<\/script>/g;
+function sinVisibilidad(h) { return h.replace(RASTRO_ESTILO, "").replace(RASTRO_GUION, ""); }
+
 function acelera(html) {
   let h = plegar(String(html))
     .replace(FUENTE, (_, url) =>
@@ -92,7 +97,12 @@ function acelera(html) {
       + `<noscript><link href="${url}" rel="stylesheet"></noscript>`)
     .replace(/<img(?![^>]*\sloading=)(?=[^>]*\ssrc="(?:\.\.\/)?public\/)/g, "<img" + PEREZA);
   h = conWebp(h);
-  if (h.includes('<section id="hero">') && !h.includes(VISIBILIDAD)) h = h.replace("</head>", VISIBILIDAD + "\n</head>");
+  /* SE QUITA LO SUYO ANTES DE PONERLO. El paso del tema oscuro mueve de sitio
+     el bloque —lo deja pegado a su propia hoja— y entonces buscarlo por texto
+     exacto no lo encontraba y se metía otro: había dos. Por su marca da igual
+     dónde haya quedado, y el resultado no depende de cuántas veces se corra. */
+  h = sinVisibilidad(h);
+  if (h.includes('<section id="hero">')) h = h.replace("</head>", VISIBILIDAD + "\n</head>");
   return h;
 }
 
@@ -100,8 +110,8 @@ function sinAcelerar(html) {
   return plegar(String(html))
     .split(PEREZA).join("")
     .replace(CON_WEBP, "")
-    .split(VISIBILIDAD + "\n").join("")
-    .split(VISIBILIDAD).join("");
+    .replace(RASTRO_ESTILO, "")
+    .replace(RASTRO_GUION, "");
 }
 
 module.exports = { acelera, sinAcelerar };
