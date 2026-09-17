@@ -292,19 +292,82 @@ nav {
 
 /* ── COLUMNS & GRID ── */
 .fw-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  transition: all 0.2s ease;
+}
+.fw-grid.fw-grid-cols {
   display: grid;
   grid-template-columns: repeat(var(--cols, 5), minmax(0, 1fr));
   gap: 16px;
   align-items: start;
 }
 @media (max-width: 1200px) {
-  .fw-grid { grid-template-columns: repeat(var(--cols-3, 3), minmax(0, 1fr)); }
+  .fw-grid.fw-grid-cols { grid-template-columns: repeat(var(--cols-3, 3), minmax(0, 1fr)); }
 }
 @media (max-width: 800px) {
-  .fw-grid { grid-template-columns: repeat(var(--cols-2, 2), minmax(0, 1fr)); }
+  .fw-grid.fw-grid-cols { grid-template-columns: repeat(var(--cols-2, 2), minmax(0, 1fr)); }
 }
 @media (max-width: 520px) {
-  .fw-grid { grid-template-columns: 1fr; }
+  .fw-grid.fw-grid-cols { grid-template-columns: 1fr; }
+}
+
+.fw-shelf {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.fw-shelf.hidden { display: none; }
+.fw-shelf-header {
+  padding: 14px 18px;
+  background: var(--dark);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+.fw-shelf-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.fw-shelf-info { flex: 1; min-width: 0; }
+.fw-shelf-title {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--text);
+  line-height: 1.2;
+}
+.fw-shelf-desc {
+  font-size: 12px;
+  color: var(--text-2);
+  margin-top: 2px;
+}
+.fw-shelf-count {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text-2);
+  background: var(--dark-3);
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+.fw-shelf-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+}
+@media (max-width: 600px) {
+  .fw-shelf-cards { grid-template-columns: 1fr; }
 }
 
 .fw-col {
@@ -333,56 +396,150 @@ nav {
   background: var(--dark-3); border: 1px solid var(--border);
   padding: 2px 7px; border-radius: 12px;
 }
+.fw-col-body { padding: 12px; display: flex; flex-direction: column; gap: 12px; }
 
-.fw-col-body { padding: 10px; display: flex; flex-direction: column; gap: 8px; }
-
-/* ── FRAMEWORK CARD ── */
+/* ── VISUAL FRAMEWORK CARD ── */
 .fw-card {
   background: var(--dark); border: 1px solid var(--border);
-  border-radius: 8px; padding: 12px 14px; cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative; overflow: hidden;
+  border-radius: 12px; padding: 16px 16px 14px; cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+  position: relative; overflow: hidden; display: flex; flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
 }
 .fw-card:hover {
-  border-color: rgba(235,16,0,0.35);
+  border-color: rgba(235,16,0,0.38);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.07);
 }
 .fw-card.hidden { display: none; }
-.fw-card-top {
-  display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 4px;
+
+.fw-card-header {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;
+  margin-bottom: 12px;
 }
+.fw-logo-box {
+  width: 60px; height: 44px; border-radius: 8px;
+  background: #FFFFFF; border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  padding: 4px 6px; flex-shrink: 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+  transition: transform 0.2s ease;
+}
+.fw-card:hover .fw-logo-box { transform: scale(1.04); }
+.fw-logo-img {
+  max-width: 50px; max-height: 36px; width: auto; height: auto;
+  object-fit: contain; display: block;
+}
+
+.fw-card-pills {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
+}
+.fw-cat-badge {
+  font-size: 9px; font-weight: 800; letter-spacing: 0.6px;
+  text-transform: uppercase; padding: 2px 6px; border-radius: 4px;
+  border: 1px solid transparent;
+}
+.fw-card-cov {
+  font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;
+  display: inline-flex; align-items: center; gap: 4px;
+  border: 1px solid transparent; line-height: 1;
+}
+
 .fw-card-name {
-  font-size: 13px; font-weight: 800; color: var(--text); line-height: 1.25;
+  font-size: 15px; font-weight: 800; color: var(--text); line-height: 1.25;
+  transition: color 0.15s ease;
 }
 .fw-card:hover .fw-card-name { color: var(--red); }
-.fw-card-cov {
-  font-size: 10px; font-weight: 800; padding: 2px 5px; border-radius: 4px;
-  color: white; flex-shrink: 0; line-height: 1;
-}
 .fw-card-sub {
-  font-size: 11px; color: var(--text-2); line-height: 1.4; margin-bottom: 8px;
+  font-size: 12px; font-weight: 600; color: var(--text-2); line-height: 1.35;
+  margin-top: 3px; margin-bottom: 8px;
+}
+.fw-compliance-tag {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  color: var(--success); background: rgba(15,107,78,0.08);
+  border: 1px solid rgba(15,107,78,0.2); padding: 2px 6px;
+  border-radius: 4px; margin-bottom: 8px; align-self: flex-start;
+}
+.fw-card-desc {
+  font-size: 12px; color: var(--text-2); line-height: 1.45;
+  margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+
+.fw-ctrl-preview {
+  display: flex; flex-direction: column; gap: 5px;
+  background: var(--dark-2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 8px 10px; margin-bottom: 12px;
+}
+.fw-ctrl-chip {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--text); line-height: 1.25;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.fw-ctrl-chip svg { flex-shrink: 0; }
+.fw-ctrl-chip span { overflow: hidden; text-overflow: ellipsis; }
+
+.fw-meter-row {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; color: var(--text-3); margin-bottom: 4px;
 }
 .fw-mini-meter {
-  width: 100%; height: 4px; background: var(--dark-3); border-radius: 2px;
-  overflow: hidden; margin-bottom: 8px;
+  width: 100%; height: 5px; background: var(--dark-3); border-radius: 3px;
+  overflow: hidden; margin-bottom: 12px;
 }
-.fw-mini-fill { height: 100%; border-radius: 2px; }
+.fw-mini-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
 
 .fw-card-footer {
-  display: flex; align-items: center; justify-content: space-between; gap: 4px;
+  margin-top: auto; padding-top: 10px; border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
 }
 .fw-card-tags { display: flex; gap: 4px; flex-wrap: wrap; }
 .badge {
-  font-size: 9px; font-weight: 700; letter-spacing: 0.4px;
-  text-transform: uppercase; padding: 2px 5px; border-radius: 3px;
+  font-size: 9.5px; font-weight: 700; letter-spacing: 0.3px;
+  text-transform: uppercase; padding: 2px 6px; border-radius: 4px;
   background: var(--dark-3); color: var(--text-2); border: 1px solid var(--border);
 }
+
 .fw-card-arrow {
-  font-size: 11px; font-weight: 700; color: var(--red); opacity: 0;
-  transform: translateX(-4px); transition: all 0.15s ease;
+  font-size: 11px; font-weight: 700; color: var(--red);
+  display: inline-flex; align-items: center; gap: 4px;
+  transition: transform 0.15s ease; white-space: nowrap;
 }
-.fw-card:hover .fw-card-arrow { opacity: 1; transform: translateX(0); }
+.fw-card:hover .fw-card-arrow { transform: translateX(3px); }
+
+/* In Column view, compact adjustments for narrower width */
+.fw-grid-cols .fw-card-desc { display: none; }
+.fw-grid-cols .fw-ctrl-preview { padding: 6px 8px; gap: 4px; margin-bottom: 8px; }
+.fw-grid-cols .fw-ctrl-chip { font-size: 10.5px; }
+
+/* ── VIEW SWITCHER ── */
+.view-switch {
+  display: flex; align-items: center; background: var(--dark-3);
+  border: 1px solid var(--border); border-radius: 6px; padding: 2px;
+  margin-left: 8px;
+}
+.view-btn {
+  height: 26px; padding: 0 8px; border-radius: 4px; font-size: 11px;
+  font-weight: 700; cursor: pointer; border: none; background: transparent;
+  color: var(--text-3); transition: all 0.15s ease;
+  display: inline-flex; align-items: center; gap: 5px;
+}
+.view-btn:hover { color: var(--text); }
+.view-btn.active {
+  background: var(--dark); color: var(--text);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.fw-empty-notice {
+  font-size: 12px; color: var(--text-3); text-align: center;
+  padding: 24px 16px; background: var(--dark-2); border-radius: 8px;
+  border: 1px dashed var(--border); grid-column: 1 / -1;
+}
+.fw-empty-state {
+  font-size: 13px; color: var(--text-3); text-align: center;
+  padding: 48px 24px; background: var(--dark-2); border-radius: 12px;
+  border: 1px dashed var(--border);
+}
 
 /* ── DETAIL DRAWER (SIDE-OVER) ── */
 .drawer-overlay {
@@ -421,10 +578,24 @@ nav {
 .drawer-body {
   padding: 28px 24px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 20px;
 }
-.drawer-title {
-  font-size: 24px; font-weight: 900; letter-spacing: -0.8px; color: var(--text); line-height: 1.15;
+.drawer-header-entity {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 4px;
 }
-.drawer-sub { font-size: 14px; font-weight: 500; color: var(--text-2); line-height: 1.4; margin-top: 4px; }
+.drawer-logo-box {
+  width: 72px; height: 50px; border-radius: 8px;
+  background: #FFFFFF; border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  padding: 5px 8px; flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+.drawer-logo-img {
+  max-width: 60px; max-height: 40px; width: auto; height: auto;
+  object-fit: contain; display: block;
+}
+.drawer-title {
+  font-size: 22px; font-weight: 900; letter-spacing: -0.6px; color: var(--text); line-height: 1.2;
+}
+.drawer-sub { font-size: 13.5px; font-weight: 500; color: var(--text-2); line-height: 1.4; margin-top: 3px; }
 
 .coverage-box {
   background: var(--dark-2); border: 1px solid var(--border);
@@ -711,9 +882,14 @@ html[data-tema="oscuro"] .stat-card{box-shadow:0 2px 8px rgba(0,0,0,0.044)}
 html[data-tema="oscuro"] .stat-card:hover{box-shadow:0 6px 20px rgba(0,0,0,0.132)}
 html[data-tema="oscuro"] .filter-toolbar{background:rgba(14,14,14,0.92);box-shadow:0 10px 30px rgba(0,0,0,0.088)}
 html[data-tema="oscuro"] .tab-btn.active{background:#16181C;box-shadow:0 2px 8px rgba(0,0,0,0.33)}
-html[data-tema="oscuro"] .sec-chip.active{background:#16181C}
+html[data-tema="oscuro"] .fw-shelf-header{background:#0E0E0E;border-color:rgba(255,255,255,0.08)}
 html[data-tema="oscuro"] .fw-col-header{background:#0E0E0E}
-html[data-tema="oscuro"] .fw-card:hover{box-shadow:0 8px 24px rgba(0,0,0,0.132)}
+html[data-tema="oscuro"] .fw-card{background:#0E0E0E;border-color:rgba(255,255,255,0.08)}
+html[data-tema="oscuro"] .fw-card:hover{background:#14161A;box-shadow:0 10px 28px rgba(0,0,0,0.3)}
+html[data-tema="oscuro"] .fw-logo-box{background:#181A1F;border-color:rgba(255,255,255,0.12)}
+html[data-tema="oscuro"] .drawer-logo-box{background:#181A1F;border-color:rgba(255,255,255,0.12)}
+html[data-tema="oscuro"] .fw-ctrl-preview{background:#14161A;border-color:rgba(255,255,255,0.06)}
+html[data-tema="oscuro"] .view-btn.active{background:#222222;color:#F0F0F0}
 html[data-tema="oscuro"] .drawer-overlay{background:rgba(0,0,0,0.563)}
 html[data-tema="oscuro"] .detail-drawer{box-shadow:-10px 0 40px rgba(0,0,0,0.264)}
 html[data-tema="oscuro"] .drawer-header{background:rgba(14,14,14,0.95)}
@@ -791,7 +967,7 @@ html[data-tema="oscuro"] .cta-banner{box-shadow:0 20px 40px rgba(0,0,0,0.33)}
       <div class="search-box">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <input class="search-input" id="searchInp" placeholder="Search for a standard, regulator or control (e.g. ISO 27001, AML, SOC 2, SIB, Privacy)..." oninput="applyFilters()">
-        <button class="search-clear" id="searchClearBtn" onclick="clearSearchInput()">✕</button>
+        <button type="button" class="search-clear" id="searchClearBtn" onclick="clearSearchInput()" aria-label="Clear search" title="Clear"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
       </div>
       <div class="layer-tabs">
         <button class="tab-btn active" data-layer="all" onclick="setLayer(this,'all')">All (38)</button>
@@ -814,6 +990,16 @@ html[data-tema="oscuro"] .cta-banner{box-shadow:0 20px 40px rgba(0,0,0,0.33)}
       <div class="sec-chip" data-s="gobierno" onclick="setSector(this,'gobierno')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 2.5a4.2 4.2 0 0 0-4.2 4.2V9h8.4V6.7A4.2 4.2 0 0 0 12 2.5zM4 9h16M5.6 9v9M10 9v9M14 9v9M18.4 9v9M3 21h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Governance</div>
 
       <div class="results-counter" id="resultsCount">Showing 38 items</div>
+      <div class="view-switch">
+        <button type="button" class="view-btn active" id="viewGridBtn" onclick="setViewMode('grid')" aria-label="Grid view" title="Grid view">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          <span>Grid</span>
+        </button>
+        <button type="button" class="view-btn" id="viewColsBtn" onclick="setViewMode('cols')" aria-label="Columns view" title="Columns view">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="4" height="18" rx="1"/><rect x="10" y="3" width="4" height="18" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>
+          <span>Columns</span>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -926,39 +1112,39 @@ const DATA = {
     desc:'Core engines of the GRC platform',
     icon:`<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/></svg>`,
     items:[
-      {id:'m1',name:'Risk Management',sub:'Integrated ERM and Heat Maps',type:'modulo',sectors:['banca','valores','seguros','cooperativas','pensiones','fintech'],coverage:92,
+      {id:'m1',name:'Risk Management',sub:'Integrated ERM and Heat Maps',logo:'/public/mod-riesgos.svg',type:'modulo',sectors:['banca','valores','seguros','cooperativas','pensiones','fintech'],coverage:92,
         desc:'End-to-end management of the risk lifecycle: identification, assessment, treatment, KRIs and continuous monitoring. Includes dynamic matrices and simulations.',
         controls:['Dynamic Impact × Likelihood matrices','Operational, Technology and Legal ERM','Loss event and incident register','Business Impact Analysis (BIA)','Automated executive dashboards'],
         tags:['b-mod']},
-      {id:'m2',name:'Compliance',sub:'Regulatory Monitoring and Policies',type:'modulo',sectors:['banca','valores','seguros','cooperativas','pensiones','fintech','gobierno'],coverage:90,
+      {id:'m2',name:'Compliance',sub:'Regulatory Monitoring and Policies',logo:'/public/mod-cumplimiento.svg',type:'modulo',sectors:['banca','valores','seguros','cooperativas','pensiones','fintech','gobierno'],coverage:90,
         desc:'Central hub for managing regulatory compliance, internal policies, real-time alerts and the regulatory calendar.',
         controls:['Policy lifecycle and versioning','Regulatory calendar and real-time alerts','Automated due diligence workflows','Contract and material event register','AI compliance copilot'],
         tags:['b-mod']},
-      {id:'m3',name:'Internal Audit',sub:'Planning, Evidence and Findings',type:'modulo',sectors:['banca','valores','seguros','cooperativas','pensiones','fintech','gobierno'],coverage:88,
+      {id:'m3',name:'Internal Audit',sub:'Planning, Evidence and Findings',logo:'/public/mod-auditoria.svg',type:'modulo',sectors:['banca','valores','seguros','cooperativas','pensiones','fintech','gobierno'],coverage:88,
         desc:'Modernises the audit universe: annual plans, digital evidence collection, information requests and action plans for findings.',
         controls:['Digital Annual Audit Plan','Working papers and structured sampling','Digital evidence request and upload','Remediation plans for findings','Automated executive report generation'],
         tags:['b-mod']},
-      {id:'m4',name:'Internal Control',sub:'Aligned with the COSO Framework',type:'modulo',sectors:['banca','valores','seguros','pensiones','gobierno'],coverage:86,
+      {id:'m4',name:'Internal Control',sub:'Aligned with the COSO Framework',logo:'/public/mod-control.svg',type:'modulo',sectors:['banca','valores','seguros','pensiones','gobierno'],coverage:86,
         desc:'Full assessment of the internal control system covering the 5 components and 17 principles of COSO with automated testing.',
         controls:['Assessment of the institutional control environment','Control risk matrix by process','Workflows for periodic control testing','Communication and documentation chain','Continuous remediation of deficiencies'],
         tags:['b-mod','b-hybrid']},
-      {id:'m5',name:'Cybersecurity',sub:'Security Controls and Threat Posture',type:'modulo',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:91,
+      {id:'m5',name:'Cybersecurity',sub:'Security Controls and Threat Posture',logo:'/public/mod-ciberseguridad.svg',type:'modulo',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:91,
         desc:'Information security posture, vulnerability management, security incidents and continuous control validation.',
         controls:['Cross-mapping to ISO 27001 and NIST','Vulnerability and patch lifecycle','Ticketing and SLA for security incidents','Privileged access recertification','Automated supplier security score'],
         tags:['b-mod','b-intl']},
-      {id:'m6',name:'Corporate Governance',sub:'Boards, Committees and Digital Minutes',type:'modulo',sectors:['banca','valores','seguros','cooperativas','pensiones'],coverage:87,
+      {id:'m6',name:'Corporate Governance',sub:'Boards, Committees and Digital Minutes',logo:'/public/mod-gobierno.svg',type:'modulo',sectors:['banca','valores','seguros','cooperativas','pensiones'],coverage:87,
         desc:'Digital management of the Board of Directors, mandatory committees, resolutions, sworn declarations and digital signatures.',
         controls:['Committee agenda and minutes builder','Integrated electronic signatures (XSign)','Register of conflict of interest declarations','Tracking of regulatory agreements','Governance structure map'],
         tags:['b-mod']},
-      {id:'m7',name:'Business Continuity',sub:'BCP, DRP and Crisis Resilience',type:'modulo',sectors:['banca','valores','seguros','fintech'],coverage:84,
+      {id:'m7',name:'Business Continuity',sub:'BCP, DRP and Crisis Resilience',logo:'/public/mod-continuidad.svg',type:'modulo',sectors:['banca','valores','seguros','fintech'],coverage:84,
         desc:'Maintain operational resilience with Business Continuity (BCP) and Disaster Recovery (DRP) plans in line with ISO 22301.',
         controls:['BIA of critical processes and services','Monitoring of RTO and RPO thresholds','Register of simulation exercises and tests','Crisis communication protocols','Automated recovery playbooks'],
         tags:['b-mod','b-intl']},
-      {id:'m8',name:'Data Privacy',sub:'Law 172-13 and GDPR',type:'modulo',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:82,
+      {id:'m8',name:'Data Privacy',sub:'Law 172-13 and GDPR',logo:'/public/mod-privacidad.svg',type:'modulo',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:82,
         desc:'Data lifecycle governance, ARCO rights management, DPIAs and compliance with Law 172-13 and GDPR.',
         controls:['Record of processing activities (RoPA)','Automated ARCO rights portal','Data Protection Impact Assessments (DPIA)','Breach notification within 72 hours','DPO governance traceability'],
         tags:['b-mod','b-intl']},
-      {id:'m9',name:'Third-Party Risk (TPRM)',sub:'Due Diligence and Suppliers',type:'modulo',sectors:['banca','valores','seguros','fintech'],coverage:80,
+      {id:'m9',name:'Third-Party Risk (TPRM)',sub:'Due Diligence and Suppliers',logo:'/public/mod-terceros.svg',type:'modulo',sectors:['banca','valores','seguros','fintech'],coverage:80,
         desc:'Automates supplier assessment, security questionnaires, contractual compliance and continuous supply chain monitoring.',
         controls:['Classification of suppliers by criticality','Automated security questionnaires','Automated third-party due diligence','Alerts and continuous risk monitoring','Control of SLAs and contractual clauses'],
         tags:['b-mod']}
@@ -969,23 +1155,23 @@ const DATA = {
     desc:'Reference frameworks for control and governance',
     icon:`<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26 12,2" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`,
     items:[
-      {id:'h1',name:'COSO 2013',sub:'Internal Control — 5 Components',type:'hibrido',sectors:['banca','valores','seguros','pensiones','gobierno'],coverage:90,
+      {id:'h1',name:'COSO 2013',sub:'Internal Control — 5 Components',logo:'/public/coso.svg',type:'hibrido',sectors:['banca','valores','seguros','pensiones','gobierno'],coverage:90,
         desc:'Global standard for internal control architecture. Pre-mapped to Clèrigo\'s Internal Control and Audit modules.',
         controls:['Control Environment (5 principles)','Risk Assessment (4 principles)','Control Activities (3 principles)','Information and Communication (3 principles)','Monitoring Activities (2 principles)'],
         tags:['b-hybrid']},
-      {id:'h2',name:'COBIT 2019',sub:'Enterprise IT Governance and Management',type:'hibrido',sectors:['banca','valores','fintech','gobierno'],coverage:83,
+      {id:'h2',name:'COBIT 2019',sub:'Enterprise IT Governance and Management',logo:'/public/cobit.svg',type:'hibrido',sectors:['banca','valores','fintech','gobierno'],coverage:83,
         desc:'Connects business objectives with IT strategy. Covers 40 governance and management objectives across 5 domains.',
         controls:['Evaluate, Direct and Monitor (EDM)','Align, Plan and Organise (APO)','Build, Acquire and Implement (BAI)','Deliver, Service and Support (DSS)','Monitor, Evaluate and Assess (MEA)'],
         tags:['b-hybrid']},
-      {id:'h3',name:'NIST CSF 2.0',sub:'Cybersecurity Framework and CIS',type:'hibrido',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:89,
+      {id:'h3',name:'NIST CSF 2.0',sub:'Cybersecurity Framework and CIS',logo:'/public/nist-csf.svg',type:'hibrido',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:89,
         desc:'The leading standard for managing cybersecurity risk, updated with the "Govern" pillar and CIS Critical Controls.',
         controls:['Govern — Cybersecurity strategy and governance','Identify — Assets, risks and suppliers','Protect — Safeguards and identity control','Detect — Continuous threat monitoring','Respond — Incident containment and mitigation','Recover — Restoration and lessons learned'],
         tags:['b-hybrid','b-intl']},
-      {id:'h4',name:'ISO 27002:2022',sub:'Security Controls Catalogue (93)',type:'hibrido',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:91,
+      {id:'h4',name:'ISO 27002:2022',sub:'Security Controls Catalogue (93)',logo:'/public/iso-27002.svg',type:'hibrido',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:91,
         desc:'Complete taxonomy of 93 security controls grouped into 4 themes: Organisational, People, Physical and Technological.',
         controls:['Organisational Controls (37)','People Controls (8)','Physical Controls (14)','Technological Controls (34)','Cryptography and cloud security'],
         tags:['b-hybrid','b-intl']},
-      {id:'h5',name:'SOC 2 Type II',sub:'Trust Services Criteria (TSC)',type:'hibrido',sectors:['banca','valores','fintech'],coverage:85,
+      {id:'h5',name:'SOC 2 Type II',sub:'Trust Services Criteria (TSC)',logo:'/public/soc2.svg',type:'hibrido',sectors:['banca','valores','fintech'],coverage:85,
         desc:'Assessment of the operating effectiveness of controls for Security, Availability, Confidentiality, Integrity and Privacy.',
         controls:['Common Criteria (Security Baseline)','System Availability and SLA','Processing Integrity Controls','Confidentiality Safeguards','Data Privacy Principles'],
         tags:['b-hybrid']}
@@ -996,31 +1182,31 @@ const DATA = {
     desc:'Global certification standards',
     icon:`<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="2"/></svg>`,
     items:[
-      {id:'i1',name:'ISO 27001:2022',sub:'Information Security Management (ISMS)',type:'internacional',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:93,
+      {id:'i1',name:'ISO 27001:2022',sub:'Information Security Management (ISMS)',logo:'/public/iso-27001.svg',type:'internacional',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:93,
         desc:'Mandatory standard for ISMS certification. Clèrigo delivers continuous gap analysis and an automated Statement of Applicability (SoA).',
         controls:['Context of the Organisation and Leadership','Risk Assessment and Treatment (Clauses 6 and 8)','Statement of Applicability (SoA)','Internal Audit and Management Review','Continual Improvement and Surveillance Audits'],
         tags:['b-intl']},
-      {id:'i2',name:'ISO 22301:2019',sub:'Business Continuity Management (BCMS)',type:'internacional',sectors:['banca','valores','seguros','fintech'],coverage:86,
+      {id:'i2',name:'ISO 22301:2019',sub:'Business Continuity Management (BCMS)',logo:'/public/iso-22301.svg',type:'internacional',sectors:['banca','valores','seguros','fintech'],coverage:86,
         desc:'Ensures the organisation recovers quickly from serious disruptions through structured continuity plans.',
         controls:['BIA and Continuity Risk Assessment','Recovery Strategies and Solutions','Incident Response and Crisis Management','Exercises, Testing and Periodic Validation','BCMS Performance Metrics'],
         tags:['b-intl']},
-      {id:'i3',name:'ISO 31000:2018',sub:'Risk Management Guidelines',type:'internacional',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:88,
+      {id:'i3',name:'ISO 31000:2018',sub:'Risk Management Guidelines',logo:'/public/iso-31000.svg',type:'internacional',sectors:['banca','valores','seguros','fintech','gobierno'],coverage:88,
         desc:'Universal framework for the governance, culture and integration of risk management across the organisation.',
         controls:['Risk Management Principles and Framework','Structured Risk Identification and Analysis','Assessment Criteria and Risk Tolerance','Risk Treatment and Control Mapping','Monitoring, Consultation and Continuous Review'],
         tags:['b-intl']},
-      {id:'i4',name:'PCI-DSS v4.0',sub:'Payment Card Data Security',type:'internacional',sectors:['banca','fintech','valores'],coverage:84,
+      {id:'i4',name:'PCI-DSS v4.0',sub:'Payment Card Data Security',logo:'/public/pci-dss.svg',type:'internacional',sectors:['banca','fintech','valores'],coverage:84,
         desc:'Strict security controls to process, transmit and store payment cardholder data.',
         controls:['Secure Network and System Configuration','Card Data Protection and Encryption','Vulnerability Management and Penetration Testing','Strict Access Control and MFA','Continuous Monitoring and Audit Logs'],
         tags:['b-intl']},
-      {id:'i5',name:'SWIFT CSCF v2024',sub:'Customer Security Controls Framework',type:'internacional',sectors:['banca','fintech'],coverage:80,
+      {id:'i5',name:'SWIFT CSCF v2024',sub:'Customer Security Controls Framework',logo:'/public/swift.svg',type:'internacional',sectors:['banca','fintech'],coverage:80,
         desc:'Mandatory cybersecurity controls for every entity connected to the SWIFT financial messaging network.',
         controls:['SWIFT Architecture Segmentation','Privileged Account Governance','Transaction Anomaly Detection','Training and Incident Response','Mandatory Annual Attestation'],
         tags:['b-intl']},
-      {id:'i6',name:'ISO 9001:2015',sub:'Quality Management Systems (QMS)',type:'internacional',sectors:['banca','valores','seguros','gobierno'],coverage:76,
+      {id:'i6',name:'ISO 9001:2015',sub:'Quality Management Systems (QMS)',logo:'/public/iso-9001.svg',type:'internacional',sectors:['banca','valores','seguros','gobierno'],coverage:76,
         desc:'Quality standard to ensure consistent service delivery and ongoing customer satisfaction.',
         controls:['Quality Policy and Process Mapping','Customer Satisfaction Measurement','Non-Conformity Control and Corrective Actions','Operational Planning and Resource Control','Management Review and Audits'],
         tags:['b-intl']},
-      {id:'i7',name:'RGPD / GDPR',sub:'General Data Protection Regulation (EU)',type:'internacional',sectors:['banca','valores','fintech','gobierno'],coverage:82,
+      {id:'i7',name:'RGPD / GDPR',sub:'General Data Protection Regulation (EU)',logo:'/public/gdpr.svg',type:'internacional',sectors:['banca','valores','fintech','gobierno'],coverage:82,
         desc:'The benchmark standard for personal data protection, international transfers and data subject rights.',
         controls:['Legal Basis for Processing and Consent','Automated ARCO+ Rights Management','Data Protection by Design and by Default','72-Hour Breach Notification Protocol','Third-Party DPAs and Transfer Safeguards'],
         tags:['b-intl']}
@@ -1031,39 +1217,39 @@ const DATA = {
     desc:'Supervisory and regulatory bodies',
     icon:`<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
     items:[
-      {id:'r1',name:'SIB',sub:'Superintendencia de Bancos (DR)',type:'regulador',sectors:['banca'],coverage:94,
+      {id:'r1',name:'SIB',sub:'Superintendencia de Bancos (DR)',logo:'/public/sb.png',type:'regulador',sectors:['banca'],coverage:94,
         desc:'Regulates and supervises every financial intermediation entity in the Dominican Republic. Issues mandatory instructions on governance, risk and cybersecurity.',
         controls:['Corporate Governance Circulars','Integrated Risk Management Rules','Operational and Liquidity Risk Guidelines','Cybersecurity and IT Instructions','AML/CFT Supervision'],
         tags:['b-local']},
-      {id:'r2',name:'BCRD',sub:'Banco Central de la República Dominicana',type:'regulador',sectors:['banca','fintech'],coverage:90,
+      {id:'r2',name:'BCRD',sub:'Banco Central de la República Dominicana',logo:'/public/bcrd-logo.svg',type:'regulador',sectors:['banca','fintech'],coverage:90,
         desc:'Monetary and foreign exchange authority safeguarding financial system stability, payment infrastructure and cybersecurity.',
         controls:['Payment Systems Cybersecurity Regulation','SIPARD Critical Infrastructure Security','Financial Resilience Directives','Foreign Exchange and Monetary Compliance'],
         tags:['b-local']},
-      {id:'r3',name:'SIMV',sub:'Superintendencia del Mercado de Valores (DR)',type:'regulador',sectors:['valores','fintech'],coverage:88,
+      {id:'r3',name:'SIMV',sub:'Superintendencia del Mercado de Valores (DR)',logo:'/public/simv-logo.png',type:'regulador',sectors:['valores','fintech'],coverage:88,
         desc:'Regulates and supervises broker-dealers, investment fund managers and Dominican capital market infrastructure.',
         controls:['Intermediary Licensing and Minimum Capital','Corporate Governance Rules for Securities','Market Risk Management Circulars','Control of Material Events and Transparency'],
         tags:['b-local']},
-      {id:'r4',name:'IDECOOP',sub:'Instituto de Desarrollo y Crédito Cooperativo (DR)',type:'regulador',sectors:['cooperativas'],coverage:76,
+      {id:'r4',name:'IDECOOP',sub:'Instituto de Desarrollo y Crédito Cooperativo (DR)',logo:'/public/idecoop.png',type:'regulador',sectors:['cooperativas'],coverage:76,
         desc:'Supervises and audits savings and credit cooperatives in the Dominican Republic.',
         controls:['Financial Supervision of Cooperatives','Credit and Liquidity Risk Directives','Cooperative Governance Standards','Anti-Money Laundering in Accounts'],
         tags:['b-local']},
-      {id:'r5',name:'SIPEN',sub:'Superintendencia de Pensiones (DR)',type:'regulador',sectors:['pensiones'],coverage:78,
+      {id:'r5',name:'SIPEN',sub:'Superintendencia de Pensiones (DR)',logo:'/public/sipen.svg',type:'regulador',sectors:['pensiones'],coverage:78,
         desc:'Regulates pension fund managers (AFP), pension investments and fund custody.',
         controls:['Internal Control and Audit Rules for AFPs','Investment Limits and Regulatory Control','Custody and Safeguarding of Pension Accounts','Transparency and Member Rights'],
         tags:['b-local']},
-      {id:'r6',name:'OPTIC / OGTIC',sub:'Oficina Presidencial de TIC (DR)',type:'regulador',sectors:['gobierno'],coverage:88,
+      {id:'r6',name:'OPTIC / OGTIC',sub:'Oficina Presidencial de TIC (DR)',logo:'/public/ogtic.png',type:'regulador',sectors:['gobierno'],coverage:88,
         desc:'Issues the NORTIC technical standards for digital government, cybersecurity, interoperability and public portals.',
         controls:['NORTIC A2, A3, A4 and A5 Standards','Public IT Security Baseline','National Interoperability Architecture','Digital Identity and Citizen Services'],
         tags:['b-local']},
-      {id:'r7',name:'OFAC',sub:'US Department of the Treasury — Sanctions',type:'regulador',sectors:['banca','valores','seguros','fintech'],coverage:85,
+      {id:'r7',name:'OFAC',sub:'US Department of the Treasury — Sanctions',logo:'/public/ofac.svg',type:'regulador',sectors:['banca','valores','seguros','fintech'],coverage:85,
         desc:'Applies economic and trade sanctions. Mandatory monitoring for international transactions and foreign counterparties.',
         controls:['Automated SDN List Monitoring','Transaction Blocking and Preventive Holds','Due Diligence on International Counterparties','OFAC Compliance Audit Trail'],
         tags:['b-ext']},
-      {id:'r8',name:'SEC',sub:'US Securities and Exchange Commission',type:'regulador',sectors:['valores','fintech'],coverage:72,
+      {id:'r8',name:'SEC',sub:'US Securities and Exchange Commission',logo:'/public/sec.svg',type:'regulador',sectors:['valores','fintech'],coverage:72,
         desc:'US regulator that protects investors and keeps capital markets fair and transparent.',
         controls:['Disclosure Controls for 10-K, 10-Q and 8-K Filings','Sarbanes-Oxley Internal Controls (SOX 404)','Compliance Rules for Broker-Dealers and RIAs','Code of Ethics and Insider Trading Prevention'],
         tags:['b-ext']},
-      {id:'r9',name:'FINRA',sub:'Financial Industry Regulatory Authority (US)',type:'regulador',sectors:['valores'],coverage:70,
+      {id:'r9',name:'FINRA',sub:'Financial Industry Regulatory Authority (US)',logo:'/public/finra.svg',type:'regulador',sectors:['valores'],coverage:70,
         desc:'Self-regulatory organisation overseeing brokerage firms and securities markets in the US.',
         controls:['Broker-Dealer Supervisory Systems','Client Account Protection and KYC','Market Surveillance and Transaction Reporting','Annual Compliance Certification (Rule 3130)'],
         tags:['b-ext']}
@@ -1074,47 +1260,47 @@ const DATA = {
     desc:'Mandatory regulations with automated mapping',
     icon:`<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
     items:[
-      {id:'reg1',name:'Corporate governance regulation',sub:'Superintendencia de Bancos (SIB)',compliance:'Mandatory Board and Committee Oversight',type:'regulacion',sectors:['banca'],coverage:92,
+      {id:'reg1',name:'Corporate governance regulation',sub:'Superintendencia de Bancos (SIB)',logo:'/public/sb.png',compliance:'Mandatory Board and Committee Oversight',type:'regulacion',sectors:['banca'],coverage:92,
         desc:'Defines governance requirements, Board composition, mandatory committees and executive independence for banking entities.',
         controls:['Board of Directors and Audit and Risk Committees','Segregation of Duties in Senior Management','Code of Ethics and Conflict of Interest Policies','Mandatory Oversight of Internal and External Audit'],
         tags:['b-local','b-reg']},
-      {id:'reg2',name:'Integrated Risk Management',sub:'Superintendencia de Bancos (SIB)',compliance:'Integrated ERM Architecture',type:'regulacion',sectors:['banca'],coverage:94,
+      {id:'reg2',name:'Integrated Risk Management',sub:'Superintendencia de Bancos (SIB)',logo:'/public/sb.png',compliance:'Integrated ERM Architecture',type:'regulacion',sectors:['banca'],coverage:94,
         desc:'Integrated regulatory framework covering credit, market, liquidity, operational and technology risk in the banking sector.',
         controls:['Concentration Limits and Credit Risk','Market, Interest Rate and Foreign Exchange Risk Models','Liquidity Coverage and Stress Testing','Capital Adequacy and Basel III Alignment'],
         tags:['b-local','b-reg']},
-      {id:'reg3',name:'Operational Risk Regulation',sub:'Superintendencia de Bancos (SIB)',compliance:'Loss Events and Business Continuity',type:'regulacion',sectors:['banca'],coverage:90,
+      {id:'reg3',name:'Operational Risk Regulation',sub:'Superintendencia de Bancos (SIB)',logo:'/public/sb.png',compliance:'Loss Events and Business Continuity',type:'regulacion',sectors:['banca'],coverage:90,
         desc:'Identification, reporting and mitigation of operational loss events and critical banking flows.',
         controls:['Loss Event Recording and Classification','Key Operational Risk Indicators (KRIs)','Banking Business Continuity (BCP)','Root Cause Analysis and Action Plans'],
         tags:['b-local','b-reg']},
-      {id:'reg4',name:'Anti-Money Laundering (AML / CFT)',sub:'SIB / SIMV / Law 155-17',compliance:'Anti-Money Laundering and Counter-Terrorist Financing',type:'regulacion',sectors:['banca','valores','seguros','cooperativas'],coverage:96,
+      {id:'reg4',name:'Anti-Money Laundering (AML / CFT)',sub:'SIB / SIMV / Law 155-17',logo:'/public/uaf.png',compliance:'Anti-Money Laundering and Counter-Terrorist Financing',type:'regulacion',sectors:['banca','valores','seguros','cooperativas'],coverage:96,
         desc:'Mandatory AML/CFT framework based on Law 155-17 and the FATF recommendations.',
         controls:['Customer Due Diligence (KYC / CDD / EDD)','Ultimate Beneficial Owner (UBO) Verification','Real-Time Monitoring of PEPs and Sanctions Lists','Suspicious Activity Reporting (ROS / SAR)','Annual Programme and AML Compliance Audit'],
         tags:['b-local','b-reg']},
-      {id:'reg5',name:'Cybersecurity and IT Regulation',sub:'Joint SIB / BCRD Directive',compliance:'Information Security and Technology Resilience',type:'regulacion',sectors:['banca','fintech'],coverage:93,
+      {id:'reg5',name:'Cybersecurity and IT Regulation',sub:'Joint SIB / BCRD Directive',logo:'/public/bcrd-logo.svg',compliance:'Information Security and Technology Resilience',type:'regulacion',sectors:['banca','fintech'],coverage:93,
         desc:'Sets binding requirements for cybersecurity, logical access, incident notification and IT continuity.',
         controls:['Institutional Cybersecurity Governance','Asset Inventory and Technology Criticality Matrix','Strict Access and Privileged Identity Controls','Mandatory SLA for Regulatory Incident Notification'],
         tags:['b-local','b-reg']},
-      {id:'reg6',name:'Securities Intermediaries',sub:'SIMV (Securities Market)',compliance:'Broker-Dealer Operations and Capital',type:'regulacion',sectors:['valores'],coverage:86,
+      {id:'reg6',name:'Securities Intermediaries',sub:'SIMV (Securities Market)',logo:'/public/simv-logo.png',compliance:'Broker-Dealer Operations and Capital',type:'regulacion',sectors:['valores'],coverage:86,
         desc:'Regulates operations, capitalisation and risk safeguards for broker-dealers and fund managers.',
         controls:['Licensing and Minimum Capital Verification','Segregation and Safeguarding of Client Assets','Order Execution Best Practices','Regulatory Reporting and Periodic Audits'],
         tags:['b-local','b-reg']},
-      {id:'reg7',name:'Securities Corporate Governance',sub:'SIMV (Securities Market)',compliance:'Capital Market Transparency',type:'regulacion',sectors:['valores'],coverage:84,
+      {id:'reg7',name:'Securities Corporate Governance',sub:'SIMV (Securities Market)',logo:'/public/simv-logo.png',compliance:'Capital Market Transparency',type:'regulacion',sectors:['valores'],coverage:84,
         desc:'Corporate governance rules for public issuers and securities market participants.',
         controls:['Board Structure and Independent Directors','Mandatory Audit and Risk Committees','Timely Disclosure of Material Events','Investor Protection Protocols'],
         tags:['b-local','b-reg']},
-      {id:'reg8',name:'Securities Risk Management',sub:'SIMV (Securities Market)',compliance:'Market and Investment Risk',type:'regulacion',sectors:['valores'],coverage:85,
+      {id:'reg8',name:'Securities Risk Management',sub:'SIMV (Securities Market)',logo:'/public/simv-logo.png',compliance:'Market and Investment Risk',type:'regulacion',sectors:['valores'],coverage:85,
         desc:'Market, counterparty, operational and credit risk guidelines for securities intermediaries.',
         controls:['Portfolio Value at Risk (VaR) Calculation','Counterparty and Settlement Exposure Limits','Stress Scenarios and Sensitivity Analysis','Quarterly Risk Reporting to SIMV'],
         tags:['b-local','b-reg']},
-      {id:'reg9',name:'Internal Control for AFPs',sub:'SIPEN (Pensions)',compliance:'Internal Control for Pension Funds',type:'regulacion',sectors:['pensiones'],coverage:80,
+      {id:'reg9',name:'Internal Control for AFPs',sub:'SIPEN (Pensions)',logo:'/public/sipen.svg',compliance:'Internal Control for Pension Funds',type:'regulacion',sectors:['pensiones'],coverage:80,
         desc:'Internal controls, audit oversight and safeguards for retirement fund investments.',
         controls:['Fund Segregation and Valuation Control','Internal Audit Scope and Mandate','Regulatory Limits on Pension Investment','Security and Privacy of Member Account Statements'],
         tags:['b-local','b-reg']},
-      {id:'reg10',name:'Cooperative Supervision',sub:'IDECOOP (Cooperatives)',compliance:'Financial Health and Risk Control',type:'regulacion',sectors:['cooperativas'],coverage:75,
+      {id:'reg10',name:'Cooperative Supervision',sub:'IDECOOP (Cooperatives)',logo:'/public/idecoop.png',compliance:'Financial Health and Risk Control',type:'regulacion',sectors:['cooperativas'],coverage:75,
         desc:'Prudential supervision rules for savings and credit cooperatives in the Dominican Republic.',
         controls:['Cooperative Solvency and Capital Buffers','Loan Approval and Arrears Control','Cooperative Governance and Assembly Minutes','Anti-Money Laundering in Member Accounts'],
         tags:['b-local','b-reg']},
-      {id:'reg11',name:'NORTIC Standards Suite',sub:'OPTIC / Oficina Presidencial de TIC',compliance:'Digital Government and State Cybersecurity',type:'regulacion',sectors:['gobierno'],coverage:89,
+      {id:'reg11',name:'NORTIC Standards Suite',sub:'OPTIC / Oficina Presidencial de TIC',logo:'/public/ogtic.png',compliance:'Digital Government and State Cybersecurity',type:'regulacion',sectors:['gobierno'],coverage:89,
         desc:'Suite of Technical Standards (NORTIC A2, A3, A4, A5, B2) governing Dominican public institutions.',
         controls:['NORTIC A2 — Web Portals and Citizen Transparency','NORTIC A3 — Open Data and Public Information','NORTIC A4 — Interoperability Between State Institutions','NORTIC A5 — Public Cybersecurity Baseline','NORTIC B2 — Institutional IT Governance'],
         tags:['b-local','b-reg']}
@@ -1175,7 +1361,89 @@ function clearSearchInput() {
   renderGrid();
 }
 
+let viewMode = 'grid';
+
+function setViewMode(mode) {
+  viewMode = mode;
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  const btn = mode === 'grid' ? document.getElementById('viewGridBtn') : document.getElementById('viewColsBtn');
+  if (btn) btn.classList.add('active');
+  renderGrid();
+}
+
+const TEXTS = {
+  coverageLabel: 'Automated coverage',
+  viewDetail: 'View details',
+  noItemsShelf: 'No items found in this category',
+  noItemsSearch: 'No items match the selected filters',
+  mapped: 'Mapped',
+  automatedCoverage: 'Automated Coverage in Clèrigo',
+  coverageDesc: 'Controls and requirements are continuously monitored and automatically linked to the Clèrigo evidence repository.',
+  scopeTitle: 'Framework Scope and Description',
+  sectorsTitle: 'Applicable Sectors',
+  controlsTitle: 'Controls and Deliverables Covered',
+  synergyTitle: 'Smart Cross-Mapping Active',
+  synergyDesc: (name) => `Evidence uploaded for ${name} is automatically correlated with the equivalent requirements in ISO 27001, SOC 2, SIB and GDPR, with no duplicated manual work.`
+};
+
 const COLS_ORDER = ['modulos','hibrido','internacionales','reguladores','regulaciones'];
+
+function createCardHtml(item, colKey, isVis, isColView) {
+  const col = DATA[colKey];
+  const covColor = item.coverage >= 90 ? '#0F6B4E' : item.coverage >= 80 ? '#0257BF' : '#B45309';
+  const logoSrc = item.logo || '/public/bandera-rd.svg';
+
+  const ctrlPreview = (item.controls || []).slice(0, 2).map(c => `
+    <div class="fw-ctrl-chip">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="${covColor}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <span>${c}</span>
+    </div>
+  `).join('');
+
+  return `<div class="fw-card ${isVis ? '' : 'hidden'}" onclick="openDetail('${item.id}','${colKey}')">
+    <div class="fw-card-header">
+      <div class="fw-logo-box">
+        <img class="fw-logo-img" src="${logoSrc}" alt="" aria-hidden="true" loading="lazy" decoding="async">
+      </div>
+      <div class="fw-card-pills">
+        <span class="fw-cat-badge" style="color:${col.color};background:${col.color}15;border-color:${col.color}30">${col.title}</span>
+        <span class="fw-card-cov" style="color:${covColor};background:${covColor}12;border-color:${covColor}25">
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          ${item.coverage}%
+        </span>
+      </div>
+    </div>
+
+    <div class="fw-card-name">${item.name}</div>
+    <div class="fw-card-sub">${item.sub}</div>
+    ${item.compliance ? `<div class="fw-compliance-tag">${item.compliance}</div>` : ''}
+
+    <div class="fw-card-desc">${item.desc}</div>
+
+    <div class="fw-ctrl-preview">
+      ${ctrlPreview}
+    </div>
+
+    <div class="fw-meter-row">
+      <span>${TEXTS.coverageLabel}</span>
+      <span style="color:${covColor}">${item.coverage}%</span>
+    </div>
+    <div class="fw-mini-meter">
+      <div class="fw-mini-fill" style="width:${item.coverage}%; background:${covColor}"></div>
+    </div>
+
+    <div class="fw-card-footer">
+      <div class="fw-card-tags">
+        ${item.sectors.slice(0, 2).map(s => `<span class="badge">${SECTORS[s] || s}</span>`).join('')}
+        ${item.sectors.length > 2 ? `<span class="badge">+${item.sectors.length - 2}</span>` : ''}
+      </div>
+      <span class="fw-card-arrow">
+        <span>${TEXTS.viewDetail}</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </span>
+    </div>
+  </div>`;
+}
 
 function renderGrid() {
   const grid = document.getElementById('fwGrid');
@@ -1183,52 +1451,61 @@ function renderGrid() {
     return activeLayer === 'all' || DATA[key].type === activeLayer;
   });
 
-  const nCols = Math.min(visibleCols.length, 5);
-  grid.style.setProperty('--cols', nCols);
-  grid.style.setProperty('--cols-3', Math.min(nCols, 3));
-  grid.style.setProperty('--cols-2', Math.min(nCols, 2));
-
   let totalVisible = 0;
 
-  grid.innerHTML = visibleCols.map(key => {
-    const col = DATA[key];
-    const vis = col.items.filter(matchItem);
-    totalVisible += vis.length;
+  if (viewMode === 'grid') {
+    grid.className = 'fw-grid';
+    grid.innerHTML = visibleCols.map(key => {
+      const col = DATA[key];
+      const vis = col.items.filter(matchItem);
+      totalVisible += vis.length;
 
-    return '<div class="fw-col" style="border-top: 3px solid ' + col.color + '">' +
-      '<div class="fw-col-header">' +
-        '<div class="fw-col-icon" style="background:' + col.color + '18; color:' + col.color + '">' + col.icon + '</div>' +
-        '<div class="fw-col-info">' +
-          '<div class="fw-col-title">' + col.title + '</div>' +
+      const isShelfHidden = vis.length === 0 && searchQuery.length > 0;
+      if (isShelfHidden) return '';
+
+      return '<section class="fw-shelf" id="shelf-' + key + '">' +
+        '<div class="fw-shelf-header" style="border-left: 4px solid ' + col.color + '">' +
+          '<div class="fw-shelf-icon" style="background:' + col.color + '18; color:' + col.color + '">' + col.icon + '</div>' +
+          '<div class="fw-shelf-info">' +
+            '<div class="fw-shelf-title">' + col.title + '</div>' +
+            '<div class="fw-shelf-desc">' + col.desc + '</div>' +
+          '</div>' +
+          '<div class="fw-shelf-count">' + vis.length + '</div>' +
         '</div>' +
-        '<div class="fw-col-count">' + vis.length + '</div>' +
-      '</div>' +
-      '<div class="fw-col-body">' +
-        col.items.map(item => {
-          const isVis = matchItem(item);
-          const covColor = item.coverage >= 90 ? '#0F6B4E' : item.coverage >= 80 ? '#0257BF' : '#B45309';
-          return '<div class="fw-card ' + (isVis ? '' : 'hidden') + '" onclick="openDetail(\'' + item.id + '\',\'' + key + '\')">' +
-            '<div class="fw-card-top">' +
-              '<div class="fw-card-name">' + item.name + '</div>' +
-              '<span class="fw-card-cov" style="background:' + covColor + '">' + item.coverage + '%</span>' +
-            '</div>' +
-            '<div class="fw-card-sub">' + item.sub + '</div>' +
-            '<div class="fw-mini-meter">' +
-              '<div class="fw-mini-fill" style="width:' + item.coverage + '%; background:' + covColor + '"></div>' +
-            '</div>' +
-            '<div class="fw-card-footer">' +
-              '<div class="fw-card-tags">' +
-                item.sectors.slice(0, 2).map(s => '<span class="badge">' + (SECTORS[s] || s) + '</span>').join('') +
-                (item.sectors.length > 2 ? '<span class="badge">+' + (item.sectors.length - 2) + '</span>' : '') +
-              '</div>' +
-              '<span class="fw-card-arrow">View details →</span>' +
-            '</div>' +
-          '</div>';
-        }).join('') +
-        (vis.length === 0 ? '<div style="font-size:12px;color:var(--text-3);text-align:center;padding:32px 16px">No items found in this category</div>' : '') +
-      '</div>' +
-    '</div>';
-  }).join('');
+        '<div class="fw-shelf-cards">' +
+          col.items.map(item => createCardHtml(item, key, matchItem(item), false)).join('') +
+          (vis.length === 0 ? '<div class="fw-empty-notice">' + TEXTS.noItemsShelf + '</div>' : '') +
+        '</div>' +
+      '</section>';
+    }).join('') || '<div class="fw-empty-state">' + TEXTS.noItemsSearch + '</div>';
+  } else {
+    grid.className = 'fw-grid';
+    grid.classList.add('fw-grid-cols');
+    const nCols = Math.min(visibleCols.length, 5);
+    grid.style.setProperty('--cols', nCols);
+    grid.style.setProperty('--cols-3', Math.min(nCols, 3));
+    grid.style.setProperty('--cols-2', Math.min(nCols, 2));
+
+    grid.innerHTML = visibleCols.map(key => {
+      const col = DATA[key];
+      const vis = col.items.filter(matchItem);
+      totalVisible += vis.length;
+
+      return '<div class="fw-col" style="border-top: 3px solid ' + col.color + '">' +
+        '<div class="fw-col-header">' +
+          '<div class="fw-col-icon" style="background:' + col.color + '18; color:' + col.color + '">' + col.icon + '</div>' +
+          '<div class="fw-col-info">' +
+            '<div class="fw-col-title">' + col.title + '</div>' +
+          '</div>' +
+          '<div class="fw-col-count">' + vis.length + '</div>' +
+        '</div>' +
+        '<div class="fw-col-body">' +
+          col.items.map(item => createCardHtml(item, key, matchItem(item), true)).join('') +
+          (vis.length === 0 ? '<div class="fw-empty-notice">' + TEXTS.noItemsShelf + '</div>' : '') +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
 
   /* La frase entera en UNA plantilla. Pegada con `+ totalVisible +` eran dos
      claves sueltas: se tradujo «Mostrando» y « elementos» se quedó, así que la
@@ -1243,6 +1520,7 @@ function openDetail(id, colKey) {
   if (!item) return;
 
   const covColor = item.coverage >= 90 ? '#0F6B4E' : item.coverage >= 80 ? '#0257BF' : '#B45309';
+  const logoSrc = item.logo || '/public/bandera-rd.svg';
 
   const badgeEl = document.getElementById('dpBadge');
   badgeEl.innerText = col.title;
@@ -1250,41 +1528,46 @@ function openDetail(id, colKey) {
   badgeEl.style.color = col.color;
 
   document.getElementById('dpContent').innerHTML =
-    '<div>' +
-      '<div class="drawer-title">' + item.name + '</div>' +
-      '<div class="drawer-sub">' + item.sub + '</div>' +
-      (item.compliance ? '<div style="margin-top:8px;font-size:11px;font-weight:700;color:var(--success);background:rgba(15,107,78,0.1);padding:4px 8px;border-radius:4px;display:inline-block">' + item.compliance + '</div>' : '') +
+    '<div class="drawer-header-entity">' +
+      '<div class="drawer-logo-box">' +
+        `<img class="drawer-logo-img" src="${logoSrc}" alt="" aria-hidden="true" loading="lazy">` +
+      '</div>' +
+      '<div style="flex:1;min-width:0">' +
+        '<div class="drawer-title">' + item.name + '</div>' +
+        '<div class="drawer-sub">' + item.sub + '</div>' +
+        (item.compliance ? '<div style="margin-top:8px;font-size:11px;font-weight:700;color:var(--success);background:rgba(15,107,78,0.1);padding:4px 8px;border-radius:4px;display:inline-block">' + item.compliance + '</div>' : '') +
+      '</div>' +
     '</div>' +
 
     '<div class="coverage-box">' +
       '<div class="coverage-top">' +
-        '<span class="coverage-label">Automated Coverage in Clèrigo</span>' +
-        '<span class="coverage-score" style="color:' + covColor + '">' + item.coverage + '% Mapped</span>' +
+        '<span class="coverage-label">' + TEXTS.automatedCoverage + '</span>' +
+        '<span class="coverage-score" style="color:' + covColor + '">' + item.coverage + '% ' + TEXTS.mapped + '</span>' +
       '</div>' +
       '<div class="coverage-track">' +
         '<div class="coverage-fill" style="width:' + item.coverage + '%; background:' + covColor + '"></div>' +
       '</div>' +
-      '<div class="coverage-note">Controls and requirements are continuously monitored and automatically linked to the Clèrigo evidence repository.</div>' +
+      '<div class="coverage-note">' + TEXTS.coverageDesc + '</div>' +
     '</div>' +
 
     '<div>' +
-      '<div class="sec-heading">Framework Scope and Description</div>' +
+      '<div class="sec-heading">' + TEXTS.scopeTitle + '</div>' +
       '<div class="drawer-desc">' + item.desc + '</div>' +
     '</div>' +
 
     '<div>' +
-      '<div class="sec-heading">Applicable Sectors</div>' +
+      '<div class="sec-heading">' + TEXTS.sectorsTitle + '</div>' +
       '<div style="display:flex;flex-wrap:wrap;gap:6px">' +
         item.sectors.map(s => '<span class="badge" style="padding:4px 8px;font-size:10px">' + (SECTORS[s] || s) + '</span>').join('') +
       '</div>' +
     '</div>' +
 
     '<div>' +
-      '<div class="sec-heading">Controls and Deliverables Covered</div>' +
+      '<div class="sec-heading">' + TEXTS.controlsTitle + '</div>' +
       '<div class="ctrls-list">' +
         item.controls.map(c =>
           '<div class="ctrl-item">' +
-            '<div class="ctrl-check">✓</div>' +
+            '<div class="ctrl-check"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>' +
             '<div>' + c + '</div>' +
           '</div>'
         ).join('') +
@@ -1292,15 +1575,14 @@ function openDetail(id, colKey) {
     '</div>' +
 
     '<div class="synergy-card">' +
-      '<div class="synergy-title">⚡ Smart Cross-Mapping Active</div>' +
-      /* La frase entera en UNA plantilla, y no pegando trozos. Partida en dos
-         con un `+ item.name +` en medio, cada mitad es una clave distinta del
-         diccionario: se tradujo la primera y la segunda se quedó en castellano
-         dentro de la página inglesa. Es la tercera vez que muerde lo mismo. */
-      `<div class="synergy-text">Evidence uploaded for ${item.name} is automatically correlated with the equivalent requirements in ISO 27001, SOC 2, SIB and GDPR, with no duplicated manual work.</div>` +
+      '<div class="synergy-title">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>' +
+        '<span>' + TEXTS.synergyTitle + '</span>' +
+      '</div>' +
+      '<div class="synergy-text">' + TEXTS.synergyDesc(item.name) + '</div>' +
     '</div>';
 
-  document.getElementById('dpCta').href = 'contacto.html?framework=' + encodeURIComponent(item.name);
+  document.getElementById('dpCta').href = '/contact?framework=' + encodeURIComponent(item.name);
 
   document.getElementById('detailPanel').classList.add('open');
   document.getElementById('dpOverlay').classList.add('open');

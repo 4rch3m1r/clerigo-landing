@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 110" width="100%" height="100%">
+  <defs>
+    <linearGradient id="nistGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B2545"/>
+      <stop offset="100%" stop-color="#041224"/>
+    </linearGradient>
+    <linearGradient id="nistBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#006699"/>
+      <stop offset="100%" stop-color="#0088CC"/>
+    </linearGradient>
+    <filter id="nistDrop" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect x="2" y="2" width="236" height="106" rx="8" fill="url(#nistGrad)" filter="url(#nistDrop)" stroke="#0E3D6E" stroke-width="1.2"/>
+  <g transform="translate(18, 16)">
+    <rect x="0" y="0" width="70" height="78" rx="6" fill="#003087" stroke="#1A5FB4" stroke-width="1"/>
+    <text x="35" y="46" text-anchor="middle" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-size="20" fill="#FFFFFF" letter-spacing="2">NIST</text>
+    <rect x="10" y="56" width="50" height="14" rx="2" fill="#0088CC"/>
+    <text x="35" y="66" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="8" fill="#FFFFFF" letter-spacing="1">CSF 2.0</text>
+  </g>
+  <g transform="translate(100, 24)">
+    <text x="0" y="24" font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="22" fill="#FFFFFF" letter-spacing="1.5">NIST CSF</text>
+    <rect x="0" y="32" width="124" height="14" rx="3" fill="url(#nistBlue)"/>
+    <text x="62" y="42.5" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="7" fill="#FFFFFF" letter-spacing="0.8">CYBERSECURITY FRAMEWORK</text>
+    <text x="0" y="58" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="7" fill="rgba(255,255,255,0.85)" letter-spacing="0.2">National Institute of Standards</text>
+    <text x="0" y="66" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="6.5" fill="rgba(255,255,255,0.65)" letter-spacing="0.2">&amp; Technology · 6 Funciones Core</text>
+  </g>
+</svg>

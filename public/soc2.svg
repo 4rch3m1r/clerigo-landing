@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 110" width="100%" height="100%">
+  <defs>
+    <linearGradient id="socGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2D0E12"/>
+      <stop offset="100%" stop-color="#190608"/>
+    </linearGradient>
+    <linearGradient id="socRed" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#DC2626"/>
+      <stop offset="100%" stop-color="#EF4444"/>
+    </linearGradient>
+    <filter id="socDrop" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect x="2" y="2" width="236" height="106" rx="8" fill="url(#socGrad)" filter="url(#socDrop)" stroke="#5B161B" stroke-width="1.2"/>
+  <g transform="translate(18, 16)">
+    <circle cx="39" cy="39" r="38" fill="none" stroke="#DC2626" stroke-width="2.5"/>
+    <circle cx="39" cy="39" r="33" fill="#3D1217" stroke="#DC2626" stroke-width="1"/>
+    <text x="39" y="36" text-anchor="middle" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-size="18" fill="#FFFFFF" letter-spacing="-0.5">SOC</text>
+    <text x="39" y="55" text-anchor="middle" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-size="16" fill="#EF4444">2</text>
+    <path id="socArch" d="M 14,39 A 25,25 0 0,1 64,39" fill="none"/>
+    <text font-family="'Helvetica Neue', Arial, sans-serif" font-size="6" font-weight="900" fill="#EF4444" letter-spacing="1">
+      <textPath href="#socArch" startOffset="16%">AICPA · TSC</textPath>
+    </text>
+  </g>
+  <g transform="translate(102, 24)">
+    <text x="0" y="24" font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="22" fill="#FFFFFF" letter-spacing="1">SOC 2 TYPE II</text>
+    <rect x="0" y="32" width="122" height="14" rx="3" fill="url(#socRed)"/>
+    <text x="61" y="42.5" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="7" fill="#FFFFFF" letter-spacing="0.8">TRUST SERVICES CRITERIA</text>
+    <text x="0" y="58" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="7" fill="rgba(255,255,255,0.85)" letter-spacing="0.2">AICPA Criterios de Seguridad</text>
+    <text x="0" y="66" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="6.5" fill="rgba(255,255,255,0.65)" letter-spacing="0.2">Disponibilidad, Integridad &amp; Privacidad</text>
+  </g>
+</svg>
