@@ -881,13 +881,15 @@ html[data-tema="oscuro"] .gbg-grid{background-image:linear-gradient(rgba(240,240
 html[data-tema="oscuro"] .stat-card{box-shadow:0 2px 8px rgba(0,0,0,0.044)}
 html[data-tema="oscuro"] .stat-card:hover{box-shadow:0 6px 20px rgba(0,0,0,0.132)}
 html[data-tema="oscuro"] .filter-toolbar{background:rgba(14,14,14,0.92);box-shadow:0 10px 30px rgba(0,0,0,0.088)}
-html[data-tema="oscuro"] .tab-btn.active{background:#16181C;box-shadow:0 2px 8px rgba(0,0,0,0.33)}
+html[data-tema="oscuro"] .tab-btn.active{background:#22252A;border-color:rgba(255,255,255,0.25);color:#F0F0F0;box-shadow:0 2px 8px rgba(0,0,0,0.33)}
+html[data-tema="oscuro"] .sec-chip.active{background:#22252A;border-color:rgba(255,255,255,0.25);color:#F0F0F0}
+html[data-tema="oscuro"] .sec-chip.active svg{color:#F0F0F0}
 html[data-tema="oscuro"] .fw-shelf-header{background:#0E0E0E;border-color:rgba(255,255,255,0.08)}
 html[data-tema="oscuro"] .fw-col-header{background:#0E0E0E}
 html[data-tema="oscuro"] .fw-card{background:#0E0E0E;border-color:rgba(255,255,255,0.08)}
 html[data-tema="oscuro"] .fw-card:hover{background:#14161A;box-shadow:0 10px 28px rgba(0,0,0,0.3)}
-html[data-tema="oscuro"] .fw-logo-box{background:#181A1F;border-color:rgba(255,255,255,0.12)}
-html[data-tema="oscuro"] .drawer-logo-box{background:#181A1F;border-color:rgba(255,255,255,0.12)}
+html[data-tema="oscuro"] .fw-logo-box{background:#FFFFFF;border-color:rgba(255,255,255,0.15);box-shadow:0 2px 8px rgba(0,0,0,0.35)}
+html[data-tema="oscuro"] .drawer-logo-box{background:#FFFFFF;border-color:rgba(255,255,255,0.15);box-shadow:0 4px 12px rgba(0,0,0,0.35)}
 html[data-tema="oscuro"] .fw-ctrl-preview{background:#14161A;border-color:rgba(255,255,255,0.06)}
 html[data-tema="oscuro"] .view-btn.active{background:#222222;color:#F0F0F0}
 html[data-tema="oscuro"] .drawer-overlay{background:rgba(0,0,0,0.563)}
@@ -1221,7 +1223,7 @@ const DATA = {
         desc:'Regula y supervisa a todas las entidades de intermediación financiera de la República Dominicana. Emite instructivos mandatorios en gobierno, riesgo y ciberseguridad.',
         controls:['Circulares de Gobierno Corporativo','Normas de Gestión Integral de Riesgos','Pautas de Riesgo Operativo y Liquidez','Instructivos de Ciberseguridad y TI','Supervisión de Prevención de PLA/FT'],
         tags:['b-local']},
-      {id:'r2',name:'BCRD',sub:'Banco Central de la República Dominicana',logo:'/public/bcrd-logo.svg',type:'regulador',sectors:['banca','fintech'],coverage:90,
+      {id:'r2',name:'BCRD',sub:'Banco Central de la República Dominicana',logo:'/public/bcrd.png',type:'regulador',sectors:['banca','fintech'],coverage:90,
         desc:'Autoridad monetaria y cambiaria que vela por la estabilidad del sistema financiero, infraestructura de pagos y ciberseguridad.',
         controls:['Reglamento de Ciberseguridad de Sistemas de Pago','Seguridad de Infraestructura Crítica SIPARD','Directivas de Resiliencia Financiera','Cumplimiento Cambiario y Monetario'],
         tags:['b-local']},
@@ -1276,7 +1278,7 @@ const DATA = {
         desc:'Marco mandatorio de PLA/FT basado en la Ley 155-17 y las recomendaciones del GAFI.',
         controls:['Debida Diligencia del Cliente (KYC / CDD / EDD)','Verificación del Beneficiario Final (UBO)','Monitoreo en Tiempo Real de PEPs y Listas Sancionatorias','Reporte de Operaciones Sospechosas (ROS / SAR)','Programa Anual y Auditoría de Cumplimiento PLA'],
         tags:['b-local','b-reg']},
-      {id:'reg5',name:'Reglamento de Ciberseguridad y TI',sub:'Directiva Conjunta SIB / BCRD',compliance:'Seguridad de la Información y Resiliencia Tecnológica',logo:'/public/bcrd-logo.svg',type:'regulacion',sectors:['banca','fintech'],coverage:93,
+      {id:'reg5',name:'Reglamento de Ciberseguridad y TI',sub:'Directiva Conjunta SIB / BCRD',compliance:'Seguridad de la Información y Resiliencia Tecnológica',logo:'/public/bcrd.png',type:'regulacion',sectors:['banca','fintech'],coverage:93,
         desc:'Establece requerimientos vinculantes de ciberseguridad, acceso lógico, notificación de incidentes y continuidad de TI.',
         controls:['Gobernanza Institucional de Ciberseguridad','Inventario de Activos y Matriz de Criticidad Tecnológica','Controles Estrictos de Acceso e Identidades Privilegiadas','SLA Mandatorio de Notificación Regulatoria de Incidentes'],
         tags:['b-local','b-reg']},

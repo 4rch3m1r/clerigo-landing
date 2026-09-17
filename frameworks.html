@@ -881,13 +881,15 @@ html[data-tema="oscuro"] .gbg-grid{background-image:linear-gradient(rgba(240,240
 html[data-tema="oscuro"] .stat-card{box-shadow:0 2px 8px rgba(0,0,0,0.044)}
 html[data-tema="oscuro"] .stat-card:hover{box-shadow:0 6px 20px rgba(0,0,0,0.132)}
 html[data-tema="oscuro"] .filter-toolbar{background:rgba(14,14,14,0.92);box-shadow:0 10px 30px rgba(0,0,0,0.088)}
-html[data-tema="oscuro"] .tab-btn.active{background:#16181C;box-shadow:0 2px 8px rgba(0,0,0,0.33)}
+html[data-tema="oscuro"] .tab-btn.active{background:#22252A;border-color:rgba(255,255,255,0.25);color:#F0F0F0;box-shadow:0 2px 8px rgba(0,0,0,0.33)}
+html[data-tema="oscuro"] .sec-chip.active{background:#22252A;border-color:rgba(255,255,255,0.25);color:#F0F0F0}
+html[data-tema="oscuro"] .sec-chip.active svg{color:#F0F0F0}
 html[data-tema="oscuro"] .fw-shelf-header{background:#0E0E0E;border-color:rgba(255,255,255,0.08)}
 html[data-tema="oscuro"] .fw-col-header{background:#0E0E0E}
 html[data-tema="oscuro"] .fw-card{background:#0E0E0E;border-color:rgba(255,255,255,0.08)}
 html[data-tema="oscuro"] .fw-card:hover{background:#14161A;box-shadow:0 10px 28px rgba(0,0,0,0.3)}
-html[data-tema="oscuro"] .fw-logo-box{background:#181A1F;border-color:rgba(255,255,255,0.12)}
-html[data-tema="oscuro"] .drawer-logo-box{background:#181A1F;border-color:rgba(255,255,255,0.12)}
+html[data-tema="oscuro"] .fw-logo-box{background:#FFFFFF;border-color:rgba(255,255,255,0.15);box-shadow:0 2px 8px rgba(0,0,0,0.35)}
+html[data-tema="oscuro"] .drawer-logo-box{background:#FFFFFF;border-color:rgba(255,255,255,0.15);box-shadow:0 4px 12px rgba(0,0,0,0.35)}
 html[data-tema="oscuro"] .fw-ctrl-preview{background:#14161A;border-color:rgba(255,255,255,0.06)}
 html[data-tema="oscuro"] .view-btn.active{background:#222222;color:#F0F0F0}
 html[data-tema="oscuro"] .drawer-overlay{background:rgba(0,0,0,0.563)}
@@ -1221,7 +1223,7 @@ const DATA = {
         desc:'Regulates and supervises every financial intermediation entity in the Dominican Republic. Issues mandatory instructions on governance, risk and cybersecurity.',
         controls:['Corporate Governance Circulars','Integrated Risk Management Rules','Operational and Liquidity Risk Guidelines','Cybersecurity and IT Instructions','AML/CFT Supervision'],
         tags:['b-local']},
-      {id:'r2',name:'BCRD',sub:'Banco Central de la República Dominicana',logo:'/public/bcrd-logo.svg',type:'regulador',sectors:['banca','fintech'],coverage:90,
+      {id:'r2',name:'BCRD',sub:'Banco Central de la República Dominicana',logo:'/public/bcrd.png',type:'regulador',sectors:['banca','fintech'],coverage:90,
         desc:'Monetary and foreign exchange authority safeguarding financial system stability, payment infrastructure and cybersecurity.',
         controls:['Payment Systems Cybersecurity Regulation','SIPARD Critical Infrastructure Security','Financial Resilience Directives','Foreign Exchange and Monetary Compliance'],
         tags:['b-local']},
@@ -1276,7 +1278,7 @@ const DATA = {
         desc:'Mandatory AML/CFT framework based on Law 155-17 and the FATF recommendations.',
         controls:['Customer Due Diligence (KYC / CDD / EDD)','Ultimate Beneficial Owner (UBO) Verification','Real-Time Monitoring of PEPs and Sanctions Lists','Suspicious Activity Reporting (ROS / SAR)','Annual Programme and AML Compliance Audit'],
         tags:['b-local','b-reg']},
-      {id:'reg5',name:'Cybersecurity and IT Regulation',sub:'Joint SIB / BCRD Directive',logo:'/public/bcrd-logo.svg',compliance:'Information Security and Technology Resilience',type:'regulacion',sectors:['banca','fintech'],coverage:93,
+      {id:'reg5',name:'Cybersecurity and IT Regulation',sub:'Joint SIB / BCRD Directive',logo:'/public/bcrd.png',compliance:'Information Security and Technology Resilience',type:'regulacion',sectors:['banca','fintech'],coverage:93,
         desc:'Sets binding requirements for cybersecurity, logical access, incident notification and IT continuity.',
         controls:['Institutional Cybersecurity Governance','Asset Inventory and Technology Criticality Matrix','Strict Access and Privileged Identity Controls','Mandatory SLA for Regulatory Incident Notification'],
         tags:['b-local','b-reg']},
