@@ -1,14 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="100%" height="100%">
-  <defs>
-    <linearGradient id="gAudit" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF3829"/>
-      <stop offset="100%" stop-color="#C70D00"/>
-    </linearGradient>
-  </defs>
-  <rect x="3" y="3" width="42" height="42" rx="10" fill="url(#gAudit)"/>
-  <rect x="13" y="14" width="22" height="24" rx="3" fill="none" stroke="#FFFFFF" stroke-width="2.2"/>
-  <path d="M19 14 V12 C19 10.8 20.2 10 21.5 10 H26.5 C27.8 10 29 10.8 29 12 V14" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
-  <line x1="18" y1="20" x2="25" y2="20" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
-  <line x1="18" y1="26" x2="30" y2="26" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
-  <line x1="18" y1="31" x2="27" y2="31" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="#EB1000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="m9 14 2 2 4-4M9 10h6"/></svg>

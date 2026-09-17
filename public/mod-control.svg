@@ -1,15 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="100%" height="100%">
-  <defs>
-    <linearGradient id="gCtrl" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF3829"/>
-      <stop offset="100%" stop-color="#C70D00"/>
-    </linearGradient>
-  </defs>
-  <rect x="3" y="3" width="42" height="42" rx="10" fill="url(#gCtrl)"/>
-  <line x1="13" y1="17" x2="35" y2="17" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
-  <circle cx="21" cy="17" r="3.5" fill="#C70D00" stroke="#FFFFFF" stroke-width="2.2"/>
-  <line x1="13" y1="24" x2="35" y2="24" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
-  <circle cx="29" cy="24" r="3.5" fill="#C70D00" stroke="#FFFFFF" stroke-width="2.2"/>
-  <line x1="13" y1="31" x2="35" y2="31" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
-  <circle cx="18" cy="31" r="3.5" fill="#C70D00" stroke="#FFFFFF" stroke-width="2.2"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="#EB1000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><circle cx="4" cy="14" r="2"/><circle cx="12" cy="8" r="2"/><circle cx="20" cy="16" r="2"/></svg>

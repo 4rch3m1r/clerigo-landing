@@ -1,14 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="100%" height="100%">
-  <defs>
-    <linearGradient id="gGov" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF3829"/>
-      <stop offset="100%" stop-color="#C70D00"/>
-    </linearGradient>
-  </defs>
-  <rect x="3" y="3" width="42" height="42" rx="10" fill="url(#gGov)"/>
-  <polygon points="24 11 37 18 11 18" fill="#FFFFFF"/>
-  <line x1="15" y1="21" x2="15" y2="33" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
-  <line x1="24" y1="21" x2="24" y2="33" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
-  <line x1="33" y1="21" x2="33" y2="33" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
-  <line x1="10" y1="35" x2="38" y2="35" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="#EB1000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M12 8v4"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M6 15.5V14a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1.5"/></svg>

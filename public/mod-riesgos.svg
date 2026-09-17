@@ -1,12 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="100%" height="100%">
-  <defs>
-    <linearGradient id="gRiesgos" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF3829"/>
-      <stop offset="100%" stop-color="#C70D00"/>
-    </linearGradient>
-  </defs>
-  <rect x="3" y="3" width="42" height="42" rx="10" fill="url(#gRiesgos)"/>
-  <path d="M24 10 L35 15 V25 C35 31.5 29.5 36.5 24 38 C18.5 36.5 13 31.5 13 25 V15 Z" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linejoin="round"/>
-  <line x1="24" y1="18" x2="24" y2="26" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round"/>
-  <circle cx="24" cy="30" r="1.5" fill="#FFFFFF"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="#EB1000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/><circle cx="18" cy="6" r="1.5" fill="#EB1000"/><circle cx="12" cy="12" r="1.5" fill="#EB1000"/><circle cx="6" cy="18" r="1.5" fill="#EB1000"/></svg>

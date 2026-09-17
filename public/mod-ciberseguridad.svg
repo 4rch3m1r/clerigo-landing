@@ -1,12 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="100%" height="100%">
-  <defs>
-    <linearGradient id="gCyber" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF3829"/>
-      <stop offset="100%" stop-color="#C70D00"/>
-    </linearGradient>
-  </defs>
-  <rect x="3" y="3" width="42" height="42" rx="10" fill="url(#gCyber)"/>
-  <rect x="16" y="21" width="16" height="13" rx="2.5" fill="none" stroke="#FFFFFF" stroke-width="2.4"/>
-  <path d="M19 21 V16 C19 13.5 21 11.5 24 11.5 C27 11.5 29 13.5 29 16 V21" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round"/>
-  <circle cx="24" cy="27" r="1.6" fill="#FFFFFF"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="#EB1000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1.5"/></svg>
