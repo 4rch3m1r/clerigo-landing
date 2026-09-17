@@ -1037,11 +1037,11 @@ html[data-tema="oscuro"] .drawer-mod-badge {
 
       <div class="results-counter" id="resultsCount">Mostrando 38 elementos</div>
       <div class="view-switch">
-        <button type="button" class="view-btn active" id="viewGridBtn" onclick="setViewMode('grid')" aria-label="Vista en cuadrícula" title="Vista en cuadrícula">
+        <button type="button" class="view-btn" id="viewGridBtn" onclick="setViewMode('grid')" aria-label="Vista en cuadrícula" title="Vista en cuadrícula">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
           <span>Cuadrícula</span>
         </button>
-        <button type="button" class="view-btn" id="viewColsBtn" onclick="setViewMode('cols')" aria-label="Vista en columnas" title="Vista en columnas">
+        <button type="button" class="view-btn active" id="viewColsBtn" onclick="setViewMode('cols')" aria-label="Vista en columnas" title="Vista en columnas">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="4" height="18" rx="1"/><rect x="10" y="3" width="4" height="18" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>
           <span>Columnas</span>
         </button>
@@ -1407,7 +1407,7 @@ function clearSearchInput() {
   renderGrid();
 }
 
-let viewMode = 'grid';
+let viewMode = 'cols';
 
 function setViewMode(mode) {
   viewMode = mode;
