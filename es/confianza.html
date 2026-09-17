@@ -279,6 +279,15 @@ footer {
   transform: translateY(-2px);
 }
 .social-icon svg { display: block; }
+/* Instagram y X, apagados mientras no haya cuenta. El gris lo pone
+   grayscale(), así que vale igual para el degradado de Instagram y para el
+   negro de X sin tener que tocar los dibujos. */
+/* Sin `pointer-events` el hover seguía levantando el icono y cambiándole el
+   fondo, y el fondo que tocaba NO es el de la hoja base: la barra y el pie van
+   en oscuro en los dos temas, así que ahí los iconos llevan otros valores. En
+   vez de repetirlos —y de que se separen el día que cambien— se apaga el ratón:
+   no hay estado de hover que mantener. */
+.social-icon.social-off { filter: grayscale(1); opacity: 0.38; cursor: default; pointer-events: none; }
 
 @media (max-width: 768px) {
   nav { padding: 0 20px; }
@@ -920,7 +929,7 @@ html[data-tema="oscuro"] .tc-rejilla{background-image:linear-gradient(rgba(240,2
             <path d="M11 13v4" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
           </svg>
         </a>
-        <a href="#" class="social-icon" title="Instagram" aria-label="Instagram">
+        <a class="social-icon social-off" title="Instagram" aria-label="Instagram" aria-disabled="true">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <radialGradient id="ig-grad" cx="30%" cy="107%" r="150%">
@@ -937,7 +946,7 @@ html[data-tema="oscuro"] .tc-rejilla{background-image:linear-gradient(rgba(240,2
             <circle cx="16.2" cy="7.8" r="0.9" fill="white"/>
           </svg>
         </a>
-        <a href="#" class="social-icon" title="X (Twitter)" aria-label="X">
+        <a class="social-icon social-off" title="X (Twitter)" aria-label="X" aria-disabled="true">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="2" y="2" width="20" height="20" rx="4" fill="#000"/>
             <path d="M13.5 11.1L17.5 6.5H16.3L13 10.3L10.4 6.5H6.5L10.7 12.6L6.5 17.5H7.7L11.2 13.4L14 17.5H17.9L13.5 11.1Z" fill="white"/>
@@ -974,10 +983,10 @@ html[data-tema="oscuro"] .tc-rejilla{background-image:linear-gradient(rgba(240,2
       <a href="https://www.linkedin.com/company/clerigo" target="_blank" rel="noopener noreferrer" class="social-icon" style="width:26px;height:26px;border-radius:6px" title="LinkedIn" aria-label="LinkedIn">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" fill="#0A66C2"/><path d="M7 10v7" stroke="white" stroke-width="1.6" stroke-linecap="round"/><circle cx="7" cy="7.5" r="1.2" fill="white"/><path d="M11 17v-4c0-1.1.9-2 2-2s2 .9 2 2v4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 13v4" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
       </a>
-      <a href="#" class="social-icon" style="width:26px;height:26px;border-radius:6px" title="Instagram" aria-label="Instagram">
+      <a class="social-icon social-off" style="width:26px;height:26px;border-radius:6px" title="Instagram" aria-label="Instagram" aria-disabled="true">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><defs><radialGradient id="ig2" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#ffd600"/><stop offset="25%" stop-color="#ff7a00"/><stop offset="50%" stop-color="#ff0069"/><stop offset="75%" stop-color="#d300c5"/><stop offset="100%" stop-color="#7638fa"/></radialGradient></defs><rect x="2" y="2" width="20" height="20" rx="5.5" fill="url(#ig2)"/><rect x="7" y="7" width="10" height="10" rx="3" stroke="white" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="2.5" stroke="white" stroke-width="1.5" fill="none"/><circle cx="16.2" cy="7.8" r="0.9" fill="white"/></svg>
       </a>
-      <a href="#" class="social-icon" style="width:26px;height:26px;border-radius:6px" title="X" aria-label="X">
+      <a class="social-icon social-off" style="width:26px;height:26px;border-radius:6px" title="X" aria-label="X" aria-disabled="true">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" fill="#000"/><path d="M13.5 11.1L17.5 6.5H16.3L13 10.3L10.4 6.5H6.5L10.7 12.6L6.5 17.5H7.7L11.2 13.4L14 17.5H17.9L13.5 11.1Z" fill="white"/></svg>
       </a>
       <div style="width:1px;height:14px;background:rgba(255,255,255,0.1);margin:0 4px"></div>
