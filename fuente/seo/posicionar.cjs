@@ -272,7 +272,7 @@ function aplicacion(idioma) {
 const LOGIN = "https://app.clerigo.io/login";
 /* El perfil oficial, con la dirección que da el propio LinkedIn (con www),
    confirmado por el dueño el 2026-09-15. */
-const PERFIL_LINKEDIN = "https://www.linkedin.com/company/clerigo";
+const PERFIL_LINKEDIN = "https://www.linkedin.com/company/clerigo/";
 function navegacion(idioma, esIngles) {
   return PAGINAS.filter((p) => p.nav).map((p) => ({
     "@type": "SiteNavigationElement",

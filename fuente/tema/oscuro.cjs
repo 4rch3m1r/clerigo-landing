@@ -395,7 +395,8 @@ ${PREFIJO} .tema-toggle .tema-luna{display:none}
 @media (max-width:389px){.nav-logo-text small{display:none}}
 @media (max-width:340px){nav{padding:0 14px;gap:7px}.idiomas{margin-right:0}.idiomas .idioma{padding:4px 4px}.nav-cta{gap:6px}.nav-cta .btn-ghost,.nav-cta .btn-primary{padding:7px 9px}}
 @media (min-width:769px) and (max-width:1320px){nav{gap:clamp(16px,calc(16px + (100vw - 1000px) * .075),40px);padding-left:clamp(24px,calc(24px + (100vw - 1000px) * .075),48px);padding-right:clamp(24px,calc(24px + (100vw - 1000px) * .075),48px)}.nav-links{gap:clamp(16px,calc(16px + (100vw - 1000px) * .0375),28px)}.nav-cta{gap:clamp(8px,calc(8px + (100vw - 1000px) * .0125),12px)}.tema-toggle{margin-left:clamp(0px,calc((100vw - 1000px) * .025),8px)}}
-${PREFIJO}{color-scheme:dark}`;
+${PREFIJO}{color-scheme:dark}
+body,nav,.nav-logo-text,.nav-links a,.stat-card,.filter-toolbar,.search-input,.tab-btn,.sec-chip,.view-btn,.fw-shelf-header,.fw-col,.fw-col-header,.fw-card,.fw-card-name,.fw-card-sub,.fw-card-desc,.fw-ctrl-preview,.fw-ctrl-item,.fw-logo-box,.detail-drawer,.drawer-header,.drawer-body,.drawer-logo-box,.mod-icon-badge,.drawer-mod-badge,.cta-banner,footer,.platform-frame,.platform-topbar,.plat-sidebar,.plat-panel,.plat-kpi,.preview-sidebar,.hero-title,.btn-ghost,.btn-primary{transition:background-color .35s cubic-bezier(.4,0,.2,1),background .35s cubic-bezier(.4,0,.2,1),color .35s cubic-bezier(.4,0,.2,1),border-color .35s cubic-bezier(.4,0,.2,1),box-shadow .35s cubic-bezier(.4,0,.2,1)}`;
 
 function boton(idioma, movil) {
   const t = TEXTOS[idioma];
