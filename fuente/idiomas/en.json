@@ -2173,5 +2173,8 @@
   "Google (Gemini)": "Google (Gemini)",
   "Sentry": "Sentry",
   "Registro de errores de la aplicación, sin datos personales (desde el próximo despliegue)": "Application error logging, without personal data (from the next release)",
-  "xAI (Grok)": "xAI (Grok)"
+  "xAI (Grok)": "xAI (Grok)",
+  "Clèrigo AI": "Clèrigo AI",
+  "Infraestructura de Clèrigo": "Clèrigo infrastructure",
+  "LLM propio de Clèrigo, diseñado para la plataforma; sin entrenamiento con tus datos": "Clèrigo’s own LLM, designed for the platform, with no training on your data"
 }
