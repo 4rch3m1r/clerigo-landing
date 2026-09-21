@@ -81,13 +81,25 @@ const REDIRECCIONES = [
   [["/precios", "/precios.html"], "/pricing"],
 ];
 
+/* A DÓNDE ACABARÁ UNA RUTA, para el salto de `http` y `www`. Sin esto,
+   http://clerigo.io/index.html daba DOS 301 —primero a https con la misma
+   ruta, luego a /— y Search Console apuntaba las dos direcciones. Se hace de
+   una vez lo que harían los pasos de después: las redirecciones de la tabla y
+   el `.html` que Cloudflare quita. Medido el 2026-09-21. */
+function rutaFinal(ruta) {
+  for (const [desde, hasta] of REDIRECCIONES) if (desde.includes(ruta)) return hasta;
+  if (ruta.endsWith("/index.html")) return ruta.slice(0, -"index.html".length);
+  if (ruta.endsWith(".html")) return ruta.slice(0, -".html".length);
+  return ruta;
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
     if (NOMBRES_DEL_SITIO.includes(url.hostname)
       && (url.hostname !== CANONICO || url.protocol !== "https:")) {
-      return conHsts(Response.redirect("https://" + CANONICO + url.pathname + url.search, 301), url);
+      return conHsts(Response.redirect("https://" + CANONICO + rutaFinal(url.pathname) + url.search, 301), url);
     }
 
     for (const [desde, hasta] of REDIRECCIONES) {

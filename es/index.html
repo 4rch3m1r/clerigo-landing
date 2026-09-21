@@ -2013,8 +2013,8 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
 </style>
 
 <script>
-/* El idioma del navegador decide; la eleccion de la persona manda. Ver
-   fuente/idiomas/deteccion.cjs para el porque de cada cuidado. */
+/* El idioma del navegador decide: NADA. Manda la eleccion guardada, y solo
+   esa. Ver fuente/idiomas/deteccion.cjs para el porque de cada cuidado. */
 (function () {
   var ruta = location.pathname;
   var enCastellano = ruta.indexOf('/es/') !== -1;
@@ -2040,15 +2040,25 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
   if (yaMirado) return;
   try { sessionStorage.setItem('clerigo-idioma-mirado', '1'); } catch (e) {}
 
-  var elegido = guardado();
-  var quiere = elegido || ((navigator.language || navigator.userLanguage || 'en')
-    .toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
+  /* SOLO LA ELECCION EXPLICITA. Nada de navigator.language: el renderizador de
+     Google pide en ingles, y mirarlo hacia que toda pagina de /es/ saltase a
+     la inglesa delante del buscador. Un rastreador llega con el almacenamiento
+     vacio, asi que aqui se para siempre. */
+  var quiere = guardado();
+  if (quiere !== 'es' && quiere !== 'en') return;
   if (quiere === mio) return;
 
-  var destino = quiere === 'es'
-    ? ruta.replace(/\/([^\/]*)$/, '/es/$1')
-    : ruta.replace('/es/', '/');
-  if (destino === ruta) return;
+  /* A DONDE, LO DICE LA PROPIA PAGINA. El hreflang de la cabecera ya trae la
+     direccion de la otra version CON SU NOMBRE TRADUCIDO. Calcularlo a mano
+     —meterle '/es/' delante al ultimo trozo— daba /es/pricing, /es/contact,
+     /es/frameworks y /es/trustcenter, que son cuatro 404: la pagina se llama
+     /es/precios. Sale del mismo sitio que el mapa del sitio, asi que no se
+     puede desincronizar. Se coge solo la ruta para no salirse de este
+     servidor: en local la etiqueta dice clerigo.io. */
+  var otra = document.querySelector('link[rel="alternate"][hreflang="' + quiere + '"]');
+  var destino = null;
+  try { destino = otra && new URL(otra.getAttribute('href'), location.href).pathname; } catch (e) {}
+  if (!destino || destino === ruta) return;
   location.replace(destino + location.search + location.hash);
 })();
 </script>

@@ -1,33 +1,86 @@
 /**
- * El idioma del navegador decide, pero la persona manda.
+ * Manda la elección de la persona. Y nada más.
  *
- * Quien llega por primera vez a clerigo.io con el navegador en castellano va a
- * /es/ sin tener que buscar nada. Quien llega con cualquier otro idioma se
- * queda en inglés, que es el de por omisión.
+ * Quien pulsó «ES» alguna vez va a /es/ aunque entre por una dirección
+ * inglesa. Quien no ha elegido nunca se queda donde ha entrado.
  *
- * TRES CUIDADOS, y los tres importan:
+ * ── LO QUE HACÍA ANTES, Y POR QUÉ SE QUITÓ ────────────────────────────────
  *
- *   1. LA ELECCIÓN DE LA PERSONA GANA SIEMPRE. En cuanto alguien toca el
- *      selector, se guarda su idioma y no se le vuelve a mover. Un sitio que
- *      te devuelve a su idioma cada vez que navegas es peor que uno que no
- *      detecta nada: te deja sin salida.
- *   2. UNA SOLA VEZ POR VISITA. Se apunta en la sesión que ya se miró. Sin
- *      eso, volver atrás con el botón del navegador te reenvía otra vez y no
- *      hay forma de salir de la página.
- *   3. NO SE TOCA A LOS RASTREADORES. Google y compañía no ejecutan esto: leen
- *      las etiquetas `hreflang` de la cabecera, que ya dicen que hay dos
- *      versiones y cuál es la de por omisión. Por eso el reenvío es de
- *      navegador y no del servidor: así el buscador indexa las dos.
+ * Hasta el 2026-09-20 este guion miraba `navigator.language`: quien llegaba
+ * con el navegador en castellano a una dirección inglesa era reenviado a /es/,
+ * y al revés. La cabecera de este fichero decía que eso NO tocaba a los
+ * rastreadores, que «Google y compañía no ejecutan esto». Era falso.
+ *
+ * Google renderiza con Chrome, y su renderizador pide en inglés. O sea: en
+ * TODA página de /es/ el guion se ejecutaba, veía un navegador en inglés, y
+ * hacía `location.replace` a la inglesa. Para Google eso es una redirección,
+ * no una página.
+ *
+ * Medido el 2026-09-20. Por HTTP las catorce direcciones del mapa del sitio
+ * contestaban 200 —también con el agente de Googlebot—, así que por fuera todo
+ * parecía correcto; la redirección sólo aparecía al renderizar. Cargada
+ * `https://clerigo.io/es/` en un navegador con `navigator.language = "en-US"`,
+ * se acababa en `https://clerigo.io/`. Search Console daba `/es/` y
+ * `/es/contacto` —las dos únicas españolas ya renderizadas— por «Página con
+ * redirección», y las seis restantes por «Descubierta: actualmente sin
+ * indexar». En Google no salía una sola página en castellano.
+ *
+ * ── POR QUÉ ESTO SÍ ES SEGURO ─────────────────────────────────────────────
+ *
+ * Porque el reenvío depende de `localStorage`, y un rastreador llega siempre
+ * con el almacenamiento vacío: nunca ha pulsado el selector. No hay lista de
+ * agentes que mantener ni comportamiento distinto que servirle —se le da
+ * exactamente el mismo guion que a una persona—, y aun así no se le reenvía
+ * jamás. Las etiquetas `hreflang` ya le dicen que hay dos versiones y cuál es
+ * la de por omisión; con eso indexa las dos y sirve la que toca a cada quien.
+ *
+ * LO QUE SE PIERDE: quien entra por primera vez en clerigo.io con el navegador
+ * en castellano ve la portada en inglés hasta que pulsa «ES». Se acepta a
+ * sabiendas. Lo cubre `hreflang`: quien busque en castellano en Google llegará
+ * ya a /es/. Si algún día se quiere recuperar el recibimiento en el idioma del
+ * navegador, se hace con un aviso —«¿Prefieres español? Ver en español»— y no
+ * con un salto: un aviso no es una redirección y ningún rastreador lo cuenta
+ * como tal.
+ *
+ * ── Y DE PASO, CUATRO 404 QUE LLEVABAN AHÍ DESDE SIEMPRE ──────────────────
+ *
+ * El destino se calculaba metiendo `/es/` delante del último trozo de la ruta.
+ * Eso sólo acierta cuando la página se llama igual en los dos idiomas. Para
+ * las otras cuatro daba `/es/pricing`, `/es/contact`, `/es/frameworks` y
+ * `/es/trustcenter`, y las cuatro contestan 404 —comprobado en producción el
+ * 2026-09-20—: la página se llama `/es/precios`.
+ *
+ * O sea que hasta hoy, quien llegaba desde Google a `clerigo.io/pricing` con
+ * el navegador en castellano —el caso más común en el mercado al que va el
+ * sitio— era reenviado a una página que no existe. Ahora el destino se lee del
+ * `hreflang` de la propia cabecera, que ya trae el nombre traducido y sale del
+ * mismo sitio que el mapa del sitio.
+ *
+ * ── LOS DOS CUIDADOS QUE SE QUEDAN ────────────────────────────────────────
+ *
+ *   1. LA ELECCIÓN SE APUNTA AL TOCAR EL SELECTOR, antes de que el enlace
+ *      navegue. Si no se apuntara, no habría nada que obedecer después.
+ *   2. UNA SOLA VEZ POR VISITA. Se marca en la sesión que ya se miró. Sin eso,
+ *      volver atrás con el botón del navegador te reenvía otra vez y no hay
+ *      forma de salir de la página.
  *
  * El guion es IDÉNTICO en las dos versiones: de dónde está y a dónde va lo
  * deduce de la propia dirección. Si fuera distinto en cada una, sería otra
  * diferencia que declarar y otro sitio donde se pueden separar.
+ *
+ * ── LA PRIMERA LÍNEA DEL COMENTARIO ES UNA MARCA ──────────────────────────
+ *
+ * `/* El idioma del navegador decide` la buscan cinco sitios del generador
+ * —mutar.cjs, idiomas/validar.cjs, paginas/validar.cjs, paginas/sincronizar.cjs
+ * y validar.cjs— para recortar el guion o comprobar que está. Por eso sigue
+ * empezando igual aunque ya no sea el navegador quien decide; la frase se
+ * completa para que no mienta.
  */
 
 const GUION = `
 <script>
-/* El idioma del navegador decide; la eleccion de la persona manda. Ver
-   fuente/idiomas/deteccion.cjs para el porque de cada cuidado. */
+/* El idioma del navegador decide: NADA. Manda la eleccion guardada, y solo
+   esa. Ver fuente/idiomas/deteccion.cjs para el porque de cada cuidado. */
 (function () {
   var ruta = location.pathname;
   var enCastellano = ruta.indexOf('/es/') !== -1;
@@ -53,15 +106,25 @@ const GUION = `
   if (yaMirado) return;
   try { sessionStorage.setItem('clerigo-idioma-mirado', '1'); } catch (e) {}
 
-  var elegido = guardado();
-  var quiere = elegido || ((navigator.language || navigator.userLanguage || 'en')
-    .toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
+  /* SOLO LA ELECCION EXPLICITA. Nada de navigator.language: el renderizador de
+     Google pide en ingles, y mirarlo hacia que toda pagina de /es/ saltase a
+     la inglesa delante del buscador. Un rastreador llega con el almacenamiento
+     vacio, asi que aqui se para siempre. */
+  var quiere = guardado();
+  if (quiere !== 'es' && quiere !== 'en') return;
   if (quiere === mio) return;
 
-  var destino = quiere === 'es'
-    ? ruta.replace(/\\/([^\\/]*)$/, '/es/$1')
-    : ruta.replace('/es/', '/');
-  if (destino === ruta) return;
+  /* A DONDE, LO DICE LA PROPIA PAGINA. El hreflang de la cabecera ya trae la
+     direccion de la otra version CON SU NOMBRE TRADUCIDO. Calcularlo a mano
+     —meterle '/es/' delante al ultimo trozo— daba /es/pricing, /es/contact,
+     /es/frameworks y /es/trustcenter, que son cuatro 404: la pagina se llama
+     /es/precios. Sale del mismo sitio que el mapa del sitio, asi que no se
+     puede desincronizar. Se coge solo la ruta para no salirse de este
+     servidor: en local la etiqueta dice clerigo.io. */
+  var otra = document.querySelector('link[rel=\"alternate\"][hreflang=\"' + quiere + '\"]');
+  var destino = null;
+  try { destino = otra && new URL(otra.getAttribute('href'), location.href).pathname; } catch (e) {}
+  if (!destino || destino === ruta) return;
   location.replace(destino + location.search + location.hash);
 })();
 </script>

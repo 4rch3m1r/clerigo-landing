@@ -716,8 +716,8 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
 /* ── FIN DEL SELECTOR DE IDIOMA ── */
 </style>
 <script>
-/* El idioma del navegador decide; la eleccion de la persona manda. Ver
-   fuente/idiomas/deteccion.cjs para el porque de cada cuidado. */
+/* El idioma del navegador decide: NADA. Manda la eleccion guardada, y solo
+   esa. Ver fuente/idiomas/deteccion.cjs para el porque de cada cuidado. */
 (function () {
   var ruta = location.pathname;
   var enCastellano = ruta.indexOf('/es/') !== -1;
@@ -743,15 +743,25 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
   if (yaMirado) return;
   try { sessionStorage.setItem('clerigo-idioma-mirado', '1'); } catch (e) {}
 
-  var elegido = guardado();
-  var quiere = elegido || ((navigator.language || navigator.userLanguage || 'en')
-    .toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
+  /* SOLO LA ELECCION EXPLICITA. Nada de navigator.language: el renderizador de
+     Google pide en ingles, y mirarlo hacia que toda pagina de /es/ saltase a
+     la inglesa delante del buscador. Un rastreador llega con el almacenamiento
+     vacio, asi que aqui se para siempre. */
+  var quiere = guardado();
+  if (quiere !== 'es' && quiere !== 'en') return;
   if (quiere === mio) return;
 
-  var destino = quiere === 'es'
-    ? ruta.replace(/\/([^\/]*)$/, '/es/$1')
-    : ruta.replace('/es/', '/');
-  if (destino === ruta) return;
+  /* A DONDE, LO DICE LA PROPIA PAGINA. El hreflang de la cabecera ya trae la
+     direccion de la otra version CON SU NOMBRE TRADUCIDO. Calcularlo a mano
+     —meterle '/es/' delante al ultimo trozo— daba /es/pricing, /es/contact,
+     /es/frameworks y /es/trustcenter, que son cuatro 404: la pagina se llama
+     /es/precios. Sale del mismo sitio que el mapa del sitio, asi que no se
+     puede desincronizar. Se coge solo la ruta para no salirse de este
+     servidor: en local la etiqueta dice clerigo.io. */
+  var otra = document.querySelector('link[rel="alternate"][hreflang="' + quiere + '"]');
+  var destino = null;
+  try { destino = otra && new URL(otra.getAttribute('href'), location.href).pathname; } catch (e) {}
+  if (!destino || destino === ruta) return;
   location.replace(destino + location.search + location.hash);
 })();
 </script>
@@ -868,7 +878,7 @@ html[data-tema="oscuro"] .booking-modal{box-shadow:0 24px 64px rgba(0,0,0,0.6), 
 
       <div class="channels">
 
-        <a class="ch" href="https://wa.me/8297482545?text=Hola,%20me%20interesa%20conocer%20las%20soluciones%20de%20Cl%C3%A8rigo." target="_blank">
+        <a class="ch" href="https://wa.me/18297482545?text=Hola,%20me%20interesa%20conocer%20las%20soluciones%20de%20Cl%C3%A8rigo." target="_blank">
           <div class="ch-ico wa">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374A9.86 9.86 0 0 1 2.1 11.892C2.1 6.44 6.537 2.006 11.989 2.006c2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
           </div>
@@ -1176,11 +1186,11 @@ html[data-tema="oscuro"] .booking-modal{box-shadow:0 24px 64px rgba(0,0,0,0.6), 
         <div class="booking-actions">
           <button type="button" class="btn-primary booking-submit-btn" id="btnBookingSubmit" onclick="submitBookingModal()">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            <span>Confirmar y agendar reunión</span>
+            <span>Enviar solicitud de reunión</span>
           </button>
           <div class="booking-security-note">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            <span>Invitación directa a tu calendario de Teams con confirmación instantánea.</span>
+            <span>Te confirmamos la reunión de Teams por correo.</span>
           </div>
         </div>
       </div>
@@ -1192,12 +1202,12 @@ html[data-tema="oscuro"] .booking-modal{box-shadow:0 24px 64px rgba(0,0,0,0.6), 
         <div class="booking-success-icon">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
         </div>
-        <h3 class="booking-success-title">¡Demostración agendada con éxito!</h3>
-        <p class="booking-success-desc">Hemos reservado tu espacio y enviado la invitación de Microsoft Teams a <strong id="bookingConfirmedEmail" style="color:var(--text)"></strong>.</p>
+        <h3 class="booking-success-title">¡Solicitud lista para enviar!</h3>
+        <p class="booking-success-desc">Abrimos tu correo con la solicitud para hello@clerigo.io. En cuanto la recibamos, enviaremos la invitación de Microsoft Teams a <strong id="bookingConfirmedEmail" style="color:var(--text)"></strong>.</p>
         
         <div class="booking-summary-card">
           <div class="bsc-row">
-            <span class="bsc-lbl">Fecha y hora</span>
+            <span class="bsc-lbl">Fecha y hora solicitadas</span>
             <span class="bsc-val" id="bookingConfirmedTime">Jueves · 09:30 AM</span>
           </div>
           <div class="bsc-row">
@@ -1402,6 +1412,146 @@ function submitForm() {
     document.getElementById('step-ind-3').classList.remove('done');
   }, 4600);
 }
+</script>
+<script id="reserva-demo">
+/* LA RESERVA DE LA DEMO. El marcado del modal llegó el 2026-09-09 sin su
+   guion: el botón llamaba a openBookingModal(), que no existía, y no pasaba
+   nada. No hay agenda ni servidor detrás, así que esto NO reserva: redacta la
+   solicitud y abre el correo de quien la pide, dirigido a hello@clerigo.io. La
+   confirmación final lo dice así, y la cita del calendario va como pendiente
+   de confirmar. Prometer «reservado e invitación enviada» sin nada que lo haga
+   sería mentirle a un cliente en su primer contacto.
+   Cada página lleva sólo los textos de SU idioma, en T. */
+(function () {
+  var T = {"idioma":"es-DO","asunto":"Solicitud de demo virtual — ","saludo":"Hola, equipo de Clèrigo:","peticion":"Me gustaría agendar una demo virtual de 30 minutos por Microsoft Teams.","dia":"Día: ","hora":"Hora: ","tema":"Tema: ","nombre":"Nombre: ","correo":"Correo: ","compania":"Empresa: ","gracias":"Gracias.","cita":"Demo Clèrigo (pendiente de confirmar)","detalle":"Solicitud enviada a hello@clerigo.io. Clèrigo confirmará la reunión y enviará el enlace de Microsoft Teams por correo. Tema: "};
+  var DESTINO = 'hello@clerigo.io';
+  var eleccion = {};
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* Los nombres de días y meses, del propio navegador y en el idioma de la
+     página: sin listas escritas a mano que traducir. */
+  function nombre(d, forma) {
+    var t = d.toLocaleDateString(T.idioma, forma).replace(/\.$/, '');
+    return t.charAt(0).toUpperCase() + t.slice(1);
+  }
+
+  /* Los cinco próximos días laborables, empezando mañana. */
+  function pintaDias() {
+    var caja = $('bookingDaysContainer');
+    if (!caja) return;
+    caja.innerHTML = '';
+    var d = new Date();
+    var puestos = 0;
+    while (puestos < 5) {
+      d.setDate(d.getDate() + 1);
+      if (d.getDay() === 0 || d.getDay() === 6) continue;
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'booking-day-btn' + (puestos === 0 ? ' active' : '');
+      var fecha = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+      b.setAttribute('data-fecha', fecha);
+      b.setAttribute('data-texto', nombre(d, { weekday: 'long' }) + ' ' + d.getDate() + ' ' + nombre(d, { month: 'short' }));
+      b.innerHTML = '<span class="booking-day-name">' + nombre(d, { weekday: 'short' }) + '</span><span class="booking-day-sub">' + d.getDate() + ' ' + nombre(d, { month: 'short' }) + '</span>';
+      b.onclick = function () {
+        var todos = caja.querySelectorAll('.booking-day-btn');
+        for (var i = 0; i < todos.length; i++) todos[i].classList.remove('active');
+        this.classList.add('active');
+      };
+      caja.appendChild(b);
+      puestos++;
+    }
+  }
+
+  window.openBookingModal = function () {
+    pintaDias();
+    $('bookingFormView').style.display = '';
+    $('bookingSuccessView').style.display = 'none';
+    $('bookingModalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function () { var n = $('bmName'); if (n) n.focus(); }, 50);
+  };
+  window.closeBookingModal = function () {
+    $('bookingModalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+  window.closeBookingModalOutside = function (e) {
+    if (e.target === $('bookingModalOverlay')) window.closeBookingModal();
+  };
+  window.selectBookingSlot = function (b) {
+    var todos = document.querySelectorAll('.booking-slot-btn');
+    for (var i = 0; i < todos.length; i++) todos[i].classList.remove('active');
+    b.classList.add('active');
+  };
+  document.addEventListener('keydown', function (e) {
+    var o = $('bookingModalOverlay');
+    if (e.key === 'Escape' && o && o.classList.contains('open')) window.closeBookingModal();
+  });
+
+  window.submitBookingModal = function () {
+    var nombre = $('bmName'), correo = $('bmEmail');
+    if (!nombre.value.trim()) { nombre.focus(); if (nombre.reportValidity) nombre.reportValidity(); return; }
+    if (!correo.value.trim() || !correo.checkValidity()) { correo.focus(); if (correo.reportValidity) correo.reportValidity(); return; }
+    var dia = document.querySelector('.booking-day-btn.active');
+    var hora = document.querySelector('.booking-slot-btn.active');
+    var tema = $('bmTopic');
+    eleccion = {
+      fecha: dia ? dia.getAttribute('data-fecha') : '',
+      dia: dia ? dia.getAttribute('data-texto') : '',
+      hora: hora ? hora.getAttribute('data-time') : '',
+      tema: tema.options[tema.selectedIndex].text,
+      nombre: nombre.value.trim(),
+      correo: correo.value.trim(),
+      compania: $('bmCompany').value.trim()
+    };
+    var asunto = T.asunto + eleccion.nombre + (eleccion.compania ? ' (' + eleccion.compania + ')' : '');
+    var cuerpo = [T.saludo, '', T.peticion, '',
+      T.dia + eleccion.dia, T.hora + eleccion.hora + ' (CST)', T.tema + eleccion.tema, '',
+      T.nombre + eleccion.nombre, T.correo + eleccion.correo, T.compania + (eleccion.compania || '—'), '', T.gracias].join('\r\n');
+    window.location.href = 'mailto:' + DESTINO + '?subject=' + encodeURIComponent(asunto) + '&body=' + encodeURIComponent(cuerpo);
+
+    $('bookingConfirmedEmail').textContent = eleccion.correo;
+    $('bookingConfirmedTime').textContent = eleccion.dia + ' · ' + eleccion.hora;
+    $('bookingConfirmedTopic').textContent = eleccion.tema;
+    var g = $('btnGoogleCalendar');
+    if (g) g.href = enlaceGoogle();
+    $('bookingFormView').style.display = 'none';
+    $('bookingSuccessView').style.display = '';
+  };
+
+  /* La hora elegida, en CST (UTC-6, sin cambio de horario), a UTC. */
+  function inicioUtc() {
+    var m = /(\d+):(\d+)\s*(AM|PM)/i.exec(eleccion.hora || '');
+    if (!m || !eleccion.fecha) return null;
+    var h = (+m[1] % 12) + (/PM/i.test(m[3]) ? 12 : 0);
+    var p = eleccion.fecha.split('-');
+    return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2], h + 6, +m[2]));
+  }
+  function sello(d) { return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); }
+  function detalleCita() { return T.detalle + eleccion.tema; }
+  function enlaceGoogle() {
+    var i = inicioUtc();
+    if (!i) return 'https://calendar.google.com/';
+    var f = new Date(i.getTime() + 30 * 60000);
+    return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(T.cita)
+      + '&dates=' + sello(i) + '/' + sello(f) + '&details=' + encodeURIComponent(detalleCita());
+  }
+  window.downloadBookingIcs = function () {
+    var i = inicioUtc();
+    if (!i) return;
+    var f = new Date(i.getTime() + 30 * 60000);
+    var ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Clerigo//Demo//EN', 'BEGIN:VEVENT',
+      'UID:' + sello(i) + '-' + Math.random().toString(36).slice(2) + '@clerigo.io', 'DTSTAMP:' + sello(new Date()),
+      'DTSTART:' + sello(i), 'DTEND:' + sello(f), 'STATUS:TENTATIVE',
+      'SUMMARY:' + T.cita, 'DESCRIPTION:' + detalleCita().replace(/[,;]/g, '\\$&'),
+      'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+    a.download = 'demo-clerigo.ics';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 0);
+  };
+})();
 </script>
 <script id="tema-motor">
 (function () {

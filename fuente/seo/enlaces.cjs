@@ -78,9 +78,14 @@ function aplicarATodas() {
   const tabla = tablaDeRutas(PAGINAS);
   let total = 0, tocadas = 0;
   for (const [carpeta, idioma] of [[CASTELLANO, "es"], [INGLES, "en"]]) {
-    for (const p of PAGINAS) {
-      if (p.slug === "login") continue;
-      const f = path.join(carpeta, p.disco[idioma]);
+    /* Y LAS DOS PORTADAS OSCURAS. Llevan «noindex», pero «follow»: Google
+       sigue sus enlaces igual, y hasta el 2026-09-21 los suyos iban aún a
+       `marcos.html`, `precios.html`, `index.html`… —cada uno, una
+       redirección más que Search Console apuntaba en «Página con
+       redirección»—. No están en PAGINAS porque no van al mapa del sitio. */
+    const ficheros = PAGINAS.filter((p) => p.slug !== "login").map((p) => p.disco[idioma]).concat("oscuro.html");
+    for (const nombre of ficheros) {
+      const f = path.join(carpeta, nombre);
       if (!fs.existsSync(f)) continue;
       const antes = fs.readFileSync(f, "utf8");
       const despues = enlacesLimpios(antes, idioma, tabla);

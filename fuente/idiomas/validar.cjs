@@ -72,8 +72,16 @@ function esqueleto(html) {
     .replace(/<a href="[^"]*" class="idioma" data-idioma="(en|es)" hreflang="\1">/g, '<a class="idioma" data-idioma="$1">')
     /* Las capturas y el icono viven en la RAÍZ y son las mismas en los dos
        idiomas; la castellana está un nivel más adentro y por eso los cita con
-       `../`. Se normalizan las dos formas a la misma para poder comparar. */
+       `../`. Se normalizan las dos formas a la misma para poder comparar.
+       Los logotipos de `public/` son lo mismo: llegaron después y esto no los
+       conocía, así que el primero —bcrd.png— daba la estructura por distinta
+       aunque las dos rutas llevan al mismo fichero. Que el fichero EXISTA lo
+       mira otra comprobación, más abajo, resolviendo la ruta. */
     .replace(/(\s(?:src|href)=")\.\.\/((?:sistema\/[a-z0-9-]+|favicon)\.png)"/g, '$1$2"')
+    .replace(/(\s(?:src|href)=")\.\.\/(public\/[a-z0-9._-]+\.(?:png|svg|jpg|jpeg|webp))"/g, '$1$2"')
+    /* El mensaje que WhatsApp deja escrito es TEXTO, aunque viaje en la
+       dirección: en la inglesa va en inglés. */
+    .replace(/(wa\.me\/\d+)\?text=[^"]*/g, "$1?text=·")
     .replace(/<link rel="canonical" href="[^"]*">/, '<link rel="canonical" href="·">')
     /* `og:url` va con la canónica: cada versión declara SU dirección, y la de
        la castellana lleva /es/. Si sólo se normalizara la canónica, esta línea
@@ -426,16 +434,17 @@ for (const p of TODAS) {
   comprueba(`${p}: los rótulos gemelos se traducen los dos o ninguno`,
     descuadrados.length === 0, descuadrados.join(" · "));
 
-  /* Y la detección de idioma, en las DOS.
-     Quitarla no rompe nada que se vea —la página carga igual de bien— y a quien
-     llega con el navegador en castellano se le queda el inglés delante sin
-     enterarse de que hay otra versión. Va en la cabecera, antes de que se pinte
-     nada; si alguien la moviera al final del cuerpo, se vería la página en un
-     idioma y saltaría al otro delante de quien la lee. Por eso se comprueba
-     también DÓNDE está. */
+  /* Y el guion del idioma, en las DOS.
+     Ya no mira el navegador —eso reenviaba a Google y le dejaba /es/ por
+     «Página con redirección»; ver fuente/idiomas/deteccion.cjs—, pero sigue
+     haciendo falta: es quien obedece la elección guardada y quien la apunta
+     cuando se toca el selector. Sin él, pulsar «ES» no se recuerda. Va en la
+     cabecera, antes de que se pinte nada; si alguien lo moviera al final del
+     cuerpo, a quien eligió se le vería la página en un idioma y saltaría al
+     otro delante de sus ojos. Por eso se comprueba también DÓNDE está. */
   for (const [cual, h] of [["inglesa", en], ["castellana", es]]) {
     const i = h.indexOf("/* El idioma del navegador decide");
-    comprueba(`${p}: la ${cual} mira el idioma del navegador`, i > 0 && i < h.indexOf("</head>"),
+    comprueba(`${p}: la ${cual} lleva el guion del idioma en la cabecera`, i > 0 && i < h.indexOf("</head>"),
       i < 0 ? "no está" : "está fuera de la cabecera");
   }
 

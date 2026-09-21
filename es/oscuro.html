@@ -2012,8 +2012,8 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
 
 
 <script>
-/* El idioma del navegador decide; la eleccion de la persona manda. Ver
-   fuente/idiomas/deteccion.cjs para el porque de cada cuidado. */
+/* El idioma del navegador decide: NADA. Manda la eleccion guardada, y solo
+   esa. Ver fuente/idiomas/deteccion.cjs para el porque de cada cuidado. */
 (function () {
   var ruta = location.pathname;
   var enCastellano = ruta.indexOf('/es/') !== -1;
@@ -2039,15 +2039,25 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
   if (yaMirado) return;
   try { sessionStorage.setItem('clerigo-idioma-mirado', '1'); } catch (e) {}
 
-  var elegido = guardado();
-  var quiere = elegido || ((navigator.language || navigator.userLanguage || 'en')
-    .toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
+  /* SOLO LA ELECCION EXPLICITA. Nada de navigator.language: el renderizador de
+     Google pide en ingles, y mirarlo hacia que toda pagina de /es/ saltase a
+     la inglesa delante del buscador. Un rastreador llega con el almacenamiento
+     vacio, asi que aqui se para siempre. */
+  var quiere = guardado();
+  if (quiere !== 'es' && quiere !== 'en') return;
   if (quiere === mio) return;
 
-  var destino = quiere === 'es'
-    ? ruta.replace(/\/([^\/]*)$/, '/es/$1')
-    : ruta.replace('/es/', '/');
-  if (destino === ruta) return;
+  /* A DONDE, LO DICE LA PROPIA PAGINA. El hreflang de la cabecera ya trae la
+     direccion de la otra version CON SU NOMBRE TRADUCIDO. Calcularlo a mano
+     —meterle '/es/' delante al ultimo trozo— daba /es/pricing, /es/contact,
+     /es/frameworks y /es/trustcenter, que son cuatro 404: la pagina se llama
+     /es/precios. Sale del mismo sitio que el mapa del sitio, asi que no se
+     puede desincronizar. Se coge solo la ruta para no salirse de este
+     servidor: en local la etiqueta dice clerigo.io. */
+  var otra = document.querySelector('link[rel="alternate"][hreflang="' + quiere + '"]');
+  var destino = null;
+  try { destino = otra && new URL(otra.getAttribute('href'), location.href).pathname; } catch (e) {}
+  if (!destino || destino === ruta) return;
   location.replace(destino + location.search + location.hash);
 })();
 </script>
@@ -2057,7 +2067,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
 
 <!-- ══════════ NAV ══════════ -->
 <nav>
-  <a href="index.html" class="nav-logo">
+  <a href="/es/" data-enlace="index.html" class="nav-logo">
     <div class="nav-logo-mark"></div>
     <span class="nav-logo-text">Clèrigo <small>XGRC</small></span>
   </a>
@@ -2065,15 +2075,15 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
     <a href="#solution">Módulos</a>
     <a href="#platform">Plataforma</a>
     <a href="#how">Cómo funciona</a>
-    <a href="marcos.html">Marcos</a>
-    <a href="confianza.html">Centro de Confianza</a>
+    <a href="/es/marcos" data-enlace="marcos.html">Marcos</a>
+    <a href="/es/confianza" data-enlace="confianza.html">Centro de Confianza</a>
     <a href="#testimonials">Clientes</a>
   </div>
   <div class="nav-cta">
     <div class="idiomas"><a href="../oscuro.html" class="idioma" data-idioma="en" hreflang="en">EN</a><a href="oscuro.html" class="idioma" data-idioma="es" hreflang="es">ES</a></div>
     <a href="https://app.clerigo.io/login" class="btn-ghost">login</a>
-    <a href="precios.html" class="btn-ghost">Planes</a>
-    <a href="contacto.html" class="btn-primary">
+    <a href="/es/precios" data-enlace="precios.html" class="btn-ghost">Planes</a>
+    <a href="/es/contacto" data-enlace="contacto.html" class="btn-primary">
        Contacto
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6H10M7 3L10 6L7 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
@@ -2194,7 +2204,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
         Clèrigo XGRC es un solo entorno <strong>inteligente y automatizado</strong> que unifica Gestión de Riesgos, Cumplimiento Legal, Regulatorio, Privacidad &amp; protección de Datos, Ciberseguridad, Control interno y Auditoría — eliminando silos, reduciendo fricciones y acelerando la madurez de tu organización.
       </p>
       <div class="hero-actions fade-up fade-up-4">
-        <a href="precios.html" class="btn-large red">
+        <a href="/es/precios" data-enlace="precios.html" class="btn-large red">
           Planes y Precios
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M8 3L12 7L8 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -3399,7 +3409,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
         <span class="fw-logo-label">ITIL 4</span>
         </a>
         <!-- ── Entre Otros ── -->
-        <a href="marcos.html" class="fw-logo-card reveal reveal-2" style="border-style:dashed;opacity:0.75" title="Ver los más de 65 marcos y normativas soportados">
+        <a href="/es/marcos" data-enlace="marcos.html" class="fw-logo-card reveal reveal-2" style="border-style:dashed;opacity:0.75" title="Ver los más de 65 marcos y normativas soportados">
         <svg width="44" height="44" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
         <circle cx="60" cy="60" r="56" fill="none" stroke="rgba(240,240,240,0.2)" stroke-width="3" stroke-dasharray="6 4"/>
         <circle cx="30" cy="60" r="6" fill="var(--text-3)"/>
@@ -3483,13 +3493,13 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
         Únete a organizaciones que ya transformaron su gestión de Gobernanza, Riesgo y Cumplimiento con Clèrigo.
       </p>
       <div class="cta-actions reveal reveal-4">
-        <a href="contacto.html" class="btn-large red">
+        <a href="/es/contacto" data-enlace="contacto.html" class="btn-large red">
           Solicitar demo gratuita
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M8 3L12 7L8 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="partners.html" class="btn-large outline">Portal de Partners</a>
+        <a href="/es/partners" data-enlace="partners.html" class="btn-large outline">Portal de Partners</a>
       </div>
-      <p class="cta-trust reveal reveal-5">Sin compromisos · Implementación gratuita · <a href="legal.html">Política de privacidad</a></p>
+      <p class="cta-trust reveal reveal-5">Sin compromisos · Implementación gratuita · <a href="/es/legal" data-enlace="legal.html">Política de privacidad</a></p>
     </div>
   </div>
 </section>
@@ -3498,7 +3508,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <a href="index.html" class="nav-logo" style="text-decoration:none">
+      <a href="/es/" data-enlace="index.html" class="nav-logo" style="text-decoration:none">
         <div class="nav-logo-mark"></div>
         <span class="nav-logo-text">Clèrigo</span>
       </a>
@@ -3545,23 +3555,23 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
     <div class="footer-links">
       <div class="footer-col">
         <div class="footer-col-title">Producto</div>
-        <a href="precios.html">Módulos GRC</a>
-        <a href="index.html#platform">Plataforma</a>
-        <a href="precios.html">Precios</a>
-        <a href="index.html#solution">Entrenamiento</a>
+        <a href="/es/precios" data-enlace="precios.html">Módulos GRC</a>
+        <a href="/es/#platform" data-enlace="index.html#platform">Plataforma</a>
+        <a href="/es/precios" data-enlace="precios.html">Precios</a>
+        <a href="/es/#solution" data-enlace="index.html#solution">Entrenamiento</a>
       </div>
       <div class="footer-col">
         <div class="footer-col-title">Soluciones</div>
-        <a href="marcos.html">Gestión de Riesgos</a>
-        <a href="marcos.html">Cumplimiento ISO</a>
-        <a href="marcos.html">Privacidad GDPR</a>
-        <a href="marcos.html">Ciberseguridad</a>
-        <a href="marcos.html">Auditoría Interna</a>
+        <a href="/es/marcos" data-enlace="marcos.html">Gestión de Riesgos</a>
+        <a href="/es/marcos" data-enlace="marcos.html">Cumplimiento ISO</a>
+        <a href="/es/marcos" data-enlace="marcos.html">Privacidad GDPR</a>
+        <a href="/es/marcos" data-enlace="marcos.html">Ciberseguridad</a>
+        <a href="/es/marcos" data-enlace="marcos.html">Auditoría Interna</a>
       </div>
       <div class="footer-col">
         <div class="footer-col-title">Compañía</div>
-        <a href="contacto.html">Contacto</a>
-        <a href="partners.html">Socios</a>
+        <a href="/es/contacto" data-enlace="contacto.html">Contacto</a>
+        <a href="/es/partners" data-enlace="partners.html">Socios</a>
       </div>
     </div>
   </div>
@@ -3581,10 +3591,10 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="4" fill="#000"/><path d="M13.5 11.1L17.5 6.5H16.3L13 10.3L10.4 6.5H6.5L10.7 12.6L6.5 17.5H7.7L11.2 13.4L14 17.5H17.9L13.5 11.1Z" fill="white"/></svg>
       </a>
       <div style="width:1px;height:14px;background:rgba(255,255,255,0.1);margin:0 4px"></div>
-      <a href="confianza.html">Centro de Confianza</a>
-      <a href="legal.html">Términos de uso</a>
-      <a href="legal.html">Privacidad</a>
-      <a href="legal.html">Cookies</a>
+      <a href="/es/confianza" data-enlace="confianza.html">Centro de Confianza</a>
+      <a href="/es/legal" data-enlace="legal.html">Términos de uso</a>
+      <a href="/es/legal" data-enlace="legal.html">Privacidad</a>
+      <a href="/es/legal" data-enlace="legal.html">Cookies</a>
     </div>
   </div>
 </footer>
@@ -3645,7 +3655,7 @@ document.querySelectorAll('.platform-frame, .preview-body').forEach(el => barObs
   </div>
 
   <p class="cookie-body">
-    Esta web no usa cookies. En tu navegador solo se guarda el idioma que elijas y que ya has visto este aviso. Sin publicidad, sin analítica y sin rastreadores de terceros. <a href="legal.html" target="_blank">Política de cookies <svg width="12" height="5" viewBox="0 0 12 5" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:0.5px" aria-hidden="true"><path d="M0.6 2.5h9.5M8.1 0.9 10.9 2.5 8.1 4.1"/></svg></a>
+    Esta web no usa cookies. En tu navegador solo se guarda el idioma que elijas y que ya has visto este aviso. Sin publicidad, sin analítica y sin rastreadores de terceros. <a href="/es/legal" data-enlace="legal.html" target="_blank">Política de cookies <svg width="12" height="5" viewBox="0 0 12 5" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:0.5px" aria-hidden="true"><path d="M0.6 2.5h9.5M8.1 0.9 10.9 2.5 8.1 4.1"/></svg></a>
   </p>
 
   <div class="cookie-trust">
