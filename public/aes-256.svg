@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%" role="img" aria-label="Cifrado AES-256">
+  <!-- Sello de cifrado AES-256. No existe un sello oficial de AES: el algoritmo es
+       un estándar público (NIST FIPS 197), no una certificación. Por eso este es
+       un icono propio, con la misma forma circular que los demás sellos. -->
+  <circle cx="50" cy="50" r="48" fill="#1E2B4D"/>
+  <circle cx="50" cy="50" r="42" fill="none" stroke="#5B79C9" stroke-width="1.6"/>
+  <rect x="35" y="44" width="30" height="22" rx="3.5" fill="#FFFFFF"/>
+  <path d="M40 44v-6a10 10 0 0 1 20 0v6" fill="none" stroke="#FFFFFF" stroke-width="4.2" stroke-linecap="round"/>
+  <circle cx="50" cy="53" r="3.2" fill="#1E2B4D"/>
+  <rect x="48.6" y="54.5" width="2.8" height="6" rx="1.2" fill="#1E2B4D"/>
+  <text x="50" y="80" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="10.5" font-weight="700" letter-spacing="0.6" fill="#FFFFFF">AES-256</text>
+</svg>
