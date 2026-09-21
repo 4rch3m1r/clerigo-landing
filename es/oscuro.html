@@ -214,6 +214,20 @@ section { position: relative; }
   font-weight: 900; line-height: 1.04; letter-spacing: -2.5px;
   margin-bottom: 12px;
 }
+
+/* LA MARCA, DENTRO DEL TITULAR. Buscando «clerigo.io», Google enseñaba las
+   páginas interiores y no la portada, y su resumen de IA decía que no hay un
+   sitio oficial: «clérigo» es una palabra corriente y el <h1> —el eslogan— no
+   nombraba la marca. Ahora el titular dice «Clèrigo: …». Los dos puntos no se
+   ven; están para que se LEA como una frase, y no como «Clèrigo Managing…». */
+.hero-title .hero-marca {
+  display: block; font-size: .36em; font-weight: 800; letter-spacing: -.5px;
+  line-height: 1.1; color: var(--text); margin-bottom: .22em;
+}
+.hero-title .hero-marca .hero-sep {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
 .hero-title .word-grc {
   color: var(--red);
   position: relative;
@@ -2196,6 +2210,7 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
         Gobernanza · Riesgo · Cumplimiento
       </div>
       <h1 class="hero-title fade-up fade-up-2">
+        <span class="hero-marca">Clèrigo<span class="hero-sep">:</span></span>
         La gestión <span class="word-grc">GRC</span><br>
         no tiene que ser<br>
         <span class="word-simple">complicada</span>
