@@ -8,6 +8,10 @@ compatibility_date = "2024-09-23"
 routes = [
   { pattern = "clerigo.io/*", zone_name = "clerigo.io" },
   { pattern = "www.clerigo.io/*", zone_name = "clerigo.io" },
+  # Sólo la pantalla de acceso de la aplicación, para ponerle `noindex` desde
+  # el borde. El resto de app.clerigo.io no pasa por este Worker. Ver
+  # «LA PANTALLA DE ACCESO DE LA APLICACIÓN» en worker.js.
+  { pattern = "app.clerigo.io/login*", zone_name = "clerigo.io" },
 ]
 
 [assets]

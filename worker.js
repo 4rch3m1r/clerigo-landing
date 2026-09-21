@@ -93,9 +93,41 @@ function rutaFinal(ruta) {
   return ruta;
 }
 
+/* ── LA PANTALLA DE ACCESO DE LA APLICACIÓN, FUERA DE GOOGLE ──────────────
+ *
+ * Medido el 2026-09-21: buscando «clerigo.io», el primer resultado era
+ * https://app.clerigo.io/login —«Clèrigo · Inicia sesión…»—, por delante de
+ * esta web, y Search Console la daba por «Duplicada: sin canónica». Una
+ * pantalla de acceso no es una página que enseñar en un buscador.
+ *
+ * Lo correcto es que la aplicación lo diga ella misma, y el cambio está hecho
+ * en su repositorio (src/app/(auth)/login/layout.tsx). Pero la aplicación no
+ * se despliega al subir —producción iba por detrás del 15 de septiembre—, así
+ * que esto lo dice YA, desde el borde: la ruta `app.clerigo.io/login*` de
+ * wrangler.toml pasa por aquí, se le pide la página a la aplicación tal cual y
+ * se le añade la cabecera. No se toca nada más de la respuesta.
+ *
+ * Va lo PRIMERO: la tabla de abajo manda `/login` a app.clerigo.io/login, y
+ * aplicada aquí sería una redirección a sí misma, sin fin.
+ *
+ * `follow` porque los enlaces de la pantalla —a clerigo.io, a lo legal— sí
+ * deben seguirse. Y por cabecera, no por robots.txt: si se prohibiera el paso,
+ * Google no llegaría a leer el `noindex` y la dejaría indexada.
+ */
+const ACCESO_DE_LA_APP = "app.clerigo.io";
+
+async function sinIndexar(request) {
+  const respuesta = await fetch(request);
+  const copia = new Response(respuesta.body, respuesta);
+  copia.headers.set("x-robots-tag", "noindex, follow");
+  return copia;
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    if (url.hostname === ACCESO_DE_LA_APP) return sinIndexar(request);
 
     if (NOMBRES_DEL_SITIO.includes(url.hostname)
       && (url.hostname !== CANONICO || url.protocol !== "https:")) {
