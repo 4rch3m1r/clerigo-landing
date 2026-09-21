@@ -2172,5 +2172,6 @@
   "Anthropic": "Anthropic",
   "Google (Gemini)": "Google (Gemini)",
   "Sentry": "Sentry",
-  "Registro de errores de la aplicación, sin datos personales (desde el próximo despliegue)": "Application error logging, without personal data (from the next release)"
+  "Registro de errores de la aplicación, sin datos personales (desde el próximo despliegue)": "Application error logging, without personal data (from the next release)",
+  "xAI (Grok)": "xAI (Grok)"
 }
