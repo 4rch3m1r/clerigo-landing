@@ -103,9 +103,12 @@ function rutaFinal(ruta) {
  * Lo correcto es que la aplicación lo diga ella misma, y el cambio está hecho
  * en su repositorio (src/app/(auth)/login/layout.tsx). Pero la aplicación no
  * se despliega al subir —producción iba por detrás del 15 de septiembre—, así
- * que esto lo dice YA, desde el borde: la ruta `app.clerigo.io/login*` de
- * wrangler.toml pasa por aquí, se le pide la página a la aplicación tal cual y
- * se le añade la cabecera. No se toca nada más de la respuesta.
+ * que esto lo dice YA, desde el borde: las rutas `app.clerigo.io/` y
+ * `app.clerigo.io/login*` de wrangler.toml pasan por aquí, se le pide la
+ * página a la aplicación tal cual y se le añade la cabecera. No se toca nada
+ * más de la respuesta. La raíz, porque era ELLA la indexada —Search Console,
+ * 2026-09-21—: redirige a /login con un 307, temporal, y con uno temporal
+ * Google enseña la dirección de origen con el contenido del destino.
  *
  * Va lo PRIMERO: la tabla de abajo manda `/login` a app.clerigo.io/login, y
  * aplicada aquí sería una redirección a sí misma, sin fin.

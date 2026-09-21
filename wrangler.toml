@@ -11,6 +11,9 @@ routes = [
   # Sólo la pantalla de acceso de la aplicación, para ponerle `noindex` desde
   # el borde. El resto de app.clerigo.io no pasa por este Worker. Ver
   # «LA PANTALLA DE ACCESO DE LA APLICACIÓN» en worker.js.
+  # La raíz también, y sin comodín: es la que Google tenía indexada —redirige
+  # con un 307, temporal, a /login y el buscador se queda con la de origen—.
+  { pattern = "app.clerigo.io/", zone_name = "clerigo.io" },
   { pattern = "app.clerigo.io/login*", zone_name = "clerigo.io" },
 ]
 
