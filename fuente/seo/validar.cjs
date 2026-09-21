@@ -153,8 +153,16 @@ for (const carpeta of [CASTELLANO, INGLES]) {
 
     /* El título, con el patrón de las grandes. */
     const titulo = (h.match(/<title>([^<]*)<\/title>/) || [, ""])[1];
+    /* LA PORTADA, APARTE (decisión del dueño, 2026-09-21): su título es la
+       marca y su lema, «Clèrigo — Go Beyond.», y no «Clèrigo | de qué va».
+       Lo que se pierde —que el título diga a qué se dedica— lo dice la meta
+       description, que sigue hablando de software GRC. Se fija el texto
+       exacto para que nadie lo cambie sin querer. */
+    const esLaPortada = slug === "index" || slug === "oscuro";
     comprueba(`${p}: el título nombra la marca y dice de qué va`,
-      titulo.includes("Clèrigo") && titulo.includes(" | ") && titulo.length <= 70,
+      esLaPortada
+        ? titulo === "Clèrigo — Go Beyond."
+        : titulo.includes("Clèrigo") && titulo.includes(" | ") && titulo.length <= 70,
       `«${titulo}» (${titulo.length} letras)`);
 
     /* La descripción, en la horquilla que el buscador enseña entera. */
@@ -356,8 +364,18 @@ for (const carpeta of [CASTELLANO, INGLES]) {
       dime("WebPage").url === canonica,
       `ficha «${dime("WebPage").url}» vs canónica «${canonica}»`);
 
+    /* La portada —y la oscura, cuya canónica es la portada— no lleva migas:
+       una lista de un solo «Inicio» no es un camino. Las interiores, dos
+       peldaños: «Inicio › Precios». */
+    const migas = dime("BreadcrumbList");
+    const esPortada = /^https:\/\/clerigo\.io\/(es\/)?$/.test(canonica);
     comprueba(`${p}: las migas empiezan en la portada`,
-      (dime("BreadcrumbList").itemListElement || [])[0]?.position === 1);
+      esPortada
+        ? !migas && !dime("WebPage").breadcrumb
+        : (migas?.itemListElement || []).length === 2 && migas.itemListElement[0].position === 1
+          && migas.itemListElement[0].item === canonica.replace(/^(https:\/\/clerigo\.io\/(es\/)?).*$/, "$1")
+          && migas.itemListElement[1].item === canonica,
+      esPortada ? "la portada no lleva migas" : JSON.stringify((migas?.itemListElement || []).map((x) => x.name)));
 
     /* ── LO QUE NO PUEDE ESTAR ───────────────────────────────────────────
        Los testimonios de la portada son nombres de ejemplo. Marcarlos como

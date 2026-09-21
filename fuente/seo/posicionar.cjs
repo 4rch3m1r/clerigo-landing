@@ -88,13 +88,18 @@ const tipoDeTarjeta = (nombre) => (/\.jpe?g$/i.test(nombre) ? "image/jpeg" : "im
  * Por eso cada entrada lleva ahora los dos nombres. `ruta` es la dirección
  * pública, sin extensión; `disco` es el fichero que hay que abrir.
  */
+/* LAS CUATRO SECCIONES PRINCIPALES, decididas el 2026-09-21: la portada —que es
+   también «Plataforma XGRC»—, Precios, Confianza y Contacto. Los rótulos de
+   aquí son los de las migas y la navegación de la ficha, y dicen lo mismo que
+   la barra del sitio. La prioridad del mapa del sitio lo refleja: la portada
+   1.0, las tres secciones 0.9 y el resto por debajo. */
 const PAGINAS = [
   { slug: "index", ruta: { en: "", es: "" }, disco: { en: "index.html", es: "index.html" },
     es: "Inicio", en: "Home", prioridad: "1.0", nav: false },
   { slug: "marcos", ruta: { en: "frameworks", es: "marcos" }, disco: { en: "frameworks.html", es: "marcos.html" },
-    es: "Marcos", en: "Frameworks", prioridad: "0.9", nav: true },
+    es: "Marcos", en: "Frameworks", prioridad: "0.8", nav: true },
   { slug: "confianza", ruta: { en: "trustcenter", es: "confianza" }, disco: { en: "trustcenter.html", es: "confianza.html" },
-    es: "Centro de Confianza", en: "Trust Center", prioridad: "0.9", nav: true },
+    es: "Confianza", en: "Trust Center", prioridad: "0.9", nav: true },
   /* LA INGLESA SE SIRVE EN `/pricing`, Y ESTO SE HABÍA QUEDADO ATRÁS.
      La ruta inglesa se normalizó a `/pricing` con sus 301, pero aquí seguía
      diciendo `precios` en las dos columnas. Consecuencias, las tres medidas:
@@ -106,9 +111,9 @@ const PAGINAS = [
      cualquier regeneración habría borrado el redirector.
      Es el mismo descuido que ya pasó con `marcos`/`frameworks`. */
   { slug: "precios", ruta: { en: "pricing", es: "precios" }, disco: { en: "pricing.html", es: "precios.html" },
-    es: "Planes", en: "Pricing", prioridad: "0.9", nav: true },
+    es: "Precios", en: "Pricing", prioridad: "0.9", nav: true },
   { slug: "contacto", ruta: { en: "contact", es: "contacto" }, disco: { en: "contact.html", es: "contacto.html" },
-    es: "Contacto", en: "Contact", prioridad: "0.8", nav: true },
+    es: "Contacto", en: "Contact", prioridad: "0.9", nav: true },
   { slug: "partners", ruta: { en: "partners", es: "partners" }, disco: { en: "partners.html", es: "partners.html" },
     es: "Partner Portal", en: "Partner Portal", prioridad: "0.5", nav: false },
   { slug: "legal", ruta: { en: "legal", es: "legal" }, disco: { en: "legal.html", es: "legal.html" },
@@ -291,6 +296,8 @@ function ficha(pagina, idioma, esIngles, titulo, descripcion, imagen, canonica) 
      oscuro.html» justo mientras la canónica decía lo contrario. Dos señales
      que se contradicen valen menos que ninguna: el buscador elige él. */
   const url = canonica || raiz + (pagina.ruta ? pagina.ruta[idioma] : "");
+  /* La portada, y todo lo que declara la portada como canónica. */
+  const sinMigas = pagina.slug === "index" || url === raiz;
   const grafo = [
     organizacion(idioma),
     {
@@ -315,18 +322,20 @@ function ficha(pagina, idioma, esIngles, titulo, descripcion, imagen, canonica) 
       isPartOf: { "@id": BASE + "/#sitio" },
       about: { "@id": BASE + "/#producto" },
       primaryImageOfPage: { "@type": "ImageObject", url: imagen },
-      breadcrumb: { "@id": url + "#migas" },
+      ...(sinMigas ? {} : { breadcrumb: { "@id": url + "#migas" } }),
     },
-    {
+    /* MIGAS SÓLO EN LAS INTERIORES: «Inicio › Precios». La portada llevaba una
+       lista de UN elemento —«Inicio»—, que no es un camino y no describe nada;
+       y la portada oscura, cuya canónica es la portada, salía con «Inicio ›»
+       y un nombre vacío. */
+    ...(sinMigas ? [] : [{
       "@type": "BreadcrumbList",
       "@id": url + "#migas",
-      itemListElement: pagina.slug === "index"
-        ? [{ "@type": "ListItem", position: 1, name: idioma === "es" ? "Inicio" : "Home", item: raiz }]
-        : [
-          { "@type": "ListItem", position: 1, name: idioma === "es" ? "Inicio" : "Home", item: raiz },
-          { "@type": "ListItem", position: 2, name: idioma === "es" ? pagina.es : pagina.en, item: url },
-        ],
-    },
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: idioma === "es" ? "Inicio" : "Home", item: raiz },
+        { "@type": "ListItem", position: 2, name: idioma === "es" ? pagina.es : pagina.en, item: url },
+      ],
+    }]),
     ...navegacion(idioma, esIngles),
   ];
   /* La ficha del producto sólo en las dos páginas que hablan de él. Repetirla

@@ -166,8 +166,12 @@ for (const [n, tConSelector] of [["oscuro", osc], ["claro", cla]]) {
      Data Security, Privacy, and Compliance»— y no es estética: en el
      resultado de búsqueda esa línea es lo único que se lee antes de decidir
      si se entra, y lo que va detrás de la barra es donde caben las palabras
-     por las que a uno lo buscan. */
-  comprueba(`el título es de Clèrigo en el ${n}`, /<title>Clèrigo \| /.test(t));
+     por las que a uno lo buscan.
+     LA PORTADA ES LA EXCEPCIÓN desde el 2026-09-21, por decisión del dueño:
+     su título es la marca y su lema, «Clèrigo — Go Beyond.», porque es la
+     página que identifica a Clèrigo como marca paraguas y no a un producto.
+     Las palabras de la búsqueda quedan en la meta description. */
+  comprueba(`el título es de Clèrigo en el ${n}`, /<title>Clèrigo — Go Beyond\.<\/title>/.test(t));
   comprueba(`hay canonical, Open Graph y Twitter en el ${n}`,
     t.includes(`rel="canonical" href="${SITIO.base}/es/"`)
     && t.includes(`og:url" content="${SITIO.base}/es/"`)
