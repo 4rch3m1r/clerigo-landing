@@ -370,6 +370,14 @@ footer {
 .tc-att h3 { font-size: 20px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 6px; }
 .tc-att-sub { font-size: 13px; color: var(--text-3); margin-bottom: 16px; }
 .tc-att p { font-size: 14px; color: var(--text-2); line-height: 1.65; }
+/* El sello de cada atestación, arriba a la derecha. El de ISO va apagado
+   —gris y a media luz— porque la certificación está en curso: a todo color
+   diría lo contrario de lo que dice el texto. Título y subtítulo dejan su
+   hueco para que el sello no les pise la última palabra. */
+.tc-att { position: relative; }
+.tc-att-logo { position: absolute; top: 22px; right: 24px; width: 64px; height: 64px; object-fit: contain; }
+.tc-att-logo.apagado { filter: grayscale(1); opacity: 0.35; }
+.tc-att h3, .tc-att-sub { padding-right: 80px; }
 .tc-ficha { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); }
 .tc-ficha dt { font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--text-3); align-self: center; }
 .tc-ficha dd { font-size: 13px; color: var(--text); margin: 0; font-weight: 600; }
@@ -767,6 +775,7 @@ html[data-tema="oscuro"] .fw-marca{background:#0E0E0E}
     <div class="tc-atestaciones">
       <div class="tc-att tc-att-alta reveal">
         <span class="tc-sello ok">Emitido</span>
+        <img loading="lazy" decoding="async" data-diferida class="tc-att-logo" src="../public/soc2.svg" width="64" height="64" alt="Logotipo SOC 2 de AICPA">
         <h3>SOC 2 Tipo II</h3>
         <div class="tc-att-sub">Informe de atestación sobre la efectividad operativa de los controles</div>
         <p>
@@ -783,6 +792,7 @@ html[data-tema="oscuro"] .fw-marca{background:#0E0E0E}
 
       <div class="tc-att tc-att-curso reveal reveal-2">
         <span class="tc-sello curso">En proceso</span>
+        <img loading="lazy" decoding="async" data-diferida class="tc-att-logo apagado" src="../public/iso-27001.svg" width="64" height="64" alt="Logotipo de ISO (certificación en curso)">
         <h3>ISO 27001</h3>
         <div class="tc-att-sub">Sistema de Gestión de Seguridad de la Información</div>
         <p>
