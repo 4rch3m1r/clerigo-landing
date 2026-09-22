@@ -63,15 +63,29 @@ const FECHAS_PREVIAS = (() => {
   } catch { return {}; }
 })();
 
+/* COMPARAR CON LO CONFIRMADO, PERO SIN LO QUE PONEN LOS PASOS DE DESPUÉS.
+   Este paso corre A MITAD del pipeline —`hacer.cjs`: el orden no se puede
+   cambiar—, antes de `enlaces.cjs` y del tema. En ese momento todas las
+   páginas están sin sus enlaces definitivos y sin el tema, y comparadas tal
+   cual con HEAD, que sí los lleva, TODAS «difieren»: la primera versión de
+   esto le ponía la fecha de hoy a las catorce en cuanto se pasaba el pipeline
+   entero, aunque sólo hubiera cambiado una. Probándolo a mano, con las
+   páginas ya terminadas, no se veía.
+   Se quita a los dos lados lo que añaden esos pasos (`sinEnlaces`, `sinTema`,
+   los mismos que usan los validadores) y se compara lo que queda. Medido: a
+   mitad de pipeline y con el árbol limpio, las catorce salen idénticas. */
+const { sinEnlaces } = require("./enlaces.cjs");
+const { sinTema } = require("../tema/marcas.cjs");
+const comoContenido = (s) => sinTema(sinEnlaces(String(s).split("\r\n").join("\n")));
+
 function cuandoCambió(f, url) {
   const rel = path.relative(RAIZ, f).split(path.sep).join("/");
-  const git = (args) => execFileSync("git", ["-C", RAIZ, ...args], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
+  const git = (args) => execFileSync("git", ["-C", RAIZ, ...args], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"], maxBuffer: 1e9 });
   try {
-    /* `diff --quiet` sale con 1 si hay diferencias y con 0 si no. Cualquier
-       otra cosa es que git no está o esto no es un repositorio. */
-    try { execFileSync("git", ["-C", RAIZ, "diff", "--quiet", "HEAD", "--", rel], { stdio: "ignore" }); }
-    catch (e) { if (e.status === 1) return hoy(); throw e; }
-    const fecha = git(["log", "-1", "--format=%cs", "--", rel]);
+    /* Si no está confirmada, `git show` falla y se va al respaldo de abajo. */
+    const confirmada = git(["show", "HEAD:" + rel]);
+    if (comoContenido(fs.readFileSync(f, "utf8")) !== comoContenido(confirmada)) return hoy();
+    const fecha = git(["log", "-1", "--format=%cs", "--", rel]).trim();
     if (/^\d{4}-\d{2}-\d{2}$/.test(fecha)) return fecha;
   } catch { /* sin git: abajo */ }
   return FECHAS_PREVIAS[url] || hoy();
