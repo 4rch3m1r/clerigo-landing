@@ -38,13 +38,43 @@ const { CASTELLANO, INGLES } = require("../donde.cjs");
 
 const RAIZ = path.join(__dirname, "..", "..");
 
-/* La fecha del fichero, no la de hoy.
-   Poner hoy en las siete páginas cada vez que se genera es decirle al buscador
+/* LA FECHA EN QUE CAMBIÓ EL CONTENIDO, no la de hoy ni la del fichero.
+   Poner hoy en todas las páginas cada vez que se genera es decirle al buscador
    que todo el sitio cambió, todos los días. Deja de creerse las fechas, y con
-   ellas deja de creerse la que sí importa el día que algo cambie de verdad. */
-function cuandoSeTocó(f) {
-  try { return fs.statSync(f).mtime.toISOString().slice(0, 10); }
-  catch { return new Date().toISOString().slice(0, 10); }
+   ellas deja de creerse la que sí importa el día que algo cambie de verdad.
+
+   La fecha del fichero en disco —lo que se usaba— tampoco sirve: el pipeline
+   REESCRIBE las catorce páginas en cada pasada aunque salgan idénticas, y un
+   `git checkout` también la mueve. El 2026-09-21 se cambió sólo la página
+   legal y el sitemap salió con las catorce direcciones fechadas ese día.
+
+   Así que se le pregunta a git, que sabe cuándo cambió de verdad cada cosa:
+     · si la página difiere de lo confirmado, es que cambia AHORA → hoy;
+     · si no, la fecha del último commit que la tocó.
+   Sin git a mano —un despliegue que copie los ficheros sin el historial—, se
+   conserva la fecha que ya traía el sitemap para esa dirección; y sólo si no
+   hay ninguna, la de hoy. */
+const hoy = () => new Date().toISOString().slice(0, 10);
+const { execFileSync } = require("node:child_process");
+const FECHAS_PREVIAS = (() => {
+  try {
+    const previo = fs.readFileSync(path.join(RAIZ, "sitemap.xml"), "utf8");
+    return Object.fromEntries([...previo.matchAll(/<loc>([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/g)].map((m) => [m[1], m[2]]));
+  } catch { return {}; }
+})();
+
+function cuandoCambió(f, url) {
+  const rel = path.relative(RAIZ, f).split(path.sep).join("/");
+  const git = (args) => execFileSync("git", ["-C", RAIZ, ...args], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
+  try {
+    /* `diff --quiet` sale con 1 si hay diferencias y con 0 si no. Cualquier
+       otra cosa es que git no está o esto no es un repositorio. */
+    try { execFileSync("git", ["-C", RAIZ, "diff", "--quiet", "HEAD", "--", rel], { stdio: "ignore" }); }
+    catch (e) { if (e.status === 1) return hoy(); throw e; }
+    const fecha = git(["log", "-1", "--format=%cs", "--", rel]);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(fecha)) return fecha;
+  } catch { /* sin git: abajo */ }
+  return FECHAS_PREVIAS[url] || hoy();
 }
 
 const entradas = [];
@@ -67,7 +97,7 @@ for (const p of PAGINAS) {
     entradas.push([
       "  <url>",
       `    <loc>${url}</loc>`,
-      `    <lastmod>${cuandoSeTocó(path.join(carpeta, p.disco[idi]))}</lastmod>`,
+      `    <lastmod>${cuandoCambió(path.join(carpeta, p.disco[idi]), url)}</lastmod>`,
       `    <changefreq>${p.slug === "index" ? "weekly" : "monthly"}</changefreq>`,
       `    <priority>${p.prioridad}</priority>`,
       alternativas,
