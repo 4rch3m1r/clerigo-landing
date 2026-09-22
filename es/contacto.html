@@ -1421,7 +1421,7 @@ function submitForm() {
    sería mentirle a un cliente en su primer contacto.
    Cada página lleva sólo los textos de SU idioma, en T. */
 (function () {
-  var T = {"idioma":"es-DO","asunto":"Solicitud de demo virtual — ","saludo":"Hola, equipo de Clèrigo:","peticion":"Me gustaría agendar una demo virtual de 30 minutos por Microsoft Teams.","dia":"Día: ","hora":"Hora: ","tema":"Tema: ","nombre":"Nombre: ","correo":"Correo: ","compania":"Empresa: ","gracias":"Gracias.","cita":"Demo Clèrigo (pendiente de confirmar)","detalle":"Solicitud enviada a hello@clerigo.io. Clèrigo confirmará la reunión y enviará el enlace de Microsoft Teams por correo. Tema: "};
+  var T = {"idioma":(document.documentElement.lang === "en" ? "en-US" : "es-DO"),"asunto":"Solicitud de demo virtual — ","saludo":"Hola, equipo de Clèrigo:","peticion":"Me gustaría agendar una demo virtual de 30 minutos por Microsoft Teams.","dia":"Día: ","hora":"Hora: ","tema":"Tema: ","nombre":"Nombre: ","correo":"Correo: ","compania":"Empresa: ","gracias":"Gracias.","cita":"Demo Clèrigo (pendiente de confirmar)","detalle":"Solicitud enviada a hello@clerigo.io. Clèrigo confirmará la reunión y enviará el enlace de Microsoft Teams por correo. Tema: "};
   var DESTINO = 'hello@clerigo.io';
   var eleccion = {};
   var $ = function (id) { return document.getElementById(id); };

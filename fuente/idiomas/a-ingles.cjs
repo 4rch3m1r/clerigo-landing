@@ -200,6 +200,23 @@ function traduce(html, dic) {
      inglesa servía el catálogo entero en castellano. */
   salida = traduceLosGuiones(salida, dic);
 
+  /* Y EL MENSAJE QUE LLEVA EL ENLACE DE WHATSAPP.
+     `wa.me/…?text=` abre la conversación con ese texto ya escrito, y ese texto
+     es lenguaje aunque viaje dentro de un href, codificado para URL. Nada de lo
+     de arriba mira dentro de un href, así que la página inglesa de contacto
+     abría WhatsApp con «Hola, me interesa conocer…». Alguien lo arregló
+     escribiendo el inglés a mano en contact.html, y la siguiente pasada del
+     pipeline lo devolvió al castellano sin avisar.
+     Se descodifica, se busca en el diccionario como cualquier otro texto y se
+     vuelve a codificar con `encodeURI`, que deja las comas como están: es la
+     forma en que viene escrito el castellano, y así el enlace sale igual. */
+  salida = salida.replace(/(href="https:\/\/wa\.me\/[^"?]*\?text=)([^"]+)(")/g, (todo, antes, texto, despues) => {
+    let claro;
+    try { claro = decodeURIComponent(texto); } catch { return todo; }
+    const en = dic[claro.trim()];
+    return en === undefined ? todo : antes + encodeURI(en) + despues;
+  });
+
   /* QUÉ SE QUEDÓ SIN TRADUCIR.
      No vale mirar los trozos de la salida y ya: el extractor no sabe distinguir
      castellano de inglés —«Modules» le parece tan lenguaje como «Módulos»— así

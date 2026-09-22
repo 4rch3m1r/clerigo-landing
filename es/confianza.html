@@ -463,29 +463,6 @@ footer { background: #0E0E0E; }
 footer .social-icon { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
 footer .social-icon:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.24); }
 /* ── FIN DE LA BARRA Y EL PIE EN OSCURO ────────────────────────────────── */
-/* ── EL SELECTOR DE IDIOMA ─────────────────────────────────────────────
-   Cuál está activo lo dice el `lang` del documento y no una clase escrita a
-   mano: así el marcado es el mismo en las dos versiones y lo único que
-   cambia entre ellas son los dos enlaces. */
-.idiomas { display: flex; align-items: center; gap: 2px; margin-right: 4px; }
-.idiomas .idioma {
-  font-size: 11px; font-weight: 700; letter-spacing: .6px;
-  color: var(--text-3); padding: 5px 7px; border-radius: 5px; text-decoration: none;
-  transition: color .2s, background .2s;
-}
-.idiomas .idioma:hover { color: var(--text-2); }
-html[lang="en"] .idioma[data-idioma="en"],
-html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(--dark-3); }
-@media (max-width: 768px) {
-  .idiomas { gap: 0; margin-right: 2px; }
-  .idiomas .idioma {
-    font-size: 10px; letter-spacing: .4px; padding: 4px 6px;
-    color: var(--text-2); background: var(--dark-3);
-  }
-  html[lang="en"] .idioma[data-idioma="en"],
-  html[lang="es"] .idioma[data-idioma="es"] { display: none; }
-}
-/* ── FIN DEL SELECTOR DE IDIOMA ── */
 
 /* ── COMPROMISOS, INTEGRACIONES Y PRIVACIDAD POR DEFECTO ────────────────────
    Los sellos son los mismos que enseña la portada (public/). Cada afirmación
@@ -593,6 +570,29 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
 .fw-tag:hover { border-color: var(--border-light); color: var(--text); transform: translateY(-1px); }
 .fw-dot { width: 6px; height: 6px; border-radius: 50%; }
 body,nav,.nav-logo-text,.nav-links a,.stat-card,.filter-toolbar,.search-input,.tab-btn,.sec-chip,.view-btn,.fw-shelf-header,.fw-col,.fw-col-header,.fw-card,.fw-card-name,.fw-card-sub,.fw-card-desc,.fw-ctrl-preview,.fw-ctrl-item,.fw-logo-box,.detail-drawer,.drawer-header,.drawer-body,.drawer-logo-box,.mod-icon-badge,.drawer-mod-badge,.cta-banner,footer,.platform-frame,.platform-topbar,.plat-sidebar,.plat-panel,.plat-kpi,.preview-sidebar,.hero-title,.btn-ghost,.btn-primary {transition:background-color .35s cubic-bezier(.4,0,.2,1),background .35s cubic-bezier(.4,0,.2,1),color .35s cubic-bezier(.4,0,.2,1),border-color .35s cubic-bezier(.4,0,.2,1),box-shadow .35s cubic-bezier(.4,0,.2,1)}
+/* ── EL SELECTOR DE IDIOMA ─────────────────────────────────────────────
+   Cuál está activo lo dice el `lang` del documento y no una clase escrita a
+   mano: así el marcado es el mismo en las dos versiones y lo único que
+   cambia entre ellas son los dos enlaces. */
+.idiomas { display: flex; align-items: center; gap: 2px; margin-right: 4px; }
+.idiomas .idioma {
+  font-size: 11px; font-weight: 700; letter-spacing: .6px;
+  color: var(--text-3); padding: 5px 7px; border-radius: 5px; text-decoration: none;
+  transition: color .2s, background .2s;
+}
+.idiomas .idioma:hover { color: var(--text-2); }
+html[lang="en"] .idioma[data-idioma="en"],
+html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(--dark-3); }
+@media (max-width: 768px) {
+  .idiomas { gap: 0; margin-right: 2px; }
+  .idiomas .idioma {
+    font-size: 10px; letter-spacing: .4px; padding: 4px 6px;
+    color: var(--text-2); background: var(--dark-3);
+  }
+  html[lang="en"] .idioma[data-idioma="en"],
+  html[lang="es"] .idioma[data-idioma="es"] { display: none; }
+}
+/* ── FIN DEL SELECTOR DE IDIOMA ── */
 </style>
 <script>
 /* El idioma del navegador decide: NADA. Manda la eleccion guardada, y solo
