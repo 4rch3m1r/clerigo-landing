@@ -210,6 +210,16 @@ function declaraciones(cuerpo) {
    se aclararían. Se reconocen por el selector. */
 const ES_BARRA_O_PIE = /(^|[\s>+~,(])(nav|footer)(?![\w-])|\.nav-|\.footer-|\.nav\b|\.footer\b/;
 
+/* LOS LOGOTIPOS DE TERCEROS VAN SOBRE BLANCO EN LOS DOS TEMAS, y tampoco se
+   convierten. Son la marca de otro, bajada de su web y sin recolorear, y
+   varias —Okta, AWS, Vicarius, la UAF— llevan la tinta negra o azul marino:
+   dibujadas para ir sobre blanco. En las páginas interiores este generador
+   tomaba ese blanco por fondo de página y lo pasaba a negro, y el logotipo
+   desaparecía (se vio en las integraciones del centro de confianza,
+   2026-09-22). En la portada no pasaba porque allí manda la gemela oscura.
+   Se reconocen por su clase, como la barra y el pie. */
+const ES_LOGO_DE_TERCERO = /\.int-marca\b|\.fw-marca\b/;
+
 function acotar(selector) {
   const partes = [];
   let actual = "", parentesis = 0;
@@ -221,7 +231,7 @@ function acotar(selector) {
   }
   partes.push(actual.trim());
   return partes
-    .filter((s) => s && !ES_BARRA_O_PIE.test(s))
+    .filter((s) => s && !ES_BARRA_O_PIE.test(s) && !ES_LOGO_DE_TERCERO.test(s))
     .map((s) => {
       if (s.startsWith(":root")) return PREFIJO + s.slice(5);
       if (/^html(?![\w-])/.test(s)) return PREFIJO + s.slice(4);
