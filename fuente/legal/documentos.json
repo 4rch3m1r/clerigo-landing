@@ -1,6 +1,6 @@
 {
  "_": "Copia de app-saas/src/app/legal/documentos.ts. NO se edita a mano: se refresca con `node fuente/legal/traer-de-la-app.cjs`. Manda la aplicación.",
- "version": "2.5",
+ "version": "2.6",
  "documentos": [
   {
    "id": "terminos",
@@ -9,7 +9,7 @@
    "corto": "Términos",
    "sumario": "Contrato de servicio entre Clèrigo y el Cliente.",
    "entradilla": "Este acuerdo regula el acceso y uso de la plataforma Clèrigo XGRC y todos sus módulos, APIs, integraciones y servicios relacionados operados por Clèrigo (Delaware). Al continuar utilizando el servicio confirmas tu aceptación de estos términos.",
-   "actualizado": "16 de septiembre de 2026",
+   "actualizado": "21 de septiembre de 2026",
    "secciones": [
     {
      "n": "01",
@@ -246,7 +246,7 @@
       },
       {
        "t": "p",
-       "texto": "Todos los planes incluyen un período de prueba gratuita de 14 días sin requerir tarjeta de crédito. Al finalizar la prueba, el Servicio se suspende automáticamente hasta que el Cliente active un plan de pago."
+       "texto": "Todos los planes incluyen una demo funcional sin compromiso, sin requerir tarjeta de crédito. Al finalizar la demo, el Servicio se suspende automáticamente hasta que el Cliente active un plan de pago."
       }
      ]
     },
@@ -966,7 +966,7 @@
   "Términos": "Terms",
   "Contrato de servicio entre Clèrigo y el Cliente.": "Service agreement between Clèrigo and the Client.",
   "Este acuerdo regula el acceso y uso de la plataforma Clèrigo XGRC y todos sus módulos, APIs, integraciones y servicios relacionados operados por Clèrigo (Delaware). Al continuar utilizando el servicio confirmas tu aceptación de estos términos.": "This agreement governs access to and use of the Clèrigo XGRC platform and all its modules, APIs, integrations and related services operated by Clèrigo (Delaware). By continuing to use the service you confirm your acceptance of these terms.",
-  "16 de septiembre de 2026": "16 September 2026",
+  "21 de septiembre de 2026": "21 September 2026",
   "Aceptación de los Términos": "Acceptance of the Terms",
   "Al registrarte, acceder o utilizar la plataforma Clèrigo XGRC («el Servicio»), operada por Clèrigo («Clèrigo», «nosotros», «la Compañía»), declaras que has leído, comprendido y aceptas estar vinculado por estos Términos y Condiciones de Uso, así como por nuestra Política de Privacidad y Política de Cookies.": "By registering for, accessing or using the Clèrigo XGRC platform (\"the Service\"), operated by Clèrigo (\"Clèrigo\", \"we\", \"the Company\"), you declare that you have read and understood these Terms and Conditions of Use and agree to be bound by them, as well as by our Privacy Policy and Cookie Policy.",
   "Si accedes al Servicio en nombre de una organización, declaras que tienes la autoridad para vincular a dicha organización con estos Términos. En tal caso, «tú» y «el Cliente» se refieren a esa organización.": "If you access the Service on behalf of an organisation, you declare that you have authority to bind that organisation to these Terms. In that case, \"you\" and \"the Client\" refer to that organisation.",
@@ -1030,7 +1030,7 @@
   "Renovación automática:": "Automatic renewal:",
   "los planes se renuevan automáticamente al vencer, salvo que el Cliente notifique la cancelación con al menos 15 días de anticipación.": "plans renew automatically on expiry unless the Client gives notice of cancellation at least 15 days in advance.",
   "Los pagos vencidos pueden resultar en la suspensión del Servicio tras un período de gracia de 10 días. Clèrigo no se responsabiliza por pérdidas derivadas de suspensiones por falta de pago.": "Overdue payments may result in suspension of the Service after a 10-day grace period. Clèrigo accepts no responsibility for losses arising from suspensions due to non-payment.",
-  "Todos los planes incluyen un período de prueba gratuita de 14 días sin requerir tarjeta de crédito. Al finalizar la prueba, el Servicio se suspende automáticamente hasta que el Cliente active un plan de pago.": "All plans include a 14-day free trial with no credit card required. When the trial ends, the Service is suspended automatically until the Client activates a paid plan.",
+  "Todos los planes incluyen una demo funcional sin compromiso, sin requerir tarjeta de crédito. Al finalizar la demo, el Servicio se suspende automáticamente hasta que el Cliente active un plan de pago.": "All plans include a working demo with no commitment and no credit card required. When the demo ends, the Service is suspended automatically until the Client activates a paid plan.",
   "Suspensión y Terminación": "Suspension and Termination",
   "Cualquiera de las partes puede terminar el contrato de servicio con 30 días de aviso escrito. Clèrigo puede suspender o terminar el acceso de forma inmediata y sin previo aviso cuando:": "Either party may terminate the service agreement on 30 days' written notice. Clèrigo may suspend or terminate access immediately and without prior notice where:",
   "El Cliente incumpla estos Términos de forma material.": "The Client is in material breach of these Terms.",
