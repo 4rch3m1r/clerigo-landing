@@ -46,7 +46,13 @@ for (const pg of paginas()) {
      las demás, ninguno. */
   const gemelos = cuenta(html, MARCAS.gemelos);
   comprueba(`${pg.nombre}: ${pg.slug === "index" ? "los elementos llevan su valor oscuro de la gemela" : "no lleva valores de gemela"}`,
-    pg.slug === "index" ? gemelos > 200 : gemelos === 0, gemelos + " atributos");
+    /* Eran más de 200 hasta el 2026-09-22. Ese día, dieciséis sellos de marcos
+       dibujados a mano en SVG —trece ISO, NIST, GDPR y SOC 2, con sus círculos
+       y sus textos, diez atributos de color cada uno— se cambiaron por el
+       logotipo oficial de cada marca, que es una imagen y no lleva color que
+       copiar: de 298 atributos a 137. El listón baja con ellos, no por debajo:
+       sigue cazando el día que la copia desde la gemela deje de hacerse. */
+    pg.slug === "index" ? gemelos > 100 : gemelos === 0, gemelos + " atributos");
   for (const [pieza, re] of Object.entries(MARCAS)) {
     if (pieza === "gemelos") continue;
     /* El botón de móvil sólo va donde el selector de idioma se oculta. */

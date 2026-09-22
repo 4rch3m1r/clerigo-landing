@@ -218,7 +218,7 @@ const ES_BARRA_O_PIE = /(^|[\s>+~,(])(nav|footer)(?![\w-])|\.nav-|\.footer-|\.na
    desaparecía (se vio en las integraciones del centro de confianza,
    2026-09-22). En la portada no pasaba porque allí manda la gemela oscura.
    Se reconocen por su clase, como la barra y el pie. */
-const ES_LOGO_DE_TERCERO = /\.int-marca\b|\.fw-marca\b/;
+const ES_LOGO_DE_TERCERO = /\.int-marca\b|\.fw-marca\b|\.fw-sello\b/;
 
 function acotar(selector) {
   const partes = [];
