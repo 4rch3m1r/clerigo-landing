@@ -754,13 +754,17 @@ for (const e of excepcionadas) console.log("        (excepción justificada L" +
 
 console.log("\n── Comportamiento ──────────────────────────────────────────────");
 for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
-  /* Las del original más UNA, y se dice cuál: `seg-baja`, el punto que baja
-     por el eje del dibujo de la sección de seguridad. Se apaga con
-     prefers-reduced-motion. */
-  comprueba(`las animaciones del original más la de la seguridad, en el ${n}`,
-    cuenta(t, /@keyframes/g) === cuenta(org, /@keyframes/g) + 1
-    && /@keyframes seg-baja/.test(t),
-    `${cuenta(t, /@keyframes/g)} vs ${cuenta(org, /@keyframes/g)} + 1`);
+  /* Las del original más DOS, y se dice cuáles:
+       · `seg-baja`, el punto que baja por el eje del dibujo de la sección de
+         seguridad;
+       · `escena-toque`, el aro que se abre donde el cursor de la escena del
+         carrusel da el toque (2026-09-23).
+     Las dos se apagan con prefers-reduced-motion: la primera por su regla, y
+     la segunda porque con poco movimiento no hay escena que representar. */
+  comprueba(`las animaciones del original más la de la seguridad y la del carrusel, en el ${n}`,
+    cuenta(t, /@keyframes/g) === cuenta(org, /@keyframes/g) + 2
+    && /@keyframes seg-baja/.test(t) && /@keyframes escena-toque/.test(t),
+    `${cuenta(t, /@keyframes/g)} vs ${cuenta(org, /@keyframes/g)} + 2`);
   /* Una consulta de medios MÁS que el original, y sólo una: la de 480 px que
      retira «Planes» de la barra en el teléfono. Sin ella, el botón de
      «Contacto» se corta en cualquier pantalla de menos de 414 px. Es el único

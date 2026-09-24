@@ -1658,7 +1658,7 @@ footer {
    animadas: sobre una imagen de 950 px de ancho, sesenta veces por segundo,
    eso se nota en un portátil normal. */
 .carrusel-marco {
-  overflow: hidden;
+  overflow: hidden; position: relative;
   /* Sólo para la vuelta de la última a la primera: ver el guion. */
   transition: opacity 240ms ease;
 }
@@ -1694,6 +1694,45 @@ footer {
   transform: translate3d(var(--desfase, 0%), 0, 0);
   transition: transform 700ms cubic-bezier(.32,.72,0,1);
 }
+
+/* ── LA ESCENA QUE SE REPRESENTA ENCIMA DE LA LÁMINA ────────────────────
+   Un cursor que va a un sitio, un foco que lo resalta y una nota que dice qué
+   hace el sistema ahí. Todo en tanto por ciento del marco —lo único que no se
+   mueve cuando la ventana cambia de tamaño— y todo con `opacity`,
+   `transform` y posiciones, que no obligan a recalcular la página.
+   La capa no recibe el ratón: debajo hay una captura, no una aplicación. */
+.escena { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.escena-foco {
+  position: absolute; border-radius: 8px; border: 2px solid var(--red);
+  /* La sombra enorme apaga TODO lo de fuera del foco: es lo que lleva el ojo
+     al sitio, y no hay que tocar la captura para conseguirlo. */
+  box-shadow: 0 0 0 2000px rgba(14,14,14,0.45);
+  opacity: 0;
+  transition: opacity 450ms ease, left 600ms cubic-bezier(.4,0,.2,1), top 600ms cubic-bezier(.4,0,.2,1),
+              width 600ms cubic-bezier(.4,0,.2,1), height 600ms cubic-bezier(.4,0,.2,1);
+}
+.escena-cursor {
+  position: absolute; width: 22px; height: 22px; opacity: 0;
+  transition: opacity 300ms ease, left 750ms cubic-bezier(.4,0,.2,1), top 750ms cubic-bezier(.4,0,.2,1);
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.45));
+}
+.escena-nota {
+  position: absolute; max-width: 46%;
+  background: var(--dark); color: var(--text);
+  border: 1px solid var(--border-light); border-radius: 8px;
+  padding: 7px 11px; font-size: 12px; font-weight: 600; line-height: 1.35;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.30);
+  opacity: 0; transform: translateY(6px);
+  transition: opacity 350ms ease, transform 350ms ease, left 600ms cubic-bezier(.4,0,.2,1), top 600ms cubic-bezier(.4,0,.2,1);
+}
+.escena.se-ve .escena-foco, .escena.se-ve .escena-cursor { opacity: 1; }
+.escena.se-ve .escena-nota { opacity: 1; transform: translateY(0); }
+/* El toque del cursor: un aro que se abre y se va. */
+.escena-cursor.pulsa::after {
+  content: ""; position: absolute; left: -9px; top: -9px; width: 34px; height: 34px;
+  border-radius: 50%; border: 2px solid var(--red); animation: escena-toque 500ms ease-out;
+}
+@keyframes escena-toque { from { transform: scale(.4); opacity: .9; } to { transform: scale(1.35); opacity: 0; } }
 
 /* El rótulo de la ventana. Sale apagándose SIN moverse y entra subiendo seis
    píxeles: simétrico parecería un parpadeo. */
@@ -2885,6 +2924,14 @@ html[data-tema="oscuro"] .award-tt-desc{color:rgba(240,240,240,0.5);border-top:1
           <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-catalogos-800.webp 800w, ../sistema/webp/sistema-catalogos-1200.webp 1200w, ../sistema/webp/sistema-catalogos-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="../sistema/sistema-catalogos.png" width="1600" height="1000" loading="lazy" alt="Motor de Catálogos: el vocabulario común de normativa, controles, riesgos y amenazas."></figure>
           <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-chatagent-800.webp 800w, ../sistema/webp/sistema-chatagent-1200.webp 1200w, ../sistema/webp/sistema-chatagent-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="../sistema/sistema-chatagent.png" width="1600" height="1000" loading="lazy" alt="Chat Agent: preguntas en lenguaje corriente cruzando los módulos de la plataforma."></figure>
         </div>
+        <!-- La escena: una sola capa para las catorce láminas; el guion la
+             mueve según la que toque. Fuera del alcance de los lectores de
+             pantalla: lo que cuenta ya está escrito en la página. -->
+        <div class="escena" aria-hidden="true">
+          <div class="escena-foco"></div>
+          <svg class="escena-cursor" viewBox="0 0 24 24" fill="none"><path data-tema-fill="#FFFFFF" data-tema-stroke="#16181C" d="M5 3l14 8.5-6 1.2-2.6 5.8L5 3z" fill="#FFFFFF" stroke="#16181C" stroke-width="1.2" stroke-linejoin="round"/></svg>
+          <div class="escena-nota"></div>
+        </div>
       </div>
     </div>
 
@@ -3779,6 +3826,68 @@ document.querySelectorAll('.platform-frame, .preview-body').forEach(el => barObs
    * volver no se le regala el tiempo perdido. Sin ese tope, volver a la
    * pestaña después de un minuto salta veinte láminas de golpe. */
   var PAUSA = 3000;      /* de cambio a cambio */
+
+  /* ── LAS ESCENAS ──────────────────────────────────────────────────────
+   *
+   * Una lámina puede contar lo que hace el sistema en dos o tres momentos: el
+   * cursor va a una pieza de la pantalla, se enciende el foco y una nota dice
+   * qué pasa ahí. Las medidas van en TANTO POR CIENTO de la captura, tomadas
+   * sobre el PNG de 1600×1000; así valen a cualquier tamaño.
+   *
+   * La lámina que tiene escena se queda más tiempo: en tres segundos no da
+   * tiempo a leer nada. Lo dice `dura()`, y la barra de avance usa el mismo
+   * número, que si no diría una cosa y la lámina haría otra.
+   *
+   * De momento hay UNA, para decidir el aspecto antes de escribir las catorce. */
+  var ESCENAS = {
+    'Firma Digital': [
+      { x: 88.5, y: 12.8, w: 10, h: 4.2, nx: 60, ny: 20, txt: 'Se firma un documento' },
+      { x: 17.5, y: 23.5, w: 32, h: 21.5, nx: 53, ny: 47, txt: 'El sello de tiempo RFC 3161 viaja dentro de la firma' },
+      { x: 74.5, y: 23.5, w: 23.5, h: 21.5, nx: 36, ny: 47, txt: 'Cada asiento sella el anterior: el rastro se puede verificar' }
+    ]
+  };
+  var MOMENTO = 2600;    /* lo que dura cada momento de una escena */
+  var ENTRADA = 900;     /* lo que tarda en empezar: la lámina viaja 820 ms */
+
+  var capa = marco.querySelector('.escena');
+  var elFoco = capa && capa.querySelector('.escena-foco');
+  var elCursor = capa && capa.querySelector('.escena-cursor');
+  var laNota = capa && capa.querySelector('.escena-nota');
+  var momentoPuesto = -1;
+
+  function escenaDe(i) {
+    if (!capa || pocoMovimiento || !tiras[i]) return null;
+    return ESCENAS[tiras[i].textContent.trim()] || null;
+  }
+  /* Lo que se queda cada lámina: las de escena, lo que dure su escena. */
+  function dura() {
+    var e = escenaDe(cual);
+    return e ? ENTRADA + e.length * MOMENTO : PAUSA;
+  }
+  function ponMomento(m) {
+    elFoco.style.left = m.x + '%'; elFoco.style.top = m.y + '%';
+    elFoco.style.width = m.w + '%'; elFoco.style.height = m.h + '%';
+    elCursor.style.left = (m.x + m.w / 2) + '%';
+    elCursor.style.top = (m.y + m.h / 2) + '%';
+    elCursor.classList.remove('pulsa');
+    void elCursor.offsetWidth;   /* se fuerza el cálculo o el aro no se repite */
+    elCursor.classList.add('pulsa');
+    laNota.textContent = m.txt;
+    laNota.style.left = m.nx + '%'; laNota.style.top = m.ny + '%';
+  }
+  function escenaAvanza() {
+    if (!capa) return;
+    var e = escenaDe(cual);
+    if (!e || llevaba < ENTRADA) { capa.classList.remove('se-ve'); return; }
+    var n = Math.min(e.length - 1, Math.floor((llevaba - ENTRADA) / MOMENTO));
+    capa.classList.add('se-ve');
+    if (n !== momentoPuesto) { momentoPuesto = n; ponMomento(e[n]); }
+  }
+  function escenaReinicia() {
+    if (!capa) return;
+    momentoPuesto = -1;
+    capa.classList.remove('se-ve');
+  }
   var DESFASE = 3;       /* % que la imagen se queda detrás de su marco */
   var pocoMovimiento = !!(window.matchMedia
     && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -3798,11 +3907,12 @@ document.querySelectorAll('.platform-frame, .preview-body').forEach(el => barObs
       if (d > 250) d = 250;
       if (!sujeto()) {
         llevaba += d;
-        if (llevaba >= PAUSA) { llevaba = 0; ir(cual + 1); }
+        if (llevaba >= dura()) { llevaba = 0; ir(cual + 1); }
       }
     }
     ultimo = t;
-    if (tiras[cual]) tiras[cual].style.setProperty('--avance', llevaba / PAUSA);
+    escenaAvanza();
+    if (tiras[cual]) tiras[cual].style.setProperty('--avance', llevaba / dura());
     requestAnimationFrame(cuadro);
   }
 
@@ -3867,6 +3977,7 @@ document.querySelectorAll('.platform-frame, .preview-body').forEach(el => barObs
   }
 
   function pinta() {
+    escenaReinicia();
     pista.style.transform = 'translate3d(' + (-cual * 100) + '%,0,0)';
     for (var i = 0; i < laminas.length; i++) {
       var toca = i === cual;
