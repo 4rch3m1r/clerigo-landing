@@ -1701,6 +1701,13 @@ footer {
    mueve cuando la ventana cambia de tamaño— y todo con `opacity`,
    `transform` y posiciones, que no obligan a recalcular la página.
    La capa no recibe el ratón: debajo hay una captura, no una aplicación. */
+/* Los pasos de un recorrido: fotos apiladas sobre la de la lámina, que se
+   encienden por turno. La de abajo se queda puesta —si se apagara, entre una
+   y otra se vería el fondo— y la de arriba entra con una fundida corta. */
+.carrusel-lamina { position: relative; }
+.carrusel-lamina .paso { position: absolute; left: 0; top: 0; opacity: 0; transition: opacity 420ms ease; }
+.carrusel-lamina .paso.se-ve { opacity: 1; }
+
 .escena { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
 .escena-foco {
   position: absolute; border-radius: 8px; border: 2px solid var(--red);
@@ -1717,7 +1724,7 @@ footer {
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.45));
 }
 .escena-nota {
-  position: absolute; max-width: 46%;
+  position: absolute; max-width: 56%;
   background: var(--dark); color: var(--text);
   border: 1px solid var(--border-light); border-radius: 8px;
   padding: 7px 11px; font-size: 12px; font-weight: 600; line-height: 1.35;
@@ -2910,19 +2917,19 @@ html[data-tema="oscuro"] .award-tt-desc{color:rgba(240,240,240,0.5);border-top:1
       <div class="carrusel-marco">
         <div class="carrusel-pista">
           <figure class="carrusel-lamina"><img srcset="../sistema/webp/sistema-panel-800.webp 800w, ../sistema/webp/sistema-panel-1200.webp 1200w, ../sistema/webp/sistema-panel-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-panel.png" width="1600" height="1000" alt="Command Centre: the indicators for the five areas and the knowledge radar."></figure>
-          <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-cumplimiento-800.webp 800w, ../sistema/webp/sistema-cumplimiento-1200.webp 1200w, ../sistema/webp/sistema-cumplimiento-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-cumplimiento.png" width="1600" height="1000" loading="lazy" alt="Regulatory Compliance: status by framework, obligations and requirements."></figure>
+          <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-cumplimiento-800.webp 800w, ../sistema/webp/sistema-cumplimiento-1200.webp 1200w, ../sistema/webp/sistema-cumplimiento-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-cumplimiento.png" width="1600" height="1000" loading="lazy" alt="Regulatory Compliance: status by framework, obligations and requirements."><img class="paso" srcset="../sistema/webp/sistema-cumplimiento-2-800.webp 800w, ../sistema/webp/sistema-cumplimiento-2-1200.webp 1200w, ../sistema/webp/sistema-cumplimiento-2-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-cumplimiento-2.png" width="1600" height="1000" alt="GAP analysis: self-assessment against the catalogue's frameworks."><img class="paso" srcset="../sistema/webp/sistema-cumplimiento-3-800.webp 800w, ../sistema/webp/sistema-cumplimiento-3-1200.webp 1200w, ../sistema/webp/sistema-cumplimiento-3-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-cumplimiento-3.png" width="1600" height="1000" alt="Choosing the regulatory framework the assessment is measured against."></figure>
           <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-riesgos-800.webp 800w, ../sistema/webp/sistema-riesgos-1200.webp 1200w, ../sistema/webp/sistema-riesgos-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-riesgos.png" width="1600" height="1000" loading="lazy" alt="Risk Management: ERM maturity, inherent versus residual risk and heat map."></figure>
           <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-auditoria-800.webp 800w, ../sistema/webp/sistema-auditoria-1200.webp 1200w, ../sistema/webp/sistema-auditoria-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-auditoria.png" width="1600" height="1000" loading="lazy" alt="Audit Management: annual plan, findings and follow-up by area."></figure>
           <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-activos-800.webp 800w, ../sistema/webp/sistema-activos-1200.webp 1200w, ../sistema/webp/sistema-activos-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-activos.png" width="1600" height="1000" loading="lazy" alt="Inventory of technology assets with their classification and their owner."></figure>
-          <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-terceros-800.webp 800w, ../sistema/webp/sistema-terceros-1200.webp 1200w, ../sistema/webp/sistema-terceros-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-terceros.png" width="1600" height="1000" loading="lazy" alt="Third-party risk assessment and the status of each counterparty."></figure>
+          <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-terceros-800.webp 800w, ../sistema/webp/sistema-terceros-1200.webp 1200w, ../sistema/webp/sistema-terceros-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-terceros.png" width="1600" height="1000" loading="lazy" alt="Third-party risk assessment and the status of each counterparty."><img class="paso" srcset="../sistema/webp/sistema-terceros-2-800.webp 800w, ../sistema/webp/sistema-terceros-2-1200.webp 1200w, ../sistema/webp/sistema-terceros-2-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-terceros-2.png" width="1600" height="1000" alt="Supplier portal: each file at its KYC, security or risk stage."><img class="paso" srcset="../sistema/webp/sistema-terceros-3-800.webp 800w, ../sistema/webp/sistema-terceros-3-1200.webp 1200w, ../sistema/webp/sistema-terceros-3-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-terceros-3.png" width="1600" height="1000" alt="Supplier onboarding: the KYC and due diligence wizard, in four steps."></figure>
           <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-gobierno-800.webp 800w, ../sistema/webp/sistema-gobierno-1200.webp 1200w, ../sistema/webp/sistema-gobierno-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-gobierno.png" width="1600" height="1000" loading="lazy" alt="Corporate Governance: committee structure, policies and registered members."></figure>
-          <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-xsign-800.webp 800w, ../sistema/webp/sistema-xsign-1200.webp 1200w, ../sistema/webp/sistema-xsign-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-xsign.png" width="1600" height="1000" loading="lazy" alt="XSign Digital Signature: advanced signature formats, chain of evidence and time stamping."></figure>
+          <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-xsign-800.webp 800w, ../sistema/webp/sistema-xsign-1200.webp 1200w, ../sistema/webp/sistema-xsign-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-xsign.png" width="1600" height="1000" loading="lazy" alt="XSign Digital Signature: advanced signature formats, chain of evidence and time stamping."><img class="paso" srcset="../sistema/webp/sistema-xsign-2-800.webp 800w, ../sistema/webp/sistema-xsign-2-1200.webp 1200w, ../sistema/webp/sistema-xsign-2-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-xsign-2.png" width="1600" height="1000" alt="Signing wizard: the envelope's recipients and the order in which they sign."><img class="paso" srcset="../sistema/webp/sistema-xsign-3-800.webp 800w, ../sistema/webp/sistema-xsign-3-1200.webp 1200w, ../sistema/webp/sistema-xsign-3-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-xsign-3.png" width="1600" height="1000" alt="The signature fields placed on the document, ready to send."></figure>
           <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-documental-800.webp 800w, ../sistema/webp/sistema-documental-1200.webp 1200w, ../sistema/webp/sistema-documental-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-documental.png" width="1600" height="1000" loading="lazy" alt="Document Management: document lifecycle, capture and classification scheme."></figure>
-          <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-procesos-800.webp 800w, ../sistema/webp/sistema-procesos-1200.webp 1200w, ../sistema/webp/sistema-procesos-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-procesos.png" width="1600" height="1000" loading="lazy" alt="Process Management: process map, indicators and associated risks."></figure>
+          <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-procesos-800.webp 800w, ../sistema/webp/sistema-procesos-1200.webp 1200w, ../sistema/webp/sistema-procesos-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-procesos.png" width="1600" height="1000" loading="lazy" alt="Process Management: process map, indicators and associated risks."><img class="paso" srcset="../sistema/webp/sistema-procesos-2-800.webp 800w, ../sistema/webp/sistema-procesos-2-1200.webp 1200w, ../sistema/webp/sistema-procesos-2-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-procesos-2.png" width="1600" height="1000" alt="Setting up a new process, guided in nine steps under ISO 9001."></figure>
           <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-teamwork-800.webp 800w, ../sistema/webp/sistema-teamwork-1200.webp 1200w, ../sistema/webp/sistema-teamwork-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-teamwork.png" width="1600" height="1000" loading="lazy" alt="Teamwork: task board by status, with the owner and date of each one."></figure>
           <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-workflow-800.webp 800w, ../sistema/webp/sistema-workflow-1200.webp 1200w, ../sistema/webp/sistema-workflow-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-workflow.png" width="1600" height="1000" loading="lazy" alt="Automation engine: rules that trigger alerts and tasks without anyone launching them."></figure>
           <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-catalogos-800.webp 800w, ../sistema/webp/sistema-catalogos-1200.webp 1200w, ../sistema/webp/sistema-catalogos-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-catalogos.png" width="1600" height="1000" loading="lazy" alt="Catalog Engine: the common vocabulary of regulations, controls, risks and threats."></figure>
-          <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-chatagent-800.webp 800w, ../sistema/webp/sistema-chatagent-1200.webp 1200w, ../sistema/webp/sistema-chatagent-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-chatagent.png" width="1600" height="1000" loading="lazy" alt="Chat Agent: questions in plain language across the platform's modules."></figure>
+          <figure class="carrusel-lamina" aria-hidden="true"><img srcset="../sistema/webp/sistema-chatagent-800.webp 800w, ../sistema/webp/sistema-chatagent-1200.webp 1200w, ../sistema/webp/sistema-chatagent-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-chatagent.png" width="1600" height="1000" loading="lazy" alt="Chat Agent: questions in plain language across the platform's modules."><img class="paso" srcset="../sistema/webp/sistema-chatagent-2-800.webp 800w, ../sistema/webp/sistema-chatagent-2-1200.webp 1200w, ../sistema/webp/sistema-chatagent-2-1600.webp 1600w" sizes="(max-width: 1024px) 92vw, 1062px" data-webp src="sistema/sistema-chatagent-2.png" width="1600" height="1000" alt="A question typed to the agent, which answers across the modules."></figure>
         </div>
         <!-- La escena: una sola capa para las catorce láminas; el guion la
              mueve según la que toque. Fuera del alcance de los lectores de
@@ -3841,9 +3848,27 @@ document.querySelectorAll('.platform-frame, .preview-body').forEach(el => barObs
    * De momento hay UNA, para decidir el aspecto antes de escribir las catorce. */
   var ESCENAS = {
     'Digital Signature': [
-      { x: 88.5, y: 12.8, w: 10, h: 4.2, nx: 60, ny: 20, txt: 'A document gets signed' },
-      { x: 17.5, y: 23.5, w: 32, h: 21.5, nx: 53, ny: 47, txt: 'The RFC 3161 time stamp travels inside the signature' },
-      { x: 74.5, y: 23.5, w: 23.5, h: 21.5, nx: 36, ny: 47, txt: 'Each entry seals the previous one: the trail can be verified' }
+      { txt: 'A new envelope: the document to be signed' },
+      { im: 1, txt: 'Who signs, in what order and with which verification' },
+      { im: 2, txt: 'The fields go on top of the document and the envelope leaves with an RFC 3161 time stamp' }
+    ],
+    'Third parties': [
+      { txt: 'Every counterparty, with its risk level and its evidence' },
+      { im: 1, txt: 'The file goes through three stages: KYC, security and risk' },
+      { im: 2, txt: 'Onboarding opens the form that matches each type of supplier' }
+    ],
+    'Processes': [
+      { txt: 'The process map, with its indicators and its risks' },
+      { im: 1, txt: 'A new process is set up in nine steps guided by ISO 9001' }
+    ],
+    'Compliance': [
+      { txt: 'The organisation\'s compliance index, module by module' },
+      { im: 1, txt: 'The GAP analysis says where you comply, what proves it and what is missing' },
+      { im: 2, txt: 'You pick the framework from the catalogue and answer it control by control' }
+    ],
+    'Chat Agent': [
+      { txt: 'The agent reads the platform\'s modules, not a stray document' },
+      { im: 1, txt: 'You ask in plain language and it answers across modules' }
     ]
   };
   var MOMENTO = 2600;    /* lo que dura cada momento de una escena */
@@ -3865,15 +3890,31 @@ document.querySelectorAll('.platform-frame, .preview-body').forEach(el => barObs
     return e ? ENTRADA + e.length * MOMENTO : PAUSA;
   }
   function ponMomento(m) {
-    elFoco.style.left = m.x + '%'; elFoco.style.top = m.y + '%';
-    elFoco.style.width = m.w + '%'; elFoco.style.height = m.h + '%';
-    elCursor.style.left = (m.x + m.w / 2) + '%';
-    elCursor.style.top = (m.y + m.h / 2) + '%';
-    elCursor.classList.remove('pulsa');
-    void elCursor.offsetWidth;   /* se fuerza el cálculo o el aro no se repite */
-    elCursor.classList.add('pulsa');
+    /* LA FOTO DEL PASO. Un momento sin `im` se queda con la de la lámina; los
+       demás encienden la suya, que está apilada encima. */
+    var fotos = laminas[cual] ? laminas[cual].querySelectorAll('.paso') : [];
+    for (var k = 0; k < fotos.length; k++) {
+      if ((m.im || 0) === k + 1) fotos[k].classList.add('se-ve');
+      else fotos[k].classList.remove('se-ve');
+    }
+    /* EL FOCO Y EL CURSOR, sólo cuando el momento señala un sitio concreto.
+       Cuando lo que cambia es la foto entera, un aro rojo en una esquina
+       distrae de lo que de verdad ha pasado. */
+    if (m.w) {
+      elFoco.style.display = ''; elCursor.style.display = '';
+      elFoco.style.left = m.x + '%'; elFoco.style.top = m.y + '%';
+      elFoco.style.width = m.w + '%'; elFoco.style.height = m.h + '%';
+      elCursor.style.left = (m.x + m.w / 2) + '%';
+      elCursor.style.top = (m.y + m.h / 2) + '%';
+      elCursor.classList.remove('pulsa');
+      void elCursor.offsetWidth;   /* se fuerza el cálculo o el aro no se repite */
+      elCursor.classList.add('pulsa');
+    } else {
+      elFoco.style.display = 'none'; elCursor.style.display = 'none';
+    }
     laNota.textContent = m.txt;
-    laNota.style.left = m.nx + '%'; laNota.style.top = m.ny + '%';
+    laNota.style.left = (m.nx == null ? 4 : m.nx) + '%';
+    laNota.style.top = (m.ny == null ? 87 : m.ny) + '%';
   }
   function escenaAvanza() {
     if (!capa) return;
@@ -3887,6 +3928,17 @@ document.querySelectorAll('.platform-frame, .preview-body').forEach(el => barObs
     if (!capa) return;
     momentoPuesto = -1;
     capa.classList.remove('se-ve');
+    /* Y las fotos de los pasos, a cero: si una se quedara encendida, la lámina
+       volvería a empezar por el final de su recorrido. */
+    var fotos = document.querySelectorAll('.carrusel-lamina .paso.se-ve');
+    for (var k = 0; k < fotos.length; k++) fotos[k].classList.remove('se-ve');
+    /* Y las de ESTA lámina se piden ya. Con la carga diferida a secas, la del
+       segundo momento empezaba a bajar cuando ya tocaba enseñarla y se veía
+       medio transparente encima de la anterior. Aquí hay 2,6 segundos de
+       margen —lo que dura el primer momento— y la lámina que nadie mira sigue
+       sin pedir nada. */
+    var mias = laminas[cual] ? laminas[cual].querySelectorAll('.paso') : [];
+    for (var j = 0; j < mias.length; j++) mias[j].loading = 'eager';
   }
   var DESFASE = 3;       /* % que la imagen se queda detrás de su marco */
   var pocoMovimiento = !!(window.matchMedia
