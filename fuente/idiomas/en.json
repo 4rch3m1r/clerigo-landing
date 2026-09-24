@@ -2313,5 +2313,10 @@
   "— cada área trae": "— each area includes",
   "— incluye": "— includes",
   "— verificación continua de identidad y acceso mínimo": "— continuous identity verification and least-privilege access",
-  "⚡ Mapeo Cruzado Inteligente Activo": "⚡ Smart Cross-Mapping Active"
+  "⚡ Mapeo Cruzado Inteligente Activo": "⚡ Smart Cross-Mapping Active",
+  "El tablero del equipo: cada tarea con su responsable y su fecha": "The team board: every task with its owner and its date",
+  "Cada persona entra a su WorkSpace y ve sólo lo suyo": "Each person enters their WorkSpace and sees only what is theirs",
+  "Los documentos que esperan su firma, con el plazo de cada uno": "The documents waiting for their signature, each with its deadline",
+  "WorkSpace de una persona: sus entrenamientos, sus firmas y sus declaraciones.": "A person's WorkSpace: their training, their signatures and their statements.",
+  "Los documentos que esperan la firma de esa persona, con su plazo.": "The documents waiting for that person's signature, with their deadline."
 }

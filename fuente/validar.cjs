@@ -312,8 +312,8 @@ for (const [n, t] of [["oscuro", osc], ["claro", cla]]) {
      preguntarle al agente— y cada paso es una foto más, apilada dentro de su
      lámina. La cuenta sigue clavada a propósito: una foto de más que nadie
      mira, o una de menos, se ve aquí antes que en la portada. */
-  comprueba(`las 22 fotos del sistema existen, en el ${n}`,
-    pedidas.length === 22 && faltan.length === 0,
+  comprueba(`las 24 fotos del sistema existen, en el ${n}`,
+    pedidas.length === 24 && faltan.length === 0,
     `pide ${pedidas.length}` + (faltan.length ? `, faltan ${faltan.join(", ")}` : ""));
   /* Y que sean fotos de verdad, no un recorte de 2 KB: se leen sus medidas de
      la cabecera del PNG. */
