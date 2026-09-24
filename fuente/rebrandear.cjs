@@ -68,7 +68,11 @@ function cambia(antes, despues, veces) {
 
 cambia(
   "<title>GRC Intelligence — Gobernanza, Riesgo y Cumplimiento sin complicaciones</title>",
-  "<title>Clèrigo | Software GRC de Gobernanza, Riesgo y Cumplimiento</title>\n"
+  /* EL TÍTULO DE LA PORTADA: la marca, su lema y el idioma. Decidido por el
+     dueño el 2026-09-21 —marca y lema— y completado el 2026-09-24, cuando
+     Google declaró `/es/` duplicada de `/` teniendo las dos el mismo título
+     palabra por palabra. El de la inglesa lo pone el diccionario. */
+  "<title>Clèrigo — Go Beyond. | Software GRC</title>\n"
   + '<meta name="description" content="Software GRC que unifica riesgos, cumplimiento normativo, auditoría interna, control interno, ciberseguridad y privacidad en una sola plataforma.">\n'
   + '<link rel="canonical" href="https://clerigo.io/">\n'
   + '<meta property="og:type" content="website">\n'

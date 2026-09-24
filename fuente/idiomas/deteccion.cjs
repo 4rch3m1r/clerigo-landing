@@ -114,14 +114,18 @@ const GUION = `
   if (quiere !== 'es' && quiere !== 'en') return;
   if (quiere === mio) return;
 
-  /* A DONDE, LO DICE LA PROPIA PAGINA. El hreflang de la cabecera ya trae la
-     direccion de la otra version CON SU NOMBRE TRADUCIDO. Calcularlo a mano
-     —meterle '/es/' delante al ultimo trozo— daba /es/pricing, /es/contact,
-     /es/frameworks y /es/trustcenter, que son cuatro 404: la pagina se llama
-     /es/precios. Sale del mismo sitio que el mapa del sitio, asi que no se
-     puede desincronizar. Se coge solo la ruta para no salirse de este
-     servidor: en local la etiqueta dice clerigo.io. */
-  var otra = document.querySelector('link[rel=\"alternate\"][hreflang=\"' + quiere + '\"]');
+  /* A DONDE, LO DICE EL PROPIO SELECTOR. Su enlace ya trae la direccion de la
+     otra version CON SU NOMBRE TRADUCIDO. Calcularlo a mano —meterle '/es/'
+     delante al ultimo trozo— daba /es/pricing, /es/contact, /es/frameworks y
+     /es/trustcenter, que son cuatro 404: la pagina se llama /es/precios.
+
+     ANTES ESTO LEIA EL hreflang DE LA CABECERA, y esas etiquetas ya no estan:
+     desde el 2026-09-24 en el buscador solo va el ingles, y un hreflang es
+     justo lo que le ofrece a Google la version castellana como alternativa.
+     El selector, en cambio, es del visitante, no del buscador: es el sitio
+     natural del que leer esto. Se coge solo la ruta para no salirse de este
+     servidor: el enlace puede ser relativo o absoluto. */
+  var otra = document.querySelector('a.idioma[data-idioma=\"' + quiere + '\"]');
   var destino = null;
   try { destino = otra && new URL(otra.getAttribute('href'), location.href).pathname; } catch (e) {}
   if (!destino || destino === ruta) return;

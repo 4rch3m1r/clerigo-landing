@@ -1,6 +1,6 @@
 {
  "_": "Copia de app-saas/src/app/legal/documentos.ts. NO se edita a mano: se refresca con `node fuente/legal/traer-de-la-app.cjs`. Manda la aplicación.",
- "version": "2.6",
+ "version": "2.7",
  "documentos": [
   {
    "id": "terminos",
@@ -9,7 +9,7 @@
    "corto": "Términos",
    "sumario": "Contrato de servicio entre Clèrigo y el Cliente.",
    "entradilla": "Este acuerdo regula el acceso y uso de la plataforma Clèrigo XGRC y todos sus módulos, APIs, integraciones y servicios relacionados operados por Clèrigo (Delaware). Al continuar utilizando el servicio confirmas tu aceptación de estos términos.",
-   "actualizado": "21 de septiembre de 2026",
+   "actualizado": "24 de septiembre de 2026",
    "secciones": [
     {
      "n": "01",
@@ -195,6 +195,78 @@
     },
     {
      "n": "07",
+     "titulo": "Inteligencia Artificial e Integraciones de Terceros",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "El Servicio incorpora funciones de inteligencia artificial que analizan y correlacionan información ya presente en la plataforma —hechos del programa de auditoría, factores de riesgo, formularios y transcripciones de reuniones— para producir resúmenes, explicaciones y sugerencias dentro de la propia plataforma. Estas funciones se rigen por las siguientes reglas:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "fuerte": "Sin entrenamiento con los Datos del Cliente:",
+         "texto": "Clèrigo no entrena ni ajusta modelos con los Datos del Cliente, y solo recurre a proveedores de modelos cuyas condiciones excluyen ese uso. Lo que se envía a un modelo se emplea únicamente para generar el resultado de esa operación."
+        },
+        {
+         "fuerte": "Qué puede enviarse a un modelo:",
+         "texto": "según la función que se utilice, el contenido necesario para producir el resultado, que puede incluir datos personales cargados por el Cliente, como la transcripción de una reunión con el nombre de quien habla o los datos identificativos de un declarante. El Cliente, como responsable del tratamiento, valora esta circunstancia antes de habilitar las funciones."
+        },
+        {
+         "fuerte": "Interruptor por organización:",
+         "texto": "las funciones de inteligencia artificial se activan y desactivan para toda la organización desde la configuración de la plataforma. Con ellas desactivadas no se realiza ninguna llamada a proveedores de modelos."
+        },
+        {
+         "fuerte": "Sin decisiones automatizadas:",
+         "texto": "ninguna función de inteligencia artificial adopta por sí sola decisiones con efectos jurídicos o significativos sobre una persona. Sus resultados son apoyo al criterio del Cliente, que decide y responde de la decisión."
+        },
+        {
+         "fuerte": "Proveedores publicados:",
+         "texto": "la relación de proveedores de modelos que pueden intervenir en el Servicio se publica y se mantiene actualizada en el Centro de Confianza, en clerigo.io/trustcenter."
+        }
+       ]
+      },
+      {
+       "t": "p",
+       "texto": "El Cliente puede conectar el Servicio con aplicaciones de terceros («Integraciones»). Cada Integración la autoriza el Cliente, con sus propias credenciales y el alcance que él concede, y puede revocarla en cualquier momento; al revocarla cesa el intercambio. El sentido del flujo es el siguiente:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "fuerte": "Solo lectura:",
+         "texto": "las integraciones de inventario de activos y de ciberseguridad leen del sistema de origen y no le devuelven nada. Clèrigo no crea, modifica ni borra registros en esos sistemas."
+        },
+        {
+         "fuerte": "Escrituras declaradas:",
+         "texto": "la integración con Microsoft 365 para reuniones sí escribe en el entorno del Cliente, y solo para lo imprescindible: crea y renueva las suscripciones de aviso que permiten enterarse de una reunión nueva y, cuando la organización ha activado expresamente la captura automática, habilita la grabación de las reuniones aún no comenzadas que entren en el alcance definido por ella."
+        },
+        {
+         "fuerte": "Comprobación de identidad:",
+         "texto": "cuando el Cliente usa inicio de sesión federado, la dirección de correo de la persona se consulta contra su propio directorio corporativo para comprobar que sigue dada de alta."
+        },
+        {
+         "fuerte": "Envíos que configura el propio Cliente:",
+         "texto": "los avisos por correo y los webhooks salientes envían la información a las direcciones que el Cliente indica, bajo su responsabilidad y firmados para que el destinatario pueda verificar el origen."
+        }
+       ]
+      },
+      {
+       "t": "p",
+       "texto": "Clèrigo no vende, alquila ni cede los Datos del Cliente, ni los trata para finalidades propias ajenas a la prestación del Servicio. Los únicos terceros que pueden tratarlos son los subprocesadores necesarios para prestarlo, sujetos a contrato de encargo con obligaciones equivalentes a las de este acuerdo."
+      },
+      {
+       "t": "p",
+       "texto": "La eliminación de los Datos del Cliente se rige por el apartado de Suspensión y Terminación y por los plazos recogidos en la Política de Privacidad. El Cliente puede solicitar la eliminación anticipada en cualquier momento escribiendo a privacy@clerigo.io."
+      },
+      {
+       "t": "aviso",
+       "texto": "Los resultados generados por inteligencia artificial pueden contener errores u omisiones. No constituyen asesoramiento jurídico, regulatorio ni de auditoría, y deben ser revisados antes de fundamentar en ellos una decisión formal o una comunicación a un supervisor."
+      }
+     ]
+    },
+    {
+     "n": "08",
      "titulo": "Confidencialidad",
      "bloques": [
       {
@@ -212,12 +284,12 @@
      ]
     },
     {
-     "n": "08",
+     "n": "09",
      "titulo": "Facturación, Pagos y Renovaciones",
      "bloques": [
       {
        "t": "p",
-       "texto": "El Servicio se factura según el plan seleccionado al momento del registro. Los precios vigentes son los recogidos en el contrato de licencia del Cliente y pueden actualizarse con 30 días de aviso previo."
+       "texto": "El Servicio se factura según el plan seleccionado al momento del registro. Los precios vigentes son los recogidos en el contrato de licencia del Cliente. Clèrigo puede revisarlos para cada período de renovación notificándolo por escrito con al menos 60 días de antelación al inicio de dicho período; el nuevo precio se aplicará a la renovación salvo que el Cliente comunique la no renovación conforme a este apartado."
       },
       {
        "t": "lista",
@@ -236,13 +308,29 @@
         },
         {
          "fuerte": "Renovación automática:",
-         "texto": "los planes se renuevan automáticamente al vencer, salvo que el Cliente notifique la cancelación con al menos 15 días de anticipación."
+         "texto": "cada período de suscripción se renueva automáticamente por otro de igual duración, salvo que cualquiera de las partes notifique por escrito la no renovación con al menos 30 días de antelación a su vencimiento. En los planes mensuales, la no renovación puede comunicarse en cualquier momento antes de la siguiente fecha de facturación."
+        },
+        {
+         "fuerte": "Reducción de licencias:",
+         "texto": "la reducción del número de usuarios o de áreas contratadas debe notificarse por escrito con al menos 30 días de antelación y surte efecto al inicio del siguiente período de renovación; hasta entonces se mantienen las cantidades contratadas."
         }
        ]
       },
       {
+       "t": "aviso",
+       "texto": "Salvo lo expresamente previsto en estos Términos y en la máxima medida permitida por la ley aplicable, las obligaciones de pago no son cancelables y los importes pagados no son reembolsables, incluso en caso de cancelación, vencimiento o terminación del contrato. No se conceden reembolsos ni créditos por períodos parciales, por un uso parcial o nulo del Servicio, ni por usuarios o áreas no utilizados durante el período contratado."
+      },
+      {
        "t": "p",
-       "texto": "Los pagos vencidos pueden resultar en la suspensión del Servicio tras un período de gracia de 10 días. Clèrigo no se responsabiliza por pérdidas derivadas de suspensiones por falta de pago."
+       "texto": "Las facturas se pagan dentro de los 30 días siguientes a su fecha de emisión, salvo que el contrato de licencia establezca otro plazo, en la moneda indicada y sin deducciones ni compensaciones. Los importes vencidos devengan un interés del 1,5 % mensual o, si fuera menor, el máximo permitido por la ley aplicable, y el Cliente reembolsará los costes razonables de cobro, incluidos los honorarios de abogados. Si el Cliente discute de buena fe una factura, deberá notificarlo por escrito, con el detalle del desacuerdo, dentro de los 15 días siguientes a recibirla, y pagar en plazo la parte no discutida."
+      },
+      {
+       "t": "p",
+       "texto": "Los precios no incluyen impuestos. El Cliente es responsable de todos los impuestos, tasas, retenciones y cargos bancarios aplicables a la contratación, salvo los impuestos sobre la renta de Clèrigo. Si la ley obliga al Cliente a practicar una retención, incrementará el pago de forma que Clèrigo reciba el importe íntegro facturado."
+      },
+      {
+       "t": "p",
+       "texto": "Si un importe permanece impago tras su vencimiento, Clèrigo puede suspender el acceso al Servicio previa notificación escrita con al menos 10 días de antelación, sin perjuicio de sus demás derechos. La suspensión no exime al Cliente del pago de las cuotas del período contratado. Clèrigo no se responsabiliza por pérdidas derivadas de suspensiones por falta de pago."
       },
       {
        "t": "p",
@@ -251,18 +339,22 @@
      ]
     },
     {
-     "n": "09",
+     "n": "10",
      "titulo": "Suspensión y Terminación",
      "bloques": [
       {
        "t": "p",
-       "texto": "Cualquiera de las partes puede terminar el contrato de servicio con 30 días de aviso escrito. Clèrigo puede suspender o terminar el acceso de forma inmediata y sin previo aviso cuando:"
+       "texto": "El contrato de servicio se mantiene vigente durante el período de suscripción contratado y sus renovaciones, y no puede terminarse por conveniencia antes de su vencimiento: para ponerle fin, cualquiera de las partes puede comunicar la no renovación conforme al apartado de Facturación, Pagos y Renovaciones. Cualquiera de las partes puede terminarlo si la otra incurre en un incumplimiento material y no lo subsana dentro de los 30 días siguientes a recibir una notificación escrita que lo describa, o de inmediato si la otra parte entra en un procedimiento de insolvencia, quiebra o liquidación, o cesa en su actividad."
+      },
+      {
+       "t": "p",
+       "texto": "Además, Clèrigo puede suspender o terminar el acceso de forma inmediata y sin previo aviso cuando:"
       },
       {
        "t": "lista",
        "items": [
         {
-         "texto": "El Cliente incumpla estos Términos de forma material."
+         "texto": "El Cliente incumpla las normas de Uso Aceptable o sus obligaciones de Confidencialidad."
         },
         {
          "texto": "Se detecte uso fraudulento, actividad ilegal o amenaza activa de seguridad."
@@ -277,17 +369,42 @@
       },
       {
        "t": "p",
+       "texto": "Efectos económicos de la terminación:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "fuerte": "Por incumplimiento de Clèrigo:",
+         "texto": "si el Cliente termina el contrato por un incumplimiento material de Clèrigo no subsanado, Clèrigo le reembolsará, dentro de los 30 días siguientes a la terminación, la parte prorrateada de las cuotas prepagadas que corresponda al período posterior a la fecha de terminación."
+        },
+        {
+         "fuerte": "Por incumplimiento del Cliente:",
+         "texto": "si Clèrigo termina el contrato por un incumplimiento del Cliente, el Cliente pagará, dentro de los 30 días siguientes a la terminación, todas las cuotas pendientes del resto del período de suscripción en curso, con independencia de sus fechas de vencimiento. Los importes ya pagados no se reembolsan."
+        },
+        {
+         "fuerte": "Por no renovación:",
+         "texto": "el Servicio se mantiene hasta el final del período ya pagado y no se reembolsa ninguna parte de él."
+        }
+       ]
+      },
+      {
+       "t": "p",
        "texto": "Tras la terminación, el Cliente tendrá acceso de solo lectura a sus datos por un período de 30 días para facilitar la exportación. Transcurrido este plazo, los datos podrán ser eliminados de forma permanente. El Cliente puede solicitar la eliminación anticipada en cualquier momento."
       }
      ]
     },
     {
-     "n": "10",
+     "n": "11",
      "titulo": "Garantías y Exclusiones",
      "bloques": [
       {
        "t": "p",
        "texto": "Clèrigo garantiza que el Servicio funcionará de manera sustancialmente conforme a la documentación publicada y mantendrá un nivel de disponibilidad del 99.5 % mensual (SLA), excluyendo mantenimientos programados notificados con 48 horas de anticipación."
+      },
+      {
+       "t": "p",
+       "texto": "Si el Servicio no cumple de forma material esta garantía, el Cliente deberá notificarlo por escrito, con el detalle del incumplimiento, dentro de los 30 días siguientes a detectarlo. Clèrigo lo corregirá en un plazo razonable y, si no pudiera hacerlo, cualquiera de las partes podrá terminar el Servicio afectado y Clèrigo reembolsará la parte prorrateada de las cuotas prepagadas correspondiente al período no transcurrido. El incumplimiento del SLA durante tres meses naturales consecutivos se considera un incumplimiento material de esta garantía. Este es el único y exclusivo recurso del Cliente por incumplimiento de la garantía."
       },
       {
        "t": "p",
@@ -300,7 +417,7 @@
      ]
     },
     {
-     "n": "11",
+     "n": "12",
      "titulo": "Limitación de Responsabilidad",
      "bloques": [
       {
@@ -318,7 +435,7 @@
      ]
     },
     {
-     "n": "12",
+     "n": "13",
      "titulo": "Ley Aplicable y Resolución de Disputas",
      "bloques": [
       {
@@ -336,7 +453,7 @@
      ]
     },
     {
-     "n": "13",
+     "n": "14",
      "titulo": "Contacto Legal",
      "bloques": [
       {
@@ -379,7 +496,7 @@
    "corto": "Privacidad",
    "sumario": "Cómo tratamos tus datos personales con responsabilidad.",
    "entradilla": "Esta política describe qué datos recopilamos, con qué finalidad los tratamos, cuánto tiempo los conservamos y cuáles son tus derechos. Cumplimos con la Ley 172-13 (RD), el RGPD (UE) y el CCPA (California, EE. UU.) según aplique. Los cambios materiales te serán notificados por email con al menos 30 días de anticipación.",
-   "actualizado": "21 de agosto de 2026",
+   "actualizado": "23 de septiembre de 2026",
    "secciones": [
     {
      "n": "01",
@@ -480,6 +597,10 @@
         {
          "fuerte": "Mejora del Servicio:",
          "texto": "análisis agregado y anonimizado de patrones de uso para el desarrollo de nuevas funcionalidades."
+        },
+        {
+         "fuerte": "Funciones de inteligencia artificial:",
+         "texto": "generación de resúmenes, explicaciones y sugerencias a partir de la información que el Cliente ya tiene en la plataforma, cuando su organización tiene estas funciones activadas. Los datos no se utilizan para entrenar modelos."
         },
         {
          "fuerte": "Seguridad:",
@@ -591,12 +712,55 @@
       },
       {
        "t": "p",
-       "texto": "Entre nuestros subprocesadores principales se incluyen proveedores de infraestructura cloud, pasarelas de pago y herramientas de análisis, todos debidamente auditados. La lista actualizada de subprocesadores está disponible bajo solicitud en privacy@clerigo.io."
+       "texto": "Entre nuestros subprocesadores se incluyen proveedores de infraestructura en la nube, pasarelas de pago, servicios de observabilidad de errores y proveedores de modelos de inteligencia artificial, todos ellos bajo contrato de encargo. La lista actualizada se publica en el Centro de Confianza, en clerigo.io/trustcenter, y también puede solicitarse en privacy@clerigo.io."
       }
      ]
     },
     {
      "n": "07",
+     "titulo": "Inteligencia Artificial y Decisiones Automatizadas",
+     "bloques": [
+      {
+       "t": "p",
+       "texto": "Cuando la organización cliente activa las funciones de inteligencia artificial, parte de la información de la plataforma se envía a un proveedor de modelos para generar el resultado solicitado. Estos son los términos de ese tratamiento:"
+      },
+      {
+       "t": "lista",
+       "items": [
+        {
+         "fuerte": "Finalidad:",
+         "texto": "producir el resumen, la explicación o la sugerencia que el usuario pide en ese momento, y nada más."
+        },
+        {
+         "fuerte": "Sin entrenamiento:",
+         "texto": "los datos enviados no se utilizan para entrenar ni ajustar modelos, ni por Clèrigo ni por el proveedor."
+        },
+        {
+         "fuerte": "Datos que pueden intervenir:",
+         "texto": "los que el Cliente ha cargado y resulten necesarios para la función, incluidos datos personales cuando la función los requiera."
+        },
+        {
+         "fuerte": "Base legal:",
+         "texto": "la ejecución del contrato y las instrucciones del Cliente, que actúa como responsable del tratamiento."
+        },
+        {
+         "fuerte": "Transferencias:",
+         "texto": "los proveedores de modelos pueden estar ubicados fuera del país del Cliente; les aplican las garantías del apartado anterior."
+        },
+        {
+         "fuerte": "Control de la organización:",
+         "texto": "estas funciones pueden desactivarse en cualquier momento desde la configuración, y con ellas desactivadas no se envía nada a ningún modelo."
+        }
+       ]
+      },
+      {
+       "t": "p",
+       "texto": "Ninguna de estas funciones adopta decisiones automatizadas con efectos jurídicos o significativos sobre una persona: sus resultados son una ayuda que alguien revisa antes de decidir. En todo caso, puedes ejercer el derecho a la revisión humana descrito en el apartado de derechos."
+      }
+     ]
+    },
+    {
+     "n": "08",
      "titulo": "Tus Derechos como Titular de Datos",
      "bloques": [
       {
@@ -643,7 +807,7 @@
      ]
     },
     {
-     "n": "08",
+     "n": "09",
      "titulo": "Medidas de Seguridad",
      "bloques": [
       {
@@ -679,7 +843,7 @@
      ]
     },
     {
-     "n": "09",
+     "n": "10",
      "titulo": "Menores de Edad",
      "bloques": [
       {
@@ -693,7 +857,7 @@
      ]
     },
     {
-     "n": "10",
+     "n": "11",
      "titulo": "Cambios a Esta Política",
      "bloques": [
       {
@@ -707,7 +871,7 @@
      ]
     },
     {
-     "n": "11",
+     "n": "12",
      "titulo": "Contacto con el DPO",
      "bloques": [
       {
@@ -966,7 +1130,7 @@
   "Términos": "Terms",
   "Contrato de servicio entre Clèrigo y el Cliente.": "Service agreement between Clèrigo and the Client.",
   "Este acuerdo regula el acceso y uso de la plataforma Clèrigo XGRC y todos sus módulos, APIs, integraciones y servicios relacionados operados por Clèrigo (Delaware). Al continuar utilizando el servicio confirmas tu aceptación de estos términos.": "This agreement governs access to and use of the Clèrigo XGRC platform and all its modules, APIs, integrations and related services operated by Clèrigo (Delaware). By continuing to use the service you confirm your acceptance of these terms.",
-  "21 de septiembre de 2026": "21 September 2026",
+  "24 de septiembre de 2026": "24 September 2026",
   "Aceptación de los Términos": "Acceptance of the Terms",
   "Al registrarte, acceder o utilizar la plataforma Clèrigo XGRC («el Servicio»), operada por Clèrigo («Clèrigo», «nosotros», «la Compañía»), declaras que has leído, comprendido y aceptas estar vinculado por estos Términos y Condiciones de Uso, así como por nuestra Política de Privacidad y Política de Cookies.": "By registering for, accessing or using the Clèrigo XGRC platform (\"the Service\"), operated by Clèrigo (\"Clèrigo\", \"we\", \"the Company\"), you declare that you have read and understood these Terms and Conditions of Use and agree to be bound by them, as well as by our Privacy Policy and Cookie Policy.",
   "Si accedes al Servicio en nombre de una organización, declaras que tienes la autoridad para vincular a dicha organización con estos Términos. En tal caso, «tú» y «el Cliente» se refieren a esa organización.": "If you access the Service on behalf of an organisation, you declare that you have authority to bind that organisation to these Terms. In that case, \"you\" and \"the Client\" refer to that organisation.",
@@ -1015,12 +1179,36 @@
   "Los datos se alojan en centros de datos ubicados en la región acordada con el Cliente.": "Data is hosted in data centres located in the region agreed with the Client.",
   "En caso de incidente de seguridad que afecte los Datos del Cliente, Clèrigo notificará al Cliente dentro de las 72 horas siguientes al descubrimiento, conforme a la normativa aplicable.": "In the event of a security incident affecting Client Data, Clèrigo will notify the Client within 72 hours of discovery, in accordance with the applicable regulations.",
   "El Cliente es responsable de la legalidad de los datos que carga en la plataforma y de obtener los consentimientos necesarios cuando corresponda.": "The Client is responsible for the lawfulness of the data it uploads to the platform and for obtaining the necessary consents where applicable.",
+  "Inteligencia Artificial e Integraciones de Terceros": "Artificial Intelligence and Third-Party Integrations",
+  "El Servicio incorpora funciones de inteligencia artificial que analizan y correlacionan información ya presente en la plataforma —hechos del programa de auditoría, factores de riesgo, formularios y transcripciones de reuniones— para producir resúmenes, explicaciones y sugerencias dentro de la propia plataforma. Estas funciones se rigen por las siguientes reglas:": "The Service includes artificial intelligence features that analyse and correlate information already held in the platform — audit programme facts, risk factors, forms and meeting transcripts — to produce summaries, explanations and suggestions within the platform itself. These features are governed by the following rules:",
+  "Sin entrenamiento con los Datos del Cliente:": "No training on Client Data:",
+  "Clèrigo no entrena ni ajusta modelos con los Datos del Cliente, y solo recurre a proveedores de modelos cuyas condiciones excluyen ese uso. Lo que se envía a un modelo se emplea únicamente para generar el resultado de esa operación.": "Clèrigo does not train or fine-tune models on Client Data, and uses only model providers whose terms exclude that use. What is sent to a model is used solely to generate the result of that operation.",
+  "Qué puede enviarse a un modelo:": "What may be sent to a model:",
+  "según la función que se utilice, el contenido necesario para producir el resultado, que puede incluir datos personales cargados por el Cliente, como la transcripción de una reunión con el nombre de quien habla o los datos identificativos de un declarante. El Cliente, como responsable del tratamiento, valora esta circunstancia antes de habilitar las funciones.": "depending on the feature used, the content needed to produce the result, which may include personal data uploaded by the Client, such as a meeting transcript with the name of each speaker or the identifying details of a declarant. The Client, as data controller, weighs this before enabling the features.",
+  "Interruptor por organización:": "Switch per organisation:",
+  "las funciones de inteligencia artificial se activan y desactivan para toda la organización desde la configuración de la plataforma. Con ellas desactivadas no se realiza ninguna llamada a proveedores de modelos.": "artificial intelligence features are turned on and off for the whole organisation from the platform settings. With them turned off, no call is made to any model provider.",
+  "Sin decisiones automatizadas:": "No automated decisions:",
+  "ninguna función de inteligencia artificial adopta por sí sola decisiones con efectos jurídicos o significativos sobre una persona. Sus resultados son apoyo al criterio del Cliente, que decide y responde de la decisión.": "no artificial intelligence feature takes decisions with legal or similarly significant effects on a person by itself. Its results support the Client's judgement; the Client decides and answers for the decision.",
+  "Proveedores publicados:": "Published providers:",
+  "la relación de proveedores de modelos que pueden intervenir en el Servicio se publica y se mantiene actualizada en el Centro de Confianza, en clerigo.io/trustcenter.": "the list of model providers that may take part in the Service is published and kept up to date in the Trust Center, at clerigo.io/trustcenter.",
+  "El Cliente puede conectar el Servicio con aplicaciones de terceros («Integraciones»). Cada Integración la autoriza el Cliente, con sus propias credenciales y el alcance que él concede, y puede revocarla en cualquier momento; al revocarla cesa el intercambio. El sentido del flujo es el siguiente:": "The Client may connect the Service to third-party applications (\"Integrations\"). Each Integration is authorised by the Client, with its own credentials and the scope it grants, and may be revoked at any time; revoking it ends the exchange. The direction of flow is as follows:",
+  "Solo lectura:": "Read only:",
+  "las integraciones de inventario de activos y de ciberseguridad leen del sistema de origen y no le devuelven nada. Clèrigo no crea, modifica ni borra registros en esos sistemas.": "the asset inventory and cybersecurity integrations read from the source system and send nothing back to it. Clèrigo does not create, modify or delete records in those systems.",
+  "Escrituras declaradas:": "Declared writes:",
+  "la integración con Microsoft 365 para reuniones sí escribe en el entorno del Cliente, y solo para lo imprescindible: crea y renueva las suscripciones de aviso que permiten enterarse de una reunión nueva y, cuando la organización ha activado expresamente la captura automática, habilita la grabación de las reuniones aún no comenzadas que entren en el alcance definido por ella.": "the Microsoft 365 integration for meetings does write to the Client's environment, and only for what is essential: it creates and renews the notification subscriptions that make it possible to learn of a new meeting and, when the organisation has expressly enabled automatic capture, it turns on recording for meetings that have not yet started and fall within the scope the organisation itself defines.",
+  "Comprobación de identidad:": "Identity check:",
+  "cuando el Cliente usa inicio de sesión federado, la dirección de correo de la persona se consulta contra su propio directorio corporativo para comprobar que sigue dada de alta.": "when the Client uses federated sign-in, the person's email address is checked against the Client's own corporate directory to confirm that they are still registered.",
+  "Envíos que configura el propio Cliente:": "Transmissions configured by the Client:",
+  "los avisos por correo y los webhooks salientes envían la información a las direcciones que el Cliente indica, bajo su responsabilidad y firmados para que el destinatario pueda verificar el origen.": "email notifications and outgoing webhooks send information to the addresses the Client specifies, under the Client's responsibility and signed so that the recipient can verify its origin.",
+  "Clèrigo no vende, alquila ni cede los Datos del Cliente, ni los trata para finalidades propias ajenas a la prestación del Servicio. Los únicos terceros que pueden tratarlos son los subprocesadores necesarios para prestarlo, sujetos a contrato de encargo con obligaciones equivalentes a las de este acuerdo.": "Clèrigo does not sell, rent or transfer Client Data, nor process it for its own purposes beyond providing the Service. The only third parties that may process it are the subprocessors needed to provide it, bound by a processing agreement with obligations equivalent to those in this agreement.",
+  "La eliminación de los Datos del Cliente se rige por el apartado de Suspensión y Terminación y por los plazos recogidos en la Política de Privacidad. El Cliente puede solicitar la eliminación anticipada en cualquier momento escribiendo a privacy@clerigo.io.": "Deletion of Client Data is governed by the Suspension and Termination section and by the retention periods set out in the Privacy Policy. The Client may request early deletion at any time by writing to privacy@clerigo.io.",
+  "Los resultados generados por inteligencia artificial pueden contener errores u omisiones. No constituyen asesoramiento jurídico, regulatorio ni de auditoría, y deben ser revisados antes de fundamentar en ellos una decisión formal o una comunicación a un supervisor.": "Results generated by artificial intelligence may contain errors or omissions. They do not constitute legal, regulatory or audit advice, and must be reviewed before a formal decision or a communication to a supervisory authority is based on them.",
   "Confidencialidad": "Confidentiality",
   "Ambas partes acuerdan mantener la confidencialidad de toda información no pública que reciban en el marco de este acuerdo («Información Confidencial»), incluyendo datos comerciales, técnicos, financieros o de cualquier otra naturaleza.": "Both parties agree to keep confidential all non-public information they receive under this agreement (\"Confidential Information\"), including commercial, technical, financial or any other kind of data.",
   "Esta obligación no aplica a información que: (a) sea de dominio público sin incumplimiento de este acuerdo; (b) ya fuera conocida por la parte receptora antes de su divulgación; (c) sea recibida legítimamente de un tercero; o (d) deba ser divulgada por mandato legal o judicial.": "This obligation does not apply to information that: (a) is in the public domain without breach of this agreement; (b) was already known to the receiving party before disclosure; (c) is lawfully received from a third party; or (d) must be disclosed by legal or judicial mandate.",
   "La obligación de confidencialidad permanece vigente durante 3 años después de la terminación del contrato de servicio.": "The confidentiality obligation remains in force for 3 years after termination of the service agreement.",
   "Facturación, Pagos y Renovaciones": "Billing, Payments and Renewals",
-  "El Servicio se factura según el plan seleccionado al momento del registro. Los precios vigentes son los recogidos en el contrato de licencia del Cliente y pueden actualizarse con 30 días de aviso previo.": "The Service is billed according to the plan selected at registration. The prices in force are those set out in the Client's licence agreement and may be updated with 30 days' prior notice.",
+  "El Servicio se factura según el plan seleccionado al momento del registro. Los precios vigentes son los recogidos en el contrato de licencia del Cliente. Clèrigo puede revisarlos para cada período de renovación notificándolo por escrito con al menos 60 días de antelación al inicio de dicho período; el nuevo precio se aplicará a la renovación salvo que el Cliente comunique la no renovación conforme a este apartado.": "The Service is billed according to the plan selected at registration. The prices in force are those set out in the Client's licence agreement. Clèrigo may revise them for each renewal period by giving written notice at least 60 days before that period begins; the new price will apply to the renewal unless the Client gives notice of non-renewal under this section.",
   "Planes anuales:": "Annual plans:",
   "se facturan por adelantado al inicio de cada período anual.": "billed in advance at the start of each annual period.",
   "Planes mensuales:": "Monthly plans:",
@@ -1028,18 +1216,32 @@
   "Usuarios adicionales:": "Additional users:",
   "se facturan a $5 USD por usuario por mes, prorrateados según la fecha de activación.": "billed at USD 5 per user per month, pro-rated from the activation date.",
   "Renovación automática:": "Automatic renewal:",
-  "los planes se renuevan automáticamente al vencer, salvo que el Cliente notifique la cancelación con al menos 15 días de anticipación.": "plans renew automatically on expiry unless the Client gives notice of cancellation at least 15 days in advance.",
-  "Los pagos vencidos pueden resultar en la suspensión del Servicio tras un período de gracia de 10 días. Clèrigo no se responsabiliza por pérdidas derivadas de suspensiones por falta de pago.": "Overdue payments may result in suspension of the Service after a 10-day grace period. Clèrigo accepts no responsibility for losses arising from suspensions due to non-payment.",
+  "cada período de suscripción se renueva automáticamente por otro de igual duración, salvo que cualquiera de las partes notifique por escrito la no renovación con al menos 30 días de antelación a su vencimiento. En los planes mensuales, la no renovación puede comunicarse en cualquier momento antes de la siguiente fecha de facturación.": "each subscription period renews automatically for another period of equal length unless either party gives written notice of non-renewal at least 30 days before it expires. On monthly plans, notice of non-renewal may be given at any time before the next billing date.",
+  "Reducción de licencias:": "Licence reductions:",
+  "la reducción del número de usuarios o de áreas contratadas debe notificarse por escrito con al menos 30 días de antelación y surte efecto al inicio del siguiente período de renovación; hasta entonces se mantienen las cantidades contratadas.": "any reduction in the number of users or subscribed areas must be notified in writing at least 30 days in advance and takes effect at the start of the next renewal period; until then the subscribed quantities remain in force.",
+  "Salvo lo expresamente previsto en estos Términos y en la máxima medida permitida por la ley aplicable, las obligaciones de pago no son cancelables y los importes pagados no son reembolsables, incluso en caso de cancelación, vencimiento o terminación del contrato. No se conceden reembolsos ni créditos por períodos parciales, por un uso parcial o nulo del Servicio, ni por usuarios o áreas no utilizados durante el período contratado.": "Except as expressly provided in these Terms and to the fullest extent permitted by applicable law, payment obligations are non-cancellable and amounts paid are non-refundable, including upon cancellation, expiry or termination of the agreement. No refunds or credits are given for partial periods, for partial or no use of the Service, or for users or areas left unused during the subscribed period.",
+  "Las facturas se pagan dentro de los 30 días siguientes a su fecha de emisión, salvo que el contrato de licencia establezca otro plazo, en la moneda indicada y sin deducciones ni compensaciones. Los importes vencidos devengan un interés del 1,5 % mensual o, si fuera menor, el máximo permitido por la ley aplicable, y el Cliente reembolsará los costes razonables de cobro, incluidos los honorarios de abogados. Si el Cliente discute de buena fe una factura, deberá notificarlo por escrito, con el detalle del desacuerdo, dentro de los 15 días siguientes a recibirla, y pagar en plazo la parte no discutida.": "Invoices are payable within 30 days of their issue date, unless the licence agreement sets another term, in the stated currency and without deduction or set-off. Overdue amounts bear interest at 1.5 % per month or, if lower, the maximum permitted by applicable law, and the Client will reimburse reasonable collection costs, including attorneys' fees. If the Client disputes an invoice in good faith, it must give written notice, detailing the disagreement, within 15 days of receiving it, and pay the undisputed portion on time.",
+  "Los precios no incluyen impuestos. El Cliente es responsable de todos los impuestos, tasas, retenciones y cargos bancarios aplicables a la contratación, salvo los impuestos sobre la renta de Clèrigo. Si la ley obliga al Cliente a practicar una retención, incrementará el pago de forma que Clèrigo reciba el importe íntegro facturado.": "Prices exclude taxes. The Client is responsible for all taxes, duties, withholdings and bank charges applicable to the purchase, other than Clèrigo's income taxes. If the law requires the Client to withhold tax, it will gross up the payment so that Clèrigo receives the full invoiced amount.",
+  "Si un importe permanece impago tras su vencimiento, Clèrigo puede suspender el acceso al Servicio previa notificación escrita con al menos 10 días de antelación, sin perjuicio de sus demás derechos. La suspensión no exime al Cliente del pago de las cuotas del período contratado. Clèrigo no se responsabiliza por pérdidas derivadas de suspensiones por falta de pago.": "If an amount remains unpaid after its due date, Clèrigo may suspend access to the Service on at least 10 days' prior written notice, without prejudice to its other rights. Suspension does not relieve the Client of paying the fees for the subscribed period. Clèrigo accepts no responsibility for losses arising from suspensions due to non-payment.",
   "Todos los planes incluyen una demo funcional sin compromiso, sin requerir tarjeta de crédito. Al finalizar la demo, el Servicio se suspende automáticamente hasta que el Cliente active un plan de pago.": "All plans include a working demo with no commitment and no credit card required. When the demo ends, the Service is suspended automatically until the Client activates a paid plan.",
   "Suspensión y Terminación": "Suspension and Termination",
-  "Cualquiera de las partes puede terminar el contrato de servicio con 30 días de aviso escrito. Clèrigo puede suspender o terminar el acceso de forma inmediata y sin previo aviso cuando:": "Either party may terminate the service agreement on 30 days' written notice. Clèrigo may suspend or terminate access immediately and without prior notice where:",
-  "El Cliente incumpla estos Términos de forma material.": "The Client is in material breach of these Terms.",
+  "El contrato de servicio se mantiene vigente durante el período de suscripción contratado y sus renovaciones, y no puede terminarse por conveniencia antes de su vencimiento: para ponerle fin, cualquiera de las partes puede comunicar la no renovación conforme al apartado de Facturación, Pagos y Renovaciones. Cualquiera de las partes puede terminarlo si la otra incurre en un incumplimiento material y no lo subsana dentro de los 30 días siguientes a recibir una notificación escrita que lo describa, o de inmediato si la otra parte entra en un procedimiento de insolvencia, quiebra o liquidación, o cesa en su actividad.": "The service agreement remains in force for the subscribed period and its renewals and may not be terminated for convenience before it expires: to end it, either party may give notice of non-renewal under the Billing, Payments and Renewals section. Either party may terminate it if the other commits a material breach and fails to cure it within 30 days of receiving written notice describing it, or immediately if the other party becomes subject to insolvency, bankruptcy or liquidation proceedings, or ceases to do business.",
+  "Además, Clèrigo puede suspender o terminar el acceso de forma inmediata y sin previo aviso cuando:": "In addition, Clèrigo may suspend or terminate access immediately and without prior notice where:",
+  "El Cliente incumpla las normas de Uso Aceptable o sus obligaciones de Confidencialidad.": "The Client breaches the Acceptable Use rules or its Confidentiality obligations.",
   "Se detecte uso fraudulento, actividad ilegal o amenaza activa de seguridad.": "Fraudulent use, unlawful activity or an active security threat is detected.",
   "Un pago permanezca impago más de 30 días después de la fecha de vencimiento.": "A payment remains outstanding more than 30 days after its due date.",
   "Sea requerido por autoridad competente mediante resolución judicial o administrativa.": "It is required by a competent authority through a judicial or administrative decision.",
+  "Efectos económicos de la terminación:": "Financial effects of termination:",
+  "Por incumplimiento de Clèrigo:": "For Clèrigo's breach:",
+  "si el Cliente termina el contrato por un incumplimiento material de Clèrigo no subsanado, Clèrigo le reembolsará, dentro de los 30 días siguientes a la terminación, la parte prorrateada de las cuotas prepagadas que corresponda al período posterior a la fecha de terminación.": "if the Client terminates the agreement for an uncured material breach by Clèrigo, Clèrigo will refund, within 30 days of termination, the pro-rated portion of prepaid fees covering the period after the termination date.",
+  "Por incumplimiento del Cliente:": "For the Client's breach:",
+  "si Clèrigo termina el contrato por un incumplimiento del Cliente, el Cliente pagará, dentro de los 30 días siguientes a la terminación, todas las cuotas pendientes del resto del período de suscripción en curso, con independencia de sus fechas de vencimiento. Los importes ya pagados no se reembolsan.": "if Clèrigo terminates the agreement for the Client's breach, the Client will pay, within 30 days of termination, all outstanding fees for the remainder of the current subscription period, regardless of their due dates. Amounts already paid are not refunded.",
+  "Por no renovación:": "On non-renewal:",
+  "el Servicio se mantiene hasta el final del período ya pagado y no se reembolsa ninguna parte de él.": "the Service continues until the end of the period already paid for, and no part of it is refunded.",
   "Tras la terminación, el Cliente tendrá acceso de solo lectura a sus datos por un período de 30 días para facilitar la exportación. Transcurrido este plazo, los datos podrán ser eliminados de forma permanente. El Cliente puede solicitar la eliminación anticipada en cualquier momento.": "After termination, the Client will have read-only access to its data for 30 days to facilitate export. Once that period has passed, the data may be permanently deleted. The Client may request early deletion at any time.",
   "Garantías y Exclusiones": "Warranties and Exclusions",
   "Clèrigo garantiza que el Servicio funcionará de manera sustancialmente conforme a la documentación publicada y mantendrá un nivel de disponibilidad del 99.5 % mensual (SLA), excluyendo mantenimientos programados notificados con 48 horas de anticipación.": "Clèrigo warrants that the Service will operate substantially in accordance with the published documentation and will maintain 99.5 % monthly availability (SLA), excluding scheduled maintenance notified 48 hours in advance.",
+  "Si el Servicio no cumple de forma material esta garantía, el Cliente deberá notificarlo por escrito, con el detalle del incumplimiento, dentro de los 30 días siguientes a detectarlo. Clèrigo lo corregirá en un plazo razonable y, si no pudiera hacerlo, cualquiera de las partes podrá terminar el Servicio afectado y Clèrigo reembolsará la parte prorrateada de las cuotas prepagadas correspondiente al período no transcurrido. El incumplimiento del SLA durante tres meses naturales consecutivos se considera un incumplimiento material de esta garantía. Este es el único y exclusivo recurso del Cliente por incumplimiento de la garantía.": "If the Service materially fails to meet this warranty, the Client must give written notice, detailing the failure, within 30 days of discovering it. Clèrigo will correct it within a reasonable time and, if it cannot, either party may terminate the affected Service and Clèrigo will refund the pro-rated portion of prepaid fees covering the unexpired period. Failure to meet the SLA for three consecutive calendar months is a material breach of this warranty. This is the Client's sole and exclusive remedy for breach of warranty.",
   "Salvo lo expresamente establecido en este acuerdo, el Servicio se proporciona «tal cual» y «según disponibilidad». Clèrigo no garantiza que el Servicio sea ininterrumpido, libre de errores ni que satisfaga todos los requisitos específicos del Cliente.": "Except as expressly set out in this agreement, the Service is provided \"as is\" and \"as available\". Clèrigo does not warrant that the Service will be uninterrupted or error-free, nor that it will meet all of the Client's specific requirements.",
   "En particular, Clèrigo no garantiza resultados específicos de cumplimiento regulatorio, aprobaciones de auditoría o ausencia de sanciones derivadas del uso o no uso de la plataforma. El Servicio es una herramienta de apoyo y no reemplaza el asesoramiento jurídico o regulatorio profesional.": "In particular, Clèrigo does not warrant any specific regulatory compliance outcome, audit approval or absence of penalties arising from use or non-use of the platform. The Service is a support tool and does not replace professional legal or regulatory advice.",
   "Limitación de Responsabilidad": "Limitation of Liability",
@@ -1056,6 +1258,7 @@
   "Clèrigo": "Clèrigo",
   "Email:": "Email:",
   "legal@clerigo.io": "legal@clerigo.io",
+  "Incidentes de seguridad:": "Security incidents:",
   "security@clerigo.io": "security@clerigo.io",
   "Dirección:": "Address:",
   "Estados Unidos": "United States",
@@ -1065,7 +1268,7 @@
   "Privacidad": "Privacy",
   "Cómo tratamos tus datos personales con responsabilidad.": "How we handle your personal data responsibly.",
   "Esta política describe qué datos recopilamos, con qué finalidad los tratamos, cuánto tiempo los conservamos y cuáles son tus derechos. Cumplimos con la Ley 172-13 (RD), el RGPD (UE) y el CCPA (California, EE. UU.) según aplique. Los cambios materiales te serán notificados por email con al menos 30 días de anticipación.": "This policy sets out what data we collect, why we process it, how long we keep it and what your rights are. We comply with Law 172-13 (Dominican Republic), the GDPR (EU) and the CCPA (California, USA) as applicable. Material changes will be notified to you by email at least 30 days in advance.",
-  "21 de agosto de 2026": "21 August 2026",
+  "23 de septiembre de 2026": "23 September 2026",
   "Responsable del Tratamiento": "Data Controller",
   "El responsable del tratamiento de tus datos personales es Clèrigo, con domicilio en Estados Unidos. Puedes contactar a nuestro Delegado de Protección de Datos (DPO) en privacy@clerigo.io.": "The controller of your personal data is Clèrigo, domiciled in United States. You can contact our Data Protection Officer (DPO) at privacy@clerigo.io.",
   "Cuando el Servicio es utilizado por una organización cliente, dicha organización actúa como responsable del tratamiento de los datos de sus empleados y usuarios finales, y Clèrigo actúa como encargado del tratamiento bajo las instrucciones del cliente.": "Where the Service is used by a client organisation, that organisation acts as controller of its employees' and end users' data, and Clèrigo acts as processor on the client's instructions.",
@@ -1105,6 +1308,8 @@
   "diagnóstico de incidencias y asistencia al usuario.": "diagnosing issues and assisting users.",
   "Mejora del Servicio:": "Improving the Service:",
   "análisis agregado y anonimizado de patrones de uso para el desarrollo de nuevas funcionalidades.": "aggregated, anonymised analysis of usage patterns to develop new features.",
+  "Funciones de inteligencia artificial:": "Artificial intelligence features:",
+  "generación de resúmenes, explicaciones y sugerencias a partir de la información que el Cliente ya tiene en la plataforma, cuando su organización tiene estas funciones activadas. Los datos no se utilizan para entrenar modelos.": "generating summaries, explanations and suggestions from the information the Client already holds in the platform, when their organisation has these features enabled. The data is not used to train models.",
   "Seguridad:": "Security:",
   "detección de accesos no autorizados, prevención de fraude y auditoría de seguridad interna.": "detecting unauthorised access, preventing fraud and internal security auditing.",
   "Cumplimiento legal:": "Legal compliance:",
@@ -1141,7 +1346,22 @@
   "Contratos de procesamiento de datos con cláusulas de protección equivalentes al estándar GDPR.": "Data processing agreements with protection clauses equivalent to the GDPR standard.",
   "Proveedores certificados bajo marcos de privacidad reconocidos (ISO 27701, SOC 2 Type II).": "Providers certified under recognised privacy frameworks (ISO 27701, SOC 2 Type II).",
   "Evaluaciones de impacto en transferencias (TIA) cuando los datos se transfieren a jurisdicciones con menor nivel de protección.": "Transfer impact assessments (TIA) where data is transferred to jurisdictions with a lower level of protection.",
-  "Entre nuestros subprocesadores principales se incluyen proveedores de infraestructura cloud, pasarelas de pago y herramientas de análisis, todos debidamente auditados. La lista actualizada de subprocesadores está disponible bajo solicitud en privacy@clerigo.io.": "Our main sub-processors include cloud infrastructure providers, payment gateways and analytics tools, all duly audited. An up-to-date list of sub-processors is available on request at privacy@clerigo.io.",
+  "Entre nuestros subprocesadores se incluyen proveedores de infraestructura en la nube, pasarelas de pago, servicios de observabilidad de errores y proveedores de modelos de inteligencia artificial, todos ellos bajo contrato de encargo. La lista actualizada se publica en el Centro de Confianza, en clerigo.io/trustcenter, y también puede solicitarse en privacy@clerigo.io.": "Our subprocessors include cloud infrastructure providers, payment gateways, error observability services and artificial intelligence model providers, all of them under a processing agreement. The current list is published in the Trust Center, at clerigo.io/trustcenter, and may also be requested at privacy@clerigo.io.",
+  "Inteligencia Artificial y Decisiones Automatizadas": "Artificial Intelligence and Automated Decisions",
+  "Cuando la organización cliente activa las funciones de inteligencia artificial, parte de la información de la plataforma se envía a un proveedor de modelos para generar el resultado solicitado. Estos son los términos de ese tratamiento:": "When the client organisation enables the artificial intelligence features, part of the information in the platform is sent to a model provider to generate the requested result. These are the terms of that processing:",
+  "Finalidad:": "Purpose:",
+  "producir el resumen, la explicación o la sugerencia que el usuario pide en ese momento, y nada más.": "to produce the summary, explanation or suggestion the user asks for at that moment, and nothing else.",
+  "Sin entrenamiento:": "No training:",
+  "los datos enviados no se utilizan para entrenar ni ajustar modelos, ni por Clèrigo ni por el proveedor.": "the data sent is not used to train or fine-tune models, either by Clèrigo or by the provider.",
+  "Datos que pueden intervenir:": "Data that may be involved:",
+  "los que el Cliente ha cargado y resulten necesarios para la función, incluidos datos personales cuando la función los requiera.": "the data the Client has uploaded that is necessary for the feature, including personal data where the feature requires it.",
+  "Base legal:": "Legal basis:",
+  "la ejecución del contrato y las instrucciones del Cliente, que actúa como responsable del tratamiento.": "performance of the contract and the instructions of the Client, who acts as data controller.",
+  "Transferencias:": "Transfers:",
+  "los proveedores de modelos pueden estar ubicados fuera del país del Cliente; les aplican las garantías del apartado anterior.": "model providers may be located outside the Client's country; the safeguards in the previous section apply to them.",
+  "Control de la organización:": "Control by the organisation:",
+  "estas funciones pueden desactivarse en cualquier momento desde la configuración, y con ellas desactivadas no se envía nada a ningún modelo.": "these features may be disabled at any time from the settings, and with them disabled nothing is sent to any model.",
+  "Ninguna de estas funciones adopta decisiones automatizadas con efectos jurídicos o significativos sobre una persona: sus resultados son una ayuda que alguien revisa antes de decidir. En todo caso, puedes ejercer el derecho a la revisión humana descrito en el apartado de derechos.": "None of these features takes automated decisions with legal or similarly significant effects on a person: their results are an aid that someone reviews before deciding. In any case, you may exercise the right to human review described in the rights section.",
   "Tus Derechos como Titular de Datos": "Your Rights as a Data Subject",
   "Tienes los siguientes derechos sobre tus datos personales, ejercibles en cualquier momento:": "You have the following rights over your personal data, exercisable at any time:",
   "Acceso:": "Access:",

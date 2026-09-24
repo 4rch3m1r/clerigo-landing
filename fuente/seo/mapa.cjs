@@ -99,25 +99,24 @@ for (const p of PAGINAS) {
      verdad, que sí la tiene. Son dos cosas distintas y por eso van separadas. */
   /* Dos nombres, uno por idioma: tres páginas cambiaron de nombre al pasar a
      inglés y aquí se usaba el castellano para las dos. */
-  const enIngles = BASE + "/" + p.ruta.en;
-  const enCastellano = BASE + "/es/" + p.ruta.es;
-  const alternativas = [
-    `    <xhtml:link rel="alternate" hreflang="en" href="${enIngles}"/>`,
-    `    <xhtml:link rel="alternate" hreflang="es" href="${enCastellano}"/>`,
-    `    <xhtml:link rel="alternate" hreflang="x-default" href="${enIngles}"/>`,
-  ].join("\n");
+  /* SÓLO EL INGLÉS, DESDE EL 2026-09-24. El mapa declaraba las catorce —siete
+     páginas por dos idiomas— y cada entrada llevaba además las tres
+     alternativas `xhtml:link`. Por decisión del dueño el castellano es una
+     comodidad del sitio y no una versión que indexar: va con `noindex`, y una
+     dirección con `noindex` dentro del sitemap no es una omisión menor, es
+     pedir que se indexe lo que a la vez se prohíbe indexar. Search Console lo
+     canta como error, y con razón.
 
-  for (const [url, carpeta, idi] of [[enIngles, INGLES, "en"], [enCastellano, CASTELLANO, "es"]]) {
-    entradas.push([
-      "  <url>",
-      `    <loc>${url}</loc>`,
-      `    <lastmod>${cuandoCambió(path.join(carpeta, p.disco[idi]), url)}</lastmod>`,
-      `    <changefreq>${p.slug === "index" ? "weekly" : "monthly"}</changefreq>`,
-      `    <priority>${p.prioridad}</priority>`,
-      alternativas,
-      "  </url>",
-    ].join("\n"));
-  }
+     Las alternativas se van con ellas: no queda a qué apuntar. */
+  const enIngles = BASE + "/" + p.ruta.en;
+  entradas.push([
+    "  <url>",
+    `    <loc>${enIngles}</loc>`,
+    `    <lastmod>${cuandoCambió(path.join(INGLES, p.disco.en), enIngles)}</lastmod>`,
+    `    <changefreq>${p.slug === "index" ? "weekly" : "monthly"}</changefreq>`,
+    `    <priority>${p.prioridad}</priority>`,
+    "  </url>",
+  ].join("\n"));
 }
 
 const sitemap = [
@@ -152,6 +151,6 @@ const robots = [
 fs.writeFileSync(path.join(RAIZ, "sitemap.xml"), sitemap);
 fs.writeFileSync(path.join(RAIZ, "robots.txt"), robots);
 
-console.log(`\n  sitemap.xml  ${entradas.length} direcciones (${entradas.length / 2} páginas × 2 idiomas)`);
+console.log(`\n  sitemap.xml  ${entradas.length} direcciones (sólo inglés; el castellano va con noindex)`);
 console.log(`  robots.txt   apunta al sitemap`);
 console.log(`  base:        ${BASE}\n`);

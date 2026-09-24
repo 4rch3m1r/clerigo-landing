@@ -26,12 +26,9 @@
 <title>Términos del Servicio y Aviso Legal | Clèrigo</title>
 <meta name="description" content="Condiciones contractuales, política de privacidad, tratamiento de datos y compromisos de nivel de servicio (SLA) de Clèrigo.">
 <meta name="keywords" content="términos del servicio, política de privacidad, política de cookies, condiciones de uso, tratamiento de datos">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="robots" content="noindex, follow">
 <meta name="theme-color" content="#0E0E0E">
 <link rel="canonical" href="https://clerigo.io/es/legal">
-<link rel="alternate" hreflang="en" href="https://clerigo.io/legal">
-<link rel="alternate" hreflang="es" href="https://clerigo.io/es/legal">
-<link rel="alternate" hreflang="x-default" href="https://clerigo.io/legal">
 <!-- Twitter / X Cards -->
 <link rel="icon" type="image/png" href="../favicon.png" sizes="160x160">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
@@ -673,14 +670,18 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
   if (quiere !== 'es' && quiere !== 'en') return;
   if (quiere === mio) return;
 
-  /* A DONDE, LO DICE LA PROPIA PAGINA. El hreflang de la cabecera ya trae la
-     direccion de la otra version CON SU NOMBRE TRADUCIDO. Calcularlo a mano
-     —meterle '/es/' delante al ultimo trozo— daba /es/pricing, /es/contact,
-     /es/frameworks y /es/trustcenter, que son cuatro 404: la pagina se llama
-     /es/precios. Sale del mismo sitio que el mapa del sitio, asi que no se
-     puede desincronizar. Se coge solo la ruta para no salirse de este
-     servidor: en local la etiqueta dice clerigo.io. */
-  var otra = document.querySelector('link[rel="alternate"][hreflang="' + quiere + '"]');
+  /* A DONDE, LO DICE EL PROPIO SELECTOR. Su enlace ya trae la direccion de la
+     otra version CON SU NOMBRE TRADUCIDO. Calcularlo a mano —meterle '/es/'
+     delante al ultimo trozo— daba /es/pricing, /es/contact, /es/frameworks y
+     /es/trustcenter, que son cuatro 404: la pagina se llama /es/precios.
+
+     ANTES ESTO LEIA EL hreflang DE LA CABECERA, y esas etiquetas ya no estan:
+     desde el 2026-09-24 en el buscador solo va el ingles, y un hreflang es
+     justo lo que le ofrece a Google la version castellana como alternativa.
+     El selector, en cambio, es del visitante, no del buscador: es el sitio
+     natural del que leer esto. Se coge solo la ruta para no salirse de este
+     servidor: el enlace puede ser relativo o absoluto. */
+  var otra = document.querySelector('a.idioma[data-idioma="' + quiere + '"]');
   var destino = null;
   try { destino = otra && new URL(otra.getAttribute('href'), location.href).pathname; } catch (e) {}
   if (!destino || destino === ruta) return;
@@ -771,9 +772,9 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
         En Clèrigo estamos comprometidos con la transparencia. Estos documentos explican cómo operamos, qué datos recopilamos, cómo los protegemos y cuáles son tus derechos como usuario.
       </p>
       <div class="legal-hero-meta">
-        <span><strong>Versión:</strong> 2.6</span>
+        <span><strong>Versión:</strong> 2.7</span>
         <span><strong>Vigente desde:</strong> 1 de enero de 2026</span>
-        <span><strong>Última revisión:</strong> 21 de septiembre de 2026</span>
+        <span><strong>Última revisión:</strong> 24 de septiembre de 2026</span>
         <span><strong>Jurisdicción:</strong> Delaware, Estados Unidos</span>
       </div>
     </div>
@@ -803,13 +804,14 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
       <li><a href="#t4">4. Uso aceptable</a></li>
       <li><a href="#t5">5. Propiedad intelectual</a></li>
       <li><a href="#t6">6. Datos del cliente</a></li>
-      <li><a href="#t7">7. Confidencialidad</a></li>
-      <li><a href="#t8">8. Facturación y pagos</a></li>
-      <li><a href="#t9">9. Suspensión y terminación</a></li>
-      <li><a href="#t10">10. Garantías y exclusiones</a></li>
-      <li><a href="#t11">11. Limitación de responsabilidad</a></li>
-      <li><a href="#t12">12. Ley aplicable</a></li>
-      <li><a href="#t13">13. Contacto legal</a></li>
+      <li><a href="#t7">7. IA e integraciones</a></li>
+      <li><a href="#t8">8. Confidencialidad</a></li>
+      <li><a href="#t9">9. Facturación y pagos</a></li>
+      <li><a href="#t10">10. Suspensión y terminación</a></li>
+      <li><a href="#t11">11. Garantías y exclusiones</a></li>
+      <li><a href="#t12">12. Limitación de responsabilidad</a></li>
+      <li><a href="#t13">13. Ley aplicable</a></li>
+      <li><a href="#t14">14. Contacto legal</a></li>
     </ul>
   </aside>
 
@@ -822,11 +824,12 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
       <li><a href="#p4">4. Base legal</a></li>
       <li><a href="#p5">5. Retención de datos</a></li>
       <li><a href="#p6">6. Transferencias internacionales</a></li>
-      <li><a href="#p7">7. Tus derechos ARCO</a></li>
-      <li><a href="#p8">8. Seguridad</a></li>
-      <li><a href="#p9">9. Menores</a></li>
-      <li><a href="#p10">10. Cambios a esta política</a></li>
-      <li><a href="#p11">11. Contacto DPO</a></li>
+      <li><a href="#p7">7. IA y decisiones automatizadas</a></li>
+      <li><a href="#p8">8. Tus derechos ARCO</a></li>
+      <li><a href="#p9">9. Seguridad</a></li>
+      <li><a href="#p10">10. Menores</a></li>
+      <li><a href="#p11">11. Cambios a esta política</a></li>
+      <li><a href="#p12">12. Contacto DPO</a></li>
     </ul>
   </aside>
 
@@ -857,7 +860,7 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
 
       <div class="update-banner">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        Última actualización: <strong>21 de septiembre de 2026</strong>. Al continuar utilizando el servicio confirmas tu aceptación de estos términos.
+        Última actualización: <strong>24 de septiembre de 2026</strong>. Al continuar utilizando el servicio confirmas tu aceptación de estos términos.
       </div>
 
       <div class="toc-box">
@@ -882,7 +885,7 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
         </ul>
       </div>
 
-                                    <div class="article-block" id="t1">
+                                          <div class="article-block" id="t1">
         <h3><span class="num">01</span> Aceptación de los Términos</h3>
         <p>Al registrarte, acceder o utilizar la plataforma Clèrigo XGRC («el Servicio»), operada por Clèrigo («Clèrigo», «nosotros», «la Compañía»), declaras que has leído, comprendido y aceptas estar vinculado por estos Términos y Condiciones de Uso, así como por nuestra Política de Privacidad y Política de Cookies.</p>
         <p>Si accedes al Servicio en nombre de una organización, declaras que tienes la autoridad para vincular a dicha organización con estos Términos. En tal caso, «tú» y «el Cliente» se refieren a esa organización.</p>
@@ -956,40 +959,80 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
       </div>
 
       <div class="article-block" id="t7">
-        <h3><span class="num">07</span> Confidencialidad</h3>
+        <h3><span class="num">07</span> Inteligencia Artificial e Integraciones de Terceros</h3>
+        <p>El Servicio incorpora funciones de inteligencia artificial que analizan y correlacionan información ya presente en la plataforma —hechos del programa de auditoría, factores de riesgo, formularios y transcripciones de reuniones— para producir resúmenes, explicaciones y sugerencias dentro de la propia plataforma. Estas funciones se rigen por las siguientes reglas:</p>
+        <ul>
+          <li><strong>Sin entrenamiento con los Datos del Cliente:</strong> Clèrigo no entrena ni ajusta modelos con los Datos del Cliente, y solo recurre a proveedores de modelos cuyas condiciones excluyen ese uso. Lo que se envía a un modelo se emplea únicamente para generar el resultado de esa operación.</li>
+          <li><strong>Qué puede enviarse a un modelo:</strong> según la función que se utilice, el contenido necesario para producir el resultado, que puede incluir datos personales cargados por el Cliente, como la transcripción de una reunión con el nombre de quien habla o los datos identificativos de un declarante. El Cliente, como responsable del tratamiento, valora esta circunstancia antes de habilitar las funciones.</li>
+          <li><strong>Interruptor por organización:</strong> las funciones de inteligencia artificial se activan y desactivan para toda la organización desde la configuración de la plataforma. Con ellas desactivadas no se realiza ninguna llamada a proveedores de modelos.</li>
+          <li><strong>Sin decisiones automatizadas:</strong> ninguna función de inteligencia artificial adopta por sí sola decisiones con efectos jurídicos o significativos sobre una persona. Sus resultados son apoyo al criterio del Cliente, que decide y responde de la decisión.</li>
+          <li><strong>Proveedores publicados:</strong> la relación de proveedores de modelos que pueden intervenir en el Servicio se publica y se mantiene actualizada en el Centro de Confianza, en clerigo.io/trustcenter.</li>
+        </ul>
+        <p>El Cliente puede conectar el Servicio con aplicaciones de terceros («Integraciones»). Cada Integración la autoriza el Cliente, con sus propias credenciales y el alcance que él concede, y puede revocarla en cualquier momento; al revocarla cesa el intercambio. El sentido del flujo es el siguiente:</p>
+        <ul>
+          <li><strong>Solo lectura:</strong> las integraciones de inventario de activos y de ciberseguridad leen del sistema de origen y no le devuelven nada. Clèrigo no crea, modifica ni borra registros en esos sistemas.</li>
+          <li><strong>Escrituras declaradas:</strong> la integración con Microsoft 365 para reuniones sí escribe en el entorno del Cliente, y solo para lo imprescindible: crea y renueva las suscripciones de aviso que permiten enterarse de una reunión nueva y, cuando la organización ha activado expresamente la captura automática, habilita la grabación de las reuniones aún no comenzadas que entren en el alcance definido por ella.</li>
+          <li><strong>Comprobación de identidad:</strong> cuando el Cliente usa inicio de sesión federado, la dirección de correo de la persona se consulta contra su propio directorio corporativo para comprobar que sigue dada de alta.</li>
+          <li><strong>Envíos que configura el propio Cliente:</strong> los avisos por correo y los webhooks salientes envían la información a las direcciones que el Cliente indica, bajo su responsabilidad y firmados para que el destinatario pueda verificar el origen.</li>
+        </ul>
+        <p>Clèrigo no vende, alquila ni cede los Datos del Cliente, ni los trata para finalidades propias ajenas a la prestación del Servicio. Los únicos terceros que pueden tratarlos son los subprocesadores necesarios para prestarlo, sujetos a contrato de encargo con obligaciones equivalentes a las de este acuerdo.</p>
+        <p>La eliminación de los Datos del Cliente se rige por el apartado de Suspensión y Terminación y por los plazos recogidos en la Política de Privacidad. El Cliente puede solicitar la eliminación anticipada en cualquier momento escribiendo a privacy@clerigo.io.</p>
+        <div class="info-box blue">
+          <div class="info-box-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Los resultados generados por inteligencia artificial pueden contener errores u omisiones. No constituyen asesoramiento jurídico, regulatorio ni de auditoría, y deben ser revisados antes de fundamentar en ellos una decisión formal o una comunicación a un supervisor.</span>
+        </div>
+      </div>
+
+      <div class="article-block" id="t8">
+        <h3><span class="num">08</span> Confidencialidad</h3>
         <p>Ambas partes acuerdan mantener la confidencialidad de toda información no pública que reciban en el marco de este acuerdo («Información Confidencial»), incluyendo datos comerciales, técnicos, financieros o de cualquier otra naturaleza.</p>
         <p>Esta obligación no aplica a información que: (a) sea de dominio público sin incumplimiento de este acuerdo; (b) ya fuera conocida por la parte receptora antes de su divulgación; (c) sea recibida legítimamente de un tercero; o (d) deba ser divulgada por mandato legal o judicial.</p>
         <p>La obligación de confidencialidad permanece vigente durante 3 años después de la terminación del contrato de servicio.</p>
       </div>
 
-      <div class="article-block" id="t8">
-        <h3><span class="num">08</span> Facturación, Pagos y Renovaciones</h3>
-        <p>El Servicio se factura según el plan seleccionado al momento del registro. Los precios vigentes son los recogidos en el contrato de licencia del Cliente y pueden actualizarse con 30 días de aviso previo.</p>
+      <div class="article-block" id="t9">
+        <h3><span class="num">09</span> Facturación, Pagos y Renovaciones</h3>
+        <p>El Servicio se factura según el plan seleccionado al momento del registro. Los precios vigentes son los recogidos en el contrato de licencia del Cliente. Clèrigo puede revisarlos para cada período de renovación notificándolo por escrito con al menos 60 días de antelación al inicio de dicho período; el nuevo precio se aplicará a la renovación salvo que el Cliente comunique la no renovación conforme a este apartado.</p>
         <ul>
           <li><strong>Planes anuales:</strong> se facturan por adelantado al inicio de cada período anual.</li>
           <li><strong>Planes mensuales:</strong> se facturan cada mes en la fecha de suscripción, con un recargo del 20 % respecto al precio anual equivalente.</li>
           <li><strong>Usuarios adicionales:</strong> se facturan a $5 USD por usuario por mes, prorrateados según la fecha de activación.</li>
-          <li><strong>Renovación automática:</strong> los planes se renuevan automáticamente al vencer, salvo que el Cliente notifique la cancelación con al menos 15 días de anticipación.</li>
+          <li><strong>Renovación automática:</strong> cada período de suscripción se renueva automáticamente por otro de igual duración, salvo que cualquiera de las partes notifique por escrito la no renovación con al menos 30 días de antelación a su vencimiento. En los planes mensuales, la no renovación puede comunicarse en cualquier momento antes de la siguiente fecha de facturación.</li>
+          <li><strong>Reducción de licencias:</strong> la reducción del número de usuarios o de áreas contratadas debe notificarse por escrito con al menos 30 días de antelación y surte efecto al inicio del siguiente período de renovación; hasta entonces se mantienen las cantidades contratadas.</li>
         </ul>
-        <p>Los pagos vencidos pueden resultar en la suspensión del Servicio tras un período de gracia de 10 días. Clèrigo no se responsabiliza por pérdidas derivadas de suspensiones por falta de pago.</p>
+        <div class="info-box blue">
+          <div class="info-box-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Salvo lo expresamente previsto en estos Términos y en la máxima medida permitida por la ley aplicable, las obligaciones de pago no son cancelables y los importes pagados no son reembolsables, incluso en caso de cancelación, vencimiento o terminación del contrato. No se conceden reembolsos ni créditos por períodos parciales, por un uso parcial o nulo del Servicio, ni por usuarios o áreas no utilizados durante el período contratado.</span>
+        </div>
+        <p>Las facturas se pagan dentro de los 30 días siguientes a su fecha de emisión, salvo que el contrato de licencia establezca otro plazo, en la moneda indicada y sin deducciones ni compensaciones. Los importes vencidos devengan un interés del 1,5 % mensual o, si fuera menor, el máximo permitido por la ley aplicable, y el Cliente reembolsará los costes razonables de cobro, incluidos los honorarios de abogados. Si el Cliente discute de buena fe una factura, deberá notificarlo por escrito, con el detalle del desacuerdo, dentro de los 15 días siguientes a recibirla, y pagar en plazo la parte no discutida.</p>
+        <p>Los precios no incluyen impuestos. El Cliente es responsable de todos los impuestos, tasas, retenciones y cargos bancarios aplicables a la contratación, salvo los impuestos sobre la renta de Clèrigo. Si la ley obliga al Cliente a practicar una retención, incrementará el pago de forma que Clèrigo reciba el importe íntegro facturado.</p>
+        <p>Si un importe permanece impago tras su vencimiento, Clèrigo puede suspender el acceso al Servicio previa notificación escrita con al menos 10 días de antelación, sin perjuicio de sus demás derechos. La suspensión no exime al Cliente del pago de las cuotas del período contratado. Clèrigo no se responsabiliza por pérdidas derivadas de suspensiones por falta de pago.</p>
         <p>Todos los planes incluyen una demo funcional sin compromiso, sin requerir tarjeta de crédito. Al finalizar la demo, el Servicio se suspende automáticamente hasta que el Cliente active un plan de pago.</p>
       </div>
 
-      <div class="article-block" id="t9">
-        <h3><span class="num">09</span> Suspensión y Terminación</h3>
-        <p>Cualquiera de las partes puede terminar el contrato de servicio con 30 días de aviso escrito. Clèrigo puede suspender o terminar el acceso de forma inmediata y sin previo aviso cuando:</p>
+      <div class="article-block" id="t10">
+        <h3><span class="num">10</span> Suspensión y Terminación</h3>
+        <p>El contrato de servicio se mantiene vigente durante el período de suscripción contratado y sus renovaciones, y no puede terminarse por conveniencia antes de su vencimiento: para ponerle fin, cualquiera de las partes puede comunicar la no renovación conforme al apartado de Facturación, Pagos y Renovaciones. Cualquiera de las partes puede terminarlo si la otra incurre en un incumplimiento material y no lo subsana dentro de los 30 días siguientes a recibir una notificación escrita que lo describa, o de inmediato si la otra parte entra en un procedimiento de insolvencia, quiebra o liquidación, o cesa en su actividad.</p>
+        <p>Además, Clèrigo puede suspender o terminar el acceso de forma inmediata y sin previo aviso cuando:</p>
         <ul>
-          <li>El Cliente incumpla estos Términos de forma material.</li>
+          <li>El Cliente incumpla las normas de Uso Aceptable o sus obligaciones de Confidencialidad.</li>
           <li>Se detecte uso fraudulento, actividad ilegal o amenaza activa de seguridad.</li>
           <li>Un pago permanezca impago más de 30 días después de la fecha de vencimiento.</li>
           <li>Sea requerido por autoridad competente mediante resolución judicial o administrativa.</li>
         </ul>
+        <p>Efectos económicos de la terminación:</p>
+        <ul>
+          <li><strong>Por incumplimiento de Clèrigo:</strong> si el Cliente termina el contrato por un incumplimiento material de Clèrigo no subsanado, Clèrigo le reembolsará, dentro de los 30 días siguientes a la terminación, la parte prorrateada de las cuotas prepagadas que corresponda al período posterior a la fecha de terminación.</li>
+          <li><strong>Por incumplimiento del Cliente:</strong> si Clèrigo termina el contrato por un incumplimiento del Cliente, el Cliente pagará, dentro de los 30 días siguientes a la terminación, todas las cuotas pendientes del resto del período de suscripción en curso, con independencia de sus fechas de vencimiento. Los importes ya pagados no se reembolsan.</li>
+          <li><strong>Por no renovación:</strong> el Servicio se mantiene hasta el final del período ya pagado y no se reembolsa ninguna parte de él.</li>
+        </ul>
         <p>Tras la terminación, el Cliente tendrá acceso de solo lectura a sus datos por un período de 30 días para facilitar la exportación. Transcurrido este plazo, los datos podrán ser eliminados de forma permanente. El Cliente puede solicitar la eliminación anticipada en cualquier momento.</p>
       </div>
 
-      <div class="article-block" id="t10">
-        <h3><span class="num">10</span> Garantías y Exclusiones</h3>
+      <div class="article-block" id="t11">
+        <h3><span class="num">11</span> Garantías y Exclusiones</h3>
         <p>Clèrigo garantiza que el Servicio funcionará de manera sustancialmente conforme a la documentación publicada y mantendrá un nivel de disponibilidad del 99.5 % mensual (SLA), excluyendo mantenimientos programados notificados con 48 horas de anticipación.</p>
+        <p>Si el Servicio no cumple de forma material esta garantía, el Cliente deberá notificarlo por escrito, con el detalle del incumplimiento, dentro de los 30 días siguientes a detectarlo. Clèrigo lo corregirá en un plazo razonable y, si no pudiera hacerlo, cualquiera de las partes podrá terminar el Servicio afectado y Clèrigo reembolsará la parte prorrateada de las cuotas prepagadas correspondiente al período no transcurrido. El incumplimiento del SLA durante tres meses naturales consecutivos se considera un incumplimiento material de esta garantía. Este es el único y exclusivo recurso del Cliente por incumplimiento de la garantía.</p>
         <p>Salvo lo expresamente establecido en este acuerdo, el Servicio se proporciona «tal cual» y «según disponibilidad». Clèrigo no garantiza que el Servicio sea ininterrumpido, libre de errores ni que satisfaga todos los requisitos específicos del Cliente.</p>
         <div class="info-box blue">
           <div class="info-box-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
@@ -997,22 +1040,22 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
         </div>
       </div>
 
-      <div class="article-block" id="t11">
-        <h3><span class="num">11</span> Limitación de Responsabilidad</h3>
+      <div class="article-block" id="t12">
+        <h3><span class="num">12</span> Limitación de Responsabilidad</h3>
         <p>En la máxima medida permitida por la ley aplicable, la responsabilidad total de Clèrigo por cualquier reclamación derivada de este acuerdo no excederá el importe pagado por el Cliente en los 12 meses previos al evento que da origen a la reclamación.</p>
         <p>Clèrigo no será responsable en ningún caso por: (a) pérdida de beneficios o ingresos; (b) pérdida de datos cuando el Cliente no haya realizado copias de seguridad; (c) daños indirectos, incidentales, especiales o consecuentes; o (d) daños derivados del incumplimiento regulatorio del Cliente.</p>
         <p>Ninguna cláusula de este acuerdo excluye la responsabilidad por dolo, fraude, muerte o daños personales causados por negligencia grave, en la medida en que la ley lo prohíba.</p>
       </div>
 
-      <div class="article-block" id="t12">
-        <h3><span class="num">12</span> Ley Aplicable y Resolución de Disputas</h3>
+      <div class="article-block" id="t13">
+        <h3><span class="num">13</span> Ley Aplicable y Resolución de Disputas</h3>
         <p>Estos Términos se rigen por las leyes del Estado de Delaware, Estados Unidos, sin perjuicio de las disposiciones de derecho internacional privado que pudieran resultar aplicables.</p>
         <p>Cualquier disputa que surja de o en relación con estos Términos será sometida en primer lugar a un proceso de mediación amigable de 30 días. De no resolverse, las partes se someten a la jurisdicción exclusiva de los tribunales estatales o federales ubicados en el Estado de Delaware, Estados Unidos.</p>
         <p>Para Clientes ubicados en la Unión Europea, los derechos bajo el RGPD se mantienen íntegros y prevalecen sobre cualquier disposición contraria de este acuerdo.</p>
       </div>
 
-      <div class="article-block" id="t13">
-        <h3><span class="num">13</span> Contacto Legal</h3>
+      <div class="article-block" id="t14">
+        <h3><span class="num">14</span> Contacto Legal</h3>
         <p>Para notificaciones legales, reclamaciones o consultas relacionadas con estos Términos, contacta a nuestro equipo legal:</p>
         <ul>
           <li><strong>Departamento Legal:</strong> Clèrigo</li>
@@ -1039,10 +1082,10 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
 
       <div class="update-banner">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        Última actualización: <strong>21 de agosto de 2026</strong>. Los cambios materiales te serán notificados por email con al menos 30 días de anticipación.
+        Última actualización: <strong>23 de septiembre de 2026</strong>. Los cambios materiales te serán notificados por email con al menos 30 días de anticipación.
       </div>
 
-                                    <div class="article-block" id="p1">
+                                          <div class="article-block" id="p1">
         <h3><span class="num">01</span> Responsable del Tratamiento</h3>
         <p>El responsable del tratamiento de tus datos personales es Clèrigo, con domicilio en Estados Unidos. Puedes contactar a nuestro Delegado de Protección de Datos (DPO) en privacy@clerigo.io.</p>
         <p>Cuando el Servicio es utilizado por una organización cliente, dicha organización actúa como responsable del tratamiento de los datos de sus empleados y usuarios finales, y Clèrigo actúa como encargado del tratamiento bajo las instrucciones del cliente.</p>
@@ -1076,6 +1119,7 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
           <li><strong>Comunicaciones de servicio:</strong> notificaciones de sistema, alertas de seguridad, cambios en los Términos y actualizaciones de facturación.</li>
           <li><strong>Soporte técnico:</strong> diagnóstico de incidencias y asistencia al usuario.</li>
           <li><strong>Mejora del Servicio:</strong> análisis agregado y anonimizado de patrones de uso para el desarrollo de nuevas funcionalidades.</li>
+          <li><strong>Funciones de inteligencia artificial:</strong> generación de resúmenes, explicaciones y sugerencias a partir de la información que el Cliente ya tiene en la plataforma, cuando su organización tiene estas funciones activadas. Los datos no se utilizan para entrenar modelos.</li>
           <li><strong>Seguridad:</strong> detección de accesos no autorizados, prevención de fraude y auditoría de seguridad interna.</li>
           <li><strong>Cumplimiento legal:</strong> respuesta a requerimientos de autoridades competentes y cumplimiento de obligaciones fiscales.</li>
           <li><strong>Marketing (con consentimiento):</strong> envío de contenido informativo, webinars y actualizaciones del producto. Puedes retirar este consentimiento en cualquier momento.</li>
@@ -1118,11 +1162,25 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
           <li>Proveedores certificados bajo marcos de privacidad reconocidos (ISO 27701, SOC 2 Type II).</li>
           <li>Evaluaciones de impacto en transferencias (TIA) cuando los datos se transfieren a jurisdicciones con menor nivel de protección.</li>
         </ul>
-        <p>Entre nuestros subprocesadores principales se incluyen proveedores de infraestructura cloud, pasarelas de pago y herramientas de análisis, todos debidamente auditados. La lista actualizada de subprocesadores está disponible bajo solicitud en privacy@clerigo.io.</p>
+        <p>Entre nuestros subprocesadores se incluyen proveedores de infraestructura en la nube, pasarelas de pago, servicios de observabilidad de errores y proveedores de modelos de inteligencia artificial, todos ellos bajo contrato de encargo. La lista actualizada se publica en el Centro de Confianza, en clerigo.io/trustcenter, y también puede solicitarse en privacy@clerigo.io.</p>
       </div>
 
       <div class="article-block" id="p7">
-        <h3><span class="num">07</span> Tus Derechos como Titular de Datos</h3>
+        <h3><span class="num">07</span> Inteligencia Artificial y Decisiones Automatizadas</h3>
+        <p>Cuando la organización cliente activa las funciones de inteligencia artificial, parte de la información de la plataforma se envía a un proveedor de modelos para generar el resultado solicitado. Estos son los términos de ese tratamiento:</p>
+        <ul>
+          <li><strong>Finalidad:</strong> producir el resumen, la explicación o la sugerencia que el usuario pide en ese momento, y nada más.</li>
+          <li><strong>Sin entrenamiento:</strong> los datos enviados no se utilizan para entrenar ni ajustar modelos, ni por Clèrigo ni por el proveedor.</li>
+          <li><strong>Datos que pueden intervenir:</strong> los que el Cliente ha cargado y resulten necesarios para la función, incluidos datos personales cuando la función los requiera.</li>
+          <li><strong>Base legal:</strong> la ejecución del contrato y las instrucciones del Cliente, que actúa como responsable del tratamiento.</li>
+          <li><strong>Transferencias:</strong> los proveedores de modelos pueden estar ubicados fuera del país del Cliente; les aplican las garantías del apartado anterior.</li>
+          <li><strong>Control de la organización:</strong> estas funciones pueden desactivarse en cualquier momento desde la configuración, y con ellas desactivadas no se envía nada a ningún modelo.</li>
+        </ul>
+        <p>Ninguna de estas funciones adopta decisiones automatizadas con efectos jurídicos o significativos sobre una persona: sus resultados son una ayuda que alguien revisa antes de decidir. En todo caso, puedes ejercer el derecho a la revisión humana descrito en el apartado de derechos.</p>
+      </div>
+
+      <div class="article-block" id="p8">
+        <h3><span class="num">08</span> Tus Derechos como Titular de Datos</h3>
         <p>Tienes los siguientes derechos sobre tus datos personales, ejercibles en cualquier momento:</p>
         <ul>
           <li><strong>Acceso:</strong> solicitar confirmación y copia de los datos que tratamos sobre ti.</li>
@@ -1136,8 +1194,8 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
         <p>Atendemos las solicitudes de ejercicio de derechos dentro de los 30 días hábiles siguientes a su recepción, con posibilidad de extensión a 60 días en casos complejos notificando al interesado. Puedes enviar tu solicitud a privacy@clerigo.io.</p>
       </div>
 
-      <div class="article-block" id="p8">
-        <h3><span class="num">08</span> Medidas de Seguridad</h3>
+      <div class="article-block" id="p9">
+        <h3><span class="num">09</span> Medidas de Seguridad</h3>
         <p>Implementamos medidas técnicas y organizativas apropiadas para proteger tus datos, incluyendo:</p>
         <ul>
           <li>Controles de cifrado robustos para datos en reposo y en tránsito.</li>
@@ -1150,20 +1208,20 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
         </ul>
       </div>
 
-      <div class="article-block" id="p9">
-        <h3><span class="num">09</span> Menores de Edad</h3>
+      <div class="article-block" id="p10">
+        <h3><span class="num">10</span> Menores de Edad</h3>
         <p>El Servicio está dirigido exclusivamente a organizaciones y profesionales mayores de 18 años. No recopilamos conscientemente datos personales de menores de edad. Si detectamos que hemos recopilado datos de un menor sin consentimiento parental, procederemos a su eliminación inmediata.</p>
         <p>Si eres padre, madre o tutor y crees que un menor ha proporcionado datos a través de nuestro Servicio, contáctanos en privacy@clerigo.io.</p>
       </div>
 
-      <div class="article-block" id="p10">
-        <h3><span class="num">10</span> Cambios a Esta Política</h3>
+      <div class="article-block" id="p11">
+        <h3><span class="num">11</span> Cambios a Esta Política</h3>
         <p>Nos reservamos el derecho de actualizar esta Política de Privacidad para reflejar cambios en nuestras prácticas, en la legislación aplicable o en el Servicio. Cuando los cambios sean materiales, te notificaremos por email y/o mediante un aviso prominente en la plataforma con al menos 30 días de anticipación.</p>
         <p>Te recomendamos revisar esta política periódicamente. La fecha de «última actualización» al inicio de este documento indica cuándo se realizaron los últimos cambios.</p>
       </div>
 
-      <div class="article-block" id="p11">
-        <h3><span class="num">11</span> Contacto con el DPO</h3>
+      <div class="article-block" id="p12">
+        <h3><span class="num">12</span> Contacto con el DPO</h3>
         <p>Para ejercer tus derechos, plantear preguntas o presentar una queja relacionada con el tratamiento de tus datos personales:</p>
         <ul>
           <li><strong>Delegado de Protección de Datos (DPO):</strong> privacy@clerigo.io</li>
@@ -1191,7 +1249,7 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
         Última actualización: <strong>20 de agosto de 2026</strong>.
       </div>
 
-                                    <div class="article-block" id="c1">
+                                          <div class="article-block" id="c1">
         <h3><span class="num">01</span> ¿Qué son las Cookies?</h3>
         <p>Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas un sitio web. Junto con las cookies, también utilizamos tecnologías similares —almacenamiento local (localStorage) y de sesión (sessionStorage)— para recordar preferencias de la interfaz.</p>
         <p>Las cookies pueden ser:</p>

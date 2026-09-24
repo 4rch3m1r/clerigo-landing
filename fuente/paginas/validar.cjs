@@ -470,19 +470,19 @@ for (const { slug, chrome, sinOriginal } of aRevisar) {
     sal.includes(`<link rel="canonical" href="${canonica}">`)
     && sal.includes(`<meta property="og:image" content="${imagen}">`),
     canonica);
-  /* Y que las tres alternativas estén: sin ellas, el buscador trata las dos
-     versiones como páginas distintas que dicen casi lo mismo y elige una por
-     su cuenta. */
-  /* A la dirección PÚBLICA de cada idioma —/pricing y /es/precios—, que no
-     es el nombre del fichero: ése redirige. Antes se miraba con `includes` y
-     el nombre castellano, así que `/partners` casaba dentro de
-     `/partners.html` y daba por buena una dirección que redirige. */
+  /* Y que NO declare un idioma alternativo. Aquí se exigía justo lo
+     contrario —las tres etiquetas `hreflang`, a la dirección pública de cada
+     idioma— porque sin ellas el buscador trata las dos versiones como páginas
+     distintas que dicen casi lo mismo y elige una por su cuenta.
+
+     Eligió por su cuenta igual: el 22 de septiembre de 2026, con las tres
+     etiquetas puestas y bien puestas, fundió `/es/` con `/`. Así que desde el
+     2026-09-24 se elige aquí: en el buscador va el inglés, y el castellano es
+     una comodidad de quien visita el sitio. A dónde lleva el cambio de idioma
+     lo comprueba `fuente/seo/validar.cjs`, sobre el enlace del selector. */
   const rutas = (require("../seo/posicionar.cjs").PAGINAS.find((x) => x.slug === slug) || {}).ruta;
-  comprueba(`${slug}: declara sus dos idiomas y cuál se sirve por omisión`,
-    !!rutas
-    && sal.includes(`hreflang="en" href="${SITIO.base}/${rutas.en}">`)
-    && sal.includes(`hreflang="es" href="${SITIO.base}/es/${rutas.es}">`)
-    && sal.includes(`hreflang="x-default" href="${SITIO.base}/${rutas.en}">`));
+  comprueba(`${slug}: no le ofrece al buscador otro idioma`,
+    !!rutas && !/<link rel="alternate" hreflang=/.test(sal));
   comprueba(`${slug}: tiene título y descripción propios`,
     titulo.includes("Clèrigo") && desc.length > 40,
     `título «${titulo}», descripción de ${desc.length} letras`);

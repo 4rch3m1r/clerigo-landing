@@ -194,11 +194,6 @@ function ponSelector(html, idioma, ficheroEn, ficheroEs) {
 function ponAlternativas(html, idioma, ficheroEn, ficheroEs, base) {
   const enIngles = base + "/" + (ficheroEn || "");
   const enCastellano = base + "/es/" + (ficheroEs || "");
-  const etiquetas = [
-    '<link rel="alternate" hreflang="en" href="' + enIngles + '">',
-    '<link rel="alternate" hreflang="es" href="' + enCastellano + '">',
-    '<link rel="alternate" hreflang="x-default" href="' + enIngles + '">',
-  ].join("\n  ");
 
   /* La canónica de cada versión apunta a SÍ MISMA, no las dos a la inglesa:
      si las dos dijeran lo mismo, la castellana estaría pidiendo que no la
@@ -230,9 +225,17 @@ function ponAlternativas(html, idioma, ficheroEn, ficheroEs, base) {
       .replace(/"url":"[^"]*"/, '"url":"' + miCanonica + '"')
       .replace(/"inLanguage":"[^"]*"/, '"inLanguage":"' + idioma + '"'));
 
-  if (!salida.includes('rel="alternate" hreflang')) {
-    salida = salida.replace(/(<link rel="canonical"[^>]*>)/, "$1\n  " + etiquetas);
-  }
+  /* NI UN hreflang, DESDE EL 2026-09-24. Aquí se ponían las tres etiquetas que
+     le dicen a Google «esta página existe también en castellano». Por decisión
+     del dueño ya no: el castellano es una comodidad para quien visita el
+     sitio, no una versión que competir en el buscador, y un hreflang es
+     exactamente la forma de ofrecérsela. Se quitan también de las páginas que
+     ya las llevaban, porque una etiqueta vieja es una promesa vigente.
+
+     Quien necesita saber a dónde lleva el otro idioma es el selector, y el
+     selector lo sabe por sí mismo: sus dos enlaces llevan la dirección
+     traducida y un `data-idioma`. De ahí lee el guion de `deteccion.cjs`. */
+  salida = salida.replace(/[ \t]*<link rel="alternate" hreflang="[^"]*" href="[^"]*">\r?\n?/g, "");
   return salida;
 }
 

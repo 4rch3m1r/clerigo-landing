@@ -49,9 +49,9 @@ const mapa = fs.existsSync(fMapa) ? lee(fMapa) : "";
 const direcciones = [...mapa.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
 
 const indexables = PAGINAS.filter((p) => !NO_INDEXAR.includes(p.slug) && !FUERA_DEL_MAPA.includes(p.slug));
-comprueba("una entrada por página y por idioma",
-  direcciones.length === indexables.length * 2,
-  `${direcciones.length} direcciones, esperaba ${indexables.length * 2}`);
+comprueba("una entrada por página, y sólo la inglesa",
+  direcciones.length === indexables.length,
+  `${direcciones.length} direcciones, esperaba ${indexables.length}`);
 
 comprueba("todas las direcciones salen de la base de sitio.json",
   direcciones.length > 0 && direcciones.every((u) => u.startsWith(BASE + "/")),
@@ -76,14 +76,22 @@ const noEstan = direcciones.filter((u) => {
 comprueba("cada dirección lleva a un fichero que existe", noEstan.length === 0,
   noEstan.slice(0, 3).join(" "));
 
-/* Las alternativas de idioma. Sin ellas las dos versiones compiten entre sí y
-   el buscador se queda con una. */
+/* NI UNA ALTERNATIVA DE IDIOMA, DESDE EL 2026-09-24. Aquí se exigía lo
+   contrario: que cada entrada declarase sus dos idiomas, porque sin eso las
+   dos versiones compiten y el buscador se queda con una. Y se quedó con una
+   igual —fundió `/es/` con `/` y `/es/marcos` con `/frameworks`—, así que
+   ahora se elige en vez de competir: en el buscador va el inglés y el
+   castellano es una comodidad del sitio, con `noindex`. Declarar una
+   alternativa que no se puede indexar no es media verdad, es ruido. */
 const bloques = mapa.split("<url>").slice(1);
-const sinAlternativas = bloques.filter((b) =>
-  !(b.includes('hreflang="en"') && b.includes('hreflang="es"') && b.includes('hreflang="x-default"')));
-comprueba("cada entrada declara sus dos idiomas y el de por omisión",
-  bloques.length > 0 && sinAlternativas.length === 0,
-  `${sinAlternativas.length} entradas sin las tres`);
+const conAlternativas = bloques.filter((b) => b.includes("hreflang="));
+comprueba("ninguna entrada ofrece otro idioma",
+  bloques.length > 0 && conAlternativas.length === 0,
+  `${conAlternativas.length} entradas todavía lo declaran`);
+
+comprueba("no hay ninguna dirección castellana en el mapa",
+  !direcciones.some((u) => u.includes("/es/")),
+  direcciones.filter((u) => u.includes("/es/")).slice(0, 3).join(" "));
 
 comprueba("la portada oscura NO está en el mapa",
   !direcciones.some((u) => u.endsWith("oscuro.html")),
@@ -153,17 +161,28 @@ for (const carpeta of [CASTELLANO, INGLES]) {
 
     /* El título, con el patrón de las grandes. */
     const titulo = (h.match(/<title>([^<]*)<\/title>/) || [, ""])[1];
-    /* LA PORTADA, APARTE (decisión del dueño, 2026-09-21): su título es la
-       marca y su lema, «Clèrigo — Go Beyond.», y no «Clèrigo | de qué va».
-       Lo que se pierde —que el título diga a qué se dedica— lo dice la meta
-       description, que sigue hablando de software GRC. Se fija el texto
-       exacto para que nadie lo cambie sin querer. */
+    /* LA PORTADA, APARTE (decisión del dueño, 2026-09-21): su título empieza
+       por la marca y su lema, «Clèrigo — Go Beyond.», y no por «Clèrigo | de
+       qué va».
+       Y DETRÁS, DESDE EL 2026-09-24, LO QUE DISTINGUE A CADA IDIOMA. Las dos
+       portadas llevaban el lema a secas, la misma cadena carácter por
+       carácter. Google rastreó `/es/` el 22 de septiembre —con hreflang
+       recíproco, canónica propia y el texto ya traducido— y la declaró
+       duplicada de la inglesa, eligiendo `/` como canónica. El título
+       idéntico era la única señal de duplicado que quedaba en nuestra mano.
+       Se fija el texto exacto, uno por idioma, para que nadie lo cambie sin
+       querer y para que no vuelvan a coincidir. */
     const esLaPortada = slug === "index" || slug === "oscuro";
+    const DE_LA_PORTADA = { es: "Clèrigo — Go Beyond. | Software GRC", en: "Clèrigo — Go Beyond. | GRC Software" };
     comprueba(`${p}: el título nombra la marca y dice de qué va`,
       esLaPortada
-        ? titulo === "Clèrigo — Go Beyond."
+        ? titulo === DE_LA_PORTADA[idioma]
         : titulo.includes("Clèrigo") && titulo.includes(" | ") && titulo.length <= 70,
       `«${titulo}» (${titulo.length} letras)`);
+    if (esLaPortada) {
+      comprueba(`${p}: y no es el mismo título que el de la otra portada`,
+        DE_LA_PORTADA.es !== DE_LA_PORTADA.en);
+    }
 
     /* La descripción, en la horquilla que el buscador enseña entera. */
     const desc = (h.match(/<meta name="description" content="([^"]*)"/) || [, ""])[1];
@@ -177,11 +196,15 @@ for (const carpeta of [CASTELLANO, INGLES]) {
       clave.split(",").filter(Boolean).length === esperadas.length,
       `${clave.split(",").filter(Boolean).length} de ${esperadas.length}`);
 
-    /* La orden al buscador. */
+    /* La orden al buscador. El castellano entero va con `noindex, follow`
+       desde el 2026-09-24: en el índice sólo está el inglés. `follow` y no
+       `none`, porque desde esas páginas se enlaza a las inglesas y esos
+       enlaces tienen que contar. */
     const orden = (h.match(/<meta name="robots" content="([^"]*)"/) || [, ""])[1];
+    const fueraDelIndice = NO_INDEXAR.includes(slug) || !esIngles;
     comprueba(`${p}: dice qué puede hacer el buscador con ella`,
-      NO_INDEXAR.includes(slug)
-        ? /noindex/.test(orden)
+      fueraDelIndice
+        ? /noindex/.test(orden) && /follow/.test(orden)
         : /index/.test(orden) && !/noindex/.test(orden) && /max-image-preview:large/.test(orden),
       orden);
 
@@ -480,20 +503,37 @@ if (fs.existsSync(path.join(RAIZ, "_redirects"))) {
   }
 }
 
-/* ── LOS IDIOMAS ALTERNATIVOS APUNTAN A PÁGINAS, NO A REDIRECCIONES ────────
- * Un hreflang a `/pricing.html` redirige y Google no lo sigue. Cada uno tiene
- * que ser una dirección del sitemap. */
+/* ── NINGUNA PÁGINA OFRECE OTRO IDIOMA AL BUSCADOR ─────────────────────────
+ *
+ * Aquí se comprobaba que las tres etiquetas `hreflang` de cada página
+ * apuntaran a una dirección del sitemap y no a una que redirige. Desde el
+ * 2026-09-24 no debe haber ninguna: el castellano no se ofrece.
+ *
+ * Lo que SÍ sigue vigente es el motivo de aquella comprobación: el destino
+ * del cambio de idioma no puede ser un 404 ni una redirección. Sólo que ahora
+ * ese destino no vive en un `hreflang`, vive en el enlace del selector, que
+ * es de quien visita el sitio y no del buscador. Se comprueba ahí. */
 {
-  const delMapa = new Set([...fs.readFileSync(path.join(__dirname, "..", "..", "sitemap.xml"), "utf8").matchAll(/<loc>([^<]*)<\/loc>/g)].map((m) => m[1]));
   for (const [carpeta, idioma] of [[CASTELLANO, "es"], [INGLES, "en"]]) {
     for (const p of PAGINAS) {
-      if (NO_INDEXAR.includes(p.slug) || FUERA_DEL_MAPA.includes(p.slug)) continue;
+      if (FUERA_DEL_MAPA.includes(p.slug)) continue;
       const f = path.join(carpeta, p.disco[idioma]);
       if (!fs.existsSync(f)) continue;
-      const alt = [...fs.readFileSync(f, "utf8").matchAll(/<link rel="alternate" hreflang="[^"]*" href="([^"]*)">/g)].map((m) => m[1]);
-      const malas = alt.filter((u) => !delMapa.has(u));
-      comprueba(`${idioma}/${p.disco[idioma]}: sus hreflang apuntan a direcciones del sitemap, sin redirección`,
-        alt.length === 3 && malas.length === 0, malas.join(", "));
+      const h = fs.readFileSync(f, "utf8");
+
+      comprueba(`${idioma}/${p.disco[idioma]}: no le ofrece al buscador otro idioma`,
+        !/<link rel="alternate" hreflang=/.test(h));
+
+      /* El selector lleva a la dirección pública de la otra versión, la misma
+         que declaraba el hreflang. Es lo que lee el guion de idioma, así que
+         si aquí hubiera el nombre del fichero —`/precios.html`— el cambio de
+         idioma pasaría por una redirección; y si estuviera el nombre del otro
+         idioma —`/es/pricing`— sería un 404. */
+      const otro = idioma === "en" ? "es" : "en";
+      const enlace = (h.match(new RegExp('<a href="([^"]*)"[^>]*data-idioma="' + otro + '"')) || [])[1];
+      const esperado = otro === "es" ? "/es/" + p.ruta.es : "/" + p.ruta.en;
+      comprueba(`${idioma}/${p.disco[idioma]}: el selector lleva a la otra versión, a su dirección buena`,
+        enlace === esperado, `dice «${enlace || "nada"}» y toca «${esperado}»`);
     }
   }
 }

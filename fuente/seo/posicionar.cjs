@@ -547,9 +547,24 @@ for (const carpeta of [CASTELLANO, INGLES]) {
           `max-image-preview:large` es el que hace que salga la foto grande en
           el resultado en vez de una miniatura; sin él, Google se queda con la
           pequeña. La portada oscura va con `noindex`: es la misma página con
-          otra piel y sale duplicada. */
+          otra piel y sale duplicada.
+
+          Y EL CASTELLANO ENTERO TAMBIÉN, DESDE EL 2026-09-24, por decisión
+          del dueño: en el buscador sólo va el inglés. No es una rendición
+          ante el duplicado, es elegir: Google ya había fundido `/es/` con `/`
+          y `/es/marcos` con `/frameworks` por su cuenta, y cuando el buscador
+          decide por ti, lo que queda no es tener dos versiones indexadas sino
+          no saber cuál enseña. Con esto se sabe.
+
+          `follow`, no `none`: las páginas castellanas siguen enlazando a las
+          inglesas y esos enlaces tienen que contar. Y NO se prohíben en
+          robots.txt, porque para leer un `noindex` hay que dejar entrar.
+
+          Siguen siendo páginas normales para quien las visita: se sirven, se
+          enlazan y el selector de idioma funciona. Lo único que cambia es que
+          no compiten en el índice. */
     h = meta(h, "robots", "name",
-      NO_INDEXAR.includes(p.slug)
+      NO_INDEXAR.includes(p.slug) || !esIngles
         ? "noindex, follow"
         : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1");
 
@@ -560,20 +575,13 @@ for (const carpeta of [CASTELLANO, INGLES]) {
     h = h.replace(/(<meta property="og:locale" content="[^"]*">)/,
       `$1\n<meta property="og:locale:alternate" content="${esIngles ? "es_ES" : "en_US"}">`);
 
-    /* 3b. LOS IDIOMAS ALTERNATIVOS, A SU DIRECCIÓN CANÓNICA.
-          El paso bilingüe los escribe con el nombre de FICHERO
-          (`/pricing.html`, `/es/precios.html`), y esas direcciones
-          redirigen. Medido el 2026-09-15 en las doce interiores: Google no
-          sigue un hreflang que redirige, y el sitemap declaraba las buenas —
-          dos versiones distintas de la misma relación. Aquí se ponen las del
-          sitemap, que es el paso que sabe la ruta pública de cada una. */
-    if (!NO_INDEXAR.includes(p.slug) && !FUERA_DEL_MAPA.includes(p.slug)) {
-      const enIngles = BASE + "/" + p.ruta.en;
-      const enCastellano = BASE + "/es/" + p.ruta.es;
-      h = h.replace(/<link rel="alternate" hreflang="en" href="[^"]*">/, `<link rel="alternate" hreflang="en" href="${enIngles}">`)
-        .replace(/<link rel="alternate" hreflang="es" href="[^"]*">/, `<link rel="alternate" hreflang="es" href="${enCastellano}">`)
-        .replace(/<link rel="alternate" hreflang="x-default" href="[^"]*">/, `<link rel="alternate" hreflang="x-default" href="${enIngles}">`);
-    }
+    /* 3b. LOS IDIOMAS ALTERNATIVOS YA NO SE DECLARAN.
+          Aquí se corregían las tres etiquetas `hreflang` para que apuntaran a
+          la dirección pública y no al nombre de fichero, que redirige. Desde
+          el 2026-09-24 no hay ninguna que corregir: el castellano no se
+          ofrece al buscador (ver el punto 2). Se barre lo que quede, porque
+          este paso corre sobre páginas ya escritas y alguna puede traerlas. */
+    h = h.replace(/[ \t]*<link rel="alternate" hreflang="[^"]*" href="[^"]*">\r?\n?/g, "");
 
     /* 4. La ficha de datos, entera y en el idioma de la página. */
     const canonica = (h.match(/<link rel="canonical" href="([^"]*)"/) || [])[1];

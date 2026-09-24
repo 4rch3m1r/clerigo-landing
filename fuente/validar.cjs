@@ -168,10 +168,15 @@ for (const [n, tConSelector] of [["oscuro", osc], ["claro", cla]]) {
      si se entra, y lo que va detrás de la barra es donde caben las palabras
      por las que a uno lo buscan.
      LA PORTADA ES LA EXCEPCIÓN desde el 2026-09-21, por decisión del dueño:
-     su título es la marca y su lema, «Clèrigo — Go Beyond.», porque es la
-     página que identifica a Clèrigo como marca paraguas y no a un producto.
-     Las palabras de la búsqueda quedan en la meta description. */
-  comprueba(`el título es de Clèrigo en el ${n}`, /<title>Clèrigo — Go Beyond\.<\/title>/.test(t));
+     su título empieza por la marca y su lema, «Clèrigo — Go Beyond.», porque
+     es la página que identifica a Clèrigo como marca paraguas y no a un
+     producto.
+     DETRÁS DEL LEMA, DESDE EL 2026-09-24, VA EL IDIOMA. Aquí se comprueba la
+     castellana, y por eso dice «Software GRC»: la inglesa dice «GRC Software».
+     Llevaban las dos el lema a secas y Google fundió `/es/` con `/`. El porqué
+     entero está en `fuente/seo/validar.cjs`. */
+  comprueba(`el título es de Clèrigo en el ${n}`,
+    /<title>Clèrigo — Go Beyond\. \| Software GRC<\/title>/.test(t));
   comprueba(`hay canonical, Open Graph y Twitter en el ${n}`,
     t.includes(`rel="canonical" href="${SITIO.base}/es/"`)
     && t.includes(`og:url" content="${SITIO.base}/es/"`)

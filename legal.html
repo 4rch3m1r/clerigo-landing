@@ -29,9 +29,6 @@
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="theme-color" content="#0E0E0E">
 <link rel="canonical" href="https://clerigo.io/legal">
-<link rel="alternate" hreflang="en" href="https://clerigo.io/legal">
-<link rel="alternate" hreflang="es" href="https://clerigo.io/es/legal">
-<link rel="alternate" hreflang="x-default" href="https://clerigo.io/legal">
 <!-- Twitter / X Cards -->
 <link rel="icon" type="image/png" href="favicon.png" sizes="160x160">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
@@ -673,14 +670,18 @@ html[lang="es"] .idioma[data-idioma="es"] { color: var(--text); background: var(
   if (quiere !== 'es' && quiere !== 'en') return;
   if (quiere === mio) return;
 
-  /* A DONDE, LO DICE LA PROPIA PAGINA. El hreflang de la cabecera ya trae la
-     direccion de la otra version CON SU NOMBRE TRADUCIDO. Calcularlo a mano
-     —meterle '/es/' delante al ultimo trozo— daba /es/pricing, /es/contact,
-     /es/frameworks y /es/trustcenter, que son cuatro 404: la pagina se llama
-     /es/precios. Sale del mismo sitio que el mapa del sitio, asi que no se
-     puede desincronizar. Se coge solo la ruta para no salirse de este
-     servidor: en local la etiqueta dice clerigo.io. */
-  var otra = document.querySelector('link[rel="alternate"][hreflang="' + quiere + '"]');
+  /* A DONDE, LO DICE EL PROPIO SELECTOR. Su enlace ya trae la direccion de la
+     otra version CON SU NOMBRE TRADUCIDO. Calcularlo a mano —meterle '/es/'
+     delante al ultimo trozo— daba /es/pricing, /es/contact, /es/frameworks y
+     /es/trustcenter, que son cuatro 404: la pagina se llama /es/precios.
+
+     ANTES ESTO LEIA EL hreflang DE LA CABECERA, y esas etiquetas ya no estan:
+     desde el 2026-09-24 en el buscador solo va el ingles, y un hreflang es
+     justo lo que le ofrece a Google la version castellana como alternativa.
+     El selector, en cambio, es del visitante, no del buscador: es el sitio
+     natural del que leer esto. Se coge solo la ruta para no salirse de este
+     servidor: el enlace puede ser relativo o absoluto. */
+  var otra = document.querySelector('a.idioma[data-idioma="' + quiere + '"]');
   var destino = null;
   try { destino = otra && new URL(otra.getAttribute('href'), location.href).pathname; } catch (e) {}
   if (!destino || destino === ruta) return;
@@ -771,9 +772,9 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
         At Clèrigo we are committed to transparency. These documents explain how we operate, what data we collect, how we protect it and what your rights as a user are.
       </p>
       <div class="legal-hero-meta">
-        <span><strong>Version:</strong> 2.6</span>
+        <span><strong>Version:</strong> 2.7</span>
         <span><strong>Effective from:</strong> 1 January 2026</span>
-        <span><strong>Last reviewed:</strong> 21 September 2026</span>
+        <span><strong>Last reviewed:</strong> 24 September 2026</span>
         <span><strong>Jurisdiction:</strong> Delaware, United States</span>
       </div>
     </div>
@@ -803,13 +804,14 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
       <li><a href="#t4">4. Acceptable use</a></li>
       <li><a href="#t5">5. Intellectual property</a></li>
       <li><a href="#t6">6. Customer data</a></li>
-      <li><a href="#t7">7. Confidentiality</a></li>
-      <li><a href="#t8">8. Billing and payments</a></li>
-      <li><a href="#t9">9. Suspension and termination</a></li>
-      <li><a href="#t10">10. Warranties and exclusions</a></li>
-      <li><a href="#t11">11. Limitation of liability</a></li>
-      <li><a href="#t12">12. Governing law</a></li>
-      <li><a href="#t13">13. Legal contact</a></li>
+      <li><a href="#t7">7. AI and integrations</a></li>
+      <li><a href="#t8">8. Confidentiality</a></li>
+      <li><a href="#t9">9. Billing and payments</a></li>
+      <li><a href="#t10">10. Suspension and termination</a></li>
+      <li><a href="#t11">11. Warranties and exclusions</a></li>
+      <li><a href="#t12">12. Limitation of liability</a></li>
+      <li><a href="#t13">13. Governing law</a></li>
+      <li><a href="#t14">14. Legal contact</a></li>
     </ul>
   </aside>
 
@@ -822,11 +824,12 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
       <li><a href="#p4">4. Legal basis</a></li>
       <li><a href="#p5">5. Data retention</a></li>
       <li><a href="#p6">6. International transfers</a></li>
-      <li><a href="#p7">7. Your ARCO rights</a></li>
-      <li><a href="#p8">8. Security</a></li>
-      <li><a href="#p9">9. Minors</a></li>
-      <li><a href="#p10">10. Changes to this policy</a></li>
-      <li><a href="#p11">11. DPO contact</a></li>
+      <li><a href="#p7">7. AI and automated decisions</a></li>
+      <li><a href="#p8">8. Your ARCO rights</a></li>
+      <li><a href="#p9">9. Security</a></li>
+      <li><a href="#p10">10. Minors</a></li>
+      <li><a href="#p11">11. Changes to this policy</a></li>
+      <li><a href="#p12">12. DPO contact</a></li>
     </ul>
   </aside>
 
@@ -857,7 +860,7 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
 
       <div class="update-banner">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        Last updated: <strong>21 September 2026</strong>. By continuing to use the service you confirm your acceptance of these terms.
+        Last updated: <strong>24 September 2026</strong>. By continuing to use the service you confirm your acceptance of these terms.
       </div>
 
       <div class="toc-box">
@@ -882,7 +885,7 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
         </ul>
       </div>
 
-                                    <div class="article-block" id="t1">
+                                          <div class="article-block" id="t1">
         <h3><span class="num">01</span> Acceptance of the Terms</h3>
         <p>By registering for, accessing or using the Clèrigo XGRC platform ("the Service"), operated by Clèrigo ("Clèrigo", "we", "the Company"), you declare that you have read and understood these Terms and Conditions of Use and agree to be bound by them, as well as by our Privacy Policy and Cookie Policy.</p>
         <p>If you access the Service on behalf of an organisation, you declare that you have authority to bind that organisation to these Terms. In that case, "you" and "the Client" refer to that organisation.</p>
@@ -956,40 +959,80 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
       </div>
 
       <div class="article-block" id="t7">
-        <h3><span class="num">07</span> Confidentiality</h3>
+        <h3><span class="num">07</span> Artificial Intelligence and Third-Party Integrations</h3>
+        <p>The Service includes artificial intelligence features that analyse and correlate information already held in the platform — audit programme facts, risk factors, forms and meeting transcripts — to produce summaries, explanations and suggestions within the platform itself. These features are governed by the following rules:</p>
+        <ul>
+          <li><strong>No training on Client Data:</strong> Clèrigo does not train or fine-tune models on Client Data, and uses only model providers whose terms exclude that use. What is sent to a model is used solely to generate the result of that operation.</li>
+          <li><strong>What may be sent to a model:</strong> depending on the feature used, the content needed to produce the result, which may include personal data uploaded by the Client, such as a meeting transcript with the name of each speaker or the identifying details of a declarant. The Client, as data controller, weighs this before enabling the features.</li>
+          <li><strong>Switch per organisation:</strong> artificial intelligence features are turned on and off for the whole organisation from the platform settings. With them turned off, no call is made to any model provider.</li>
+          <li><strong>No automated decisions:</strong> no artificial intelligence feature takes decisions with legal or similarly significant effects on a person by itself. Its results support the Client's judgement; the Client decides and answers for the decision.</li>
+          <li><strong>Published providers:</strong> the list of model providers that may take part in the Service is published and kept up to date in the Trust Center, at clerigo.io/trustcenter.</li>
+        </ul>
+        <p>The Client may connect the Service to third-party applications ("Integrations"). Each Integration is authorised by the Client, with its own credentials and the scope it grants, and may be revoked at any time; revoking it ends the exchange. The direction of flow is as follows:</p>
+        <ul>
+          <li><strong>Read only:</strong> the asset inventory and cybersecurity integrations read from the source system and send nothing back to it. Clèrigo does not create, modify or delete records in those systems.</li>
+          <li><strong>Declared writes:</strong> the Microsoft 365 integration for meetings does write to the Client's environment, and only for what is essential: it creates and renews the notification subscriptions that make it possible to learn of a new meeting and, when the organisation has expressly enabled automatic capture, it turns on recording for meetings that have not yet started and fall within the scope the organisation itself defines.</li>
+          <li><strong>Identity check:</strong> when the Client uses federated sign-in, the person's email address is checked against the Client's own corporate directory to confirm that they are still registered.</li>
+          <li><strong>Transmissions configured by the Client:</strong> email notifications and outgoing webhooks send information to the addresses the Client specifies, under the Client's responsibility and signed so that the recipient can verify its origin.</li>
+        </ul>
+        <p>Clèrigo does not sell, rent or transfer Client Data, nor process it for its own purposes beyond providing the Service. The only third parties that may process it are the subprocessors needed to provide it, bound by a processing agreement with obligations equivalent to those in this agreement.</p>
+        <p>Deletion of Client Data is governed by the Suspension and Termination section and by the retention periods set out in the Privacy Policy. The Client may request early deletion at any time by writing to privacy@clerigo.io.</p>
+        <div class="info-box blue">
+          <div class="info-box-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Results generated by artificial intelligence may contain errors or omissions. They do not constitute legal, regulatory or audit advice, and must be reviewed before a formal decision or a communication to a supervisory authority is based on them.</span>
+        </div>
+      </div>
+
+      <div class="article-block" id="t8">
+        <h3><span class="num">08</span> Confidentiality</h3>
         <p>Both parties agree to keep confidential all non-public information they receive under this agreement ("Confidential Information"), including commercial, technical, financial or any other kind of data.</p>
         <p>This obligation does not apply to information that: (a) is in the public domain without breach of this agreement; (b) was already known to the receiving party before disclosure; (c) is lawfully received from a third party; or (d) must be disclosed by legal or judicial mandate.</p>
         <p>The confidentiality obligation remains in force for 3 years after termination of the service agreement.</p>
       </div>
 
-      <div class="article-block" id="t8">
-        <h3><span class="num">08</span> Billing, Payments and Renewals</h3>
-        <p>The Service is billed according to the plan selected at registration. The prices in force are those set out in the Client's licence agreement and may be updated with 30 days' prior notice.</p>
+      <div class="article-block" id="t9">
+        <h3><span class="num">09</span> Billing, Payments and Renewals</h3>
+        <p>The Service is billed according to the plan selected at registration. The prices in force are those set out in the Client's licence agreement. Clèrigo may revise them for each renewal period by giving written notice at least 60 days before that period begins; the new price will apply to the renewal unless the Client gives notice of non-renewal under this section.</p>
         <ul>
           <li><strong>Annual plans:</strong> billed in advance at the start of each annual period.</li>
           <li><strong>Monthly plans:</strong> billed each month on the subscription date, with a 20 % surcharge over the equivalent annual price.</li>
           <li><strong>Additional users:</strong> billed at USD 5 per user per month, pro-rated from the activation date.</li>
-          <li><strong>Automatic renewal:</strong> plans renew automatically on expiry unless the Client gives notice of cancellation at least 15 days in advance.</li>
+          <li><strong>Automatic renewal:</strong> each subscription period renews automatically for another period of equal length unless either party gives written notice of non-renewal at least 30 days before it expires. On monthly plans, notice of non-renewal may be given at any time before the next billing date.</li>
+          <li><strong>Licence reductions:</strong> any reduction in the number of users or subscribed areas must be notified in writing at least 30 days in advance and takes effect at the start of the next renewal period; until then the subscribed quantities remain in force.</li>
         </ul>
-        <p>Overdue payments may result in suspension of the Service after a 10-day grace period. Clèrigo accepts no responsibility for losses arising from suspensions due to non-payment.</p>
+        <div class="info-box blue">
+          <div class="info-box-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <span>Except as expressly provided in these Terms and to the fullest extent permitted by applicable law, payment obligations are non-cancellable and amounts paid are non-refundable, including upon cancellation, expiry or termination of the agreement. No refunds or credits are given for partial periods, for partial or no use of the Service, or for users or areas left unused during the subscribed period.</span>
+        </div>
+        <p>Invoices are payable within 30 days of their issue date, unless the licence agreement sets another term, in the stated currency and without deduction or set-off. Overdue amounts bear interest at 1.5 % per month or, if lower, the maximum permitted by applicable law, and the Client will reimburse reasonable collection costs, including attorneys' fees. If the Client disputes an invoice in good faith, it must give written notice, detailing the disagreement, within 15 days of receiving it, and pay the undisputed portion on time.</p>
+        <p>Prices exclude taxes. The Client is responsible for all taxes, duties, withholdings and bank charges applicable to the purchase, other than Clèrigo's income taxes. If the law requires the Client to withhold tax, it will gross up the payment so that Clèrigo receives the full invoiced amount.</p>
+        <p>If an amount remains unpaid after its due date, Clèrigo may suspend access to the Service on at least 10 days' prior written notice, without prejudice to its other rights. Suspension does not relieve the Client of paying the fees for the subscribed period. Clèrigo accepts no responsibility for losses arising from suspensions due to non-payment.</p>
         <p>All plans include a working demo with no commitment and no credit card required. When the demo ends, the Service is suspended automatically until the Client activates a paid plan.</p>
       </div>
 
-      <div class="article-block" id="t9">
-        <h3><span class="num">09</span> Suspension and Termination</h3>
-        <p>Either party may terminate the service agreement on 30 days' written notice. Clèrigo may suspend or terminate access immediately and without prior notice where:</p>
+      <div class="article-block" id="t10">
+        <h3><span class="num">10</span> Suspension and Termination</h3>
+        <p>The service agreement remains in force for the subscribed period and its renewals and may not be terminated for convenience before it expires: to end it, either party may give notice of non-renewal under the Billing, Payments and Renewals section. Either party may terminate it if the other commits a material breach and fails to cure it within 30 days of receiving written notice describing it, or immediately if the other party becomes subject to insolvency, bankruptcy or liquidation proceedings, or ceases to do business.</p>
+        <p>In addition, Clèrigo may suspend or terminate access immediately and without prior notice where:</p>
         <ul>
-          <li>The Client is in material breach of these Terms.</li>
+          <li>The Client breaches the Acceptable Use rules or its Confidentiality obligations.</li>
           <li>Fraudulent use, unlawful activity or an active security threat is detected.</li>
           <li>A payment remains outstanding more than 30 days after its due date.</li>
           <li>It is required by a competent authority through a judicial or administrative decision.</li>
         </ul>
+        <p>Financial effects of termination:</p>
+        <ul>
+          <li><strong>For Clèrigo's breach:</strong> if the Client terminates the agreement for an uncured material breach by Clèrigo, Clèrigo will refund, within 30 days of termination, the pro-rated portion of prepaid fees covering the period after the termination date.</li>
+          <li><strong>For the Client's breach:</strong> if Clèrigo terminates the agreement for the Client's breach, the Client will pay, within 30 days of termination, all outstanding fees for the remainder of the current subscription period, regardless of their due dates. Amounts already paid are not refunded.</li>
+          <li><strong>On non-renewal:</strong> the Service continues until the end of the period already paid for, and no part of it is refunded.</li>
+        </ul>
         <p>After termination, the Client will have read-only access to its data for 30 days to facilitate export. Once that period has passed, the data may be permanently deleted. The Client may request early deletion at any time.</p>
       </div>
 
-      <div class="article-block" id="t10">
-        <h3><span class="num">10</span> Warranties and Exclusions</h3>
+      <div class="article-block" id="t11">
+        <h3><span class="num">11</span> Warranties and Exclusions</h3>
         <p>Clèrigo warrants that the Service will operate substantially in accordance with the published documentation and will maintain 99.5 % monthly availability (SLA), excluding scheduled maintenance notified 48 hours in advance.</p>
+        <p>If the Service materially fails to meet this warranty, the Client must give written notice, detailing the failure, within 30 days of discovering it. Clèrigo will correct it within a reasonable time and, if it cannot, either party may terminate the affected Service and Clèrigo will refund the pro-rated portion of prepaid fees covering the unexpired period. Failure to meet the SLA for three consecutive calendar months is a material breach of this warranty. This is the Client's sole and exclusive remedy for breach of warranty.</p>
         <p>Except as expressly set out in this agreement, the Service is provided "as is" and "as available". Clèrigo does not warrant that the Service will be uninterrupted or error-free, nor that it will meet all of the Client's specific requirements.</p>
         <div class="info-box blue">
           <div class="info-box-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
@@ -997,22 +1040,22 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
         </div>
       </div>
 
-      <div class="article-block" id="t11">
-        <h3><span class="num">11</span> Limitation of Liability</h3>
+      <div class="article-block" id="t12">
+        <h3><span class="num">12</span> Limitation of Liability</h3>
         <p>To the fullest extent permitted by applicable law, Clèrigo's total liability for any claim arising out of this agreement shall not exceed the amount paid by the Client in the 12 months preceding the event giving rise to the claim.</p>
         <p>Clèrigo shall not in any event be liable for: (a) loss of profits or revenue; (b) loss of data where the Customer has not taken backups; (c) indirect, incidental, special or consequential damages; or (d) damages arising from the Customer's own regulatory non-compliance.</p>
         <p>Nothing in this agreement excludes liability for wilful misconduct, fraud, death or personal injury caused by gross negligence, to the extent the law prohibits such exclusion.</p>
       </div>
 
-      <div class="article-block" id="t12">
-        <h3><span class="num">12</span> Governing Law and Dispute Resolution</h3>
+      <div class="article-block" id="t13">
+        <h3><span class="num">13</span> Governing Law and Dispute Resolution</h3>
         <p>These Terms are governed by the laws of the State of Delaware, United States, without prejudice to any applicable rules of private international law.</p>
         <p>Any dispute arising out of or in connection with these Terms shall first be submitted to a 30-day amicable mediation process. If unresolved, the parties submit to the exclusive jurisdiction of the state or federal courts located in the State of Delaware, United States.</p>
         <p>For Clients located in the European Union, rights under the GDPR remain intact and prevail over any contrary provision of this agreement.</p>
       </div>
 
-      <div class="article-block" id="t13">
-        <h3><span class="num">13</span> Legal Contact</h3>
+      <div class="article-block" id="t14">
+        <h3><span class="num">14</span> Legal Contact</h3>
         <p>For legal notices, claims or queries relating to these Terms, contact our legal team:</p>
         <ul>
           <li><strong>Legal department:</strong> Clèrigo</li>
@@ -1039,10 +1082,10 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
 
       <div class="update-banner">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        Last updated: <strong>21 August 2026</strong>. Material changes will be notified to you by email at least 30 days in advance.
+        Last updated: <strong>23 September 2026</strong>. Material changes will be notified to you by email at least 30 days in advance.
       </div>
 
-                                    <div class="article-block" id="p1">
+                                          <div class="article-block" id="p1">
         <h3><span class="num">01</span> Data Controller</h3>
         <p>The controller of your personal data is Clèrigo, domiciled in United States. You can contact our Data Protection Officer (DPO) at privacy@clerigo.io.</p>
         <p>Where the Service is used by a client organisation, that organisation acts as controller of its employees' and end users' data, and Clèrigo acts as processor on the client's instructions.</p>
@@ -1076,6 +1119,7 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
           <li><strong>Service communications:</strong> system notifications, security alerts, changes to the Terms and billing updates.</li>
           <li><strong>Technical support:</strong> diagnosing issues and assisting users.</li>
           <li><strong>Improving the Service:</strong> aggregated, anonymised analysis of usage patterns to develop new features.</li>
+          <li><strong>Artificial intelligence features:</strong> generating summaries, explanations and suggestions from the information the Client already holds in the platform, when their organisation has these features enabled. The data is not used to train models.</li>
           <li><strong>Security:</strong> detecting unauthorised access, preventing fraud and internal security auditing.</li>
           <li><strong>Legal compliance:</strong> responding to requests from competent authorities and meeting tax obligations.</li>
           <li><strong>Marketing (with consent):</strong> sending informational content, webinars and product updates. You can withdraw this consent at any time.</li>
@@ -1118,11 +1162,25 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
           <li>Providers certified under recognised privacy frameworks (ISO 27701, SOC 2 Type II).</li>
           <li>Transfer impact assessments (TIA) where data is transferred to jurisdictions with a lower level of protection.</li>
         </ul>
-        <p>Our main sub-processors include cloud infrastructure providers, payment gateways and analytics tools, all duly audited. An up-to-date list of sub-processors is available on request at privacy@clerigo.io.</p>
+        <p>Our subprocessors include cloud infrastructure providers, payment gateways, error observability services and artificial intelligence model providers, all of them under a processing agreement. The current list is published in the Trust Center, at clerigo.io/trustcenter, and may also be requested at privacy@clerigo.io.</p>
       </div>
 
       <div class="article-block" id="p7">
-        <h3><span class="num">07</span> Your Rights as a Data Subject</h3>
+        <h3><span class="num">07</span> Artificial Intelligence and Automated Decisions</h3>
+        <p>When the client organisation enables the artificial intelligence features, part of the information in the platform is sent to a model provider to generate the requested result. These are the terms of that processing:</p>
+        <ul>
+          <li><strong>Purpose:</strong> to produce the summary, explanation or suggestion the user asks for at that moment, and nothing else.</li>
+          <li><strong>No training:</strong> the data sent is not used to train or fine-tune models, either by Clèrigo or by the provider.</li>
+          <li><strong>Data that may be involved:</strong> the data the Client has uploaded that is necessary for the feature, including personal data where the feature requires it.</li>
+          <li><strong>Legal basis:</strong> performance of the contract and the instructions of the Client, who acts as data controller.</li>
+          <li><strong>Transfers:</strong> model providers may be located outside the Client's country; the safeguards in the previous section apply to them.</li>
+          <li><strong>Control by the organisation:</strong> these features may be disabled at any time from the settings, and with them disabled nothing is sent to any model.</li>
+        </ul>
+        <p>None of these features takes automated decisions with legal or similarly significant effects on a person: their results are an aid that someone reviews before deciding. In any case, you may exercise the right to human review described in the rights section.</p>
+      </div>
+
+      <div class="article-block" id="p8">
+        <h3><span class="num">08</span> Your Rights as a Data Subject</h3>
         <p>You have the following rights over your personal data, exercisable at any time:</p>
         <ul>
           <li><strong>Access:</strong> request confirmation of, and a copy of, the data we process about you.</li>
@@ -1136,8 +1194,8 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
         <p>We answer requests to exercise rights within 30 business days of receipt, extendable to 60 days in complex cases with notice to the data subject. You can send your request to privacy@clerigo.io.</p>
       </div>
 
-      <div class="article-block" id="p8">
-        <h3><span class="num">08</span> Security Measures</h3>
+      <div class="article-block" id="p9">
+        <h3><span class="num">09</span> Security Measures</h3>
         <p>We put appropriate technical and organisational measures in place to protect your data, including:</p>
         <ul>
           <li>Strong encryption controls for data at rest and in transit.</li>
@@ -1150,20 +1208,20 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
         </ul>
       </div>
 
-      <div class="article-block" id="p9">
-        <h3><span class="num">09</span> Minors</h3>
+      <div class="article-block" id="p10">
+        <h3><span class="num">10</span> Minors</h3>
         <p>The Service is aimed solely at organisations and professionals over 18. We do not knowingly collect personal data from minors. If we find that we have collected a minor's data without parental consent, we will delete it immediately.</p>
         <p>If you are a parent or guardian and believe a minor has provided data through our Service, contact us at privacy@clerigo.io.</p>
       </div>
 
-      <div class="article-block" id="p10">
-        <h3><span class="num">10</span> Changes to This Policy</h3>
+      <div class="article-block" id="p11">
+        <h3><span class="num">11</span> Changes to This Policy</h3>
         <p>We reserve the right to update this Privacy Policy to reflect changes in our practices, in the applicable law or in the Service. Where changes are material, we will notify you by email and/or through a prominent notice on the platform at least 30 days in advance.</p>
         <p>We recommend reviewing this policy from time to time. The "last updated" date at the top of this document shows when the latest changes were made.</p>
       </div>
 
-      <div class="article-block" id="p11">
-        <h3><span class="num">11</span> Contacting the DPO</h3>
+      <div class="article-block" id="p12">
+        <h3><span class="num">12</span> Contacting the DPO</h3>
         <p>To exercise your rights, ask questions or make a complaint about the processing of your personal data:</p>
         <ul>
           <li><strong>Data Protection Officer (DPO):</strong> privacy@clerigo.io</li>
@@ -1191,7 +1249,7 @@ html[data-tema="oscuro"] .data-table tr:hover td{background:rgba(240,240,240,0.0
         Last updated: <strong>20 August 2026</strong>.
       </div>
 
-                                    <div class="article-block" id="c1">
+                                          <div class="article-block" id="c1">
         <h3><span class="num">01</span> What Are Cookies?</h3>
         <p>Cookies are small text files stored on your device when you visit a website. Alongside cookies we also use similar technologies — local storage (localStorage) and session storage (sessionStorage) — to remember interface preferences.</p>
         <p>Cookies can be:</p>
